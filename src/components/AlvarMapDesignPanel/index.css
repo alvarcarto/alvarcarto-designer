@@ -1,0 +1,18 @@
+.AlvarMapDesignPanel {
+  width: 100%;
+  padding-top: 10px;
+}
+
+.AlvarMapDesignPanel__search {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.AlvarMapDesignPanel h4 {
+  margin-bottom: 10px;
+}
+
+.AlvarMapDesignPanel .AlvarMapDesignPanel__city-button {
+  margin: 3px;
+  font-weight: 400;
+}

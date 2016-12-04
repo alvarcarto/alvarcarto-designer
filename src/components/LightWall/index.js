@@ -1,12 +1,12 @@
 import React from 'react';
-import Map from '../Map/Map';
-import './LightWall.css';
+import AlvarMap from '../AlvarMap';
+import './index.css';
 
 const LightWall = React.createClass({
   render() {
     return (
       <div className="LightWall">
-        <Map width={400} height={640} />
+        <AlvarMap width={400} height={560} />
       </div>
     );
   }

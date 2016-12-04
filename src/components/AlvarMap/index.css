@@ -1,0 +1,22 @@
+.AlvarMap {
+  box-shadow: 6px 6px 20px 3px rgba(0, 0, 0, 0.15);
+  /*filter: grayscale(100%);*/
+  border: px solid #444;
+  padding: 25px;
+}
+
+.AlvarMap__container {
+  width: 100%;
+  height: 100%;
+  border: 3.5px solid #222;
+  box-shadow: 0 0 0 2.7px white,0 0 0 5px #222
+}
+
+.AlvarMap .leaflet-container, .AlvarMap .mapboxgl-map, .AlvarMap .ant-spin-nested-loading, .AlvarMap .ant-spin-container {
+  height: 100%;
+  width: 100%;
+}
+
+.leaflet-control-attribution, .mapboxgl-ctrl-attrib {
+  display: none;
+}

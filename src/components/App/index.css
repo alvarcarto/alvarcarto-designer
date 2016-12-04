@@ -10,17 +10,16 @@
   flex-direction: row;
 }
 
-.App__column {
+.App__layout > * {
   height: 100%;
 }
 
-.App__column-8 {
+.App .SidePanel {
   flex: 1;
-  min-width: 340px;
+  min-width: 430px;
   max-width: 600px;
-  background: #666;
 }
 
-.App__column-16 {
+.App .LightWall {
   flex: 2;
 }
