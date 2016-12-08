@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Row, Col } from 'antd';
-import LightWall from '../LightWall';
-import SidePanel from '../SidePanel';
-import './index.css';
+import LightWall from './components/LightWall';
+import SidePanel from './components/SidePanel';
+import './App.css';
 
 const App = React.createClass({
   render() {
