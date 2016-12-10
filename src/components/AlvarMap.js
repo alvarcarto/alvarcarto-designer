@@ -13,7 +13,22 @@ const AlvarMap = React.createClass({
     return {
       initialFlyDone: false,
       loading: true,
+      map: null,
     };
+  },
+
+  componentWillReceiveProps(nextProps) {
+    if (!this.state.map) {
+      return;
+    }
+
+    const { globalState } = this.props;
+    const nextGlobalState = nextProps.globalState;
+
+    if (globalState.size !== nextGlobalState.size ||
+        globalState.orientation !== nextGlobalState.orientation) {
+      setTimeout(() => this.state.map.resize(), 400);
+    }
   },
 
   render() {
@@ -27,6 +42,7 @@ const AlvarMap = React.createClass({
         <div className="AlvarMap__container">
           <Spin spinning={state.loading}>
             <ReactMapboxGl
+              ref="map"
               center={[globalState.mapCenter.lng, globalState.mapCenter.lat]}
               zoom={[globalState.mapZoom]}
               pitch={globalState.pitch}
@@ -59,14 +75,18 @@ const AlvarMap = React.createClass({
     }));
   },
 
-  _onStyleLoad() {
+  _onStyleLoad(map) {
     if (!this.state.initialFlyDone) {
       setTimeout(
         () => this.setState(() => ({ loading: false })),
         200
       );
       setTimeout(() => this._flyTo(HELSINKI_CENTER, 10), 1000);
-      this.setState({ initialFlyDone: true });
+
+      this.setState({
+        map: map,
+        initialFlyDone: true,
+      });
     }
   },
 

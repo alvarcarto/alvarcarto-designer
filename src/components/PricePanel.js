@@ -1,7 +1,7 @@
-import { oneLineTrim } from 'common-tags';
+import Odometer from './Odometer';
 import React from 'react';
 import { Icon } from 'antd';
-import { posterSizeToPixels } from '../util';
+import { posterSizeToPixels, createApiUrlQuery } from '../util';
 import { calculatePrice } from '../util/price';
 import './PricePanel.css';
 
@@ -16,7 +16,10 @@ const PricePanel = React.createClass({
     const price = calculatePrice(globalState);
     return (
       <a className="PricePanel" target="_blank" href={this._createUrl()}>
-        <h5 className="PricePanel__price">{price.value} {symbols[price.currency]}</h5>
+        <h5 className="PricePanel__price">
+          <Odometer value={price.value} />
+          <span className="PricePanel__price-currency">{symbols[price.currency]}</span>
+        </h5>
         <p className="PricePanel__link">
           Checkout
           <Icon type="right" />
@@ -27,18 +30,8 @@ const PricePanel = React.createClass({
 
   _createUrl() {
     const { globalState } = this.props;
-    const dimensions = posterSizeToPixels(globalState.size);
-
-    return oneLineTrim`http://tiles.alvarcarto.com:5000/api/render
-      ?lat=${globalState.mapCenter.lat}
-      &lng=${globalState.mapCenter.lng}
-      &zoom=${globalState.mapZoom}
-      &style=${globalState.mapStyle}
-      &pitch=${globalState.mapPitch}
-      &bearing=${globalState.mapBearing}
-      &width=${dimensions.width}
-      &height=${dimensions.height}
-    `;
+    const query = createApiUrlQuery(globalState);
+    return `http://tiles.alvarcarto.com:5000/api/render${query}`;
   }
 });
 

@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import { oneLineTrim } from 'common-tags';
 
 function posterSizeToPixels(size, orientation) {
   let dimensions;
@@ -39,6 +40,21 @@ function posterSizeToPhysicalDimensions(size, orientation) {
   return _resolveOrientation(dimensions, orientation);
 }
 
+function createApiUrlQuery(state) {
+  const dimensions = posterSizeToPixels(state.size, state.orientation);
+
+  return oneLineTrim`
+    ?lat=${state.mapCenter.lat}
+    &lng=${state.mapCenter.lng}
+    &zoom=${state.mapZoom}
+    &style=${state.mapStyle}
+    &pitch=${state.mapPitch}
+    &bearing=${state.mapBearing}
+    &width=${dimensions.width}
+    &height=${dimensions.height}
+  `;
+}
+
 function _resolveOrientation(dimensions, orientation) {
   if (orientation === 'landscape') {
     return _.merge({}, dimensions, {
@@ -53,4 +69,5 @@ function _resolveOrientation(dimensions, orientation) {
 module.exports = {
   posterSizeToPixels,
   posterSizeToPhysicalDimensions,
+  createApiUrlQuery,
 };

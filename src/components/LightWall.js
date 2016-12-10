@@ -23,10 +23,12 @@ const LightWall = React.createClass({
           <AlvarMap />
 
           <div className="LightWall__width-label">
+            <div className="LightWall__width-label-line"></div>
             <p>{dimensions.width} {dimensions.unit}</p>
           </div>
 
           <div className="LightWall__height-label">
+            <div className="LightWall__height-label-line"></div>
             <p>{dimensions.height} {dimensions.unit}</p>
           </div>
         </div>

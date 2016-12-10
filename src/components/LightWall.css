@@ -23,7 +23,7 @@
 
 .LightWall__wire1, .LightWall__wire2 {
   position: absolute;
-  height: 1000px;
+  height: 4000px;
   width: 3px;
   border-right: 1px solid #ccc;
   background: #ddd;
@@ -58,52 +58,54 @@
   color: #888;
 }
 
-.LightWall__height-label, .LightWall__width-label {
+.LightWall__width-label,
+.LightWall__width-label > *,
+.LightWall__height-label,
+.LightWall__height-label > * {
   position: absolute;
-  border-bottom: 2px solid #ddd;
-  border-right: 2px solid #ddd;
 }
 
-.LightWall__width-label > p, .LightWall__height-label > p {
+.LightWall__width-label > p,
+.LightWall__height-label > p {
   position: absolute;
   color: #aaa;
+  font-size: 0.9rem;
 }
 
 .LightWall__width-label {
-  bottom: -18px;
+  bottom: -22px;
   left: 0;
   width: 100%;
   height: 10px;
   border-left: 2px solid #ddd;
+  border-right: 2px solid #ddd;
 }
-
-.LightWall__width-label::before {
-  position: absolute;
-  content: '';
-  display: block;
-  height: 8px;
-  width: 2px;
-  left: -2px;
-  top: 10px;
-  background: #ddd;
+.LightWall__width-label-line {
+  width: 100%;
+  top: 4px;
+  border-bottom: 2px solid #ddd;
 }
-
 .LightWall__width-label > p {
-  bottom: -25px;
-  right: 20px;
+  bottom: -20px;
+  right: 15px;
 }
 
 .LightWall__height-label {
-  right: -18px;
+  right: -22px;
   top: 0;
   height: 100%;
   width: 10px;
   border-top: 2px solid #ddd;
+  border-bottom: 2px solid #ddd;
 }
-
+.LightWall__height-label-line {
+  height: 100%;
+  left: 4px;
+  border-right: 2px solid #ddd;
+}
 .LightWall__height-label > p {
   bottom: 30px;
-  left: 32px;
+  left: 30px;
   transform: rotate(90deg);
   transform-origin: left top 0;
   width: 20px;

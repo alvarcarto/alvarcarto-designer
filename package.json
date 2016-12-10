@@ -16,6 +16,7 @@
     "geodist": "^0.2.1",
     "leaflet": "^1.0.2",
     "normalize.css": "^5.0.0",
+    "odometer": "^0.4.7",
     "react": "^15.4.1",
     "react-addons-shallow-compare": "^15.4.1",
     "react-dom": "^15.4.1",

@@ -8,6 +8,7 @@
   border: px solid #444;
   padding: 25px;
   background: #fcfcfc;
+  transition: all 0.2s ease;
 }
 
 .AlvarMap__container {

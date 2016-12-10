@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { oneLineTrim } from 'common-tags';
-import { posterSizeToPixels } from '../util';
+import { posterSizeToPixels, createApiUrlQuery } from '../util';
 import AlvarMapDesignPanel from './AlvarMapDesignPanel';
 import PricePanel from './PricePanel';
 import './SidePanel.css';
@@ -29,19 +28,9 @@ const SidePanel = React.createClass({
   },
 
   _createImageUrl() {
-    const globalState = this.props.globalState;
-    const dimensions = posterSizeToPixels(globalState.size);
-
-    return oneLineTrim`http://tiles.alvarcarto.com:5000/api/placeit
-      ?lat=${globalState.mapCenter.lat}
-      &lng=${globalState.mapCenter.lng}
-      &zoom=${globalState.mapZoom}
-      &style=${globalState.mapStyle}
-      &pitch=${globalState.mapPitch}
-      &bearing=${globalState.mapBearing}
-      &width=${dimensions.width}
-      &height=${dimensions.height}
-    `;
+    const { globalState } = this.props;
+    const query = createApiUrlQuery(globalState);
+    return `http://tiles.alvarcarto.com:5000/api/placeit${query}`;
   }
 });
 

@@ -38,3 +38,9 @@
   left: 30px;
   font-weight: 400;
 }
+
+.PricePanel__price-currency {
+  position: relative;
+  top: 3px;
+  left: 2px;
+}
