@@ -17,8 +17,12 @@ const Odometer = React.createClass({
   componentDidMount() {
     this.state.odometer = new HubspotOdometer({
       el: ReactDOM.findDOMNode(this.refs.container),
-      value: this.props.value,
+      value: 0,
     });
+
+    setTimeout(() => {
+      this.state.odometer.update(this.props.value);
+    }, 50);
   },
 
   componentDidUpdate() {
