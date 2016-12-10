@@ -15,10 +15,17 @@
 .SidePanel .AlvarMapDesignPanel {
   padding: 35px;
   flex: 1;
+  flex-shrink: 2;
+  overflow: auto;
 }
 
 .SidePanel .PricePanel {
-  bottom: 0;
   height: 80px;
+  min-height: 80px;
   width: 100%;
+}
+
+.SidePanel__preview-image {
+  width: 100%;
+  border-bottom: 1px solid #eee;
 }

@@ -2,20 +2,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { setMapView } from '../actions';
 import { Spin } from 'antd';
+import { posterSizeToPixels } from '../util';
 import ReactMapboxGl, { ZoomControl } from '/Users/kbru/code/alvarcarto/react-mapbox-gl';
 import './AlvarMap.css';
 
-const mapStyles = {
-  light: 'mapbox://styles/mapbox/light-v9',
-  dark: 'mapbox://styles/mapbox/dark-v9',
-  ugly: 'http://tiles.alvarcarto.com:8000/styles/basic-v9.json',
-};
 const HELSINKI_CENTER = { lat: 60.159865, lng: 24.942334 };
 
 const AlvarMap = React.createClass({
   getInitialState() {
     return {
-      pitch: 0,
       initialFlyDone: false,
       loading: true,
     };
@@ -25,28 +20,23 @@ const AlvarMap = React.createClass({
     const { state, props } = this;
     const { globalState } = props;
 
-    const styleUrl = mapStyles[globalState.mapStyle]
-      ? mapStyles[globalState.mapStyle]
-      : globalState.mapStyle;
+    const dimensions = posterSizeToPixels(globalState.size, globalState.orientation);
 
     return (
-      <div className="AlvarMap" style={{width: props.width, height: props.height}}>
+      <div className="AlvarMap" style={dimensions}>
         <div className="AlvarMap__container">
           <Spin spinning={state.loading}>
             <ReactMapboxGl
               center={[globalState.mapCenter.lng, globalState.mapCenter.lat]}
               zoom={[globalState.mapZoom]}
-              pitch={state.pitch}
+              pitch={globalState.pitch}
               movingMethod="flyTo"
               movingMethodOptions={{ speed: 2 }}
               onStyleLoad={this._onStyleLoad}
-              style={styleUrl}
+              style={globalState.mapStyle}
+              onMoveEnd={this._onMoveEnd}
               accessToken="pk.eyJ1IjoiYWx2YXJjYXJ0byIsImEiOiJjaXdhb2s5Y24wMDJ6Mm9vNjVvNXdqeDRvIn0.wC2GAwpt9ggrV-mGAD_E0w"
             >
-              <ZoomControl
-                zoomDiff={1}
-                onControlClick={this._onControlClick}
-              />
             </ReactMapboxGl>
           </Spin>
         </div>
@@ -57,6 +47,16 @@ const AlvarMap = React.createClass({
   _onControlClick(map, zoomDiff) {
     const zoom = map.getZoom() + zoomDiff;
     this.props.dispatch(setMapView({ zoom : zoom }));
+  },
+
+  _onMoveEnd(map, event) {
+    const lngLat = map.getCenter().toArray();
+    this.props.dispatch(setMapView({
+      center: { lat: lngLat[1], lng: lngLat[0] },
+      zoom: map.getZoom(),
+      pitch: map.getPitch(),
+      bearing: map.getBearing(),
+    }));
   },
 
   _onStyleLoad() {

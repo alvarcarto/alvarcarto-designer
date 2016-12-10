@@ -3,20 +3,19 @@
   padding-top: 10px;
 }
 
+.AlvarMapDesignPanel h4 {
+  margin-bottom: 6px;
+}
+
+.AlvarMapDesignPanel__group {
+  margin-top: 20px;
+  width: 100%;
+}
+
 .AlvarMapDesignPanel__search {
   width: 100%;
-  margin-bottom: 20px;
 }
 
-.AlvarMapDesignPanel__style-container {
-  margin-top: 20px;
-}
-
-.AlvarMapDesignPanel__style-container .ant-select-selection__rendered {
+.AlvarMapDesignPanel .ant-select-selection__rendered {
   margin-right: 15px;
 }
-
-.AlvarMapDesignPanel h4 {
-  margin-bottom: 10px;
-}
-

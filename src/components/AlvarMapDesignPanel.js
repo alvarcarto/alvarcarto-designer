@@ -1,9 +1,8 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { setMapView, setMapStyle } from '../actions';
-import { Select } from 'antd';
-import geodist from 'geodist';
+import { setMapView, setMapStyle, setPosterLayout } from '../actions';
+import { Select, Radio } from 'antd';
 const { Option } = Select;
+import geodist from 'geodist';
 import GeoSearch from './GeoSearch';
 import CityButtonList from './CityButtonList';
 import './AlvarMapDesignPanel.css';
@@ -15,17 +14,36 @@ const AlvarMapDesignPanel = React.createClass({
     return (
       <div className="AlvarMapDesignPanel">
         <GeoSearch onChange={this._onGeoSearch} />
-        <h4>.. or try our favorites</h4>
 
-        <CityButtonList onButtonClick={this._onCityButtonClick} />
+        <div className="AlvarMapDesignPanel__group">
+          <h4>.. or try our favorites</h4>
+          <CityButtonList onButtonClick={this._onCityButtonClick} />
+        </div>
 
-        <div className="AlvarMapDesignPanel__style-container">
+        <div className="AlvarMapDesignPanel__group">
           <h4>Choose your style</h4>
           <Select value={globalState.mapStyle} size="large" onChange={this._onStyleChange}>
-            <Option value="light">Light</Option>
-            <Option value="dark">Dark</Option>
-            <Option value="ugly">Ugly</Option>
+            <Option value="mapbox://styles/mapbox/light-v9">Light</Option>
+            <Option value="mapbox://styles/mapbox/dark-v9">Dark</Option>
+            <Option value="http://tiles.alvarcarto.com:8000/styles/basic-v9.json">Ugly</Option>
           </Select>
+        </div>
+
+        <div className="AlvarMapDesignPanel__group">
+          <h4>Orientation</h4>
+          <Radio.Group onChange={this._onOrientationChange} value={globalState.orientation}>
+            <Radio.Button value="portrait">Portrait</Radio.Button>
+            <Radio.Button value="landscape">Landscape</Radio.Button>
+          </Radio.Group>
+        </div>
+
+        <div className="AlvarMapDesignPanel__group">
+          <h4>Size</h4>
+          <Radio.Group onChange={this._onSizeChange} value={globalState.size}>
+            <Radio.Button value="50x70cm">50cm x 70cm</Radio.Button>
+            <Radio.Button value="70x100cm">70cm x 100cm</Radio.Button>
+            <Radio.Button value="30x40cm">30cm x 40cm</Radio.Button>
+          </Radio.Group>
         </div>
       </div>
     );
@@ -51,7 +69,19 @@ const AlvarMapDesignPanel = React.createClass({
 
   _onStyleChange(value) {
     this.props.dispatch(setMapStyle(value));
-  }
+  },
+
+  _onOrientationChange(e) {
+    this.props.dispatch(setPosterLayout({
+      orientation: e.target.value,
+    }));
+  },
+
+  _onSizeChange(e) {
+    this.props.dispatch(setPosterLayout({
+      size: e.target.value,
+    }));
+  },
 });
 
 function boundsToZoom(bounds) {
@@ -82,4 +112,4 @@ function boundsToZoom(bounds) {
   }
 }
 
-export default connect(state => ({ globalState: state }))(AlvarMapDesignPanel);
+export default AlvarMapDesignPanel;

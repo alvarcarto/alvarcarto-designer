@@ -11,11 +11,13 @@
   "dependencies": {
     "@google/maps": "^0.3.1",
     "antd": "^2.5.0",
+    "common-tags": "^1.4.0",
     "debounce-promise": "^2.1.1",
     "geodist": "^0.2.1",
     "leaflet": "^1.0.2",
     "normalize.css": "^5.0.0",
     "react": "^15.4.1",
+    "react-addons-shallow-compare": "^15.4.1",
     "react-dom": "^15.4.1",
     "react-mapbox-gl": "^0.18.0",
     "react-redux": "^4.4.6",
