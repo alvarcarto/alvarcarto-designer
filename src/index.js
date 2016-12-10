@@ -8,6 +8,7 @@ import App from './App';
 
 import 'normalize.css';
 import 'antd/dist/antd.css';
+import 'react-select/dist/react-select.css';
 import './index.css';
 
 import configureStore from './store/configure';

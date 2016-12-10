@@ -1,10 +1,11 @@
+import BPromise from 'bluebird';
 const request = require('request-promise');
 
 const API_KEY = 'AIzaSyA1q00KzaNyQJlxAJ1WcrJB6sIdLxTP_ws';
 const BASE_URL = 'https://maps.googleapis.com/maps/api';
 
 function geocode(query) {
-  return request({
+  return BPromise.resolve(request({
     url: BASE_URL + '/geocode/json',
     qs: {
       address: query,
@@ -12,7 +13,7 @@ function geocode(query) {
     },
     json: true,
     withCredentials: false,
-  });
+  }));
 };
 
 module.exports = {
