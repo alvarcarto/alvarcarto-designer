@@ -1,19 +1,18 @@
 import BPromise from 'bluebird';
-const request = require('request-promise');
-
-const API_KEY = 'AIzaSyA1q00KzaNyQJlxAJ1WcrJB6sIdLxTP_ws';
-const BASE_URL = 'https://maps.googleapis.com/maps/api';
+const geocoder = new window.google.maps.Geocoder();
 
 function geocode(query) {
-  return BPromise.resolve(request({
-    url: BASE_URL + '/geocode/json',
-    qs: {
-      address: query,
-      key: API_KEY,
-    },
-    json: true,
-    withCredentials: false,
-  }));
+  return new BPromise((resolve, reject) => {
+    // https://developers.google.com/maps/documentation/javascript/geocoding
+    geocoder.geocode({ address: query }, function(results, status) {
+      if (status === 'OK' || status === 'ZERO_RESULTS') {
+        resolve(results);
+      } else {
+        console.error(results);
+        reject(new Error(`Google geocode failed: ${status}`));
+      }
+    });
+  });
 };
 
 module.exports = {

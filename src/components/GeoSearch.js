@@ -44,8 +44,8 @@ const GeoSearch = React.createClass({
     }
 
     return geocode(input)
-      .then(res => ({
-        options: _.map(res.results, (result, i) => ({
+      .then(results => ({
+        options: _.map(results, (result, i) => ({
           value: String(i),
           label: result.formatted_address,
 

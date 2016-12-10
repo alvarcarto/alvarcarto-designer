@@ -32,11 +32,12 @@ const AlvarMapDesignPanel = React.createClass({
   },
 
   _onGeoSearch(result) {
+    console.log('result', result);
     const zoom = boundsToZoom(result.geometry.bounds);
     this.props.dispatch(setMapView({
       center: {
-        lat: result.geometry.location.lat,
-        lng: result.geometry.location.lng,
+        lat: result.geometry.location.lat(),
+        lng: result.geometry.location.lng(),
       },
       zoom: zoom,
     }));
