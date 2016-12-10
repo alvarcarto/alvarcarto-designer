@@ -3,6 +3,7 @@ import debouncePromise from 'debounce-promise';
 import _ from 'lodash';
 import React from 'react';
 import Select from 'react-select';
+import { Icon } from 'antd';
 import { getPlacePredictions, resolvePlaceId } from '../util/google';
 import './GeoSearch.css';
 
@@ -24,13 +25,16 @@ const GeoSearch = React.createClass({
   render() {
     return (
       <div className="GeoSearch">
-        <Select.Async
-          className="AlvarMapDesignPanel__search"
-          placeholder="Search for a city"
-          loadOptions={this.state.debouncedFetchOptions}
-          value={_.get(this, 'state.selection.value')}
-          onChange={this._onChange}
-        />
+        <div className="GeoSearch__container">
+          <Select.Async
+            className="AlvarMapDesignPanel__search"
+            placeholder="Search for a city"
+            loadOptions={this.state.debouncedFetchOptions}
+            value={_.get(this, 'state.selection.value')}
+            onChange={this._onChange}
+          />
+          <Icon type="search" />
+        </div>
         <div ref="div"></div>
       </div>
     );

@@ -26,7 +26,7 @@ const CityButtonList = React.createClass({
 const CityButton = React.createClass({
   render() {
     return <Button
-      className="AlvarMapDesignPanel__city-button"
+      className="CityButton"
       type="dashed"
       onClick={this._onClick}
     >

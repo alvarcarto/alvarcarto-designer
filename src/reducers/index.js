@@ -6,8 +6,7 @@ const initialState = {
   mapCenter: HELSINKI_CENTER,
   mapZoom: 8,
   //mapStyle: 'http://tiles.alvarcarto.com:8000/styles/basic-v9.json',
-  // mapStyle: 'light',
-  mapStyle: 'http://localhost:3000/light.json'
+  mapStyle: 'light'
 };
 
 function reducer(state = initialState, action) {

@@ -12,11 +12,11 @@
   margin-top: 20px;
 }
 
+.AlvarMapDesignPanel__style-container .ant-select-selection__rendered {
+  margin-right: 15px;
+}
+
 .AlvarMapDesignPanel h4 {
   margin-bottom: 10px;
 }
 
-.AlvarMapDesignPanel .AlvarMapDesignPanel__city-button {
-  margin: 3px;
-  font-weight: 400;
-}
