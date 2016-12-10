@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import { Row, Col } from 'antd';
+import React from 'react';
 import LightWall from './components/LightWall';
 import SidePanel from './components/SidePanel';
 import './App.css';

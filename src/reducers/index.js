@@ -26,8 +26,6 @@ function reducer(state = initialState, action) {
     default:
       return state;
   }
-
-  throw new Error('Invalid switch-case');
 }
 
 export default reducer;

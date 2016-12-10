@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { setMapView } from '../actions';
 import { Spin } from 'antd';
-import ReactMapboxGl, { Layer, Feature, Marker, ZoomControl } from '/Users/kbru/code/alvarcarto/react-mapbox-gl';
+import ReactMapboxGl, { ZoomControl } from '/Users/kbru/code/alvarcarto/react-mapbox-gl';
 import './AlvarMap.css';
 
 const mapStyles = {

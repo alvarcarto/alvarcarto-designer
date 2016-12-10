@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { setMapView, setMapStyle } from '../actions';
-import { Button, Select } from 'antd';
+import { Select } from 'antd';
 import geodist from 'geodist';
 const { Option } = Select;
 import GeoSearch from './GeoSearch';
@@ -32,12 +32,11 @@ const AlvarMapDesignPanel = React.createClass({
   },
 
   _onGeoSearch(result) {
-    console.log('result', result);
     const zoom = boundsToZoom(result.geometry.bounds);
     this.props.dispatch(setMapView({
       center: {
-        lat: result.geometry.location.lat(),
-        lng: result.geometry.location.lng(),
+        lat: result.geometry.location.lat,
+        lng: result.geometry.location.lng,
       },
       zoom: zoom,
     }));

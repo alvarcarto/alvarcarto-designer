@@ -1,9 +1,9 @@
 import BPromise from 'bluebird';
 import debouncePromise from 'debounce-promise';
 import _ from 'lodash';
-import React, { Component } from 'react';
+import React from 'react';
 import Select from 'react-select';
-import { geocode } from '../util/google';
+import { getPlacePredictions, resolvePlaceId } from '../util/google';
 import './GeoSearch.css';
 
 const GeoSearch = React.createClass({
@@ -14,27 +14,39 @@ const GeoSearch = React.createClass({
     };
   },
 
+  componentDidMount() {
+    const service = new window.google.maps.places.PlacesService(this.refs.div);
+    // We don't want a re-render from this
+    // eslint-disable-next-line
+    this.state.service = service;
+  },
+
   render() {
     return (
       <div className="GeoSearch">
         <Select.Async
           className="AlvarMapDesignPanel__search"
           placeholder="Search for a city"
-          backspaceRemoves={false}
           loadOptions={this.state.debouncedFetchOptions}
-          clearable={false}
           value={_.get(this, 'state.selection.value')}
           onChange={this._onChange}
         />
+        <div ref="div"></div>
       </div>
     );
   },
 
-  _onChange(value) {
-    this.setState(() => ({ selection: value }));
+  _onChange(item) {
+    this.setState(() => ({ selection: item }));
 
-    if (_.isFunction(this.props.onChange)) {
-      this.props.onChange(value.meta.result);
+    if (!_.isEmpty(item) &&_.isFunction(this.props.onChange)) {
+      resolvePlaceId(this.state.service, item.value)
+        .then(obj => {
+          this.props.onChange(googleObjectToResult(obj));
+        })
+        .catch(err => {
+          throw err;
+        });
     }
   },
 
@@ -43,19 +55,42 @@ const GeoSearch = React.createClass({
       return BPromise.resolve({ options: [] });
     }
 
-    return geocode(input)
-      .then(results => ({
-        options: _.map(results, (result, i) => ({
-          value: String(i),
-          label: result.formatted_address,
-
-          // Not officially supported by react select component
-          meta: {
-            result: result,
-          },
+    return getPlacePredictions({ input: input, types: ['(cities)'] })
+      .then(results => console.log('results', results) || ({
+        options: _.map(results, result => ({
+          value: String(result.place_id),
+          label: result.description,
         }))
-      }));
+      }))
+      .catch(err => {
+        throw err;
+      });
   }
 });
+
+function googleObjectToResult(obj) {
+  const northeast = obj.geometry.viewport.getNorthEast();
+  const southwest = obj.geometry.viewport.getSouthWest();
+
+  return {
+    formattedAddress: obj.formatted_address,
+    geometry: {
+      bounds: {
+        northeast: {
+          lat: northeast.lat(),
+          lng: northeast.lng(),
+        },
+        southwest: {
+          lat: southwest.lat(),
+          lng: southwest.lng(),
+        },
+      },
+      location: {
+        lat: obj.geometry.location.lat(),
+        lng: obj.geometry.location.lng(),
+      },
+    },
+  };
+}
 
 export default GeoSearch;

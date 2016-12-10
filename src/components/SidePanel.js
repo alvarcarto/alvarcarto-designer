@@ -1,6 +1,4 @@
-import React, { Component } from 'react';
-import { Tabs } from 'antd';
-const { TabPane } = Tabs;
+import React from 'react';
 import AlvarMapDesignPanel from './AlvarMapDesignPanel';
 import PricePanel from './PricePanel';
 import './SidePanel.css';
