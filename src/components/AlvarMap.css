@@ -4,8 +4,6 @@
 
 .AlvarMap {
   box-shadow: 6px 6px 20px 3px rgba(0, 0, 0, 0.15);
-  /*filter: grayscale(100%);*/
-  border: px solid #444;
   padding: 25px;
   background: #fcfcfc;
   transition: all 0.2s ease;
