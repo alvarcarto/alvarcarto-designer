@@ -1,0 +1,33 @@
+.PosterSizeSelect {
+  margin-bottom: 50px;
+}
+
+.PosterSizeSelect .ant-radio-button {
+  position: relative;
+}
+
+.PosterSizeSelect__price {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  font-size: 0.7rem;
+  position: absolute;
+  z-index: 100;
+  width: 50px;
+  height: 18px;
+  line-height: 18px;
+  right: -34px;
+  top: -10px;
+  transform: translateX(-50%) rotate(20deg);
+  color: #fff;
+  background-color: #87d068;
+  border-radius: 4px;
+  padding: 0 5px;
+}
+
+.PosterSizeSelect .ant-radio-button-wrapper:hover .PosterSizeSelect__price {
+  opacity: 1;
+}
+
+.PosterSizeSelect__price > .anticon {
+  padding: 0 1px;
+}

@@ -5,6 +5,8 @@ const { Option } = Select;
 import geodist from 'geodist';
 import GeoSearch from './GeoSearch';
 import CityButtonList from './CityButtonList';
+import PosterSizeSelect from './PosterSizeSelect';
+import PosterLabelInputs from './PosterLabelInputs';
 import './AlvarMapDesignPanel.css';
 
 const AlvarMapDesignPanel = React.createClass({
@@ -38,12 +40,11 @@ const AlvarMapDesignPanel = React.createClass({
         </div>
 
         <div className="AlvarMapDesignPanel__group">
-          <h4>Size</h4>
-          <Radio.Group onChange={this._onSizeChange} value={globalState.size}>
-            <Radio.Button value="50x70cm">50cm x 70cm</Radio.Button>
-            <Radio.Button value="70x100cm">70cm x 100cm</Radio.Button>
-            <Radio.Button value="30x40cm">30cm x 40cm</Radio.Button>
-          </Radio.Group>
+          <PosterSizeSelect value={globalState.size} onChange={this._onSizeChange} />
+        </div>
+
+        <div className="AlvarMapDesignPanel__group">
+          {/* <PosterLabelInputs /> */}
         </div>
       </div>
     );
