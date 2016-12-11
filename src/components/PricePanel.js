@@ -15,7 +15,7 @@ const PricePanel = React.createClass({
     const { globalState } = this.props;
     const price = calculatePrice(globalState);
     return (
-      <a className="PricePanel" target="_blank" href={this._createUrl()}>
+      <div className="PricePanel" target="_blank" href={this._createUrl()}>
         <h5 className="PricePanel__price">
           <Odometer value={price.value} />
           <span className="PricePanel__price-currency">{symbols[price.currency]}</span>
@@ -24,7 +24,7 @@ const PricePanel = React.createClass({
           Checkout
           <Icon type="right" />
         </p>
-      </a>
+      </div>
     );
   },
 
