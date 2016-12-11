@@ -25,9 +25,12 @@ const AlvarMapDesignPanel = React.createClass({
         <div className="AlvarMapDesignPanel__group">
           <h4>Choose your style</h4>
           <Select value={globalState.mapStyle} size="large" onChange={this._onStyleChange}>
-            <Option value="mapbox://styles/mapbox/light-v9">Light</Option>
-            <Option value="mapbox://styles/mapbox/dark-v9">Dark</Option>
-            <Option value="http://tiles.alvarcarto.com:8000/styles/basic-v9.json">Ugly</Option>
+            <Option value="mapbox://styles/mapbox/light-v9">Light (Mapbox)</Option>
+            <Option value="mapbox://styles/mapbox/dark-v9">Dark (Mapbox)</Option>
+            <Option value="mapbox://styles/alvarcarto/ciwaq5i56005g2qnuurw0zr62">Antique (Mapbox)</Option>
+            <Option value="mapbox://styles/alvarcarto/ciwaptpjn006q2ppiv71coagy">Blueprint (Mapbox)</Option>
+            <Option value="mapbox://styles/alvarcarto/ciwknyyct00lw2pmq9ohha4bg">Orange (Mapbox)</Option>
+            <Option value="http://tiles.alvarcarto.com:8000/styles/basic-v9.json">Ugly (Alvar)</Option>
           </Select>
         </div>
 
