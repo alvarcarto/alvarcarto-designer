@@ -30,7 +30,7 @@ const SidePanel = React.createClass({
   _createImageUrl() {
     const { globalState } = this.props;
     const query = createApiUrlQuery(globalState);
-    return `http://tiles.alvarcarto.com:5000/api/placeit${query}`;
+    return `http://tiles.alvarcarto.com:5000/api/placeit${query}&resizeToWidth=600`;
   }
 });
 
