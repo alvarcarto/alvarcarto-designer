@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import AlvarMap from './AlvarMap';
+import { Icon } from 'antd';
 import { posterSizeToPhysicalDimensions } from '../util';
 import './LightWall.css';
 
@@ -16,6 +17,8 @@ const LightWall = React.createClass({
       <div className="LightWall">
         <div className="LightWall__map-container">
           <div className="LightWall__wire-container">
+            <img className="LightWall__clip1" src="clip.png" />
+            <img className="LightWall__clip2" src="clip.png" />
             <div className="LightWall__wire1"></div>
             <div className="LightWall__wire2"></div>
           </div>
@@ -35,7 +38,7 @@ const LightWall = React.createClass({
 
         <div className="LightWall__credits">
           <p>
-            <span className="LightWall__credits-heart">♥</span> Map data by <a href="http://www.openstreetmap.org/">OpenStreetMaps contributors</a>︎
+            <Icon type="heart" /> Map data by <a href="http://www.openstreetmap.org/">OpenStreetMaps contributors</a>︎
           </p>
         </div>
       </div>

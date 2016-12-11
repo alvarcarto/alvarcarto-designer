@@ -19,8 +19,19 @@
   position: relative;
 }
 
-.LightWall__wire-container {
-  position: relative;
+.LightWall__clip1, .LightWall__clip2 {
+  width: 50px;
+  position: absolute;
+  top: -20px;
+  z-index: 100;
+}
+
+.LightWall__clip1 {
+  left: 28px;
+}
+
+.LightWall__clip2 {
+  right: 5px;
 }
 
 .LightWall__wire1, .LightWall__wire2 {
