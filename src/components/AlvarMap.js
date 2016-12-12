@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { setMapView } from '../actions';
 import { Spin } from 'antd';
 import { posterSizeToPixels } from '../util';
+import AlvarMapLabels from './AlvarMapLabels';
 import ReactMapboxGl, { ZoomControl } from '/Users/kbru/code/alvarcarto/react-mapbox-gl';
 import './AlvarMap.css';
 
@@ -55,6 +56,12 @@ const AlvarMap = React.createClass({
             >
             </ReactMapboxGl>
           </Spin>
+
+          <AlvarMapLabels labels={{
+            header: globalState.labelHeader,
+            smallHeader: globalState.labelSmallHeader,
+            text: globalState.labelText,
+          }}/>
         </div>
       </div>
     );

@@ -1,0 +1,31 @@
+.AlvarMapLabels {
+  font-family: 'Oswald', sans-serif;
+  position: absolute;
+  bottom: 14px;
+  text-align: center;
+  width: 100%;
+  color: #222;
+}
+
+.AlvarMapLabels__header {
+  text-transform: uppercase;
+  letter-spacing: 0.4rem;
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+.AlvarMapLabels__small-header {
+  text-transform: uppercase;
+  font-weight: 200;
+  letter-spacing: 0.2rem;
+  font-size: 1.4rem;
+  font-size: 1.5rem;
+}
+
+.AlvarMapLabels__text {
+  color: #888;
+  text-transform: uppercase;
+  font-weight: 200;
+  letter-spacing: 0.14rem;
+  font-size: 1rem;
+}

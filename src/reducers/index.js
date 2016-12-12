@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import * as actions from '../action-types';
+import { coordToPrettyText } from '../util';
 
 const HELSINKI_CENTER = { lat: 60.159865, lng: 24.942334 };
 const initialState = {
@@ -10,6 +11,9 @@ const initialState = {
   mapBearing: 0,
   orientation: 'portrait',
   size: '50x70cm',
+  labelHeader: 'Helsinki',
+  labelSmallHeader: 'Finland',
+  labelText: coordToPrettyText(HELSINKI_CENTER),
 };
 
 function reducer(state = initialState, action) {
@@ -26,6 +30,18 @@ function reducer(state = initialState, action) {
 
       return _.extend({}, state, _.omitBy(newAttrs, _.isNil));
 
+    case actions.SET_MAP_LABELS:
+      newAttrs = {
+        labelHeader: action.payload.header,
+        labelSmallHeader: action.payload.smallHeader,
+        labelText: action.payload.text,
+      };
+
+      return _.extend({}, state, _.omitBy(newAttrs, _.isNil));
+
+    case actions.SET_MAP_STYLE:
+      return _.extend({}, state, { mapStyle: action.payload });
+
     case actions.SET_POSTER_LAYOUT:
       newAttrs = {
         orientation: action.payload.orientation,
@@ -33,9 +49,6 @@ function reducer(state = initialState, action) {
       };
 
       return _.extend({}, state, _.omitBy(newAttrs, _.isNil));
-
-    case actions.SET_MAP_STYLE:
-      return _.extend({}, state, { mapStyle: action.payload });
 
     default:
       return state;

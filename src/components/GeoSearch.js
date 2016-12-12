@@ -60,7 +60,7 @@ const GeoSearch = React.createClass({
     }
 
     return getPlacePredictions({ input: input, types: ['(cities)'] })
-      .then(results => console.log('results', results) || ({
+      .then(results => ({
         options: _.map(results, result => ({
           value: String(result.place_id),
           label: result.description,
@@ -78,6 +78,8 @@ function googleObjectToResult(obj) {
 
   return {
     formattedAddress: obj.formatted_address,
+    city: findCityFromGoogleObject(obj),
+    country: findCountryFromGoogleObject(obj),
     geometry: {
       bounds: {
         northeast: {
@@ -95,6 +97,18 @@ function googleObjectToResult(obj) {
       },
     },
   };
+}
+
+function findCityFromGoogleObject(obj) {
+  return _.find(obj.address_components, component => {
+    return component.types[0] === 'locality';
+  }).long_name;
+}
+
+function findCountryFromGoogleObject(obj) {
+  return _.find(obj.address_components, component => {
+    return component.types[0] === 'country';
+  }).long_name;
 }
 
 export default GeoSearch;

@@ -55,6 +55,20 @@ function createApiUrlQuery(state) {
   `;
 }
 
+function coordToPrettyText(coord) {
+  const first = {
+    val: Math.abs(coord.lat).toFixed(3),
+    label: coord.lat > 0 ? 'N' : 'S',
+  };
+
+  const second = {
+    val: Math.abs(coord.lng).toFixed(3),
+    label: coord.lng > 0 ? 'E' : 'W',
+  };
+
+  return `${first.val}°${first.label} / ${second.val}°${second.label}`;
+}
+
 function _resolveOrientation(dimensions, orientation) {
   if (orientation === 'landscape') {
     return _.merge({}, dimensions, {
@@ -70,4 +84,5 @@ module.exports = {
   posterSizeToPixels,
   posterSizeToPhysicalDimensions,
   createApiUrlQuery,
+  coordToPrettyText,
 };

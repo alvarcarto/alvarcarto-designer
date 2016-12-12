@@ -1,5 +1,6 @@
 import React from 'react';
-import { setMapView, setMapStyle, setPosterLayout } from '../actions';
+import { setMapView, setMapStyle, setPosterLayout, setMapLabels } from '../actions';
+import { coordToPrettyText } from '../util';
 import { Select, Radio } from 'antd';
 const { Option } = Select;
 import geodist from 'geodist';
@@ -47,7 +48,11 @@ const AlvarMapDesignPanel = React.createClass({
         </div>
 
         <div className="AlvarMapDesignPanel__group">
-          {/* <PosterLabelInputs /> */}
+          <PosterLabelInputs dispatch={this.props.dispatch} labels={{
+            header: globalState.labelHeader,
+            smallHeader: globalState.labelSmallHeader,
+            text: globalState.labelText,
+          }} />
         </div>
       </div>
     );
@@ -55,12 +60,21 @@ const AlvarMapDesignPanel = React.createClass({
 
   _onGeoSearch(result) {
     const zoom = boundsToZoom(result.geometry.bounds);
+    const lat = result.geometry.location.lat;
+    const lng = result.geometry.location.lng;
+
     this.props.dispatch(setMapView({
       center: {
-        lat: result.geometry.location.lat,
-        lng: result.geometry.location.lng,
+        lat: lat,
+        lng: lng,
       },
       zoom: zoom,
+    }));
+
+    this.props.dispatch(setMapLabels({
+      header: result.city,
+      smallHeader: result.country,
+      text: coordToPrettyText({ lat, lng }),
     }));
   },
 
