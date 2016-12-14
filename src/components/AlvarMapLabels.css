@@ -1,31 +1,63 @@
 .AlvarMapLabels {
-  font-family: 'Oswald', sans-serif;
+  pointer-events: none;
+  cursor: move;
+  font-family: 'Proxima Nova', "proxima-nova", sans-serif;
   position: absolute;
-  bottom: 14px;
+  padding: 35px 20px;
+  bottom: 0;
   text-align: center;
+  background: linear-gradient(0deg, #fff 0%, #fff 40%, rgba(255, 255, 255, 0.7) 75%, rgba(255, 255, 255, 0) 100%) !important;
   width: 100%;
   color: #222;
+  box-sizing: border-box;
 }
 
 .AlvarMapLabels__header {
   text-transform: uppercase;
-  letter-spacing: 0.4rem;
-  font-size: 2rem;
-  font-weight: 800;
+  letter-spacing: 0.43rem;
+  font-size: 2.5rem;
+  line-height: 3rem;
+  text-indent: 0.3rem;
+  font-weight: 700;
 }
 
 .AlvarMapLabels__small-header {
   text-transform: uppercase;
-  font-weight: 200;
-  letter-spacing: 0.2rem;
-  font-size: 1.4rem;
-  font-size: 1.5rem;
+  font-weight: 400;
+  letter-spacing: 0.6rem;
+  text-indent: 0.7rem;
+  font-size: 1.1rem;
+  line-height: 1.5rem;
+  position: relative;
+}
+
+.AlvarMapLabels__small-header::before {
+  content: '';
+  position: absolute;
+  top: 10px;
+  left: 45px;
+  width: 60px;
+  display: block;
+  border-top: 1.5px solid #000;
+}
+
+.AlvarMapLabels__small-header::after {
+  content: '';
+  position: absolute;
+  top: 10px;
+  right: 45px;
+  width: 60px;
+  display: block;
+  border-top: 1.5px solid #000;
 }
 
 .AlvarMapLabels__text {
-  color: #888;
+  color: #777;
+  font-smoothing: antialiased;
   text-transform: uppercase;
-  font-weight: 200;
-  letter-spacing: 0.14rem;
-  font-size: 1rem;
+  font-weight: 100;
+  text-indent: 0.1rem;
+  letter-spacing: 0.12rem;
+  margin-top: 4px;
+  font-size: 0.8rem;
 }

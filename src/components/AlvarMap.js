@@ -39,7 +39,7 @@ const AlvarMap = React.createClass({
     const dimensions = posterSizeToPixels(globalState.size, globalState.orientation);
 
     return (
-      <div className="AlvarMap" style={dimensions}>
+      <div className="AlvarMap grabbable" style={dimensions}>
         <div className="AlvarMap__container">
           <Spin spinning={state.loading}>
             <ReactMapboxGl
@@ -54,6 +54,10 @@ const AlvarMap = React.createClass({
               onMoveEnd={this._onMoveEnd}
               accessToken="pk.eyJ1IjoiYWx2YXJjYXJ0byIsImEiOiJjaXdhb2s5Y24wMDJ6Mm9vNjVvNXdqeDRvIn0.wC2GAwpt9ggrV-mGAD_E0w"
             >
+              <ZoomControl
+                zoomDiff={1}
+                onControlClick={this._onControlClick.bind(this)}
+              />
             </ReactMapboxGl>
           </Spin>
 
