@@ -54,10 +54,6 @@ const AlvarMap = React.createClass({
               onMoveEnd={this._onMoveEnd}
               accessToken="pk.eyJ1IjoiYWx2YXJjYXJ0byIsImEiOiJjaXdhb2s5Y24wMDJ6Mm9vNjVvNXdqeDRvIn0.wC2GAwpt9ggrV-mGAD_E0w"
             >
-              <ZoomControl
-                zoomDiff={1}
-                onControlClick={this._onControlClick.bind(this)}
-              />
             </ReactMapboxGl>
           </Spin>
 
@@ -69,11 +65,6 @@ const AlvarMap = React.createClass({
         </div>
       </div>
     );
-  },
-
-  _onControlClick(map, zoomDiff) {
-    const zoom = map.getZoom() + zoomDiff;
-    this.props.dispatch(setMapView({ zoom : zoom }));
   },
 
   _onMoveEnd(map, event) {
