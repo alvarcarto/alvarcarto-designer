@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { setMapView } from '../actions';
 import { Spin } from 'antd';
-import { posterSizeToPixels } from '../util';
+import { posterSizeToPixels, getStyle } from '../util';
 import AlvarMapLabels from './AlvarMapLabels';
 import ReactMapboxGl, { ZoomControl } from '/Users/kbru/code/alvarcarto/react-mapbox-gl';
 import './AlvarMap.css';
@@ -37,24 +37,19 @@ const AlvarMap = React.createClass({
     const { globalState } = props;
 
     const dimensions = posterSizeToPixels(globalState.size, globalState.orientation);
-
+    const style = getStyle(globalState.mapStyle);
+    console.log(globalState.mapStyle)
+    console.log('style', style)
     return (
       <div className="AlvarMap grabbable" style={dimensions}>
         <div className="AlvarMap__container">
           <Spin spinning={state.loading}>
-            <ReactMapboxGl
-              ref="map"
-              center={[globalState.mapCenter.lng, globalState.mapCenter.lat]}
-              zoom={[globalState.mapZoom]}
-              pitch={globalState.pitch}
-              movingMethod="flyTo"
-              movingMethodOptions={{ speed: 2 }}
-              onStyleLoad={this._onStyleLoad}
-              style={globalState.mapStyle}
-              onMoveEnd={this._onMoveEnd}
-              accessToken="pk.eyJ1IjoiYWx2YXJjYXJ0byIsImEiOiJjaXdhb2s5Y24wMDJ6Mm9vNjVvNXdqeDRvIn0.wC2GAwpt9ggrV-mGAD_E0w"
-            >
-            </ReactMapboxGl>
+            {
+              style.type === 'vector'
+                ? this._renderMapboxGl(style)
+                : this._renderLeaflet(style)
+            }
+
           </Spin>
 
           <AlvarMapLabels labels={{
@@ -65,6 +60,28 @@ const AlvarMap = React.createClass({
         </div>
       </div>
     );
+  },
+
+  _renderMapboxGl(style) {
+    const { globalState } = this.props;
+    return <ReactMapboxGl
+      ref="map"
+      center={[globalState.mapCenter.lng, globalState.mapCenter.lat]}
+      zoom={[globalState.mapZoom]}
+      pitch={globalState.pitch}
+      movingMethod="flyTo"
+      movingMethodOptions={{ speed: 2 }}
+      onStyleLoad={this._onStyleLoad}
+      style={style.url}
+      onMoveEnd={this._onMoveEnd}
+      accessToken="pk.eyJ1IjoiYWx2YXJjYXJ0byIsImEiOiJjaXdhb2s5Y24wMDJ6Mm9vNjVvNXdqeDRvIn0.wC2GAwpt9ggrV-mGAD_E0w"
+    >
+    </ReactMapboxGl>;
+  },
+
+  _renderLeaflet(style) {
+    const { globalState } = this.props;
+    return <p>Leaflet</p>;
   },
 
   _onMoveEnd(map, event) {
