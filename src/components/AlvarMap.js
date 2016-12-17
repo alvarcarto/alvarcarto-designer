@@ -9,7 +9,7 @@ import {
   TileLayer as LTileLayer,
   ZoomControl as LZoomControl
 } from 'react-leaflet';
-import ReactMapboxGl, { GlZoomControl } from '/Users/kbru/code/alvarcarto/react-mapbox-gl';
+import ReactMapboxGl from '/Users/kbru/code/alvarcarto/react-mapbox-gl';
 import './AlvarMap.css';
 
 const HELSINKI_CENTER = { lat: 60.159865, lng: 24.942334 };
@@ -19,21 +19,23 @@ const AlvarMap = React.createClass({
     return {
       initialFlyDone: false,
       loading: true,
-      map: null,
+      glMap: null,
     };
   },
 
   componentWillReceiveProps(nextProps) {
-    if (!this.state.map) {
-      return;
-    }
-
     const { globalState } = this.props;
     const nextGlobalState = nextProps.globalState;
 
     if (globalState.size !== nextGlobalState.size ||
         globalState.orientation !== nextGlobalState.orientation) {
-      setTimeout(() => this.state.map.resize(), 400);
+      if (this.state.glMap) {
+        setTimeout(() => this.state.glMap.resize(), 400);
+      }
+
+      if (this.refs.lMap) {
+        setTimeout(() => this.refs.lMap.leafletElement.invalidateSize(), 400);
+      }
     }
   },
 
@@ -43,8 +45,6 @@ const AlvarMap = React.createClass({
 
     const dimensions = posterSizeToPixels(globalState.size, globalState.orientation);
     const style = getStyle(globalState.mapStyle);
-    console.log(globalState.mapStyle)
-    console.log('style', style)
     return (
       <div className="AlvarMap grabbable" style={dimensions}>
         <div className="AlvarMap__container">
@@ -87,8 +87,8 @@ const AlvarMap = React.createClass({
   _renderLeaflet(style) {
     const { globalState } = this.props;
     return <LeafletMap
+      ref="lMap"
       animate
-      useFlyTo
       zoomControl={false}
       onMoveEnd={this._onLeafletMoveEnd}
       center={globalState.mapCenter}
@@ -109,8 +109,14 @@ const AlvarMap = React.createClass({
     }));
   },
 
-  _onLeafletMoveEnd(map, event) {
-    console.log('move end leaflet', map, event);
+  _onLeafletMoveEnd(event) {
+    const map = this.refs.lMap.leafletElement;
+    const latLng = map.getCenter();
+
+    this.props.dispatch(setMapView({
+      center: { lat: latLng.lat, lng: latLng.lng },
+      zoom: map.getZoom()
+    }));
   },
 
   _onStyleLoad(map) {
@@ -122,7 +128,7 @@ const AlvarMap = React.createClass({
       setTimeout(() => this._flyTo(HELSINKI_CENTER, 10), 1000);
 
       this.setState({
-        map: map,
+        glMap: map,
         initialFlyDone: true,
       });
     }
