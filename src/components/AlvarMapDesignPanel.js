@@ -83,6 +83,12 @@ const AlvarMapDesignPanel = React.createClass({
       center: { lat: item.lat, lng: item.lng },
       zoom: item.zoom
     }));
+
+    this.props.dispatch(setMapLabels({
+      header: item.header,
+      smallHeader: item.smallHeader,
+      text: coordToPrettyText({ lat: item.lat, lng: item.lng }),
+    }));
   },
 
   _onStyleChange(value) {
