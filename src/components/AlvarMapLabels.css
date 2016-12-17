@@ -1,4 +1,5 @@
 .AlvarMapLabels {
+  z-index: 1000;
   pointer-events: none;
   cursor: move;
   font-family: 'Proxima Nova', "proxima-nova", sans-serif;
