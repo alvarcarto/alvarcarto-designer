@@ -5,7 +5,7 @@ const STYLES = [
   {
     id: 'black-and-white',
     type: 'raster',
-    url: 'http://tiles.alvarcarto.com:8080/alvar/{z}/{x}/{y}.png',
+    url: 'http://tiles.alvarcarto.com:8080/alvar/{z}/{x}/{y}/tile.png',
     name: 'Black and white',
   },
   {

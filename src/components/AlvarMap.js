@@ -4,7 +4,12 @@ import { setMapView } from '../actions';
 import { Spin } from 'antd';
 import { posterSizeToPixels, getStyle } from '../util';
 import AlvarMapLabels from './AlvarMapLabels';
-import ReactMapboxGl, { ZoomControl } from '/Users/kbru/code/alvarcarto/react-mapbox-gl';
+import {
+  Map as LeafletMap,
+  TileLayer as LTileLayer,
+  ZoomControl as LZoomControl
+} from 'react-leaflet';
+import ReactMapboxGl, { GlZoomControl } from '/Users/kbru/code/alvarcarto/react-mapbox-gl';
 import './AlvarMap.css';
 
 const HELSINKI_CENTER = { lat: 60.159865, lng: 24.942334 };
@@ -73,7 +78,7 @@ const AlvarMap = React.createClass({
       movingMethodOptions={{ speed: 2 }}
       onStyleLoad={this._onStyleLoad}
       style={style.url}
-      onMoveEnd={this._onMoveEnd}
+      onMoveEnd={this._onGlMoveEnd}
       accessToken="pk.eyJ1IjoiYWx2YXJjYXJ0byIsImEiOiJjaXdhb2s5Y24wMDJ6Mm9vNjVvNXdqeDRvIn0.wC2GAwpt9ggrV-mGAD_E0w"
     >
     </ReactMapboxGl>;
@@ -81,10 +86,20 @@ const AlvarMap = React.createClass({
 
   _renderLeaflet(style) {
     const { globalState } = this.props;
-    return <p>Leaflet</p>;
+    return <LeafletMap
+      animate
+      useFlyTo
+      zoomControl={false}
+      onMoveEnd={this._onLeafletMoveEnd}
+      center={globalState.mapCenter}
+      zoom={globalState.mapZoom}
+    >
+      <LTileLayer detectRetina url={style.url} />
+      <LZoomControl position="topright" />
+    </LeafletMap>;
   },
 
-  _onMoveEnd(map, event) {
+  _onGlMoveEnd(map, event) {
     const lngLat = map.getCenter().toArray();
     this.props.dispatch(setMapView({
       center: { lat: lngLat[1], lng: lngLat[0] },
@@ -92,6 +107,10 @@ const AlvarMap = React.createClass({
       pitch: map.getPitch(),
       bearing: map.getBearing(),
     }));
+  },
+
+  _onLeafletMoveEnd(map, event) {
+    console.log('move end leaflet', map, event);
   },
 
   _onStyleLoad(map) {
