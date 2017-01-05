@@ -4,6 +4,8 @@ import { setMapView, setMapStyle, setPosterLayout, setMapLabels } from '../actio
 import { coordToPrettyText, getStyles } from '../util';
 import { Select, Radio } from 'antd';
 const { Option } = Select;
+import { Collapse } from 'antd';
+const { Panel } = Collapse;
 import geodist from 'geodist';
 import GeoSearch from './GeoSearch';
 import CityButtonList from './CityButtonList';
@@ -17,43 +19,51 @@ const AlvarMapDesignPanel = React.createClass({
 
     return (
       <div className="AlvarMapDesignPanel">
-        <GeoSearch onChange={this._onGeoSearch} />
+        <Collapse defaultActiveKey="map-basics" accordion>
+          <Panel key="map-basics" header="Map basics">
+            <GeoSearch onChange={this._onGeoSearch} />
 
-        <div className="AlvarMapDesignPanel__group">
-          <h4>.. or try our favorites</h4>
-          <CityButtonList onButtonClick={this._onCityButtonClick} />
-        </div>
+            <div className="AlvarMapDesignPanel__group">
+              <h4>.. or try our favorites</h4>
+              <CityButtonList onButtonClick={this._onCityButtonClick} />
+            </div>
 
-        <div className="AlvarMapDesignPanel__group">
-          <h4>Choose your style</h4>
-          <Select value={globalState.mapStyle} size="large" onChange={this._onStyleChange}>
-            {
-              _.map(getStyles(), style => {
-                return <Option key={style.id} value={style.id}>{style.name}</Option>;
-              })
-            }
-          </Select>
-        </div>
+            <div className="AlvarMapDesignPanel__group">
+              <h4>Choose your style</h4>
+              <Select value={globalState.mapStyle} size="large" onChange={this._onStyleChange}>
+                {
+                  _.map(getStyles(), style => {
+                    return <Option key={style.id} value={style.id}>{style.name}</Option>;
+                  })
+                }
+              </Select>
+            </div>
+          </Panel>
 
-        <div className="AlvarMapDesignPanel__group">
-          <h4>Orientation</h4>
-          <Radio.Group onChange={this._onOrientationChange} value={globalState.orientation}>
-            <Radio.Button value="portrait">Portrait</Radio.Button>
-            <Radio.Button value="landscape">Landscape</Radio.Button>
-          </Radio.Group>
-        </div>
+          <Panel key="layout" header="Poster layout & size">
+            <div className="AlvarMapDesignPanel__group">
+              <h4>Orientation</h4>
+              <Radio.Group onChange={this._onOrientationChange} value={globalState.orientation}>
+                <Radio.Button value="portrait">Portrait</Radio.Button>
+                <Radio.Button value="landscape">Landscape</Radio.Button>
+              </Radio.Group>
+            </div>
 
-        <div className="AlvarMapDesignPanel__group">
-          <PosterSizeSelect value={globalState.size} onChange={this._onSizeChange} />
-        </div>
+            <div className="AlvarMapDesignPanel__group">
+              <PosterSizeSelect value={globalState.size} onChange={this._onSizeChange} />
+            </div>
+          </Panel>
 
-        <div className="AlvarMapDesignPanel__group">
-          <PosterLabelInputs dispatch={this.props.dispatch} labels={{
-            header: globalState.labelHeader,
-            smallHeader: globalState.labelSmallHeader,
-            text: globalState.labelText,
-          }} />
-        </div>
+          <Panel key="labels" header="Poster labels">
+            <div className="AlvarMapDesignPanel__group">
+              <PosterLabelInputs dispatch={this.props.dispatch} labels={{
+                header: globalState.labelHeader,
+                smallHeader: globalState.labelSmallHeader,
+                text: globalState.labelText,
+              }} />
+            </div>
+          </Panel>
+        </Collapse>
       </div>
     );
   },

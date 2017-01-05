@@ -88,7 +88,6 @@ const AlvarMap = React.createClass({
     const { globalState } = this.props;
     return <LeafletMap
       ref="lMap"
-      animate
       zoomControl={false}
       onMoveEnd={this._onLeafletMoveEnd}
       center={globalState.mapCenter}

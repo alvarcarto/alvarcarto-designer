@@ -19,3 +19,14 @@
 .AlvarMapDesignPanel .ant-select-selection__rendered {
   margin-right: 15px;
 }
+
+
+.AlvarMapDesignPanel .ant-collapse {
+  background-color: white;
+  border-radius: 0;
+  border: 0;
+}
+
+.AlvarMapDesignPanel .ant-collapse-header {
+  font-size: 1rem;
+}

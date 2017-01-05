@@ -13,7 +13,7 @@
 }
 
 .SidePanel .AlvarMapDesignPanel {
-  padding: 35px;
+  padding: 25px 15px;
   flex: 1;
   flex-shrink: 2;
   overflow: auto;
