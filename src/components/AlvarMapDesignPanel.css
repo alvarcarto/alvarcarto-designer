@@ -1,13 +1,12 @@
 .AlvarMapDesignPanel {
   width: 100%;
-  padding-top: 10px;
 }
 
 .AlvarMapDesignPanel h4 {
   margin-bottom: 6px;
 }
 
-.AlvarMapDesignPanel__group {
+.AlvarMapDesignPanel__group:not(:first-of-type) {
   margin-top: 20px;
   width: 100%;
 }
@@ -18,15 +17,4 @@
 
 .AlvarMapDesignPanel .ant-select-selection__rendered {
   margin-right: 15px;
-}
-
-
-.AlvarMapDesignPanel .ant-collapse {
-  background-color: white;
-  border-radius: 0;
-  border: 0;
-}
-
-.AlvarMapDesignPanel .ant-collapse-header {
-  font-size: 1rem;
 }

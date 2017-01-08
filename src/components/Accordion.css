@@ -1,0 +1,51 @@
+.Accordion {
+  border-bottom-width: 0;
+}
+
+.Accordion__section {
+  border-bottom: solid 1px #eee;
+}
+
+.Accordion__section > h3 {
+  cursor: pointer;
+  font-weight: 400;
+  padding: 18px 30px;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  color: #555;
+  position: relative;
+  margin: 0;
+  /*transition: color 0.6s ease, background-color 0.6s ease;*/
+}
+
+.Accordion__section > h3:hover {
+  background-color: #f2f2f2;
+}
+
+.Accordion__section--selected > h3 {
+  background-color: #f2f2f2;
+}
+
+.Accordion__section > h3::after {
+  content: "\E61D";
+  font-family: "anticon" !important;
+  display: block;
+  position: absolute;
+  right: 30px;
+  top: 18px;
+  /*transition: transform 0.3s ease;*/
+}
+
+.Accordion__section--selected > h3::after {
+  transform: rotate(180deg);
+}
+
+.Accordion__section > .Accordion__content {
+  height: 0;
+  overflow-y: hidden;
+}
+
+.Accordion__section--selected > .Accordion__content {
+  padding: 25px 30px 30px 30px;
+  height: auto;
+}

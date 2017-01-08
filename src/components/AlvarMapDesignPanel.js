@@ -4,8 +4,7 @@ import { setMapView, setMapStyle, setPosterLayout, setMapLabels } from '../actio
 import { coordToPrettyText, getStyles } from '../util';
 import { Select, Radio } from 'antd';
 const { Option } = Select;
-import { Collapse } from 'antd';
-const { Panel } = Collapse;
+import Accordion from './Accordion';
 import geodist from 'geodist';
 import GeoSearch from './GeoSearch';
 import CityButtonList from './CityButtonList';
@@ -19,8 +18,8 @@ const AlvarMapDesignPanel = React.createClass({
 
     return (
       <div className="AlvarMapDesignPanel">
-        <Collapse defaultActiveKey="map-basics" accordion>
-          <Panel key="map-basics" header="Map basics">
+        <Accordion selected="map-basics">
+          <Accordion.Section id="map-basics" header="Map basics">
             <GeoSearch onChange={this._onGeoSearch} />
 
             <div className="AlvarMapDesignPanel__group">
@@ -38,9 +37,9 @@ const AlvarMapDesignPanel = React.createClass({
                 }
               </Select>
             </div>
-          </Panel>
+          </Accordion.Section>
 
-          <Panel key="layout" header="Poster layout & size">
+          <Accordion.Section id="layout" header="Layout & size">
             <div className="AlvarMapDesignPanel__group">
               <h4>Orientation</h4>
               <Radio.Group onChange={this._onOrientationChange} value={globalState.orientation}>
@@ -52,9 +51,9 @@ const AlvarMapDesignPanel = React.createClass({
             <div className="AlvarMapDesignPanel__group">
               <PosterSizeSelect value={globalState.size} onChange={this._onSizeChange} />
             </div>
-          </Panel>
+          </Accordion.Section>
 
-          <Panel key="labels" header="Poster labels">
+          <Accordion.Section id="labels" header="Labels">
             <div className="AlvarMapDesignPanel__group">
               <PosterLabelInputs dispatch={this.props.dispatch} labels={{
                 header: globalState.labelHeader,
@@ -62,8 +61,8 @@ const AlvarMapDesignPanel = React.createClass({
                 text: globalState.labelText,
               }} />
             </div>
-          </Panel>
-        </Collapse>
+          </Accordion.Section>
+        </Accordion>
       </div>
     );
   },
