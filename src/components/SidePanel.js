@@ -9,18 +9,13 @@ const SidePanel = React.createClass({
   render() {
     return (
       <div className="SidePanel">
-        <PricePanel
-          dispatch={this.props.dispatch}
-          globalState={this.props.globalState}
-        />
-
         <AlvarMapDesignPanel
           dispatch={this.props.dispatch}
           globalState={this.props.globalState}
         />
-        <img
-          className="SidePanel__preview-image"
-          src={this._createImageUrl()}
+        <PricePanel
+          dispatch={this.props.dispatch}
+          globalState={this.props.globalState}
         />
 
       </div>
