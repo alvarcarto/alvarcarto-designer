@@ -2,14 +2,10 @@
   border-bottom-width: 0;
 }
 
-.Accordion__section {
-  border-bottom: solid 1px #eee;
-}
-
-.Accordion__section > h3 {
+.Accordion__section .Accordion__header {
   cursor: pointer;
   font-weight: 400;
-  padding: 18px 30px;
+  padding: 20px 55px;
   font-size: 1.1rem;
   text-transform: uppercase;
   color: #555;
@@ -18,26 +14,105 @@
   /*transition: color 0.6s ease, background-color 0.6s ease;*/
 }
 
-.Accordion__section > h3:hover {
-  background-color: #f2f2f2;
+.Accordion__header > h3 {
+  font-weight: 400;
+  color: #555;
+  font-size: 1.1rem;
+  position: relative;
 }
 
-.Accordion__section--selected > h3 {
-  background-color: #f2f2f2;
+.Accordion__header > .Accordion__header-number {
+  z-index: 20;
+  position: absolute;
+  height: 22px;
+  width: 22px;
+  border-radius: 15px;
+  background: #fcfcfc;
+  border: 1px solid #108ee9;
+  color: #108ee9;
+  line-height: 20px;
+  text-indent: 0px;
+  left: 16px;
+  top: 50%;
+  margin-top: -11px;
+  text-align: center;
+  font-size: 0.7rem;
+  background: #108ee9;
+  color: white;
+  border: none;
 }
 
-.Accordion__section > h3::after {
-  content: "\E61D";
+.Accordion__section:nth-of-type(1) .Accordion__header-number {
+  text-indent: -1px;
+}
+
+.Accordion__section .Accordion__progress-line {
+  position: absolute;
+  z-index: 10;
+  display: block;
+  height: 1000px;
+  bottom: 43px;
+  left: 26px;
+}
+
+.Accordion__section--selected .Accordion__progress-line {
+  border-left: 2px solid #108ee9 !important;
+  z-index: 11;
+}
+
+.Accordion__section:nth-of-type(3) .Accordion__progress-line {
+  border-left: 2px dashed rgba(16, 142, 233, 0.42);
+}
+
+/*
+.Accordion__section--selected .Accordion__header-number,
+.Accordion__section--highlight .Accordion__header-number {
+  background: #108ee9;
+  color: white;
+  border: none;
+}
+*/
+
+.Accordion__section .Accordion__header::before {
+  content: "";
+  display: none;
+  width: 5px;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #108ee9;
+}
+
+.Accordion__section .Accordion__header:hover {
+  background-color: #fcfcfc;
+}
+
+.Accordion__section .Accordion__header:hover:before {
+  display: none;
+}
+
+.Accordion__section--selected .Accordion__header {
+  background-color: #fcfcfc;
+}
+
+.Accordion__section--selected .Accordion__header::before {
+  display: none;
+}
+
+.Accordion__section .Accordion__header::after {
+  content: "\E61F";
   font-family: "anticon" !important;
+  color: #bbb;
   display: block;
   position: absolute;
   right: 30px;
-  top: 18px;
+  top: 19px;
   /*transition: transform 0.3s ease;*/
 }
 
-.Accordion__section--selected > h3::after {
-  transform: rotate(180deg);
+.Accordion__section--selected .Accordion__header::after {
+  transform: rotate(90deg);
 }
 
 .Accordion__section > .Accordion__content {
@@ -46,6 +121,6 @@
 }
 
 .Accordion__section--selected > .Accordion__content {
-  padding: 25px 30px 30px 30px;
+  padding: 25px 30px 30px 55px;
   height: auto;
 }

@@ -18,14 +18,9 @@ const AlvarMapDesignPanel = React.createClass({
 
     return (
       <div className="AlvarMapDesignPanel">
-        <Accordion selected="map-basics">
-          <Accordion.Section id="map-basics" header="Map basics">
+        <Accordion selected={0}>
+          <Accordion.Section header="Location & style">
             <GeoSearch onChange={this._onGeoSearch} />
-
-            <div className="AlvarMapDesignPanel__group">
-              <h4>.. or try our favorites</h4>
-              <CityButtonList onButtonClick={this._onCityButtonClick} />
-            </div>
 
             <div className="AlvarMapDesignPanel__group">
               <h4>Choose your style</h4>
@@ -39,7 +34,7 @@ const AlvarMapDesignPanel = React.createClass({
             </div>
           </Accordion.Section>
 
-          <Accordion.Section id="layout" header="Layout & size">
+          <Accordion.Section header="Layout & size">
             <div className="AlvarMapDesignPanel__group">
               <h4>Orientation</h4>
               <Radio.Group onChange={this._onOrientationChange} value={globalState.orientation}>
@@ -53,7 +48,7 @@ const AlvarMapDesignPanel = React.createClass({
             </div>
           </Accordion.Section>
 
-          <Accordion.Section id="labels" header="Labels">
+          <Accordion.Section header="Labels">
             <div className="AlvarMapDesignPanel__group">
               <PosterLabelInputs dispatch={this.props.dispatch} labels={{
                 header: globalState.labelHeader,
@@ -63,6 +58,13 @@ const AlvarMapDesignPanel = React.createClass({
             </div>
           </Accordion.Section>
         </Accordion>
+
+        {/*
+        <div className="AlvarMapDesignPanel__recommend">
+          <h3>Try one of our picks</h3>
+          <CityButtonList onButtonClick={this._onCityButtonClick} />
+        </div>
+        */}
       </div>
     );
   },

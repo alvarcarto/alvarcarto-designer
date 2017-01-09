@@ -18,3 +18,11 @@
 .AlvarMapDesignPanel .ant-select-selection__rendered {
   margin-right: 15px;
 }
+
+.AlvarMapDesignPanel__recommend {
+  padding: 30px;
+}
+
+.AlvarMapDesignPanel__recommend > h4 {
+  font-weight: 400;
+}

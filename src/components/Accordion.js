@@ -2,6 +2,10 @@ import React from 'react';
 import './Accordion.css';
 
 const Accordion = React.createClass({
+  getDefaultProps() {
+    return { alwaysOpen: true };
+  },
+
   getInitialState() {
     return {
       selected: this.props.selected
@@ -18,21 +22,20 @@ const Accordion = React.createClass({
     );
   },
 
-  _createSection(child) {
-    const id = child.props.id;
-
+  _createSection(child, index) {
     return React.cloneElement(child, {
-      key: id,
-      id: id,
-      selected: id === this.state.selected,
+      key: index,
+      index: index,
+      highlight: index <= this.state.selected,
+      selected: index === this.state.selected,
       onSelect: this._onSelect
     });
   },
 
-  _onSelect(id) {
-    const idAlreadySelected = this.state.selected === id;
-    if (!idAlreadySelected) {
-      this.setState({ selected: id });
+  _onSelect(index) {
+    const alreadySelected = this.state.selected === index;
+    if (!alreadySelected || this.props.alwaysOpen) {
+      this.setState({ selected: index });
     } else {
       this.setState({ selected: null });
     }
@@ -45,12 +48,23 @@ Accordion.Section = React.createClass({
     if (this.props.selected) {
       className += ' Accordion__section--selected'
     }
+    if (this.props.highlight) {
+      className += ' Accordion__section--highlight'
+    }
 
     return (
       <div className={className}>
-        <h3 onClick={this._onSelect}>
-          {this.props.header}
-        </h3>
+        <div className="Accordion__header" onClick={this._onSelect}>
+          <div className="Accordion__progress-line"></div>
+          <div className="Accordion__header-number">
+            {this.props.index + 1}
+          </div>
+
+          <h3>
+            {this.props.header}
+          </h3>
+        </div>
+
         <div className="Accordion__content">
           {this.props.children}
         </div>
@@ -59,7 +73,7 @@ Accordion.Section = React.createClass({
   },
 
   _onSelect() {
-    this.props.onSelect(this.props.id);
+    this.props.onSelect(this.props.index);
   }
 });
 
