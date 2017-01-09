@@ -1,3 +1,8 @@
-.PosterLabelInputs {
+.PosterLabelInputs .ant-form-item-label {
+  text-align: left;
+  font-weight: bold;
+}
 
+.PosterLabelInputs .ant-form-item-label label::after {
+  display: none;
 }
