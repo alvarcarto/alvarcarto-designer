@@ -27,7 +27,7 @@ const CityButton = React.createClass({
   render() {
     return <Button
       className="CityButton"
-      type="dashed"
+      type="ghost"
       onClick={this._onClick}
     >
       {this.props.item.header}
