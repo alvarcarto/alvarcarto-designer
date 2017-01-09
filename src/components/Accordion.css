@@ -21,13 +21,17 @@
   position: relative;
 }
 
+.Accordion__section--selected .Accordion__header > h3 {
+  color: #108ee9;
+}
+
 .Accordion__header > .Accordion__header-number {
   z-index: 20;
   position: absolute;
   height: 22px;
   width: 22px;
   border-radius: 15px;
-  background: #fcfcfc;
+  background: #fafafa;
   border: 1px solid #108ee9;
   color: #108ee9;
   line-height: 20px;
@@ -37,9 +41,6 @@
   margin-top: -11px;
   text-align: center;
   font-size: 0.7rem;
-  background: #108ee9;
-  color: white;
-  border: none;
 }
 
 .Accordion__section:nth-of-type(1) .Accordion__header-number {
@@ -60,18 +61,16 @@
   z-index: 11;
 }
 
-.Accordion__section:nth-of-type(3) .Accordion__progress-line {
+.Accordion__section:last-of-type .Accordion__progress-line {
   border-left: 2px dashed rgba(16, 142, 233, 0.42);
 }
 
-/*
 .Accordion__section--selected .Accordion__header-number,
 .Accordion__section--highlight .Accordion__header-number {
   background: #108ee9;
   color: white;
   border: none;
 }
-*/
 
 .Accordion__section .Accordion__header::before {
   content: "";
@@ -85,7 +84,7 @@
 }
 
 .Accordion__section .Accordion__header:hover {
-  background-color: #fcfcfc;
+  background-color: #fafafa;
 }
 
 .Accordion__section .Accordion__header:hover:before {
@@ -93,7 +92,7 @@
 }
 
 .Accordion__section--selected .Accordion__header {
-  background-color: #fcfcfc;
+  background-color: #fafafa;
 }
 
 .Accordion__section--selected .Accordion__header::before {
