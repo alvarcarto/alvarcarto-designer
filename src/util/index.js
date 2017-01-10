@@ -1,48 +1,22 @@
 import _ from 'lodash';
 import { oneLineTrim } from 'common-tags';
+import config from '../config';
 
+console.log(config)
 const STYLES = [
   {
     id: 'black-and-white',
     type: 'raster',
+    image: `${config.PUBLIC_URL}/assets/bw@2x.png`,
     url: 'http://tiles.alvarcarto.com:8080/alvar/{z}/{x}/{y}/tile.png',
-    name: 'Black and white',
-  },
-  {
-    id: 'mapbox-light',
-    type: 'vector',
-    url: 'mapbox://styles/mapbox/light-v9',
-    name: 'Light (Mapbox)',
-  },
-  {
-    id: 'mapbox-dark',
-    type: 'vector',
-    url: 'mapbox://styles/mapbox/dark-v9',
-    name: 'Dark (Mapbox)',
-  },
-  {
-    id: 'mapbix-antique',
-    type: 'vector',
-    url: 'mapbox://styles/alvarcarto/ciwaq5i56005g2qnuurw0zr62',
-    name: 'Antique (Mapbox)',
-  },
-  {
-    id: 'mapbox-blueprint',
-    type: 'vector',
-    url: 'mapbox://styles/alvarcarto/ciwaptpjn006q2ppiv71coagy',
-    name: 'Blueprint (Mapbox)',
+    name: 'B & W',
   },
   {
     id: 'mapbox-orange',
     type: 'vector',
+    image: `${config.PUBLIC_URL}/assets/orange@2x.png`,
     url: 'mapbox://styles/alvarcarto/ciwknyyct00lw2pmq9ohha4bg',
-    name: 'Orange (Mapbox)',
-  },
-  {
-    id: 'alvar-ugly',
-    type: 'vector',
-    url: 'http://tiles.alvarcarto.com:8000/styles/basic-v9.json',
-    name: 'Ugly (Alvar)',
+    name: 'Orange',
   }
 ];
 

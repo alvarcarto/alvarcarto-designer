@@ -28,7 +28,7 @@ const GeoSearch = React.createClass({
         <div className="GeoSearch__container">
           <Select.Async
             className="AlvarMapDesignPanel__search"
-            placeholder="Search for a city"
+            placeholder="Enter any city or country"
             loadOptions={this.state.debouncedFetchOptions}
             value={_.get(this, 'state.selection.value')}
             onChange={this._onChange}

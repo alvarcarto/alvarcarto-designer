@@ -10,6 +10,7 @@ import GeoSearch from './GeoSearch';
 import CityButtonList from './CityButtonList';
 import PosterSizeSelect from './PosterSizeSelect';
 import PosterLabelInputs from './PosterLabelInputs';
+import MapStyleSelect from './MapStyleSelect';
 import './AlvarMapDesignPanel.css';
 
 const AlvarMapDesignPanel = React.createClass({
@@ -20,17 +21,21 @@ const AlvarMapDesignPanel = React.createClass({
       <div className="AlvarMapDesignPanel">
         <Accordion selected={0}>
           <Accordion.Section header="Location & style">
-            <GeoSearch onChange={this._onGeoSearch} />
+
+            <div className="ant-row ant-form-item">
+              <div className="ant-col-5 ant-form-item-label">
+                <label>Location</label>
+              </div>
+              <div className="ant-col-19">
+                <GeoSearch onChange={this._onGeoSearch} />
+              </div>
+            </div>
 
             <div className="AlvarMapDesignPanel__group">
-              <h4>Choose your style</h4>
-              <Select value={globalState.mapStyle} size="large" onChange={this._onStyleChange}>
-                {
-                  _.map(getStyles(), style => {
-                    return <Option key={style.id} value={style.id}>{style.name}</Option>;
-                  })
-                }
-              </Select>
+              <MapStyleSelect
+                selected={globalState.mapStyle}
+                onChange={this._onStyleChange}
+              />
             </div>
           </Accordion.Section>
 

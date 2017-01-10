@@ -6,7 +6,7 @@ const HELSINKI_CENTER = { lat: 60.159865, lng: 24.942334 };
 const initialState = {
   mapCenter: HELSINKI_CENTER,
   mapZoom: 8,
-  mapStyle: 'mapbox-dark',
+  mapStyle: 'mapbox-orange',
   mapPitch: 0,
   mapBearing: 0,
   orientation: 'portrait',

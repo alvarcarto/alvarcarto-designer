@@ -29,3 +29,12 @@ html {
   cursor: -moz-grabbing;
   cursor: -webkit-grabbing;
 }
+
+.ant-form-item-label {
+  text-align: left;
+  font-weight: bold;
+}
+
+.ant-form-item-label label::after {
+  display: none;
+}
