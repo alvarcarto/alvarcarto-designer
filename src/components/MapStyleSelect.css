@@ -28,11 +28,12 @@
 .MapStyleSelectItem__circle-overlay {
   position: absolute;
   display: none;
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.4);
   height: 100%;
   width: 100%;
   border-radius: 50%;
   text-align: center;
+  padding: 25%;
 }
 .MapStyleSelectItem--selected .MapStyleSelectItem__circle-overlay {
   display: block;

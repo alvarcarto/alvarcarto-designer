@@ -3,6 +3,7 @@ import _ from 'lodash';
 import { getStyles } from '../util';
 import { Icon, Select, Radio } from 'antd';
 const { Option } = Select;
+import config from '../config';
 import './MapStyleSelect.css';
 
 const MapStyleSelect = React.createClass({
@@ -44,7 +45,7 @@ const MapStyleItem = React.createClass({
             alt="Map style image"
           />
           <div className="MapStyleSelectItem__circle-overlay">
-            <Icon type="check" />
+            <img src={`${config.PUBLIC_URL}/assets/alvarcarto-tick-icon.svg`} alt="Check" />
           </div>
         </div>
         <div className="MapStyleSelectItem__label">

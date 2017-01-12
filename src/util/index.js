@@ -2,7 +2,6 @@ import _ from 'lodash';
 import { oneLineTrim } from 'common-tags';
 import config from '../config';
 
-console.log(config)
 const STYLES = [
   {
     id: 'black-and-white',

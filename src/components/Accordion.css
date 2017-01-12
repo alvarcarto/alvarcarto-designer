@@ -2,10 +2,20 @@
   border-bottom-width: 0;
 }
 
+.Accordion__section > .Accordion__content {
+  height: 0;
+  overflow-y: hidden;
+}
+
+.Accordion__section--selected > .Accordion__content {
+  padding: 25px 30px 30px 60px;
+  height: auto;
+}
+
 .Accordion__section .Accordion__header {
   cursor: pointer;
   font-weight: 400;
-  padding: 20px 55px;
+  padding: 20px 60px;
   font-size: 1.1rem;
   text-transform: uppercase;
   color: #555;
@@ -19,9 +29,29 @@
   color: #555;
   font-size: 1.1rem;
   position: relative;
+  transition: color 0.3s ease;
 }
 
-.Accordion__section--selected .Accordion__header > h3 {
+.Accordion__section--selected .Accordion__header > h3, .Accordion__header:hover > h3 {
+  color: #108ee9;
+}
+
+.Accordion__section .Accordion__header::after {
+  content: "\E61F";
+  font-family: "anticon" !important;
+  color: #bbb;
+  display: block;
+  position: absolute;
+  right: 30px;
+  top: 19px;
+  transition: color 0.3s ease;
+}
+
+.Accordion__section--selected .Accordion__header::after {
+  transform: rotate(90deg);
+  color: #108ee9;
+}
+.Accordion__header:hover:after {
   color: #108ee9;
 }
 
@@ -70,56 +100,4 @@
   background: #108ee9;
   color: white;
   border: none;
-}
-
-.Accordion__section .Accordion__header::before {
-  content: "";
-  display: none;
-  width: 5px;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  background: #108ee9;
-}
-
-.Accordion__section .Accordion__header:hover {
-  background-color: #fafafa;
-}
-
-.Accordion__section .Accordion__header:hover:before {
-  display: none;
-}
-
-.Accordion__section--selected .Accordion__header {
-  background-color: #fafafa;
-}
-
-.Accordion__section--selected .Accordion__header::before {
-  display: none;
-}
-
-.Accordion__section .Accordion__header::after {
-  content: "\E61F";
-  font-family: "anticon" !important;
-  color: #bbb;
-  display: block;
-  position: absolute;
-  right: 30px;
-  top: 19px;
-  /*transition: transform 0.3s ease;*/
-}
-
-.Accordion__section--selected .Accordion__header::after {
-  transform: rotate(90deg);
-}
-
-.Accordion__section > .Accordion__content {
-  height: 0;
-  overflow-y: hidden;
-}
-
-.Accordion__section--selected > .Accordion__content {
-  padding: 25px 30px 30px 55px;
-  height: auto;
 }

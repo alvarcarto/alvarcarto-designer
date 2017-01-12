@@ -2,7 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 import { setMapView, setMapStyle, setPosterLayout, setMapLabels } from '../actions';
 import { coordToPrettyText, getStyles } from '../util';
-import { Select, Radio } from 'antd';
+import { Select, Radio, Button, Icon } from 'antd';
 const { Option } = Select;
 import Accordion from './Accordion';
 import geodist from 'geodist';
@@ -39,6 +39,16 @@ const AlvarMapDesignPanel = React.createClass({
             </div>
           </Accordion.Section>
 
+          <Accordion.Section header="Labels">
+            <div className="AlvarMapDesignPanel__group">
+              <PosterLabelInputs dispatch={this.props.dispatch} labels={{
+                header: globalState.labelHeader,
+                smallHeader: globalState.labelSmallHeader,
+                text: globalState.labelText,
+              }} />
+            </div>
+          </Accordion.Section>
+
           <Accordion.Section header="Layout & size">
             <div className="AlvarMapDesignPanel__group">
               <h4>Orientation</h4>
@@ -50,16 +60,6 @@ const AlvarMapDesignPanel = React.createClass({
 
             <div className="AlvarMapDesignPanel__group">
               <PosterSizeSelect value={globalState.size} onChange={this._onSizeChange} />
-            </div>
-          </Accordion.Section>
-
-          <Accordion.Section header="Labels">
-            <div className="AlvarMapDesignPanel__group">
-              <PosterLabelInputs dispatch={this.props.dispatch} labels={{
-                header: globalState.labelHeader,
-                smallHeader: globalState.labelSmallHeader,
-                text: globalState.labelText,
-              }} />
             </div>
           </Accordion.Section>
         </Accordion>
