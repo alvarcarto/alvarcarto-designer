@@ -54,7 +54,7 @@ Accordion.Section = React.createClass({
 
     return (
       <div className={className}>
-        <div className="Accordion__header" onClick={this._onSelect}>
+        <div className="Accordion__header noselect" onClick={this._onSelect}>
           <div className="Accordion__progress-line"></div>
           <div className="Accordion__header-number">
             {this.props.index + 1}

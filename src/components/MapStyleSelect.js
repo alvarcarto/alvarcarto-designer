@@ -39,7 +39,7 @@ const MapStyleItem = React.createClass({
 
     return (
       <div className={className} onClick={this._onClick}>
-        <div className="MapStyleSelectItem__circle">
+        <div className="MapStyleSelectItem__circle noselect">
           <img
             className="MapStyleSelectItem__circle-image"
             src={this.props.style.image}

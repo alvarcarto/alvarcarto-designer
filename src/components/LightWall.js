@@ -14,7 +14,7 @@ const LightWall = React.createClass({
     );
 
     return (
-      <div className="LightWall">
+      <div className="LightWall noselect">
         <div className="LightWall__map-container">
           <div className="LightWall__wire-container">
             <img className="LightWall__clip1" src="clip.png" />
