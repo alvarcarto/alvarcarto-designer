@@ -57,7 +57,12 @@ const AlvarMapDesignPanel = React.createClass({
             </div>
 
             <div className="AlvarMapDesignPanel__group">
-              <PosterSizeSelect value={globalState.size} onChange={this._onSizeChange} />
+              <h4>Size</h4>
+              <PosterSizeSelect
+                orientation={globalState.orientation}
+                selected={globalState.size}
+                onChange={this._onSizeChange}
+              />
             </div>
           </Accordion.Section>
         </Accordion>
@@ -115,9 +120,9 @@ const AlvarMapDesignPanel = React.createClass({
     }));
   },
 
-  _onSizeChange(e) {
+  _onSizeChange(value) {
     this.props.dispatch(setPosterLayout({
-      size: e.target.value,
+      size: value,
     }));
   },
 });

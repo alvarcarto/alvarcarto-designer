@@ -13,7 +13,7 @@ const symbols = {
 const PricePanel = React.createClass({
   render() {
     const { globalState } = this.props;
-    const price = calculatePrice(globalState);
+    const price = calculatePrice(globalState.size);
     return (
       <div className="PricePanel" target="_blank" href={this._createUrl()}>
         <h5 className="PricePanel__price">

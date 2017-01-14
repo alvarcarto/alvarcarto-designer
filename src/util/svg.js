@@ -56,3 +56,31 @@ module.exports.TickIcon = (props) => <svg className="TickIcon"
     <line x1="11.5" y1="24.5" x2="27" y2="9"/>
   </g>
 </svg>;
+
+module.exports.PosterIcon = (_props) => {
+  const props = _.merge({
+    fill: 'rgba(0, 0, 0, 0)',
+    stroke: 'black',
+    strokeWidth: 1,
+  }, _props);
+
+  console.log(props)
+  return <svg className="PosterIcon"
+    width={props.width}
+    height={props.height}
+    version="1.1"
+    xmlns="http://www.w3.org/2000/svg"
+    x="0px"
+    y="0px"
+    viewBox={`0 0 ${props.width} ${props.height}`}
+    style={{ enableBackground: `new 0 0 ${props.width} ${props.height}`}}
+  >
+    <rect
+      style={_.pick(props, ['fill' ,'stroke' ,'strokeWidth'])}
+      x={props.strokeWidth / 2}
+      y={props.strokeWidth / 2}
+      width={props.width - props.strokeWidth}
+      height={props.height - props.strokeWidth}
+    />
+  </svg>;
+}

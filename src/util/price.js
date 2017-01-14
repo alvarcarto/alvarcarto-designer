@@ -1,5 +1,5 @@
-function calculatePrice(state) {
-  switch (state.size) {
+function calculatePrice(size) {
+  switch (size) {
     case '50x70cm':
       return { value: 45, currency: 'EUR' };
     case '70x100cm':
