@@ -15,7 +15,7 @@
 }
 
 .OrientationItem__image-container .LandscapeIcon + .OrientationItem__overlay > .TickIcon {
-  transform: translateY(-22%);
+  transform: translateY(-18%);
 }
 
 .OrientationItem .PortraitIcon {
@@ -45,8 +45,8 @@
 }
 .OrientationItem__overlay .TickIcon {
   position: relative;
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
   top: 50%;
   transform: translateY(-50%);
 }

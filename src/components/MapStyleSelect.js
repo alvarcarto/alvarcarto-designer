@@ -4,6 +4,7 @@ import { getStyles } from '../util';
 import { Icon, Select, Radio } from 'antd';
 const { Option } = Select;
 import config from '../config';
+import { TickIcon } from '../util/svg';
 import './MapStyleSelect.css';
 
 const MapStyleSelect = React.createClass({
@@ -45,7 +46,7 @@ const MapStyleItem = React.createClass({
             alt="Map style image"
           />
           <div className="MapStyleSelectItem__circle-overlay">
-            <img src={`${config.PUBLIC_URL}/assets/tick-icon.svg`} alt="Check" />
+            <TickIcon style={{ stroke: 'white' }}/>
           </div>
         </div>
         <div className="MapStyleSelectItem__label">
