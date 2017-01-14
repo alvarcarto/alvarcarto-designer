@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 function calculatePrice(size) {
   switch (size) {
     case '50x70cm':
@@ -11,6 +13,20 @@ function calculatePrice(size) {
   }
 }
 
+// TODO: Use currency lib
+const symbols = {
+  EUR: '\u20AC',
+};
+
+function getCurrencySymbol(currency) {
+  if (!_.has(symbols, currency.toUpperCase())) {
+    throw new Error(`Unknown currency: ${currency}`);
+  }
+
+  return symbols[currency.toUpperCase()];
+}
+
 module.exports = {
   calculatePrice,
+  getCurrencySymbol,
 };

@@ -1,7 +1,10 @@
 import React from 'react';
 import _ from 'lodash';
 import config from '../config';
+import { Radio } from 'antd';
+import { calculatePrice, getCurrencySymbol } from '../util/price';
 const { PosterIcon, TickIcon } = require('../util/svg');
+import Price from './Price';
 import './PosterSizeSelect.css';
 
 const SIZES = [
@@ -34,59 +37,28 @@ const SIZES = [
 const PosterSizeSelect = React.createClass({
   render() {
     return (
-      <div className="PosterSizeSelect">
+      <Radio.Group className="PosterSizeSelect" value={this.props.selected} onChange={this._onChange}>
         {
           _.map(SIZES, item => {
-            return <PosterSizeItem
-              onClick={this._onClickItem}
+            const price = calculatePrice(item.id);
+
+            return <Radio
               key={item.id}
-              id={item.id}
-              orientation={this.props.orientation}
-              label={item.label}
-              poster={item.poster}
-              selected={this.props.selected === item.id}
-            />;
+              value={item.id}
+            >
+              {item.label}
+              <span className="PosterSizeSelect__price">
+                <Price value={price.value} currency={price.currency} />
+              </span>
+            </Radio>;
           })
         }
-      </div>
+      </Radio.Group>
     );
   },
 
-  _onClickItem(orientationId) {
-    this.props.onChange(orientationId);
-  }
-});
-
-const PosterSizeItem = React.createClass({
-  render() {
-    let className = 'PosterSizeItem';
-    const style = { stroke: '#999' };
-    if (this.props.selected) {
-      className += ' PosterSizeItem--selected';
-      style.stroke = '#333';
-    }
-
-    if (this.props.orientation === 'landscape') {
-      className += ' PosterSizeItem--landscape';
-    }
-
-    return (
-      <div className={className} onClick={this._onClick}>
-        <div className="PosterSizeItem__image-container">
-          <PosterIcon {...this.props.poster} />
-          <div className="PosterSizeItem__overlay">
-            <TickIcon />
-          </div>
-        </div>
-        <div className="PosterSizeItem__label">
-          {this.props.label}
-        </div>
-      </div>
-    );
-  },
-
-  _onClick() {
-    this.props.onClick(this.props.id);
+  _onChange(e) {
+    this.props.onChange(e.target.value);
   }
 });
 

@@ -2,13 +2,8 @@ import Odometer from './Odometer';
 import React from 'react';
 import { Icon } from 'antd';
 import { posterSizeToPixels, createApiUrlQuery } from '../util';
-import { calculatePrice } from '../util/price';
+import { calculatePrice, getCurrencySymbol } from '../util/price';
 import './PricePanel.css';
-
-// TODO: Use currency lib
-const symbols = {
-  EUR: '\u20AC',
-};
 
 const PricePanel = React.createClass({
   render() {
@@ -18,7 +13,7 @@ const PricePanel = React.createClass({
       <div className="PricePanel" target="_blank" href={this._createUrl()}>
         <h5 className="PricePanel__price">
           <Odometer value={price.value} />
-          <span className="PricePanel__price-currency">{symbols[price.currency]}</span>
+          <span className="PricePanel__price-currency">{getCurrencySymbol(price.currency)}</span>
         </h5>
         <p className="PricePanel__link">
           Checkout

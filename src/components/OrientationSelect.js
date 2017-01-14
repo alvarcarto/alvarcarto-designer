@@ -1,22 +1,74 @@
 import React from 'react';
 import _ from 'lodash';
-import { Radio } from 'antd';
 import config from '../config';
 const { LandscapeIcon, PortraitIcon, TickIcon } = require('../util/svg');
 import './OrientationSelect.css';
 
+const ORIENTATIONS = [
+  {
+    id: 'portrait',
+    label: 'Portrait',
+    iconReactElement: PortraitIcon,
+  },
+  {
+    id: 'landscape',
+    label: 'Landscape',
+    iconReactElement: LandscapeIcon,
+  }
+];
+
 const OrientationSelect = React.createClass({
   render() {
     return (
-      <Radio.Group className="OrientationSelect" onChange={this._onChange} value={this.props.selected}>
-        <Radio value="portrait">Portrait</Radio>
-        <Radio value="landscape">Landscape</Radio>
-      </Radio.Group>
+      <div className="OrientationSelect">
+        {
+          _.map(ORIENTATIONS, item => {
+            return <OrientationItem
+              onClick={this._onClickItem}
+              key={item.id}
+              id={item.id}
+              label={item.label}
+              iconReactElement={item.iconReactElement}
+              selected={this.props.selected === item.id}
+            />;
+          })
+        }
+      </div>
     );
   },
 
-  _onChange(e) {
-    this.props.onChange(e.target.value);
+  _onClickItem(orientationId) {
+    this.props.onChange(orientationId);
+  }
+});
+
+const OrientationItem = React.createClass({
+  render() {
+    let className = 'OrientationItem';
+    const style = { stroke: '#999' };
+    if (this.props.selected) {
+      className += ' OrientationItem--selected';
+      style.stroke = '#333';
+    }
+
+    const ItemIcon = this.props.iconReactElement;
+    return (
+      <div className={className} onClick={this._onClick}>
+        <div className="OrientationItem__image-container">
+          <ItemIcon style={style} />
+          <div className="OrientationItem__overlay">
+            <TickIcon />
+          </div>
+        </div>
+        <div className="OrientationItem__label">
+          {this.props.label}
+        </div>
+      </div>
+    );
+  },
+
+  _onClick() {
+    this.props.onClick(this.props.id);
   }
 });
 
