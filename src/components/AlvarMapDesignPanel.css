@@ -26,3 +26,7 @@
 .AlvarMapDesignPanel__recommend > h4 {
   font-weight: 400;
 }
+
+.AlvarMapDesignPanel .OrientationSelect {
+  margin-top: 20px;
+}

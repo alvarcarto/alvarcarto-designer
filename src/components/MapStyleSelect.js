@@ -45,7 +45,7 @@ const MapStyleItem = React.createClass({
             alt="Map style image"
           />
           <div className="MapStyleSelectItem__circle-overlay">
-            <img src={`${config.PUBLIC_URL}/assets/alvarcarto-tick-icon.svg`} alt="Check" />
+            <img src={`${config.PUBLIC_URL}/assets/tick-icon.svg`} alt="Check" />
           </div>
         </div>
         <div className="MapStyleSelectItem__label">

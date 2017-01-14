@@ -9,6 +9,7 @@ import geodist from 'geodist';
 import GeoSearch from './GeoSearch';
 import CityButtonList from './CityButtonList';
 import PosterSizeSelect from './PosterSizeSelect';
+import OrientationSelect from './OrientationSelect';
 import PosterLabelInputs from './PosterLabelInputs';
 import MapStyleSelect from './MapStyleSelect';
 import './AlvarMapDesignPanel.css';
@@ -52,10 +53,7 @@ const AlvarMapDesignPanel = React.createClass({
           <Accordion.Section header="Layout & size">
             <div className="AlvarMapDesignPanel__group">
               <h4>Orientation</h4>
-              <Radio.Group onChange={this._onOrientationChange} value={globalState.orientation}>
-                <Radio.Button value="portrait">Portrait</Radio.Button>
-                <Radio.Button value="landscape">Landscape</Radio.Button>
-              </Radio.Group>
+              <OrientationSelect selected={globalState.orientation} onChange={this._onOrientationChange} />
             </div>
 
             <div className="AlvarMapDesignPanel__group">
@@ -111,9 +109,9 @@ const AlvarMapDesignPanel = React.createClass({
     this.props.dispatch(setMapStyle(value));
   },
 
-  _onOrientationChange(e) {
+  _onOrientationChange(value) {
     this.props.dispatch(setPosterLayout({
-      orientation: e.target.value,
+      orientation: value,
     }));
   },
 
