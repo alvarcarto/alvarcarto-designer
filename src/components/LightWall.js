@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import AlvarMap from './AlvarMap';
 import { Icon } from 'antd';
+import config from '../config';
 import { posterSizeToPhysicalDimensions } from '../util';
 import './LightWall.css';
 
@@ -34,6 +35,15 @@ const LightWall = React.createClass({
             <div className="LightWall__height-label-line"></div>
             <p>{dimensions.height} {dimensions.unit}</p>
           </div>
+        </div>
+
+        <div className="LightWall__logo">
+          <a href="http://alvarcarto.com">
+            <img
+              src={`${config.PUBLIC_URL}/assets/logo.svg`}
+              alt="Alvar Carto"
+            />
+          </a>
         </div>
 
         <div className="LightWall__credits">

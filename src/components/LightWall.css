@@ -53,6 +53,13 @@
   right: 40px;
 }
 
+.LightWall__logo img {
+  position: absolute;
+  top: 7px;
+  right: 3px;
+  height: 24px;
+}
+
 .LightWall__credits {
   font-size: 0.6rem;
   position: absolute;
