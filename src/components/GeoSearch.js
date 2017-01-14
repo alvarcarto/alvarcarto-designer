@@ -61,10 +61,10 @@ const GeoSearch = React.createClass({
 
     return getPlacePredictions({ input: input, types: ['(cities)'] })
       .then(results => ({
-        options: _.map(results, result => ({
+        options: _.take(_.map(results, result => ({
           value: String(result.place_id),
           label: result.description,
-        }))
+        })), 4)
       }))
       .catch(err => {
         throw err;
