@@ -20,7 +20,7 @@ const AlvarMapDesignPanel = React.createClass({
     const { globalState } = this.props;
 
     return (
-      <div className="AlvarMapDesignPanel">
+      <div className={`AlvarMapDesignPanel ${this.props.className}`}>
         <Accordion selected={0}>
           <Accordion.Section header="Location & style">
 

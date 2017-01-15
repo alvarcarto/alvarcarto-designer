@@ -14,6 +14,7 @@
     "common-tags": "^1.4.0",
     "debounce-promise": "^2.1.1",
     "geodist": "^0.2.1",
+    "i18n-iso-countries": "^1.8.0",
     "leaflet": "^1.0.2",
     "normalize.css": "^5.0.0",
     "odometer": "^0.4.7",

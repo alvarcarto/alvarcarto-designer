@@ -5,13 +5,12 @@
   align-items: center;
   justify-content: space-between;
   color: #108ee9;
+  height: 100%;
+  width: 100%;
 }
 
-.PricePanel:hover {
-  cursor: pointer;
-}
-
-.PricePanel__link {
+.PricePanel__checkout-link {
+  padding: 30px 0 30px 30px;
   font-size: 1.3rem;
   text-transform: uppercase;
   font-weight: 400;
@@ -21,7 +20,7 @@
   right: 30px;
 }
 
-.PricePanel:hover .PricePanel__link {
+.PricePanel__checkout-link:hover {
   transform: translate3d(14px, 0, 0);
 }
 

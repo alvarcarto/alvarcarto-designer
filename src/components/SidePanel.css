@@ -12,16 +12,38 @@
   padding: 10px 10px 20px 10px;
 }
 
-.SidePanel .AlvarMapDesignPanel {
+.SidePanel__upper {
   flex: 1;
   flex-shrink: 2;
   overflow: auto;
 }
 
-.SidePanel .PricePanel {
+.SidePanel__lower {
+  background: #f6f6f6;
   height: 80px;
   min-height: 80px;
   width: 100%;
+}
+
+.SidePanel__lower {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.SidePanel__back-link {
+  font-size: 1.3rem;
+  text-transform: uppercase;
+  font-weight: 400;
+  position: relative;
+  transform: translate3d(0, 0, 0);
+  transition: transform 0.3s ease, color 0.3s ease;
+  left: 30px;
+}
+
+.SidePanel__back-link:hover {
+  transform: translate3d(-14px, 0, 0);
 }
 
 .SidePanel__preview-image {

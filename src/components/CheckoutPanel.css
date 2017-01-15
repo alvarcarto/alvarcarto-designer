@@ -1,0 +1,38 @@
+.CheckoutPanel {
+  padding: 20px 20px 20px 40px;
+}
+
+.CheckoutPanel h2 {
+  font-weight: 400;
+  text-transform: uppercase;
+  color: #108ee9;
+  margin-bottom: 30px;
+}
+
+.CheckoutPanel__header > .anticon {
+  margin-right: 5px;
+}
+
+.CheckoutPanel__form-header {
+  margin-bottom: 24px;
+}
+
+.CheckoutPanel .TruckIcon {
+  position: relative;
+  top: 2px;
+  display: inline-block;
+  margin-right: 5px;
+  height: 14px;
+}
+
+.CheckoutPanel .ant-form-item {
+  margin-bottom: 14px;
+}
+
+.CheckoutPanel .ant-input-wrapper + .ant-input-wrapper > input {
+  margin-top: 4px;
+}
+
+.CheckoutPanel .CheckoutPanel__input--short {
+  width: 75%;
+}

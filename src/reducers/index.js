@@ -4,6 +4,7 @@ import { coordToPrettyText } from '../util';
 
 const HELSINKI_CENTER = { lat: 60.159865, lng: 24.942334 };
 const initialState = {
+  viewState: 'editor',  // or 'checkout'
   mapCenter: HELSINKI_CENTER,
   mapZoom: 8,
   mapStyle: 'mapbox-orange',
@@ -16,10 +17,16 @@ const initialState = {
   labelText: coordToPrettyText(HELSINKI_CENTER),
 };
 
+const copyInitialStateJustInCase = _.cloneDeep(initialState);
+export { copyInitialStateJustInCase as initialState };
+
 function reducer(state = initialState, action) {
   let newAttrs;
 
   switch (action.type) {
+    case actions.SET_VIEW_STATE:
+      return _.extend({}, state, { viewState: action.payload });
+
     case actions.SET_MAP_VIEW:
       newAttrs = {
         mapCenter: action.payload.center,

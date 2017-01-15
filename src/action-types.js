@@ -2,3 +2,4 @@ export const SET_MAP_VIEW = 'SET_MAP_VIEW';
 export const SET_POSTER_LAYOUT = 'SET_POSTER_LAYOUT';
 export const SET_MAP_STYLE = 'SET_MAP_STYLE';
 export const SET_MAP_LABELS = 'SET_MAP_LABELS';
+export const SET_VIEW_STATE = 'SET_VIEW_STATE';

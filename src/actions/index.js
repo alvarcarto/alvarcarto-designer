@@ -1,5 +1,10 @@
 import * as actions from '../action-types';
 
+export const setViewState = (viewState) => ({
+  type: actions.SET_VIEW_STATE,
+  payload: viewState,
+});
+
 export const setMapView = (view) => ({
   type: actions.SET_MAP_VIEW,
   payload: view,
