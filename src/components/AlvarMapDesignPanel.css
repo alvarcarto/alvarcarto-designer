@@ -34,3 +34,19 @@
 .AlvarMapDesignPanel .PosterSizeSelect {
   margin-top: 20px;
 }
+
+.AlvarMapDesignPanel .Alert {
+  margin-top: 20px;
+}
+
+.AlvarMapDesignPanel__info .Alert p {
+  max-width: 250px;
+  margin-left: 38px;
+  color: #777;
+}
+
+.AlvarMapDesignPanel__info > .Alert > .anticon {
+  font-size: 1.7rem;
+  float: left;
+  color: #888;
+}

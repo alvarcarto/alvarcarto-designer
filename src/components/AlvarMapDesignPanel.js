@@ -12,6 +12,7 @@ import PosterSizeSelect from './PosterSizeSelect';
 import OrientationSelect from './OrientationSelect';
 import PosterLabelInputs from './PosterLabelInputs';
 import MapStyleSelect from './MapStyleSelect';
+import Alert from './Alert';
 import './AlvarMapDesignPanel.css';
 
 const AlvarMapDesignPanel = React.createClass({
@@ -63,6 +64,12 @@ const AlvarMapDesignPanel = React.createClass({
                 selected={globalState.size}
                 onChange={this._onSizeChange}
               />
+            </div>
+            <div className="AlvarMapDesignPanel__info">
+              <Alert>
+                <Icon type="picture" />
+                <p>Our posters fit to standard frames which you can find anywhere.</p>
+              </Alert>
             </div>
           </Accordion.Section>
         </Accordion>
