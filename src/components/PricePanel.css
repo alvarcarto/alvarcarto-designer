@@ -45,3 +45,12 @@
   top: -1px;
   left: 4px;
 }
+
+.PricePanel__price-shipping {
+  font-size: 0.8rem;
+  position: relative;
+  color: #999;
+  width: 100px;
+  top: -5px;
+  left: 12px;
+}
