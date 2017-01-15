@@ -10,7 +10,7 @@ const sortedCountries = _.sortBy(_.map(countries.getNames('en'), (name, code) =>
   code,
 })), 'label');
 const selectFilterFunc = (input, option) =>
-  option.props.value.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+  _.startsWith(option.props.name.toLowerCase(), input.toLowerCase());
 
 const CheckoutPanel = Form.create()(React.createClass({
   render() {
@@ -141,7 +141,13 @@ const CheckoutPanel = Form.create()(React.createClass({
               >
                 {
                   _.map(sortedCountries, (item) =>
-                    <Select.Option key={item.code} value={item.code}>{item.name}</Select.Option>
+                    <Select.Option
+                      key={item.code}
+                      value={item.code}
+                      name={item.name}
+                    >
+                      {item.name}
+                    </Select.Option>
                   )
                 }
               </Select>
