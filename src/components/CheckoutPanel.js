@@ -1,16 +1,9 @@
 import React from 'react';
 import _ from 'lodash';
-import { Form, Input, Icon, Checkbox, Select } from 'antd';
-import countries from 'i18n-iso-countries';
+import { Form, Input, Icon, Checkbox, Select, Radio } from 'antd';
 const { TruckIcon } = require('../util/svg');
+import AddressForm from './CustomAddressForm';
 import './CheckoutPanel.css';
-
-const sortedCountries = _.sortBy(_.map(countries.getNames('en'), (name, code) => ({
-  name,
-  code,
-})), 'label');
-const selectFilterFunc = (input, option) =>
-  _.startsWith(option.props.name.toLowerCase(), input.toLowerCase());
 
 const CheckoutPanel = Form.create()(React.createClass({
   render() {
@@ -27,10 +20,6 @@ const CheckoutPanel = Form.create()(React.createClass({
           <Icon type="shopping-cart" />
           Checkout
         </h2>
-
-        <h4 className="CheckoutPanel__form-header">
-          Shipping details
-        </h4>
 
         <Form onSubmit={this._onSubmit}>
           <Form.Item
@@ -51,140 +40,76 @@ const CheckoutPanel = Form.create()(React.createClass({
             )}
           </Form.Item>
 
-          <Form.Item
-            {...formItemLayout}
-            required
-            label="Full name"
-          >
-            {getFieldDecorator('name', {
-                validateTrigger: 'onBlur',
-                rules: [{
-                  required: true, message: 'Full name is required.',
-                }],
-              })(
-                <Input placeholder="Full name" onChange={console.log} />
-            )}
-          </Form.Item>
+          <h4 className="CheckoutPanel__form-header">
+            Shipping details
+          </h4>
 
-          <Form.Item
-            {...formItemLayout}
-            required
-            label="Street address"
-          >
-            {getFieldDecorator('address', {
-                validateTrigger: 'onBlur',
-                rules: [{
-                  required: true, message: 'Street address is required.',
-                }],
-              })(
-                <Input placeholder="Street address" onChange={console.log} />
-            )}
-
-            {getFieldDecorator('addressExtra')(
-              <Input
-                placeholder="Apartment / Floor / PO Box"
-                className="CheckoutPanel__input--short"
-                onChange={console.log}
-              />
-            )}
-          </Form.Item>
-
-          <Form.Item
-            {...formItemLayout}
-            required
-            label="City"
-          >
-            {getFieldDecorator('city', {
-                validateTrigger: 'onBlur',
-                rules: [{
-                  required: true, message: 'City is required.',
-                }],
-              })(
-              <Input placeholder="City / Town" onChange={console.log} />
-            )}
-          </Form.Item>
-
-          <Form.Item
-            {...formItemLayout}
-            required
-            label="Postal code"
-          >
-            {getFieldDecorator('postalCode', {
-                validateTrigger: 'onBlur',
-                rules: [{
-                  required: true, message: 'Postal code is required.',
-                }],
-              })(
-              <Input
-                placeholder="ZIP / Postal code"
-                className="CheckoutPanel__input--short"
-                onChange={console.log}
-              />
-            )}
-          </Form.Item>
-
-          <Form.Item
-            {...formItemLayout}
-            required
-            label="Country"
-          >
-            {getFieldDecorator('country-select')(
-              <Select
-                {...this.props}
-                size="large"
-                className="CountrySelect__search"
-                showSearch
-                placeholder="Enter a country"
-                optionFilterProp="children"
-                onChange={this._onChange}
-                filterOption={selectFilterFunc}
-              >
-                {
-                  _.map(sortedCountries, (item) =>
-                    <Select.Option
-                      key={item.code}
-                      value={item.code}
-                      name={item.name}
-                    >
-                      {item.name}
-                    </Select.Option>
-                  )
-                }
-              </Select>
-            )}
-          </Form.Item>
-
-          <Form.Item
-            {...formItemLayout}
-            label="State"
-          >
-            {getFieldDecorator('state')(
-              <Input
-                placeholder="State"
-                className="CheckoutPanel__input--short"
-                onChange={console.log}
-              />
-            )}
-          </Form.Item>
-
-          <Form.Item
-            {...formItemLayout}
-            label="Phone number"
-            extra="In case needed by postal service."
-          >
-            {getFieldDecorator('phone')(
-              <Input placeholder="Phone number" onChange={console.log} />
-            )}
-          </Form.Item>
+          <AddressForm onChange={console.log} />
 
           <Form.Item
             {...formItemLayout}
             label=""
           >
-            {getFieldDecorator('subscription', {
+            {getFieldDecorator('differentBilling', {
               valuePropName: 'checked',
             })(
               <Checkbox>Use a different address for billing</Checkbox>
+            )}
+          </Form.Item>
+
+          <h4 className="CheckoutPanel__form-header">
+            Shipping method
+          </h4>
+
+          <Form.Item
+            {...formItemLayout}
+            extra="On average delivered in 8 workdays"
+          >
+            {getFieldDecorator('shippingMethod', {
+              valuePropName: 'checked',
+            })(
+              <Radio.Group value="free">
+                <Radio value="free">Free international shipping</Radio>
+              </Radio.Group>
+            )}
+          </Form.Item>
+
+          <h4 className="CheckoutPanel__form-header">
+            Payment details
+          </h4>
+
+          <Form.Item
+            {...formItemLayout}
+            label="Card holder name"
+          >
+            {getFieldDecorator('creditCardName')(
+              <Input placeholder="Card holder name" onChange={console.log} />
+            )}
+          </Form.Item>
+
+          <Form.Item
+            {...formItemLayout}
+            label="Credit card"
+          >
+            {getFieldDecorator('creditCard')(
+              <Input placeholder="Credit card" onChange={console.log} />
+            )}
+          </Form.Item>
+          <Form.Item
+            {...formItemLayout}
+            label="Expires"
+          >
+            {getFieldDecorator('expires')(
+              <Input placeholder="In format 05/17" onChange={console.log} />
+            )}
+          </Form.Item>
+          <Form.Item
+            {...formItemLayout}
+            label="CVC"
+            extra="Back on your credit card"
+          >
+            {getFieldDecorator('cvc')(
+              <Input placeholder="CVC" onChange={console.log} />
             )}
           </Form.Item>
         </Form>
