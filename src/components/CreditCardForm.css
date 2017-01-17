@@ -1,0 +1,43 @@
+.CreditCardForm .CreditCardForm__number,
+.CreditCardForm .CreditCardForm__expiry-month,
+.CreditCardForm .CreditCardForm__expiry-year,
+.CreditCardForm .CreditCardForm__cvc {
+  font-family: Courier;
+}
+
+.CreditCardForm .CreditCardForm__expiry-date .CreditCardForm__expiry-month {
+  width: 60px;
+  float: left;
+}
+
+.CreditCardForm .CreditCardForm__expiry-separator {
+  float: left;
+  display: block;
+  margin: 0px 5px;
+}
+
+.CreditCardForm .CreditCardForm__expiry-date .CreditCardForm__expiry-year {
+  width: 80px;
+  float: left;
+}
+
+.CreditCardForm .ant-form-item {
+  margin-bottom: 8px;
+}
+
+.CreditCardForm .CreditCardForm__cvc {
+  width: 50px;
+}
+
+.CreditCardForm .CreditCardForm__logos {
+  margin-top: 15px;
+}
+
+.CreditCardForm .CreditCardForm__logos li {
+  margin-right: 5px;
+  float: left;
+}
+
+.CreditCardForm .CreditCardForm__logos img {
+  width: 34px;
+}

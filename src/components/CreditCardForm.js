@@ -1,6 +1,18 @@
+/* global Stripe */
+
 import React from 'react';
+import ReactDOM from 'react-dom';
 import _ from 'lodash';
-import { Form, Input, Icon, Checkbox, Tooltip } from 'antd';
+import Payment from 'payment';
+import { Form, Input, Icon, Checkbox, Tooltip, Select, Row, Col } from 'antd';
+import config from '../config';
+import './CreditCardForm.css';
+
+const ACCEPTED_CARD_TYPES = [
+  'Visa',
+  'MasterCard',
+  'American Express',
+];
 
 const form = {
   'cc-name': (val) => {
@@ -11,6 +23,17 @@ const form = {
   'cc-number': (val) => {
     if (_.isEmpty(val)) {
       return new Error('Credit card number is required.');
+    }
+
+    if (!Stripe.card.validateCardNumber(val)) {
+      return new Error('Invalid credit card number.')
+    }
+
+    const type = Stripe.card.cardType(val);
+    if (!_.includes(ACCEPTED_CARD_TYPES, type)) {
+      return new Error(`
+        Unfortunately we don't accept ${type} card at the moment.
+        We accept ${ACCEPTED_CARD_TYPES.join(', ')}.`);
     }
   },
   'cc-exp': (val) => {
@@ -35,55 +58,101 @@ const CreditCardForm = React.createClass({
     };
   },
 
+  componentDidMount() {
+    Payment.formatCardNumber(ReactDOM.findDOMNode(this.refs['cc-number']));
+  },
+
   render() {
     const formItemLayout = {
       labelCol: { span: 6 },
       wrapperCol: { span: 14 },
     };
 
+    const yearNow = new Date().getFullYear();
     const formErrors = this._getFormErrors();
     return (
       <div className="CreditCardForm">
-        <Form.Item {...formErrors.name} {...formItemLayout} required label="Name on card">
-          <Input name="cc-name" onBlur={this._onInputBlur} onChange={this._onInputChange} placeholder="Full name" />
+        <Form.Item {...formErrors['cc-name']} {...formItemLayout} required label="Name on card">
+          <Input name="cc-name" onBlur={this._onInputBlur} onChange={this._onInputChange} placeholder="Name" />
         </Form.Item>
 
-        <Form.Item {...formErrors.name} {...formItemLayout} required label="Card number">
+        <Form.Item {...formErrors['cc-number']} {...formItemLayout} required label="Card number">
           <Input
+            ref="cc-number"
+            maxLength="20"
             name="cc-number"
             onBlur={this._onInputBlur}
             onChange={this._onInputChange}
             placeholder="•••• •••• •••• ••••"
             pattern="\d*"
             autoComplete="cc-number"
+            className="CreditCardForm__number"
           />
         </Form.Item>
 
-        <Form.Item {...formErrors.expiryDate} {...formItemLayout} required label="Expiry date">
-          <Input
-            name="cc-exp"
-            onBlur={this._onInputBlur}
-            onChange={this._onInputChange}
-            pattern="\d*"
-            autoComplete="cc-exp"
-            placeholder="MM / YY"
-            className="input--short"
-          />
+        <Form.Item
+          {...formErrors['cc-exp']}
+          {...formItemLayout}
+          required
+          label="Expiry date"
+          className="CreditCardForm__expiry-date"
+        >
+          <Select
+            {...this.props}
+            size="large"
+            placeholder="MM"
+            className="CreditCardForm__expiry-month"
+          >
+            {
+              _.map(_.range(1, 13), (month) =>
+                <Select.Option key={month} value={String(month)}>
+                  {_.padStart(month, 2, '0')}
+                </Select.Option>
+              )
+            }
+          </Select>
+          <span className="CreditCardForm__expiry-separator">/</span>
+          <Select
+            {...this.props}
+            size="large"
+            placeholder="YYYY"
+            className="CreditCardForm__expiry-year"
+          >
+            {
+              _.map(_.range(yearNow, yearNow + 16), (year) =>
+                <Select.Option key={year} value={String(year)}>
+                  {year}
+                </Select.Option>
+              )
+            }
+          </Select>
         </Form.Item>
 
-        <Form.Item {...formErrors.cvc} {...formItemLayout} required
+        <Form.Item {...formErrors['cc-cvc']} {...formItemLayout} required
           label="CVC"
         >
           <Input
+            maxLength="4"
             name="cc-cvc"
             autoComplete="off"
             pattern="\d*"
             onBlur={this._onInputBlur}
             onChange={this._onInputChange}
             placeholder="CVC"
-            className="input--short"
+            className="CreditCardForm__cvc input--short"
           />
         </Form.Item>
+
+        <Row>
+          <Col span={6}></Col>
+          <Col span={14}>
+            <ul className="CreditCardForm__logos">
+              <li><img src={`${config.PUBLIC_URL}/assets/card-logo-visa.svg`} alt="Visa" /></li>
+              <li><img src={`${config.PUBLIC_URL}/assets/card-logo-mastercard.svg`} alt="MasterCard" /></li>
+              <li><img src={`${config.PUBLIC_URL}/assets/card-logo-amex.svg`} alt="American Express" /></li>
+            </ul>
+          </Col>
+        </Row>
       </div>
     );
   },
@@ -114,6 +183,9 @@ const CreditCardForm = React.createClass({
     this.setState((state) => ({
       values: _.extend(state.values, {
         [name]: value
+      }),
+      onBlurTriggered: _.extend(state.onBlurTriggered, {
+        [name]: false
       }),
     }));
   },

@@ -24,11 +24,3 @@
   margin-right: 5px;
   height: 14px;
 }
-
-.CheckoutPanel .ant-form-item {
-  margin-bottom: 14px;
-}
-
-.CheckoutPanel .ant-input-wrapper + .ant-input-wrapper > input {
-  margin-top: 4px;
-}

@@ -1,3 +1,11 @@
 .input--short {
   width: 60%;
 }
+
+.ant-input-wrapper + .ant-input-wrapper > input {
+  margin-top: 4px;
+}
+
+.ant-form-item {
+  margin-bottom: 12px;
+}

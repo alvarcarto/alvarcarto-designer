@@ -1,3 +1,5 @@
+/* global Stripe */
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
@@ -13,6 +15,8 @@ import './forms.css'
 
 import configureStore from './store/configure';
 const store = configureStore();
+
+Stripe.setPublishableKey('pk_test_PKlD56JoqROJNxZa8JoV5ILr');
 
 ReactDOM.render(
   <Provider store={store}>
