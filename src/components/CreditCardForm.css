@@ -5,6 +5,11 @@
   font-family: Courier;
 }
 
+.CreditCardForm .CreditCardForm__expiry-date .ant-form-explain {
+  display: block;
+  float: left;
+}
+
 .CreditCardForm .CreditCardForm__expiry-date .CreditCardForm__expiry-month {
   width: 60px;
   float: left;

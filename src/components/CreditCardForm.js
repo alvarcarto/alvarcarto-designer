@@ -4,7 +4,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import _ from 'lodash';
 import Payment from 'payment';
-import { Form, Input, Icon, Checkbox, Tooltip, Select, Row, Col } from 'antd';
+import { Form, Input, Select, Row, Col } from 'antd';
 import config from '../config';
 import './CreditCardForm.css';
 
@@ -37,13 +37,24 @@ const form = {
     }
   },
   'cc-exp': (val) => {
-    if (_.isEmpty(val)) {
+    if (_.isEmpty(val) || !_.isFinite(val.month) || !_.isFinite(val.year)) {
       return new Error('Expiry date is required.');
+    }
+
+    const now = new Date();
+    const currentYear = now.getFullYear();
+    const currentMonth = now.getMonth() + 1;
+    if (val.year <= currentYear && val.month < currentMonth) {
+      return new Error('Expiry date should not be in the past.');
     }
   },
   'cc-cvc': (val) => {
     if (_.isEmpty(val)) {
       return new Error('CVC is required.');
+    }
+
+    if (!Stripe.card.validateCVC(val)) {
+      return new Error('Invalid CVC.');
     }
   },
 };
@@ -53,8 +64,8 @@ const CreditCardForm = React.createClass({
     return {
       // Take all keys in form object and initialize their values
       // with null and false
-      values: _.mapValues(form, null),
-      onBlurTriggered: _.mapValues(form, false),
+      values: _.mapValues(form, () => null),
+      shouldValidate: _.mapValues(form, () => false),
     };
   },
 
@@ -98,10 +109,10 @@ const CreditCardForm = React.createClass({
           className="CreditCardForm__expiry-date"
         >
           <Select
-            {...this.props}
             size="large"
             placeholder="MM"
             className="CreditCardForm__expiry-month"
+            onChange={this._onMonthChange}
           >
             {
               _.map(_.range(1, 13), (month) =>
@@ -113,10 +124,10 @@ const CreditCardForm = React.createClass({
           </Select>
           <span className="CreditCardForm__expiry-separator">/</span>
           <Select
-            {...this.props}
             size="large"
             placeholder="YYYY"
             className="CreditCardForm__expiry-year"
+            onChange={this._onYearChange}
           >
             {
               _.map(_.range(yearNow, yearNow + 16), (year) =>
@@ -160,7 +171,7 @@ const CreditCardForm = React.createClass({
   _getFormErrors() {
     const formErrors = {};
     _.forEach(this.state.values, (val, key) => {
-      const hasBeenBlurred = this.state.onBlurTriggered[key];
+      const hasBeenBlurred = this.state.shouldValidate[key];
       if (!_.isFunction(form[key]) || !hasBeenBlurred) {
         return;
       }
@@ -179,25 +190,80 @@ const CreditCardForm = React.createClass({
 
   _onInputChange(e) {
     const { name, value } = e.target;
-
-    this.setState((state) => ({
-      values: _.extend(state.values, {
-        [name]: value
-      }),
-      onBlurTriggered: _.extend(state.onBlurTriggered, {
-        [name]: false
-      }),
-    }));
+    this._setValue(name, value);
+    this._setShouldValidate(name, false);
   },
 
   _onInputBlur(e) {
     const { name } = e.target;
+    if (name === 'cc-cvc') {
+      this._setShouldValidate('cc-exp', true);
+    }
+
+    this._setShouldValidate(name, true);
+  },
+
+  _onMonthChange(_value) {
+    const value = Number(_value);
 
     this.setState((state) => ({
-      onBlurTriggered: _.extend(state.onBlurTriggered, {
-        [name]: true
+      values: _.extend(state.values, {
+        'cc-exp': _.extend(state.values['cc-exp'], {
+          month: value,
+        }),
+      }),
+    }), this._emitOnChange);
+
+    this._removeExpiryValidate('month', value);
+  },
+
+  _onYearChange(_value) {
+    const value = Number(_value);
+
+    this.setState((state) => ({
+      values: _.extend(state.values, {
+        'cc-exp': _.extend(state.values['cc-exp'], {
+          year: value,
+        }),
+      }),
+    }), this._emitOnChange);
+
+    this._removeExpiryValidate('year', value);
+  },
+
+  _removeExpiryValidate(name, newVal) {
+    const newExp = _.merge({}, this.state.values['cc-exp'], {
+      [name]: newVal
+    });
+    const err = form['cc-exp'](newExp);
+
+    if (!_.isError(err)) {
+      this._setShouldValidate('cc-exp', false);
+    }
+  },
+
+  _setValue(name, val) {
+    this.setState((state) => ({
+      values: _.extend(state.values, {
+        [name]: val
+      }),
+    }), this._emitOnChange);
+  },
+
+  _setShouldValidate(name, val) {
+    this.setState((state) => ({
+      shouldValidate: _.extend(state.shouldValidate, {
+        [name]: val
       }),
     }));
+  },
+
+  _emitOnChange() {
+    // TODO: Add form validation here
+    this.props.onChange({
+      isValid: false,
+      values: this.state.values,
+    });
   }
 });
 
