@@ -47,8 +47,8 @@ const AddressForm = React.createClass({
     return {
       // Take all keys in form object and initialize their values
       // with null and false
-      values: _.mapValues(form, null),
-      onBlurTriggered: _.mapValues(form, false),
+      values: _.mapValues(form, () => null),
+      onBlurTriggered: _.mapValues(form, () => false),
     };
   },
 
