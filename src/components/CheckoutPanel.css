@@ -32,7 +32,3 @@
 .CheckoutPanel .ant-input-wrapper + .ant-input-wrapper > input {
   margin-top: 4px;
 }
-
-.CheckoutPanel .CheckoutPanel__input--short {
-  width: 60%;
-}

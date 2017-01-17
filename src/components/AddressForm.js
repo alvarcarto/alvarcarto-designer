@@ -70,14 +70,14 @@ const AddressForm = React.createClass({
             name="address"
             onBlur={this._onInputBlur}
             onChange={this._onInputChange}
-            placeholder="Street address"
+            placeholder="Street address / PO Box"
           />
           <Input
             name="addressExtra"
             onBlur={this._onInputBlur}
             onChange={this._onInputChange}
-            placeholder="Apartment / PO Box"
-            className="AddressForm__input--short"
+            placeholder="Apartment / Floor"
+            className="input--short"
           />
         </Form.Item>
 
@@ -96,7 +96,7 @@ const AddressForm = React.createClass({
             onBlur={this._onInputBlur}
             onChange={this._onInputChange}
             placeholder="ZIP / Postal code"
-            className="AddressForm__input--short"
+            className="input--short"
           />
         </Form.Item>
 
@@ -114,7 +114,7 @@ const AddressForm = React.createClass({
             onBlur={this._onInputBlur}
             onChange={this._onInputChange}
             placeholder="State"
-            className="AddressForm__input--short"
+            className="input--short"
           />
         </Form.Item>
 

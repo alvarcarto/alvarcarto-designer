@@ -2,7 +2,8 @@ import React from 'react';
 import _ from 'lodash';
 import { Form, Input, Icon, Checkbox, Select, Radio } from 'antd';
 const { TruckIcon } = require('../util/svg');
-import AddressForm from './CustomAddressForm';
+import AddressForm from './AddressForm';
+import CreditCardForm from './CreditCardForm';
 import './CheckoutPanel.css';
 
 const CheckoutPanel = Form.create()(React.createClass({
@@ -57,6 +58,8 @@ const CheckoutPanel = Form.create()(React.createClass({
             )}
           </Form.Item>
 
+          <AddressForm onChange={console.log} />
+
           <h4 className="CheckoutPanel__form-header">
             Shipping method
           </h4>
@@ -78,40 +81,7 @@ const CheckoutPanel = Form.create()(React.createClass({
             Payment details
           </h4>
 
-          <Form.Item
-            {...formItemLayout}
-            label="Card holder name"
-          >
-            {getFieldDecorator('creditCardName')(
-              <Input placeholder="Card holder name" onChange={console.log} />
-            )}
-          </Form.Item>
-
-          <Form.Item
-            {...formItemLayout}
-            label="Credit card"
-          >
-            {getFieldDecorator('creditCard')(
-              <Input placeholder="Credit card" onChange={console.log} />
-            )}
-          </Form.Item>
-          <Form.Item
-            {...formItemLayout}
-            label="Expires"
-          >
-            {getFieldDecorator('expires')(
-              <Input placeholder="In format 05/17" onChange={console.log} />
-            )}
-          </Form.Item>
-          <Form.Item
-            {...formItemLayout}
-            label="CVC"
-            extra="Back on your credit card"
-          >
-            {getFieldDecorator('cvc')(
-              <Input placeholder="CVC" onChange={console.log} />
-            )}
-          </Form.Item>
+          <CreditCardForm onChange={console.log} />
         </Form>
       </div>
     );
