@@ -2,7 +2,9 @@ import React from 'react';
 import _ from 'lodash';
 import { Form, Input, Icon, Checkbox, Select, Radio } from 'antd';
 const { TruckIcon } = require('../util/svg');
+import EmailForm from './EmailForm';
 import AddressForm from './AddressForm';
+import ShippingMethodForm from './ShippingMethodForm';
 import CreditCardForm from './CreditCardForm';
 import './CheckoutPanel.css';
 
@@ -23,23 +25,8 @@ const CheckoutPanel = Form.create()(React.createClass({
         </h2>
 
         <Form onSubmit={this._onSubmit}>
-          <Form.Item
-            {...formItemLayout}
-            required
-            label="E-mail"
-            extra="We won't send you spam, don't worry."
-          >
-            {getFieldDecorator('email', {
-                validateTrigger: 'onBlur',
-                rules: [{
-                  type: 'email', message: 'Invalid e-mail.',
-                }, {
-                  required: true, message: 'E-mail is required.',
-                }],
-              })(
-                <Input placeholder="Email" onChange={console.log} />
-            )}
-          </Form.Item>
+
+          <EmailForm onChange={console.log} />
 
           <h4 className="CheckoutPanel__form-header">
             Shipping details
@@ -62,18 +49,7 @@ const CheckoutPanel = Form.create()(React.createClass({
             Shipping method
           </h4>
 
-          <Form.Item
-            {...formItemLayout}
-            extra="On average delivered in 8 workdays"
-          >
-            {getFieldDecorator('shippingMethod', {
-              valuePropName: 'checked',
-            })(
-              <Radio.Group value="free">
-                <Radio value="free">Free international shipping</Radio>
-              </Radio.Group>
-            )}
-          </Form.Item>
+          <ShippingMethodForm onChange={console.log} />
 
           <h4 className="CheckoutPanel__form-header">
             Payment details
