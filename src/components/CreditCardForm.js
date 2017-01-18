@@ -81,6 +81,10 @@ const CreditCardForm = React.createClass({
 
     const yearNow = new Date().getFullYear();
     const formErrors = this._getFormErrors();
+    const cardType = _.isNull(this.state.values['cc-number'])
+      ? 'Unknown'
+      : Stripe.card.cardType(this.state.values['cc-number']);
+
     return (
       <div className="CreditCardForm">
         <Form.Item {...formErrors['cc-name']} {...formItemLayout} required label="Name on card">
@@ -158,9 +162,24 @@ const CreditCardForm = React.createClass({
           <Col span={6}></Col>
           <Col span={14}>
             <ul className="CreditCardForm__logos">
-              <li><img src={`${config.PUBLIC_URL}/assets/card-logo-visa.svg`} alt="Visa" /></li>
-              <li><img src={`${config.PUBLIC_URL}/assets/card-logo-mastercard.svg`} alt="MasterCard" /></li>
-              <li><img src={`${config.PUBLIC_URL}/assets/card-logo-amex.svg`} alt="American Express" /></li>
+              <li className={cardType === 'Visa' ? 'CreditCardForm__logo--highlight' : ''}>
+                <img
+                  src={`${config.PUBLIC_URL}/assets/card-logo-visa.svg`}
+                  alt="Visa"
+                />
+              </li>
+              <li className={cardType === 'MasterCard' ? 'CreditCardForm__logo--highlight' : ''}>
+                <img
+                  src={`${config.PUBLIC_URL}/assets/card-logo-mastercard.svg`}
+                  alt="MasterCard"
+                />
+              </li>
+              <li className={cardType === 'American Express' ? 'CreditCardForm__logo--highlight' : ''}>
+                <img
+                  src={`${config.PUBLIC_URL}/assets/card-logo-amex.svg`}
+                  alt="American Express"
+                />
+              </li>
             </ul>
           </Col>
         </Row>
