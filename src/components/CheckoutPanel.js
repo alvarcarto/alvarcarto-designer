@@ -58,8 +58,6 @@ const CheckoutPanel = Form.create()(React.createClass({
             )}
           </Form.Item>
 
-          <AddressForm onChange={console.log} />
-
           <h4 className="CheckoutPanel__form-header">
             Shipping method
           </h4>
