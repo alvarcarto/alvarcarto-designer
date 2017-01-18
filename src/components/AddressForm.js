@@ -48,7 +48,7 @@ const AddressForm = React.createClass({
       // Take all keys in form object and initialize their values
       // with null and false
       values: _.mapValues(form, () => null),
-      onBlurTriggered: _.mapValues(form, () => false),
+      shouldValidate: _.mapValues(form, () => false),
     };
   },
 
@@ -133,7 +133,7 @@ const AddressForm = React.createClass({
   _getFormErrors() {
     const formErrors = {};
     _.forEach(this.state.values, (val, key) => {
-      const hasBeenBlurred = this.state.onBlurTriggered[key];
+      const hasBeenBlurred = this.state.shouldValidate[key];
       if (!_.isFunction(form[key]) || !hasBeenBlurred) {
         return;
       }
@@ -164,7 +164,7 @@ const AddressForm = React.createClass({
     const { name } = e.target;
 
     this.setState((state) => ({
-      onBlurTriggered: _.extend(state.onBlurTriggered, {
+      shouldValidate: _.extend(state.shouldValidate, {
         [name]: true
       }),
     }));
@@ -180,7 +180,7 @@ const AddressForm = React.createClass({
 
   _onCountryBlur() {
     this.setState((state) => ({
-      onBlurTriggered: _.extend(state.onBlurTriggered, {
+      shouldValidate: _.extend(state.shouldValidate, {
         country: true,
       }),
     }));
