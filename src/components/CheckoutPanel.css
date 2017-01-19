@@ -2,7 +2,19 @@
   padding: 20px 20px 20px 40px;
 }
 
-.CheckoutPanel h2 {
+.CheckoutPanel__section {
+  margin: 10px 0 10px 0;
+}
+
+.CheckoutPanel__section:not(:last-of-type):after {
+  content: "";
+  display: block;
+  width: 88%;
+  margin: 50px 0 15px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.CheckoutPanel h1 {
   font-weight: 400;
   text-transform: uppercase;
   color: #108ee9;
@@ -13,14 +25,16 @@
   margin-right: 5px;
 }
 
-.CheckoutPanel__form-header {
-  margin-bottom: 24px;
+.CheckoutPanel__new-address {
+  margin-top: 20px;
+  margin-bottom: 0;
 }
 
-.CheckoutPanel .TruckIcon {
-  position: relative;
-  top: 2px;
-  display: inline-block;
-  margin-right: 5px;
-  height: 14px;
+.CheckoutPanel__form-header {
+  margin-bottom: 24px;
+  text-transform: uppercase;
+}
+
+.CheckoutPanel__terms {
+  margin-top: 10px;
 }

@@ -4,7 +4,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import _ from 'lodash';
 import Payment from 'payment';
-import { Form, Input, Select, Row, Col } from 'antd';
+import { Form, Input, Select, Row, Col, Icon } from 'antd';
 import config from '../config';
 import './CreditCardForm.css';
 
@@ -75,7 +75,7 @@ const CreditCardForm = React.createClass({
 
   render() {
     const formItemLayout = {
-      labelCol: { span: 6 },
+      labelCol: { span: 7 },
       wrapperCol: { span: 14 },
     };
 
@@ -94,6 +94,7 @@ const CreditCardForm = React.createClass({
         <Form.Item {...formErrors['cc-number']} {...formItemLayout} required label="Card number">
           <Input
             ref="cc-number"
+            suffix={<Icon type="lock" />}
             maxLength="20"
             name="cc-number"
             onBlur={this._onInputBlur}
@@ -159,8 +160,8 @@ const CreditCardForm = React.createClass({
         </Form.Item>
 
         <Row>
-          <Col span={6}></Col>
-          <Col span={14}>
+          <Col span={formItemLayout.labelCol.span}></Col>
+          <Col span={formItemLayout.wrapperCol.span}>
             <ul className="CreditCardForm__logos">
               <li className={cardType === 'Visa' ? 'CreditCardForm__logo--highlight' : ''}>
                 <img

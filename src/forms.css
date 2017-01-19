@@ -2,7 +2,7 @@
   width: 60%;
 }
 
-.ant-input-wrapper + .ant-input-wrapper > input {
+.ant-input + .ant-input {
   margin-top: 4px;
 }
 
@@ -16,6 +16,16 @@
 
 .ant-form-explain, .ant-form-extra {
   position: relative;
-  top: 3px;
+  top: 2px;
   left: 2px;
+}
+
+.ant-form-extra {
+  font-size: 0.7rem;
+}
+
+.ant-input-preSuffix-wrapper .ant-input-suffix {
+  font-size: 0.9rem;
+  line-height: 1;
+  color: #888;
 }

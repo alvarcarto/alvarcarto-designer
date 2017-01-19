@@ -54,7 +54,7 @@ const AddressForm = React.createClass({
 
   render() {
     const formItemLayout = {
-      labelCol: { span: 6 },
+      labelCol: { span: 7 },
       wrapperCol: { span: 14 },
     };
 

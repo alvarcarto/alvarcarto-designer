@@ -5,15 +5,10 @@ import './ShippingMethodForm.css';
 
 const ShippingMethodForm = React.createClass({
   render() {
-    const formItemLayout = {
-      labelCol: { span: 6 },
-      wrapperCol: { span: 14 },
-    };
-
     return (
       <div className="ShippingMethodForm">
         <Row>
-          <Col span={12}>
+          <Col span={13}>
             <Radio.Group value="free">
               <Radio value="free">Worldwide Priority Mail</Radio>
             </Radio.Group>

@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@google/maps": "^0.3.1",
-    "antd": "^2.5.0",
+    "antd": "^2.6.3",
     "common-tags": "^1.4.0",
     "debounce-promise": "^2.1.1",
     "geodist": "^0.2.1",
