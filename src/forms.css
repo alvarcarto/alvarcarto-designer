@@ -2,6 +2,15 @@
   width: 60%;
 }
 
+.ant-form-item-label {
+  text-align: left;
+  font-weight: bold;
+}
+
+.ant-form-item-label label::after {
+  display: none;
+}
+
 .ant-input + .ant-input {
   margin-top: 4px;
 }

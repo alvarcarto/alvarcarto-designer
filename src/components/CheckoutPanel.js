@@ -1,7 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { Form, Input, Icon, Checkbox, Select, Radio, Tooltip, Button } from 'antd';
-const { TruckIcon } = require('../util/svg');
 import EmailForm from './EmailForm';
 import AddressForm from './AddressForm';
 import ShippingMethodForm from './ShippingMethodForm';
@@ -37,6 +37,9 @@ const CheckoutPanel = React.createClass({
       wrapperCol: { span: 14 },
     };
 
+    let i = 0;
+    const getIndex = () => ++i;
+
     const { emailSubscription } = this.state.values;
     const formErrors = this._getFormErrors();
     return (
@@ -49,7 +52,7 @@ const CheckoutPanel = React.createClass({
         <Form onSubmit={this._onSubmit}>
           <section className="CheckoutPanel__section">
             <h3 className="CheckoutPanel__form-header">
-              Shipping details
+              {getIndex()}. Shipping details
             </h3>
 
             <EmailForm onChange={console.log} />
@@ -80,27 +83,34 @@ const CheckoutPanel = React.createClass({
             </Form.Item>
           </section>
 
-
-          {
-            !this.state.values.differentBillingAddress
-              ? null
-              : <section className="CheckoutPanel__section">
-                  <h3 className="CheckoutPanel__form-header">Billing address</h3>
-                  <AddressForm onChange={console.log} />
-                </section>
-          }
+          <ReactCSSTransitionGroup
+            transitionName="popin"
+            transitionEnterTimeout={400}
+            transitionLeaveTimeout={300}
+          >
+            {
+              !this.state.values.differentBillingAddress
+                ? null
+                : <section className="CheckoutPanel__section">
+                    <h3 className="CheckoutPanel__form-header">
+                      {getIndex()}. Billing address
+                    </h3>
+                    <AddressForm onChange={console.log} />
+                  </section>
+            }
+          </ReactCSSTransitionGroup>
 
           <section className="CheckoutPanel__section">
             <h3 className="CheckoutPanel__form-header">
-              Shipping method
+              {getIndex()}. Shipping method
             </h3>
 
             <ShippingMethodForm onChange={console.log} />
           </section>
 
-          <section className="CheckoutPanel__section">
+          <section className="CheckoutPanel__section CheckoutPanel__section--last">
             <h3 className="CheckoutPanel__form-header">
-              Payment details
+              {getIndex()}. Payment details
             </h3>
 
             <CreditCardForm onChange={console.log} />
@@ -112,10 +122,12 @@ const CheckoutPanel = React.createClass({
               </Checkbox>
             </Form.Item>
 
-            <Button type="primary">
-              <Icon type="shopping-cart" />
-              Complete order
-            </Button>
+            <Form.Item {...formItemLayout} label="&nbsp;">
+              <Button className="CheckoutPanel__complete-button" type="primary">
+                <Icon type="shopping-cart" />
+                Complete order
+              </Button>
+            </Form.Item>
           </section>
         </Form>
       </div>

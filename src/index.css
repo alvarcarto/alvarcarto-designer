@@ -30,15 +30,6 @@ html {
   cursor: -webkit-grabbing;
 }
 
-.ant-form-item-label {
-  text-align: left;
-  font-weight: bold;
-}
-
-.ant-form-item-label label::after {
-  display: none;
-}
-
 .noselect {
   -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Chrome/Safari/Opera */
@@ -47,4 +38,22 @@ html {
         -ms-user-select: none; /* Internet Explorer/Edge */
             user-select: none; /* Non-prefixed version, currently
                                   not supported by any browser */
+}
+
+.popin-enter {
+  opacity: 0.01;
+}
+
+.popin-enter.popin-enter-active {
+  opacity: 1;
+  transition: opacity 400ms ease-in;
+}
+
+.popin-leave {
+  opacity: 1;
+}
+
+.popin-leave.popin-leave-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
 }

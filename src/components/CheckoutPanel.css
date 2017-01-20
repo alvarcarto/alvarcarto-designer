@@ -1,17 +1,21 @@
 .CheckoutPanel {
-  padding: 20px 20px 20px 40px;
+  padding: 20px 20px 40px 40px;
 }
 
 .CheckoutPanel__section {
   margin: 10px 0 10px 0;
 }
 
-.CheckoutPanel__section:not(:last-of-type):after {
+.CheckoutPanel__section::after {
   content: "";
   display: block;
   width: 88%;
   margin: 50px 0 15px 0;
   border-bottom: 1px solid #eee;
+}
+
+.CheckoutPanel__section--last::after {
+  display: none;
 }
 
 .CheckoutPanel h1 {
@@ -25,9 +29,9 @@
   margin-right: 5px;
 }
 
-.CheckoutPanel__new-address {
+.CheckoutPanel .CheckoutPanel__new-address {
   margin-top: 20px;
-  margin-bottom: 0;
+  margin-bottom: -10px;
 }
 
 .CheckoutPanel__form-header {
@@ -35,6 +39,15 @@
   text-transform: uppercase;
 }
 
-.CheckoutPanel__terms {
-  margin-top: 10px;
+.CheckoutPanel .CheckoutPanel__terms {
+  margin-top: 40px;
+  margin-bottom: 0;
+}
+
+.CheckoutPanel__terms a:hover {
+  text-decoration: underline;
+}
+
+.CheckoutPanel .CheckoutPanel__complete-button {
+  padding: 10px 20px;
 }
