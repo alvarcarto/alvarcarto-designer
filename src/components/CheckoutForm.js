@@ -6,7 +6,7 @@ import EmailForm from './EmailForm';
 import AddressForm from './AddressForm';
 import ShippingMethodForm from './ShippingMethodForm';
 import CreditCardForm from './CreditCardForm';
-import './CheckoutPanel.css';
+import './CheckoutForm.css';
 
 const form = {
   differentBillingAddress: () => null,
@@ -18,7 +18,7 @@ const form = {
   }
 };
 
-const CheckoutPanel = React.createClass({
+const CheckoutForm = React.createClass({
   getInitialState() {
     return {
       // Take all keys in form object and initialize their values
@@ -43,15 +43,10 @@ const CheckoutPanel = React.createClass({
     const { emailSubscription } = this.state.values;
     const formErrors = this._getFormErrors();
     return (
-      <div className={`CheckoutPanel ${this.props.className}`}>
-        <h1 className="CheckoutPanel__header">
-          <Icon type="shopping-cart" />
-          Checkout
-        </h1>
-
+      <div className="CheckoutForm">
         <Form onSubmit={this._onSubmit}>
-          <section className="CheckoutPanel__section">
-            <h3 className="CheckoutPanel__form-header">
+          <section className="CheckoutForm__section">
+            <h3 className="CheckoutForm__form-header">
               {getIndex()}. Shipping details
             </h3>
 
@@ -76,7 +71,7 @@ const CheckoutPanel = React.createClass({
 
             <AddressForm onChange={console.log} />
 
-            <Form.Item className="CheckoutPanel__new-address" {...formItemLayout} label="&nbsp;">
+            <Form.Item className="CheckoutForm__new-address" {...formItemLayout} label="&nbsp;">
               <Checkbox name="differentBillingAddress" onChange={this._onCheckboxChange}>
                 Use a different address for billing
               </Checkbox>
@@ -91,8 +86,8 @@ const CheckoutPanel = React.createClass({
             {
               !this.state.values.differentBillingAddress
                 ? null
-                : <section className="CheckoutPanel__section">
-                    <h3 className="CheckoutPanel__form-header">
+                : <section className="CheckoutForm__section">
+                    <h3 className="CheckoutForm__form-header">
                       {getIndex()}. Billing address
                     </h3>
                     <AddressForm onChange={console.log} />
@@ -100,34 +95,29 @@ const CheckoutPanel = React.createClass({
             }
           </ReactCSSTransitionGroup>
 
-          <section className="CheckoutPanel__section">
-            <h3 className="CheckoutPanel__form-header">
+          <section className="CheckoutForm__section">
+            <h3 className="CheckoutForm__form-header">
               {getIndex()}. Shipping method
             </h3>
 
             <ShippingMethodForm onChange={console.log} />
           </section>
 
-          <section className="CheckoutPanel__section CheckoutPanel__section--last">
-            <h3 className="CheckoutPanel__form-header">
+          <section className="CheckoutForm__section CheckoutForm__section--last">
+            <h3 className="CheckoutForm__form-header">
               {getIndex()}. Payment details
             </h3>
 
             <CreditCardForm onChange={console.log} />
 
+            <Checkbox className="CheckoutForm__terms" name="termsAccepted" onChange={this._onCheckboxChange}>
+              I accept the <a target="_blank" href="http://alvarcarto.com/tos">terms of service</a>
+            </Checkbox>
 
-            <Form.Item className="CheckoutPanel__terms" {...formItemLayout} label="&nbsp;">
-              <Checkbox name="termsAccepted" onChange={this._onCheckboxChange}>
-                I accept the <a target="_blank" href="http://alvarcarto.com/tos">terms of service</a>
-              </Checkbox>
-            </Form.Item>
-
-            <Form.Item {...formItemLayout} label="&nbsp;">
-              <Button className="CheckoutPanel__complete-button" type="primary">
-                <Icon type="shopping-cart" />
-                Complete order
-              </Button>
-            </Form.Item>
+            <Button className="CheckoutForm__complete-button" type="primary">
+              <Icon type="shopping-cart" />
+              Complete order
+            </Button>
           </section>
         </Form>
       </div>
@@ -175,4 +165,4 @@ const CheckoutPanel = React.createClass({
   }
 });
 
-export default CheckoutPanel;
+export default CheckoutForm;

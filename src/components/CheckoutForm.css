@@ -1,0 +1,53 @@
+.CheckoutForm__section {
+  margin: 10px 0 10px 0;
+}
+.CheckoutForm__section:first-of-type {
+  margin-top: 0;
+}
+
+.CheckoutForm__section::after {
+  content: "";
+  display: block;
+  width: 88%;
+  margin: 50px 0 15px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.CheckoutForm__section--last::after {
+  display: none;
+}
+
+.CheckoutForm h1 {
+  font-weight: 400;
+  text-transform: uppercase;
+  color: #108ee9;
+  margin-bottom: 30px;
+}
+
+.CheckoutForm__header > .anticon {
+  margin-right: 5px;
+}
+
+.CheckoutForm .CheckoutForm__new-address {
+  margin-top: 20px;
+  margin-bottom: -10px;
+}
+
+.CheckoutForm__form-header {
+  margin-bottom: 34px;
+  text-transform: uppercase;
+}
+
+.CheckoutForm .CheckoutForm__terms {
+  display: block;
+  margin: 40px 0 12px 2px;
+}
+
+.CheckoutForm__terms a:hover {
+  text-decoration: underline;
+}
+
+.CheckoutForm .CheckoutForm__complete-button {
+  padding: 10px 20px;
+  width: 87.5%;
+}

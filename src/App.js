@@ -2,8 +2,8 @@ import React from 'react';
 import _ from 'lodash';
 import config from './config';
 import { connect } from 'react-redux';
-import LightWall from './components/LightWall';
-import SidePanel from './components/SidePanel';
+import EditorPage from './components/EditorPage';
+import CheckoutPage from './components/CheckoutPage';
 import './App.css';
 import { initialState } from './reducers';
 
@@ -26,8 +26,11 @@ const App = React.createClass({
     return (
       <div className={className}>
         <div className="App__layout">
-          <SidePanel />
-          <LightWall />
+          {
+            isCheckout
+              ? <CheckoutPage />
+              : <EditorPage />
+          }
         </div>
       </div>
     );

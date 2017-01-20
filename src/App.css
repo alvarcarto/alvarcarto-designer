@@ -6,20 +6,4 @@
 .App__layout {
   width: 100%;
   height: 100%;
-  display: flex;
-  flex-direction: row;
-}
-
-.App__layout > * {
-  height: 100%;
-}
-
-.App .SidePanel {
-  flex: 1;
-  min-width: 440px;
-  max-width: 600px;
-}
-
-.App .LightWall {
-  flex: 2;
 }

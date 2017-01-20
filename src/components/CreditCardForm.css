@@ -8,6 +8,7 @@
 .CreditCardForm .CreditCardForm__expiry-date .ant-form-explain {
   display: block;
   float: left;
+  clear: both;
 }
 
 .CreditCardForm .CreditCardForm__expiry-date .CreditCardForm__expiry-month {
@@ -16,6 +17,8 @@
 }
 
 .CreditCardForm .CreditCardForm__expiry-separator {
+  line-height: 32px;
+  font-size: 0.9rem;
   float: left;
   display: block;
   margin: 0px 5px;

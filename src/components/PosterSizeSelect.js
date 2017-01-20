@@ -10,7 +10,7 @@ import './PosterSizeSelect.css';
 const SIZES = [
   {
     id: '30x40cm',
-    label: '30cm x 40cm',
+    label: '30 x 40 cm',
     poster: {
       width: 30,
       height: 40,
@@ -18,7 +18,7 @@ const SIZES = [
   },
   {
     id: '50x70cm',
-    label: '50cm x 70cm',
+    label: '50 x 70 cm',
     poster: {
       width: 50,
       height: 70,
@@ -26,7 +26,7 @@ const SIZES = [
   },
   {
     id: '70x100cm',
-    label: '70cm x 100cm',
+    label: '70 x 100 cm',
     poster: {
       width: 70,
       height: 100,

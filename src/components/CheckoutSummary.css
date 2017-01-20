@@ -1,0 +1,24 @@
+.CheckoutSummary__header {
+  margin-bottom: 24px;
+  text-transform: uppercase;
+}
+
+.CheckoutSummary__price-table {
+  margin-top: 20px;
+  font-size: 0.9rem;
+  text-align: right;
+  float: right;
+}
+
+.CheckoutSummary__price-table tr {
+  line-height: 28px;
+}
+
+.CheckoutSummary__price-table td:last-of-type {
+  padding-left: 25px;
+}
+
+.CheckoutSummary__total-row {
+  text-transform: uppercase;
+  font-weight: 700;
+}

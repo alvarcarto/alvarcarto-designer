@@ -1,0 +1,19 @@
+.EditorPage {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+}
+
+.EditorPage > * {
+  height: 100%;
+}
+
+.EditorPage .SidePanel {
+  flex: 1;
+  min-width: 440px;
+  max-width: 600px;
+}
+
+.EditorPage .LightWall {
+  flex: 2;
+}

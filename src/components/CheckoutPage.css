@@ -1,0 +1,42 @@
+.CheckoutPage {
+  max-width: 900px;
+  padding: 0 30px;
+  margin: 100px auto 50px auto;
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.CheckoutPage .CheckoutSummary {
+  flex: 35;
+}
+
+.CheckoutPage .CheckoutForm {
+  flex: 65;
+}
+
+.CheckoutPage__logo img {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  height: 24px;
+}
+
+.CheckoutPage__back-link {
+  position: absolute;
+  font-size: 0.8rem;
+  font-weight: 400;
+  padding: 10px 20px;
+  top: 20px;
+  left: 10px;
+  transform: translate3d(0, 0, 0);
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.CheckoutPage__back-link .anticon {
+  margin-right: 2px;
+}
+
+.CheckoutPage__back-link:hover {
+  transform: translate3d(-8px, 0, 0);
+  padding-right: 40px;
+}
