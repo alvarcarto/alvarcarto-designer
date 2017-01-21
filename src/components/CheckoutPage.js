@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
-import { Row, Col, Icon } from 'antd';
+import { Row, Col, Icon, Affix } from 'antd';
 import { setViewState } from '../actions';
 import config from '../config';
 import CheckoutForm from './CheckoutForm';
@@ -26,7 +26,9 @@ const CheckoutPage = React.createClass({
           </a>
         </div>
 
-        <CheckoutSummary globalState={this.props.globalState} />
+        <Affix className="CheckoutPage__summary-container" offsetTop={10}>
+          <CheckoutSummary globalState={this.props.globalState} />
+        </Affix>
         <CheckoutForm />
       </div>
     );

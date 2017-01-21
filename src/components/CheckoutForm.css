@@ -47,6 +47,53 @@
   text-decoration: underline;
 }
 
+.CheckoutForm .CheckoutForm__info {
+  margin: 10px 0 20px 0;
+  background: #f9f9f9;
+  border-radius: 5px;
+  padding: 15px 20px;
+  width: 87.5%;
+  color: #888;
+  display: flex;
+  flex-direction: row;
+}
+
+.CheckoutForm .CheckoutForm__info > .anticon {
+  margin-top: 2px;
+  font-size: 1.4rem;
+}
+
+.CheckoutForm .CheckoutForm__info > p {
+  margin-left: 10px;
+}
+
+.CheckoutForm .CheckoutForm__badge-list {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 40px;
+}
+
+.CheckoutForm .CheckoutForm__badge {
+  margin-right: 50px;
+  text-align: center;
+  text-transform: uppercase;
+  width: 80px;
+}
+
+.CheckoutForm .CheckoutForm__badge > h4 {
+  margin-top: 5px;
+  font-size: 0.7rem;
+  color: #999;
+  text-align: center;
+}
+
+.CheckoutForm .CheckoutForm__badge > .anticon {
+  font-size: 3rem;
+  color: #89CCBD;
+  font-weight: 300;
+}
+
+
 .CheckoutForm .CheckoutForm__complete-button {
   padding: 10px 20px;
   width: 87.5%;

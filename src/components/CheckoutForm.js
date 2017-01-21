@@ -63,7 +63,6 @@ const CheckoutForm = React.createClass({
                   name="emailSubscription"
                   onChange={this._onCheckboxChange}
                 >
-
                     Subscribe me to exclusive offers
                 </Checkbox>
               </Tooltip>
@@ -108,11 +107,41 @@ const CheckoutForm = React.createClass({
               {getIndex()}. Payment details
             </h3>
 
+            <ul className="CheckoutForm__badge-list">
+              <li>
+                <div className="CheckoutForm__badge">
+                  <Icon type="credit-card" />
+                  <h4>Trusted Gateway</h4>
+                </div>
+              </li>
+              <li>
+                <div className="CheckoutForm__badge">
+                  <Icon type="lock" />
+                  <h4>SSL Secured Payments</h4>
+                </div>
+              </li>
+              <li>
+                <div className="CheckoutForm__badge">
+                  <Icon type="hdd" />
+                  <h4>Privacy first</h4>
+                </div>
+              </li>
+            </ul>
+
             <CreditCardForm onChange={console.log} />
 
             <Checkbox className="CheckoutForm__terms" name="termsAccepted" onChange={this._onCheckboxChange}>
               I accept the <a target="_blank" href="http://alvarcarto.com/tos">terms of service</a>
             </Checkbox>
+
+            <div className="CheckoutForm__info">
+              <Icon type="solution" />
+              <p>
+                Please ensure that your information is filled out correctly.
+                When clicking complete order, your account will be charged via
+                a secure <a href="https://stripe.com">Stripe</a> payment.
+              </p>
+            </div>
 
             <Button className="CheckoutForm__complete-button" type="primary">
               <Icon type="shopping-cart" />
