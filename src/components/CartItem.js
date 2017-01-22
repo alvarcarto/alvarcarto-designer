@@ -1,6 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
-import { Button, Icon, Tooltip } from 'antd';
+import { Button, Icon, Tooltip, Popconfirm } from 'antd';
 import { getStyle } from '../util';
 import { getCurrencySymbol, calculatePrice } from '../util/price';
 import { createApiUrlQuery } from '../util';
@@ -63,12 +63,20 @@ const CartItem = React.createClass({
               this.props.hideRemoveButton
                 ? null
                 : <li>
-                  <a onClick={this._onRemove}>
-                    <Tooltip title="Remove item from cart">
-                      <Icon type="close" />
-                    </Tooltip>
-                  </a>
-                </li>
+                    <Popconfirm
+                      placement="bottom"
+                      title="Remove from cart? Changes will be lost."
+                      onConfirm={this._onRemove}
+                      okText="Remove"
+                      cancelText="Cancel"
+                    >
+                      <a>
+                        <Tooltip title="Remove item from cart">
+                          <Icon type="close" />
+                        </Tooltip>
+                      </a>
+                    </Popconfirm>
+                  </li>
             }
           </ul>
         </div>
