@@ -134,7 +134,7 @@ const CheckoutForm = React.createClass({
               <Icon type="solution" />
               <p>
                 Please ensure that your information is filled out correctly.
-                When clicking complete order, your account will be charged via
+                When clicking Complete order, your account will be charged via
                 a secure <a href="https://stripe.com">Stripe</a> payment.
               </p>
             </div>
