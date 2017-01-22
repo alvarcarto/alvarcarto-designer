@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { setMapLabels } from '../actions';
-import { Form, Icon, Input, Button } from 'antd';
+import { Form, Icon, Input, Button, Switch } from 'antd';
 import './PosterLabelInputs.css';
 
 const PosterLabelInputs = React.createClass({
@@ -14,9 +14,17 @@ const PosterLabelInputs = React.createClass({
           <Form.Item
             labelCol={{ span: 6 }}
             wrapperCol={{ span: 14 }}
+            label="Print labels"
+          >
+            <Switch size="default" defaultChecked onChange={this._onSwitchChange} />
+          </Form.Item>
+
+          <Form.Item
+            labelCol={{ span: 6 }}
+            wrapperCol={{ span: 14 }}
             label="Header"
           >
-            <Input placeholder="Header" value={labels.header} onChange={this._onHeaderChange} />
+            <Input disabled={!labels.enabled} placeholder="Header" value={labels.header} onChange={this._onHeaderChange} />
           </Form.Item>
 
           <Form.Item
@@ -24,7 +32,7 @@ const PosterLabelInputs = React.createClass({
             wrapperCol={{ span: 14 }}
             label="Small header"
           >
-            <Input placeholder="Small header" value={labels.smallHeader} onChange={this._onSmallHeaderChange} />
+            <Input disabled={!labels.enabled} placeholder="Small header" value={labels.smallHeader} onChange={this._onSmallHeaderChange} />
           </Form.Item>
 
           <Form.Item
@@ -32,11 +40,17 @@ const PosterLabelInputs = React.createClass({
             wrapperCol={{ span: 14 }}
             label="Text"
           >
-            <Input placeholder="Text" value={labels.text} onChange={this._onTextChange} />
+            <Input disabled={!labels.enabled} placeholder="Text" value={labels.text} onChange={this._onTextChange} />
           </Form.Item>
         </Form>
       </div>
     );
+  },
+
+  _onSwitchChange(value) {
+    this.props.dispatch(setMapLabels({
+      enabled: value,
+    }));
   },
 
   _onHeaderChange(event) {

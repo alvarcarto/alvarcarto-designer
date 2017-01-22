@@ -56,11 +56,15 @@ const AlvarMap = React.createClass({
               : this._renderLeaflet(style)
           }
 
-          <AlvarMapLabels labels={{
-            header: mapItem.labelHeader,
-            smallHeader: mapItem.labelSmallHeader,
-            text: mapItem.labelText,
-          }}/>
+          {
+            mapItem.labelsEnabled
+              ? <AlvarMapLabels labels={{
+                  header: mapItem.labelHeader,
+                  smallHeader: mapItem.labelSmallHeader,
+                  text: mapItem.labelText,
+                }}/>
+              : null
+          }
         </div>
       </div>
     );

@@ -45,6 +45,7 @@ const AlvarMapDesignPanel = React.createClass({
           <Accordion.Section header="Labels">
             <div className="AlvarMapDesignPanel__group">
               <PosterLabelInputs dispatch={this.props.dispatch} labels={{
+                enabled: mapItem.labelsEnabled,
                 header: mapItem.labelHeader,
                 smallHeader: mapItem.labelSmallHeader,
                 text: mapItem.labelText,

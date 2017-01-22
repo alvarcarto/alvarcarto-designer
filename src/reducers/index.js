@@ -15,6 +15,7 @@ const initialState = {
       mapBearing: 0,
       orientation: 'portrait',
       size: '50x70cm',
+      labelsEnabled: true,
       labelHeader: 'Helsinki',
       labelSmallHeader: 'Finland',
       labelText: coordToPrettyText(HELSINKI_CENTER),
@@ -45,6 +46,7 @@ function reducer(state = initialState, action) {
 
     case actions.SET_MAP_LABELS:
       newAttrs = {
+        labelsEnabled: action.payload.enabled,
         labelHeader: action.payload.header,
         labelSmallHeader: action.payload.smallHeader,
         labelText: action.payload.text,
