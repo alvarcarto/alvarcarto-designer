@@ -10,7 +10,7 @@ const initialState = {
       quantity: 1,
       mapCenter: HELSINKI_CENTER,
       mapZoom: 8,
-      mapStyle: 'mapbox-orange',
+      mapStyle: 'black-and-white',
       mapPitch: 0,
       mapBearing: 0,
       orientation: 'portrait',
