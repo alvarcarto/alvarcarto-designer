@@ -17,8 +17,6 @@ const HELSINKI_CENTER = { lat: 60.159865, lng: 24.942334 };
 const AlvarMap = React.createClass({
   getInitialState() {
     return {
-      initialFlyDone: false,
-      loading: true,
       glMap: null,
     };
   },
@@ -52,14 +50,11 @@ const AlvarMap = React.createClass({
     return (
       <div className="AlvarMap grabbable" style={dimensions}>
         <div className="AlvarMap__container">
-          <Spin spinning={state.loading}>
-            {
-              style.type === 'vector'
-                ? this._renderMapboxGl(style)
-                : this._renderLeaflet(style)
-            }
-
-          </Spin>
+          {
+            style.type === 'vector'
+              ? this._renderMapboxGl(style)
+              : this._renderLeaflet(style)
+          }
 
           <AlvarMapLabels labels={{
             header: mapItem.labelHeader,
@@ -127,18 +122,9 @@ const AlvarMap = React.createClass({
   },
 
   _onStyleLoad(map) {
-    if (!this.state.initialFlyDone) {
-      setTimeout(
-        () => this.setState(() => ({ loading: false })),
-        200
-      );
-      setTimeout(() => this._flyTo(HELSINKI_CENTER, 10), 1000);
-
-      this.setState({
-        glMap: map,
-        initialFlyDone: true,
-      });
-    }
+    this.setState({
+      glMap: map,
+    });
   },
 
   _flyTo(center, zoom) {

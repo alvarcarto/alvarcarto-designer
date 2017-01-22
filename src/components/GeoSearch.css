@@ -14,6 +14,10 @@
   color: #999;
 }
 
+.GeoSearch__container .Select-clear-zone {
+  top: 1px;
+}
+
 .GeoSearch__container .Select-arrow-zone {
   visibility: hidden;
 }

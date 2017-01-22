@@ -17,6 +17,13 @@ const Accordion = React.createClass({
 
     return (
       <div className="Accordion">
+        <div className="Accordion__start">
+          <div className="Accordion__start-circle"></div>
+          <h3 className="Accordion__start-header">
+            Create your unique poster
+          </h3>
+        </div>
+
         {children}
       </div>
     );

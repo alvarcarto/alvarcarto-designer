@@ -1,5 +1,7 @@
 .Accordion {
   border-bottom-width: 0;
+  overflow-y: hidden;
+  margin-top: 30px;
 }
 
 .Accordion__section > .Accordion__content {
@@ -12,7 +14,32 @@
   height: auto;
 }
 
+.Accordion__start {
+  position: relative;
+  height: 40px;
+}
+
+.Accordion__start-header {
+  position: absolute;
+  left: 60px;
+  top: -3px;
+  font-size: 0.7rem;
+  color: #999;
+  font-weight: 400;
+}
+
+.Accordion__start-circle {
+  z-index: 20;
+  position: absolute;
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+  background: #108ee9;
+  left: 22px;
+}
+
 .Accordion__section .Accordion__header {
+  font-family: "Fira Sans Extra Condensed";
   cursor: pointer;
   font-weight: 400;
   padding: 20px 60px;
@@ -25,6 +52,7 @@
 }
 
 .Accordion__header > h3 {
+  top: 1px;
   font-weight: 400;
   color: #555;
   font-size: 1.1rem;
@@ -64,7 +92,7 @@
   background: #fafafa;
   border: 1px solid #108ee9;
   color: #108ee9;
-  line-height: 22px;
+  line-height: 23px;
   text-indent: 0px;
   left: 16px;
   top: 50%;

@@ -32,9 +32,12 @@
 }
 
 .CheckoutSummary__add {
-  padding: 10px;
-  margin: 3px 0 0 -5px;
+  margin: 13px 0 0 -5px;
   cursor: pointer;
+}
+
+.CheckoutSummary__add a {
+  padding: 10px;
 }
 
 .CheckoutSummary__add .anticon {
