@@ -3,13 +3,14 @@ import React from 'react';
 import { Icon } from 'antd';
 import { setViewState } from '../actions';
 import { posterSizeToPixels, createApiUrlQuery } from '../util';
-import { calculatePrice, getCurrencySymbol } from '../util/price';
+import { calculateTotalPrice, getCurrencySymbol } from '../util/price';
 import './PricePanel.css';
 
 const PricePanel = React.createClass({
   render() {
     const { globalState } = this.props;
-    const price = calculatePrice(globalState.size);
+    const mapItem = globalState.cart[globalState.editCartItem];
+    const price = calculateTotalPrice(globalState.cart);
 
     return (
       <div className="PricePanel">
@@ -29,12 +30,6 @@ const PricePanel = React.createClass({
 
   _onCheckoutClick() {
     this.props.dispatch(setViewState('checkout'));
-  },
-
-  _createUrl() {
-    const { globalState } = this.props;
-    const query = createApiUrlQuery(globalState);
-    return `http://tiles.alvarcarto.com:5000/api/render${query}`;
   }
 });
 

@@ -7,6 +7,15 @@
   position: relative;
 }
 
+.CheckoutPage .ant-affix {
+  max-height: 100%;
+  overflow-y: auto;
+}
+
+.CheckoutPage .CheckoutSummary {
+  margin-bottom: 60px;
+}
+
 .CheckoutPage .CheckoutPage__summary-container {
   flex: 35;
 }

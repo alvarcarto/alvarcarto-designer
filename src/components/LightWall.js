@@ -9,9 +9,11 @@ import './LightWall.css';
 const LightWall = React.createClass({
   render() {
     const { globalState } = this.props;
+    const mapItem = globalState.cart[globalState.editCartItem];
+
     const dimensions = posterSizeToPhysicalDimensions(
-      globalState.size,
-      globalState.orientation
+      mapItem.size,
+      mapItem.orientation
     );
 
     return (

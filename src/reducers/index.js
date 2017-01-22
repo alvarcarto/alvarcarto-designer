@@ -5,23 +5,29 @@ import { coordToPrettyText } from '../util';
 const HELSINKI_CENTER = { lat: 60.159865, lng: 24.942334 };
 const initialState = {
   viewState: 'editor',  // or 'checkout'
-  mapCenter: HELSINKI_CENTER,
-  mapZoom: 8,
-  mapStyle: 'mapbox-orange',
-  mapPitch: 0,
-  mapBearing: 0,
-  orientation: 'portrait',
-  size: '50x70cm',
-  labelHeader: 'Helsinki',
-  labelSmallHeader: 'Finland',
-  labelText: coordToPrettyText(HELSINKI_CENTER),
+  cart: [
+    {
+      quantity: 1,
+      mapCenter: HELSINKI_CENTER,
+      mapZoom: 8,
+      mapStyle: 'mapbox-orange',
+      mapPitch: 0,
+      mapBearing: 0,
+      orientation: 'portrait',
+      size: '50x70cm',
+      labelHeader: 'Helsinki',
+      labelSmallHeader: 'Finland',
+      labelText: coordToPrettyText(HELSINKI_CENTER),
+    }
+  ],
+  editCartItem: 0,
 };
 
 const copyInitialStateJustInCase = _.cloneDeep(initialState);
 export { copyInitialStateJustInCase as initialState };
 
 function reducer(state = initialState, action) {
-  let newAttrs;
+  let newAttrs, newState;
 
   switch (action.type) {
     case actions.SET_VIEW_STATE:
@@ -35,7 +41,7 @@ function reducer(state = initialState, action) {
         mapBearing: action.payload.bearing,
       };
 
-      return _.extend({}, state, _.omitBy(newAttrs, _.isNil));
+      return extendCurrentCartItem(state, _.omitBy(newAttrs, _.isNil));
 
     case actions.SET_MAP_LABELS:
       newAttrs = {
@@ -44,10 +50,10 @@ function reducer(state = initialState, action) {
         labelText: action.payload.text,
       };
 
-      return _.extend({}, state, _.omitBy(newAttrs, _.isNil));
+      return extendCurrentCartItem(state, _.omitBy(newAttrs, _.isNil));
 
     case actions.SET_MAP_STYLE:
-      return _.extend({}, state, { mapStyle: action.payload });
+      return extendCurrentCartItem(state, { mapStyle: action.payload });
 
     case actions.SET_POSTER_LAYOUT:
       newAttrs = {
@@ -55,11 +61,68 @@ function reducer(state = initialState, action) {
         size: action.payload.size,
       };
 
-      return _.extend({}, state, _.omitBy(newAttrs, _.isNil));
+      return extendCurrentCartItem(state, _.omitBy(newAttrs, _.isNil));
+
+    case actions.ADD_CART_ITEM_QUANTITY:
+      const currentQuantity = state.cart[action.payload.index].quantity;
+      newAttrs = {
+        quantity: currentQuantity + action.payload.add,
+      };
+
+      return extendCartItem(state, action.payload.index, _.omitBy(newAttrs, _.isNil));
+
+    case actions.EDIT_CART_ITEM:
+      return _.extend({}, state, {
+        viewState: 'editor',
+        editCartItem: action.payload,
+      });
+
+     case actions.ADD_CART_ITEM:
+      newState = _.cloneDeep(state);
+      const newEmptyItem = _.cloneDeep(copyInitialStateJustInCase.cart[0]);
+      newState.cart.push(newEmptyItem);
+      newState.viewState = 'editor';
+      newState.editCartItem = newState.cart.length - 1;
+      return newState;
+
+    case actions.REMOVE_CART_ITEM:
+      const removeIndex = action.payload;
+      newState = _.cloneDeep(state);
+
+      let newEditCartItem;
+      if (removeIndex < newState.editCartItem) {
+        // Removed item was "below" the currently selected
+        newEditCartItem = newState.editCartItem - 1;
+      } else if (removeIndex > newState.editCartItem) {
+        // Removed item was "above" the currently selected
+        newEditCartItem = newState.editCartItem
+      } else {
+        // Removed item was the currently selected so
+        // default to 0
+        newEditCartItem = 0;
+      }
+
+      newState.editCartItem = newEditCartItem;
+      newState.cart.splice(removeIndex, 1);
+      return newState;
 
     default:
       return state;
   }
+}
+
+function extendCurrentCartItem(state, newAttrs) {
+  const index = state.editCartItem;
+  return extendCartItem(state, index, newAttrs);
+}
+
+function extendCartItem(state, index, newAttrs) {
+  const oldItem = state.cart[index];
+  const newItem = _.extend({}, oldItem, newAttrs);
+
+  const newState = _.cloneDeep(state);
+  newState.cart[index] = newItem;
+  return newState;
 }
 
 export default reducer;

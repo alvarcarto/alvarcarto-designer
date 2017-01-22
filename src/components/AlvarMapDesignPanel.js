@@ -18,6 +18,7 @@ import './AlvarMapDesignPanel.css';
 const AlvarMapDesignPanel = React.createClass({
   render() {
     const { globalState } = this.props;
+    const mapItem = globalState.cart[globalState.editCartItem];
 
     return (
       <div className={`AlvarMapDesignPanel ${this.props.className}`}>
@@ -35,7 +36,7 @@ const AlvarMapDesignPanel = React.createClass({
 
             <div className="AlvarMapDesignPanel__group">
               <MapStyleSelect
-                selected={globalState.mapStyle}
+                selected={mapItem.mapStyle}
                 onChange={this._onStyleChange}
               />
             </div>
@@ -44,9 +45,9 @@ const AlvarMapDesignPanel = React.createClass({
           <Accordion.Section header="Labels">
             <div className="AlvarMapDesignPanel__group">
               <PosterLabelInputs dispatch={this.props.dispatch} labels={{
-                header: globalState.labelHeader,
-                smallHeader: globalState.labelSmallHeader,
-                text: globalState.labelText,
+                header: mapItem.labelHeader,
+                smallHeader: mapItem.labelSmallHeader,
+                text: mapItem.labelText,
               }} />
             </div>
           </Accordion.Section>
@@ -54,14 +55,14 @@ const AlvarMapDesignPanel = React.createClass({
           <Accordion.Section header="Layout & size">
             <div className="AlvarMapDesignPanel__group">
               <h4>Orientation</h4>
-              <OrientationSelect selected={globalState.orientation} onChange={this._onOrientationChange} />
+              <OrientationSelect selected={mapItem.orientation} onChange={this._onOrientationChange} />
             </div>
 
             <div className="AlvarMapDesignPanel__group">
               <h4>Size</h4>
               <PosterSizeSelect
-                orientation={globalState.orientation}
-                selected={globalState.size}
+                orientation={mapItem.orientation}
+                selected={mapItem.size}
                 onChange={this._onSizeChange}
               />
             </div>

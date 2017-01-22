@@ -2,7 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 import config from '../config';
 import { Radio } from 'antd';
-import { calculatePrice, getCurrencySymbol } from '../util/price';
+import { calculateUnitPrice, getCurrencySymbol } from '../util/price';
 const { PosterIcon, TickIcon } = require('../util/svg');
 import Price from './Price';
 import './PosterSizeSelect.css';
@@ -40,7 +40,7 @@ const PosterSizeSelect = React.createClass({
       <Radio.Group className="PosterSizeSelect" value={this.props.selected} onChange={this._onChange}>
         {
           _.map(SIZES, item => {
-            const price = calculatePrice(item.id);
+            const price = calculateUnitPrice(item.id);
 
             return <Radio
               key={item.id}

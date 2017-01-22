@@ -107,6 +107,8 @@ const CheckoutForm = React.createClass({
               {getIndex()}. Payment details
             </h3>
 
+            <CreditCardForm onChange={console.log} />
+
             <ul className="CheckoutForm__badge-list">
               <li>
                 <div className="CheckoutForm__badge">
@@ -128,12 +130,6 @@ const CheckoutForm = React.createClass({
               </li>
             </ul>
 
-            <CreditCardForm onChange={console.log} />
-
-            <Checkbox className="CheckoutForm__terms" name="termsAccepted" onChange={this._onCheckboxChange}>
-              I accept the <a target="_blank" href="http://alvarcarto.com/tos">terms of service</a>
-            </Checkbox>
-
             <div className="CheckoutForm__info">
               <Icon type="solution" />
               <p>
@@ -142,6 +138,10 @@ const CheckoutForm = React.createClass({
                 a secure <a href="https://stripe.com">Stripe</a> payment.
               </p>
             </div>
+
+            <Checkbox className="CheckoutForm__terms" name="termsAccepted" onChange={this._onCheckboxChange}>
+              I accept the <a target="_blank" href="http://alvarcarto.com/tos">terms of service</a>
+            </Checkbox>
 
             <Button className="CheckoutForm__complete-button" type="primary">
               <Icon type="shopping-cart" />

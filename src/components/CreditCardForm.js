@@ -88,7 +88,7 @@ const CreditCardForm = React.createClass({
     return (
       <div className="CreditCardForm">
         <Form.Item {...formErrors['cc-name']} {...formItemLayout} required label="Name on card">
-          <Input name="cc-name" onBlur={this._onInputBlur} onChange={this._onInputChange} placeholder="Name" />
+          <Input name="cc-name" onBlur={this._onInputBlur} onChange={this._onInputChange} placeholder="Full name" />
         </Form.Item>
 
         <Form.Item {...formErrors['cc-number']} {...formItemLayout} required label="Card number">

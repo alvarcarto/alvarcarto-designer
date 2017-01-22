@@ -39,12 +39,7 @@ const App = React.createClass({
   _beforeLeavePage() {
     const importantFields = [
       'viewState',
-      'mapStyle',
-      'orientation',
-      'size',
-      'labelHeader',
-      'labelSmallHeader',
-      'labelText',
+      'cart',
     ];
 
     const userHasMadeChanges = !_.isEqual(

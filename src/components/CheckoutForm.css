@@ -70,11 +70,17 @@
 .CheckoutForm .CheckoutForm__badge-list {
   display: flex;
   flex-direction: row;
-  margin-bottom: 40px;
+  justify-content: center;
+  margin: 40px 0;
+  width: 87.5%;
+}
+
+.CheckoutForm .CheckoutForm__badge-list li:last-of-type .CheckoutFormBadge {
+  margin-right: 0;
 }
 
 .CheckoutForm .CheckoutForm__badge {
-  margin-right: 50px;
+  margin-right: 60px;
   text-align: center;
   text-transform: uppercase;
   width: 80px;

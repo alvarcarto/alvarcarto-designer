@@ -36,7 +36,7 @@ const EmailForm = React.createClass({
           label="E-mail"
           extra="Order confirmation will be sent to your email."
         >
-          <Input name="email" onBlur={this._onInputBlur} onChange={this._onInputChange} placeholder="Email" />
+          <Input name="email" onBlur={this._onInputBlur} onChange={this._onInputChange} placeholder="E-mail" />
         </Form.Item>
       </div>
     );

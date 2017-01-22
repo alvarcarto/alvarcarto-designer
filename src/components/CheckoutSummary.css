@@ -3,11 +3,19 @@
   text-transform: uppercase;
 }
 
+.CheckoutSummary__price-summary {
+  display: flex;
+  justify-content: flex-end;
+}
+
 .CheckoutSummary__price-table {
-  margin-top: 20px;
+  margin-top: 0px;
   font-size: 0.9rem;
   text-align: right;
-  float: right;
+}
+
+.CheckoutSummary__cart li:not(:first-of-type) .CartItem {
+  margin-top: 15px;
 }
 
 .CheckoutSummary__price-table tr {
@@ -21,4 +29,33 @@
 .CheckoutSummary__total-row {
   text-transform: uppercase;
   font-weight: 700;
+}
+
+.CheckoutSummary__add {
+  padding: 10px;
+  margin: 3px 0 0 -5px;
+  cursor: pointer;
+}
+
+.CheckoutSummary__add .anticon {
+  margin-right: 3px;
+  position: relative;
+  top: -1px;
+  border: 1px solid #108ee9;
+  border-radius: 50%;
+  font-size: 0.6rem;
+  font-weight: 700;
+  transition: color 0.15s ease, background 0.15s ease;
+  background: none;
+  color: #108ee9;
+  cursor: pointer;
+  width: 15px;
+  height: 15px;
+  line-height: 14px;
+  display: inline-block;
+}
+
+.CheckoutSummary__add:hover .anticon {
+  background: #108ee9;
+  color: white;
 }

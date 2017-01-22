@@ -25,10 +25,13 @@ const AlvarMap = React.createClass({
 
   componentWillReceiveProps(nextProps) {
     const { globalState } = this.props;
-    const nextGlobalState = nextProps.globalState;
+    const mapItem = globalState.cart[globalState.editCartItem];
 
-    if (globalState.size !== nextGlobalState.size ||
-        globalState.orientation !== nextGlobalState.orientation) {
+    const nextGlobalState = nextProps.globalState;
+    const nextMapItem = nextGlobalState.cart[nextGlobalState.editCartItem];
+
+    if (mapItem.size !== nextMapItem.size ||
+        mapItem.orientation !== nextMapItem.orientation) {
       if (this.state.glMap) {
         setTimeout(() => this.state.glMap.resize(), 400);
       }
@@ -42,9 +45,10 @@ const AlvarMap = React.createClass({
   render() {
     const { state, props } = this;
     const { globalState } = props;
+    const mapItem = globalState.cart[globalState.editCartItem];
 
-    const dimensions = posterSizeToPixels(globalState.size, globalState.orientation);
-    const style = getStyle(globalState.mapStyle);
+    const dimensions = posterSizeToPixels(mapItem.size, mapItem.orientation);
+    const style = getStyle(mapItem.mapStyle);
     return (
       <div className="AlvarMap grabbable" style={dimensions}>
         <div className="AlvarMap__container">
@@ -58,9 +62,9 @@ const AlvarMap = React.createClass({
           </Spin>
 
           <AlvarMapLabels labels={{
-            header: globalState.labelHeader,
-            smallHeader: globalState.labelSmallHeader,
-            text: globalState.labelText,
+            header: mapItem.labelHeader,
+            smallHeader: mapItem.labelSmallHeader,
+            text: mapItem.labelText,
           }}/>
         </div>
       </div>
@@ -69,11 +73,13 @@ const AlvarMap = React.createClass({
 
   _renderMapboxGl(style) {
     const { globalState } = this.props;
+    const mapItem = globalState.cart[globalState.editCartItem];
+
     return <ReactMapboxGl
       ref="map"
-      center={[globalState.mapCenter.lng, globalState.mapCenter.lat]}
-      zoom={[globalState.mapZoom]}
-      pitch={globalState.pitch}
+      center={[mapItem.mapCenter.lng, mapItem.mapCenter.lat]}
+      zoom={[mapItem.mapZoom]}
+      pitch={mapItem.pitch}
       movingMethod="flyTo"
       movingMethodOptions={{ speed: 2 }}
       onStyleLoad={this._onStyleLoad}
@@ -86,12 +92,14 @@ const AlvarMap = React.createClass({
 
   _renderLeaflet(style) {
     const { globalState } = this.props;
+    const mapItem = globalState.cart[globalState.editCartItem];
+
     return <LeafletMap
       ref="lMap"
       zoomControl={false}
       onMoveEnd={this._onLeafletMoveEnd}
-      center={globalState.mapCenter}
-      zoom={globalState.mapZoom}
+      center={mapItem.mapCenter}
+      zoom={mapItem.mapZoom}
     >
       <LTileLayer detectRetina url={style.url} />
       <LZoomControl position="topright" />

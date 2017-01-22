@@ -24,3 +24,22 @@ export const setPosterLayout = (layout) => ({
   type: actions.SET_POSTER_LAYOUT,
   payload: layout,
 });
+
+export const addCartItem = () => ({
+  type: actions.ADD_CART_ITEM,
+});
+
+export const removeCartItem = (index) => ({
+  type: actions.REMOVE_CART_ITEM,
+  payload: index,
+});
+
+export const editCartItem = (index) => ({
+  type: actions.EDIT_CART_ITEM,
+  payload: index,
+});
+
+export const addCartItemQuantity = (payload) => ({
+  type: actions.ADD_CART_ITEM_QUANTITY,
+  payload: payload,
+});
