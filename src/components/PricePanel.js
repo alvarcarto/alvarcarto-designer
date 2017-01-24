@@ -1,6 +1,7 @@
 import Odometer from './Odometer';
 import React from 'react';
-import { Icon } from 'antd';
+import _ from 'lodash';
+import { Icon, Badge, Tooltip } from 'antd';
 import { setViewState } from '../actions';
 import { posterSizeToPixels, createApiUrlQuery } from '../util';
 import { calculateTotalPrice, getCurrencySymbol } from '../util/price';
@@ -11,6 +12,7 @@ const PricePanel = React.createClass({
     const { globalState } = this.props;
     const mapItem = globalState.cart[globalState.editCartItem];
     const price = calculateTotalPrice(globalState.cart);
+    const itemCount = _.reduce(globalState.cart, (memo, item) => memo + item.quantity, 0);
 
     return (
       <div className="PricePanel">
@@ -20,10 +22,20 @@ const PricePanel = React.createClass({
           <span className="PricePanel__price-shipping">+ Free shipping</span>
         </h5>
 
-        <a onClick={this._onCheckoutClick} className="PricePanel__checkout-link noselect">
+        <a onClick={this._onCheckoutClick} className="PricePanel__checkout-link">
           Checkout
           <Icon type="right" />
         </a>
+
+        {
+          itemCount > 1
+            ? <div className="PricePanel__badge">
+                <Tooltip title={`You have ${itemCount} posters in your order.`}>
+                  <Badge count={itemCount} />
+                </Tooltip>
+              </div>
+            : null
+        }
       </div>
     );
   },
