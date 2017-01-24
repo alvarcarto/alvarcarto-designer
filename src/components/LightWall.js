@@ -19,14 +19,16 @@ const LightWall = React.createClass({
     return (
       <div className="LightWall noselect">
         <div className="LightWall__map-container">
-          <div className="LightWall__wire-container">
-            <img className="LightWall__clip1" src="clip.png" />
-            <img className="LightWall__clip2" src="clip.png" />
-            <div className="LightWall__wire1"></div>
-            <div className="LightWall__wire2"></div>
-          </div>
+          <div className="LightWall__scaler" style={{ zoom: dimensions. zoom }}>
+            <div className="LightWall__wire-container">
+              <img className="LightWall__clip1" src="clip.png" />
+              <img className="LightWall__clip2" src="clip.png" />
+              <div className="LightWall__wire1"></div>
+              <div className="LightWall__wire2"></div>
+            </div>
 
-          <AlvarMap />
+            <AlvarMap />
+          </div>
 
           <div className="LightWall__width-label">
             <div className="LightWall__width-label-line"></div>

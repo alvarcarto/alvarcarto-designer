@@ -16,6 +16,10 @@
   transform: translate(-50%, -50%);
 }
 
+.LightWall__scaler {
+  transition: all 0.2s ease;
+}
+
 .LightWall__wire-container {
   position: relative;
 }
