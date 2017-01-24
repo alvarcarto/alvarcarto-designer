@@ -14,7 +14,7 @@ const initialState = {
       mapPitch: 0,
       mapBearing: 0,
       orientation: 'portrait',
-      size: '50x70cm',
+      size: '30x40cm',
       labelsEnabled: true,
       labelHeader: 'Helsinki',
       labelSmallHeader: 'Finland',
