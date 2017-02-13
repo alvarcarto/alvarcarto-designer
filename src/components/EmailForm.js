@@ -7,6 +7,10 @@ const form = {
     if (_.isEmpty(val)) {
       return new Error('E-mail is required.');
     }
+
+    if (!val.match(/.+@.+\..+/)) {
+      return new Error('Invalid e-mail. Must be in format "name@domain.com".');
+    }
   },
 };
 
@@ -26,7 +30,7 @@ const EmailForm = React.createClass({
       wrapperCol: { span: 14 },
     };
 
-    const formErrors = this._getFormErrors();
+    const formErrors = this._getFormErrors(this.props.validate);
     return (
       <div className="EmailForm">
         <Form.Item
@@ -42,11 +46,11 @@ const EmailForm = React.createClass({
     );
   },
 
-  _getFormErrors() {
+  _getFormErrors(validateAll) {
     const formErrors = {};
     _.forEach(this.state.values, (val, key) => {
-      const hasBeenBlurred = this.state.shouldValidate[key];
-      if (!_.isFunction(form[key]) || !hasBeenBlurred) {
+      const shouldValidate = validateAll ? true : this.state.shouldValidate[key];
+      if (!_.isFunction(form[key]) || !shouldValidate) {
         return;
       }
 
@@ -62,6 +66,11 @@ const EmailForm = React.createClass({
     return formErrors;
   },
 
+  _hasFormErrors() {
+    const errs = this._getFormErrors(true);
+    return _.keys(errs).length > 0;
+  },
+
   _onInputChange(e) {
     const { name, value } = e.target;
 
@@ -69,7 +78,16 @@ const EmailForm = React.createClass({
       values: _.extend(state.values, {
         [name]: value
       }),
-    }));
+    }), this._emitOnChange);
+  },
+
+  _emitOnChange() {
+    const isValid = !this._hasFormErrors();
+
+    this.props.onChange({
+      isValid,
+      values: this.state.values,
+    });
   },
 
   _onInputBlur(e) {

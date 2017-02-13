@@ -58,7 +58,7 @@ const AddressForm = React.createClass({
       wrapperCol: { span: 14 },
     };
 
-    const formErrors = this._getFormErrors();
+    const formErrors = this._getFormErrors(this.props.validate);
     return (
       <div className="AddressForm">
         <Form.Item {...formErrors.name} {...formItemLayout} required label="Full name">
@@ -130,11 +130,11 @@ const AddressForm = React.createClass({
     );
   },
 
-  _getFormErrors() {
+  _getFormErrors(validateAll) {
     const formErrors = {};
     _.forEach(this.state.values, (val, key) => {
-      const hasBeenBlurred = this.state.shouldValidate[key];
-      if (!_.isFunction(form[key]) || !hasBeenBlurred) {
+      const shouldValidate = validateAll ? true : this.state.shouldValidate[key];
+      if (!_.isFunction(form[key]) || !shouldValidate) {
         return;
       }
 
@@ -150,6 +150,11 @@ const AddressForm = React.createClass({
     return formErrors;
   },
 
+  _hasFormErrors() {
+    const errs = this._getFormErrors(true);
+    return _.keys(errs).length > 0;
+  },
+
   _onInputChange(e) {
     const { name, value } = e.target;
 
@@ -157,7 +162,7 @@ const AddressForm = React.createClass({
       values: _.extend(state.values, {
         [name]: value
       }),
-    }));
+    }), this._emitOnChange);
   },
 
   _onInputBlur(e) {
@@ -175,7 +180,7 @@ const AddressForm = React.createClass({
       values: _.extend(state.values, {
         country: value
       }),
-    }));
+    }), this._emitOnChange);
   },
 
   _onCountryBlur() {
@@ -184,6 +189,15 @@ const AddressForm = React.createClass({
         country: true,
       }),
     }));
+  },
+
+  _emitOnChange() {
+    const isValid = !this._hasFormErrors();
+
+    this.props.onChange({
+      isValid,
+      values: this.state.values,
+    });
   }
 });
 

@@ -79,7 +79,7 @@ const CreditCardForm = React.createClass({
     };
 
     const yearNow = new Date().getFullYear();
-    const formErrors = this._getFormErrors();
+    const formErrors = this._getFormErrors(this.props.validate);
     const cardType = _.isNull(this.state.values['cc-number'])
       ? 'Unknown'
       : Stripe.card.cardType(this.state.values['cc-number']);
@@ -99,7 +99,7 @@ const CreditCardForm = React.createClass({
             onBlur={this._onInputBlur}
             onChange={this._onInputChange}
             placeholder="•••• •••• •••• ••••"
-            pattern="\d*"
+            pattern="[0-9 ]*"
             autoComplete="cc-number"
             className="CreditCardForm__number"
           />
@@ -187,11 +187,11 @@ const CreditCardForm = React.createClass({
     );
   },
 
-  _getFormErrors() {
+  _getFormErrors(validateAll) {
     const formErrors = {};
     _.forEach(this.state.values, (val, key) => {
-      const hasBeenBlurred = this.state.shouldValidate[key];
-      if (!_.isFunction(form[key]) || !hasBeenBlurred) {
+      const shouldValidate = validateAll ? true : this.state.shouldValidate[key];
+      if (!_.isFunction(form[key]) || !shouldValidate) {
         return;
       }
 
@@ -205,6 +205,11 @@ const CreditCardForm = React.createClass({
     });
 
     return formErrors;
+  },
+
+  _hasFormErrors() {
+    const errs = this._getFormErrors(true);
+    return _.keys(errs).length > 0;
   },
 
   _onInputChange(e) {
@@ -278,9 +283,10 @@ const CreditCardForm = React.createClass({
   },
 
   _emitOnChange() {
-    // TODO: Add form validation here
+    const isValid = !this._hasFormErrors();
+
     this.props.onChange({
-      isValid: false,
+      isValid,
       values: this.state.values,
     });
   }

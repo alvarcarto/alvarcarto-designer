@@ -26,6 +26,11 @@ const CheckoutForm = React.createClass({
         emailSubscription: true,
       }),
       shouldValidate: _.mapValues(form, () => false),
+      validateAll: false,
+      emailForm: null,
+      shippingAddressForm: null,
+      billingAddressForm: null,
+      creditCardForm: null,
     };
   },
 
@@ -49,7 +54,10 @@ const CheckoutForm = React.createClass({
               {getIndex()}. Shipping details
             </h2>
 
-            <EmailForm onChange={console.log} />
+            <EmailForm
+              validate={this.state.validateAll}
+              onChange={this._onEmailFormChange}
+            />
 
             <Form.Item {...formItemLayout} label="&nbsp;">
               <Tooltip
@@ -67,7 +75,10 @@ const CheckoutForm = React.createClass({
               </Tooltip>
             </Form.Item>
 
-            <AddressForm onChange={console.log} />
+            <AddressForm
+              validate={this.state.validateAll}
+              onChange={this._onShippingAddressFormChange}
+            />
 
             <Form.Item className="CheckoutForm__new-address" {...formItemLayout} label="&nbsp;">
               <Checkbox name="differentBillingAddress" onChange={this._onCheckboxChange}>
@@ -88,7 +99,10 @@ const CheckoutForm = React.createClass({
                     <h2 className="CheckoutForm__form-header">
                       {getIndex()}. Billing address
                     </h2>
-                    <AddressForm onChange={console.log} />
+                    <AddressForm
+                      validate={this.state.validateAll}
+                      onChange={this._onBillingAddressFormChange}
+                    />
                   </section>
             }
           </ReactCSSTransitionGroup>
@@ -98,7 +112,7 @@ const CheckoutForm = React.createClass({
               {getIndex()}. Shipping method
             </h2>
 
-            <ShippingMethodForm onChange={console.log} />
+            <ShippingMethodForm />
           </section>
 
           <section className="CheckoutForm__section CheckoutForm__section--last">
@@ -106,7 +120,10 @@ const CheckoutForm = React.createClass({
               {getIndex()}. Payment details
             </h2>
 
-            <CreditCardForm onChange={console.log} />
+            <CreditCardForm
+              validate={this.state.validateAll}
+              onChange={this._onCreditCardFormChange}
+            />
 
             <ul className="CheckoutForm__badge-list">
               <li>
@@ -134,15 +151,30 @@ const CheckoutForm = React.createClass({
               <p>
                 Please ensure that your information is filled out correctly.
                 When clicking Complete order, your account will be charged via
-                a secure <a href="https://stripe.com">Stripe</a> payment.
+                a secure <a target="_blank" href="https://stripe.com">Stripe</a> payment.
               </p>
             </div>
 
-            <Checkbox className="CheckoutForm__terms" name="termsAccepted" onChange={this._onCheckboxChange}>
-              I accept the <a target="_blank" href="http://alvarcarto.com/tos">terms of service</a>
-            </Checkbox>
+            <Form.Item
+              {...formErrors.termsAccepted}
+              labelCol={{ span: 0 }}
+              wrapperCol={{ span: 22 }}
+              className="CheckoutForm__terms"
+              label="&nbsp;"
+            >
+              <Checkbox name="termsAccepted" onChange={this._onCheckboxChange} onBlur={this._onCheckboxBlur}>
+                I accept the <a target="_blank" href="http://alvarcarto.com/tos">terms of service</a>
+              </Checkbox>
+            </Form.Item>
 
-            <Button className="CheckoutForm__complete-button" type="primary">
+            <Button
+              className={this.state.invalidSubmit
+                ? 'CheckoutForm__complete-button shake animated'
+                : 'CheckoutForm__complete-button'
+              }
+              type="primary"
+              htmlType="submit"
+            >
               <Icon type="shopping-cart" />
               Complete order
             </Button>
@@ -152,11 +184,11 @@ const CheckoutForm = React.createClass({
     );
   },
 
-  _getFormErrors() {
+  _getFormErrors(validateAll) {
     const formErrors = {};
     _.forEach(this.state.values, (val, key) => {
-      const hasBeenBlurred = this.state.shouldValidate[key];
-      if (!_.isFunction(form[key]) || !hasBeenBlurred) {
+      const shouldValidate = validateAll ? true : this.state.shouldValidate[key];
+      if (!_.isFunction(form[key]) || !shouldValidate) {
         return;
       }
 
@@ -170,6 +202,26 @@ const CheckoutForm = React.createClass({
     });
 
     return formErrors;
+  },
+
+  _hasFormErrors() {
+    const errs = this._getFormErrors(true);
+    return _.keys(errs).length > 0;
+  },
+
+  _canSubmit() {
+    if (this._hasFormErrors()) {
+      return false;
+    }
+
+    const keys = ['emailForm', 'shippingAddressForm', 'creditCardForm'];
+    const requiredFormsAreValid = _.every(keys, (key) => _.get(this.state[key], 'isValid') === true);
+
+    const isBillingAddressOk = this.state.values.differentBillingAddress
+      ? _.get(this.state.billingAddressForm, 'isValid') === true
+      : true;
+
+    return requiredFormsAreValid && isBillingAddressOk;
   },
 
   _onCheckboxChange(e) {
@@ -190,6 +242,44 @@ const CheckoutForm = React.createClass({
         [name]: true
       }),
     }));
+  },
+
+  _onEmailFormChange(form) {
+    this.setState((state) => ({ emailForm: form }));
+  },
+
+  _onShippingAddressFormChange(form) {
+    this.setState((state) => ({ shippingAddressForm: form }));
+  },
+
+  _onBillingAddressFormChange(form) {
+    this.setState((state) => ({ billingAddressForm: form }));
+  },
+
+  _onCreditCardFormChange(form) {
+    this.setState((state) => ({ creditCardForm: form }));
+  },
+
+  _onSubmit(e) {
+    e.preventDefault();
+
+    if (!this._canSubmit()) {
+      this.setState((state) => ({
+        shouldValidate: _.mapValues(form, () => true),
+        validateAll: true,
+        invalidSubmit: true,
+      }));
+
+      setTimeout(() =>
+        this.setState((state) => ({ invalidSubmit: false })),
+        1400,
+      );
+
+      return;
+    }
+
+    // TODO: Submit
+    console.log('Submit!');
   }
 });
 
