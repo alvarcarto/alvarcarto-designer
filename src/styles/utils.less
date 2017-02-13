@@ -1,21 +1,3 @@
-html, body {
-  font-family: "Source Sans Pro", Helvetica, sans-serif;
-}
-
-html, body, .root {
-  width: 100%;
-  height: 100%;
-}
-
-/* apply a natural box layout model to all elements, but allowing components to change */
-html {
-  box-sizing: border-box;
-}
-
-*, *:before, *:after {
-  box-sizing: inherit;
-}
-
 .grabbable {
   cursor: move; /* fallback if grab cursor is unsupported */
   cursor: grab;
@@ -38,22 +20,4 @@ html {
         -ms-user-select: none; /* Internet Explorer/Edge */
             user-select: none; /* Non-prefixed version, currently
                                   not supported by any browser */
-}
-
-.popin-enter {
-  opacity: 0.01;
-}
-
-.popin-enter.popin-enter-active {
-  opacity: 1;
-  transition: opacity 400ms ease-in;
-}
-
-.popin-leave {
-  opacity: 1;
-}
-
-.popin-leave.popin-leave-active {
-  opacity: 0.01;
-  transition: opacity 300ms ease-in;
 }

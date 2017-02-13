@@ -5,7 +5,6 @@ import { Icon, Badge, Tooltip } from 'antd';
 import { setViewState } from '../actions';
 import { posterSizeToPixels, createApiUrlQuery } from '../util';
 import { calculateTotalPrice, getCurrencySymbol } from '../util/price';
-import './PricePanel.css';
 
 const PricePanel = React.createClass({
   render() {

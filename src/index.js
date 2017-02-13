@@ -7,11 +7,7 @@ import { LocaleProvider } from 'antd';
 import enUS from 'antd/lib/locale-provider/en_US';
 import App from './App';
 
-import 'normalize.css';
-import 'antd/dist/antd.css';
-import 'react-select/dist/react-select.css';
-import './index.css';
-import './forms.css'
+import './bundle.css';
 
 import configureStore from './store/configure';
 const store = configureStore();

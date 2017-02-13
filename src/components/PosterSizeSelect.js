@@ -5,7 +5,6 @@ import { Radio } from 'antd';
 import { calculateUnitPrice, getCurrencySymbol } from '../util/price';
 const { PosterIcon, TickIcon } = require('../util/svg');
 import Price from './Price';
-import './PosterSizeSelect.css';
 
 const SIZES = [
   {

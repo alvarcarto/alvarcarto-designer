@@ -1,7 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
 import { Radio, Row, Col } from 'antd';
-import './ShippingMethodForm.css';
 
 const ShippingMethodForm = React.createClass({
   render() {

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Button } from 'antd';
-import './CityButtonList.css';
 
 const cityButtons = [
   { id: 1, header: 'Heart of Hongkong', smallHeader: 'China', zoom: 11, lat: 22.279579, lng: 114.173998 },

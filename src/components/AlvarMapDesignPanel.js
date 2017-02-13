@@ -13,7 +13,6 @@ import OrientationSelect from './OrientationSelect';
 import PosterLabelInputs from './PosterLabelInputs';
 import MapStyleSelect from './MapStyleSelect';
 import Alert from './Alert';
-import './AlvarMapDesignPanel.css';
 
 const AlvarMapDesignPanel = React.createClass({
   render() {

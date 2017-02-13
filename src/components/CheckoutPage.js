@@ -6,7 +6,6 @@ import { setViewState } from '../actions';
 import config from '../config';
 import CheckoutForm from './CheckoutForm';
 import CheckoutSummary from './CheckoutSummary';
-import './CheckoutPage.css';
 
 const CheckoutPage = React.createClass({
   render() {
@@ -51,8 +50,7 @@ const CheckoutPage = React.createClass({
             <Col span={12}>
               <p>
                 Any questions? Send us mail to
-                <a href="mailto:help@alvarcarto.com"> help@alvarcarto.com </a>
-                or use the Facebook chat.
+                <a href="mailto:help@alvarcarto.com"> help@alvarcarto.com</a>.
               </p>
               <p>We are located at Luova Laboratorio, Saaristonkatu 9, 90100 Oulu, Finland.</p>
             </Col>

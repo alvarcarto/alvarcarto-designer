@@ -4,7 +4,6 @@ import AlvarMap from './AlvarMap';
 import { Icon } from 'antd';
 import config from '../config';
 import { posterSizeToPhysicalDimensions, posterSizeToPixels } from '../util';
-import './LightWall.css';
 
 const LightWall = React.createClass({
   render() {

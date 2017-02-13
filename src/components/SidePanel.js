@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { Icon } from 'antd';
 import AlvarMapDesignPanel from './AlvarMapDesignPanel';
 import PricePanel from './PricePanel';
-import './SidePanel.css';
 
 const SidePanel = React.createClass({
   render() {

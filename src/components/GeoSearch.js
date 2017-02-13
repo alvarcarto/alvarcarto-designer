@@ -5,7 +5,6 @@ import React from 'react';
 import Select from 'react-select';
 import { Icon } from 'antd';
 import { getPlacePredictions, resolvePlaceId } from '../util/google';
-import './GeoSearch.css';
 
 const GeoSearch = React.createClass({
   getInitialState() {

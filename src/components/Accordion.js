@@ -1,5 +1,4 @@
 import React from 'react';
-import './Accordion.css';
 
 const Accordion = React.createClass({
   getDefaultProps() {
@@ -19,9 +18,9 @@ const Accordion = React.createClass({
       <div className="Accordion">
         <div className="Accordion__start">
           <div className="Accordion__start-circle"></div>
-          <h3 className="Accordion__start-header">
+          <h6 className="Accordion__start-header">
             Create your unique poster
-          </h3>
+          </h6>
         </div>
 
         {children}
@@ -67,9 +66,9 @@ Accordion.Section = React.createClass({
             {this.props.index + 1}
           </div>
 
-          <h3>
+          <h2>
             {this.props.header}
-          </h3>
+          </h2>
         </div>
 
         <div className="Accordion__content">

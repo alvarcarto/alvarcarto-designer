@@ -4,7 +4,6 @@ import config from './config';
 import { connect } from 'react-redux';
 import EditorPage from './components/EditorPage';
 import CheckoutPage from './components/CheckoutPage';
-import './App.css';
 import { initialState } from './reducers';
 
 const App = React.createClass({

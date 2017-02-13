@@ -17,17 +17,19 @@
 
 .CartItem__price {
   text-align: right;
-  font-size: 0.8rem;
+  font-size: @font-size-x-small;
   position: absolute;
   right: 2px;
   bottom: 5px;
 }
 
 .CartItem__title {
+  font-size: @font-size-small;
 }
 
 .CartItem__type {
-  line-height: 1;
+  font-size: @font-size-xx-small;
+  line-height: 1.2;
   color: #999;
 }
 
@@ -47,7 +49,7 @@
 .CartItem__quantity .anticon {
   border: 1px solid #108ee9;
   border-radius: 50%;
-  font-size: 0.6rem;
+  font-size: 9px;
   font-weight: 700;
   transition: color 0.15s ease, background 0.15s ease;
   background: none;
@@ -55,7 +57,7 @@
   cursor: pointer;
   width: 15px;
   height: 15px;
-  line-height: 14px;
+  line-height: 13px;
   display: block;
 }
 
@@ -76,14 +78,14 @@
 
 .CartItem__quantity .CartItem__quantity-number {
   font-weight: 700;
-  font-size: 0.9rem;
+  font-size: @font-size-x-small;
 }
 
 .CartItem__actions {
   display: flex;
   flex-direction: row;
   position: absolute;
-  bottom: 5px;
+  bottom: 3px;
   left: 10px;
 }
 

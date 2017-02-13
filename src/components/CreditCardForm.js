@@ -6,7 +6,6 @@ import _ from 'lodash';
 import Payment from 'payment';
 import { Form, Input, Select, Row, Col, Icon } from 'antd';
 import config from '../config';
-import './CreditCardForm.css';
 
 const ACCEPTED_CARD_TYPES = [
   'Visa',

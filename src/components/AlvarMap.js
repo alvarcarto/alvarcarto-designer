@@ -12,7 +12,6 @@ import {
   ZoomControl as LZoomControl
 } from 'react-leaflet';
 import ReactMapboxGl from '/Users/kbru/code/alvarcarto/react-mapbox-gl';
-import './AlvarMap.css';
 
 const HELSINKI_CENTER = { lat: 60.159865, lng: 24.942334 };
 

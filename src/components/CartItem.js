@@ -4,7 +4,6 @@ import { Button, Icon, Tooltip, Popconfirm } from 'antd';
 import { getStyle } from '../util';
 import { getCurrencySymbol, calculatePrice } from '../util/price';
 import { createApiUrlQuery } from '../util';
-import './CartItem.css';
 
 const CartItem = React.createClass({
   propTypes: {

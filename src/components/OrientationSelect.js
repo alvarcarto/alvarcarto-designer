@@ -2,7 +2,6 @@ import React from 'react';
 import _ from 'lodash';
 import config from '../config';
 const { LandscapeIcon, PortraitIcon, TickIcon } = require('../util/svg');
-import './OrientationSelect.css';
 
 const ORIENTATIONS = [
   {

@@ -5,7 +5,6 @@ import { Icon, Select, Radio } from 'antd';
 const { Option } = Select;
 import config from '../config';
 import { TickIcon } from '../util/svg';
-import './MapStyleSelect.css';
 
 const MapStyleSelect = React.createClass({
   render() {

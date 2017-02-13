@@ -6,7 +6,6 @@ import EmailForm from './EmailForm';
 import AddressForm from './AddressForm';
 import ShippingMethodForm from './ShippingMethodForm';
 import CreditCardForm from './CreditCardForm';
-import './CheckoutForm.css';
 
 const form = {
   differentBillingAddress: () => null,
@@ -46,9 +45,9 @@ const CheckoutForm = React.createClass({
       <div className="CheckoutForm">
         <Form onSubmit={this._onSubmit}>
           <section className="CheckoutForm__section">
-            <h3 className="CheckoutForm__form-header">
+            <h2 className="CheckoutForm__form-header">
               {getIndex()}. Shipping details
-            </h3>
+            </h2>
 
             <EmailForm onChange={console.log} />
 
@@ -86,26 +85,26 @@ const CheckoutForm = React.createClass({
               !this.state.values.differentBillingAddress
                 ? null
                 : <section className="CheckoutForm__section">
-                    <h3 className="CheckoutForm__form-header">
+                    <h2 className="CheckoutForm__form-header">
                       {getIndex()}. Billing address
-                    </h3>
+                    </h2>
                     <AddressForm onChange={console.log} />
                   </section>
             }
           </ReactCSSTransitionGroup>
 
           <section className="CheckoutForm__section">
-            <h3 className="CheckoutForm__form-header">
+            <h2 className="CheckoutForm__form-header">
               {getIndex()}. Shipping method
-            </h3>
+            </h2>
 
             <ShippingMethodForm onChange={console.log} />
           </section>
 
           <section className="CheckoutForm__section CheckoutForm__section--last">
-            <h3 className="CheckoutForm__form-header">
+            <h2 className="CheckoutForm__form-header">
               {getIndex()}. Payment details
-            </h3>
+            </h2>
 
             <CreditCardForm onChange={console.log} />
 

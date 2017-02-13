@@ -2,8 +2,6 @@ const React = require('react');
 const ReactDOM = require('react-dom');
 const HubspotOdometer = require('odometer');
 
-import './Odometer.css';
-
 window.odometerOptions = {
   auto: false,
   duration: 1000,

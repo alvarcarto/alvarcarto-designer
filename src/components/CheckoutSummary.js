@@ -5,7 +5,6 @@ import { removeCartItem, editCartItem, addCartItemQuantity, addCartItem } from '
 import { calculateTotalPrice } from '../util/price';
 import _ from 'lodash';
 import CartItem from './CartItem';
-import './CheckoutSummary.css';
 
 const CheckoutSummary = React.createClass({
   render() {
@@ -15,7 +14,7 @@ const CheckoutSummary = React.createClass({
 
     return (
       <div className="CheckoutSummary">
-        <h3 className="CheckoutSummary__header">Order summary</h3>
+        <h2 className="CheckoutSummary__header">Order summary</h2>
 
         <ul className="CheckoutSummary__cart">
           {

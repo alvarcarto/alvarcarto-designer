@@ -1,7 +1,5 @@
 const React = require('react');
 
-import './AlvarMapLabels.css';
-
 const AlvarMapLabels = React.createClass({
   render() {
     const { labels } = this.props;
