@@ -34,7 +34,7 @@
   height: 10px;
   width: 10px;
   border-radius: 50%;
-  background: #108ee9;
+  background: @primary-color;
   left: 22px;
 }
 
@@ -61,7 +61,7 @@
 }
 
 .Accordion__section--selected .Accordion__header > h2, .Accordion__header:hover > h2 {
-  color: #108ee9;
+  color: @primary-color;
 }
 
 .Accordion__section .Accordion__header::after {
@@ -77,10 +77,10 @@
 
 .Accordion__section--selected .Accordion__header::after {
   transform: rotate(90deg);
-  color: #108ee9;
+  color: @primary-color;
 }
 .Accordion__header:hover:after {
-  color: #108ee9;
+  color: @primary-color;
 }
 
 .Accordion__header > .Accordion__header-number {
@@ -90,8 +90,8 @@
   width: 22px;
   border-radius: 15px;
   background: #fafafa;
-  border: 1px solid #108ee9;
-  color: #108ee9;
+  border: 1px solid @primary-color;
+  color: @primary-color;
   line-height: 23px;
   text-indent: 0px;
   left: 16px;
@@ -115,17 +115,17 @@
 }
 
 .Accordion__section--selected .Accordion__progress-line {
-  border-left: 2px solid #108ee9 !important;
+  border-left: 2px solid @primary-color !important;
   z-index: 11;
 }
 
 .Accordion__section:last-of-type .Accordion__progress-line {
-  border-left: 2px dashed rgba(16, 142, 233, 0.42);
+  border-left: 2px dashed @primary-3;
 }
 
 .Accordion__section--selected .Accordion__header-number,
 .Accordion__section--highlight .Accordion__header-number {
-  background: #108ee9;
+  background: @primary-color;
   color: white;
   border: none;
 }

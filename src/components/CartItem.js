@@ -4,6 +4,7 @@ import { Button, Icon, Tooltip, Popconfirm } from 'antd';
 import { getStyle } from '../util';
 import { getCurrencySymbol, calculatePrice } from '../util/price';
 import { createApiUrlQuery } from '../util';
+import CONST from '../constants';
 
 const CartItem = React.createClass({
   propTypes: {
@@ -54,7 +55,7 @@ const CartItem = React.createClass({
             <li>
               <a onClick={this._onEdit}>
                 <Tooltip title="Edit poster">
-                  <Icon style={{ color: '#108ee9' }} type="edit" />
+                  <Icon style={{ color: CONST.PRIMARY_COLOR }} type="edit" />
                 </Tooltip>
               </a>
             </li>

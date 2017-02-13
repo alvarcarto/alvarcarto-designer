@@ -1,5 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
+import CONST from '../constants';
 
 module.exports.PortraitIcon = (props) => <svg className="PortraitIcon"
   version="1.1"
@@ -51,7 +52,7 @@ module.exports.TickIcon = (props) => <svg className="TickIcon"
   viewBox="0 0 32 32"
   style={{ enableBackground: 'new 0 0 32 32' }}
 >
-  <g style={_.merge({strokeLinecap: 'square', strokeWidth: 3, stroke: '#108ee9'}, props.style)}>
+  <g style={_.merge({strokeLinecap: 'square', strokeWidth: 3, stroke: CONST.PRIMARY_COLOR}, props.style)}>
     <line x1="5" y1="18" x2="11.5" y2="24.5"/>
     <line x1="11.5" y1="24.5" x2="27" y2="9"/>
   </g>
