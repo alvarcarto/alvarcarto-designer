@@ -4,13 +4,13 @@ import _ from 'lodash';
 import { Icon, Badge, Tooltip } from 'antd';
 import { setViewState } from '../actions';
 import { posterSizeToPixels, createApiUrlQuery } from '../util';
-import { calculateTotalPrice, getCurrencySymbol } from '../util/price';
+import { calculatePrice, getCurrencySymbol } from '../util/price';
 
 const PricePanel = React.createClass({
   render() {
     const { globalState } = this.props;
     const mapItem = globalState.cart[globalState.editCartItem];
-    const price = calculateTotalPrice(globalState.cart);
+    const price = calculatePrice(mapItem);
     const itemCount = _.reduce(globalState.cart, (memo, item) => memo + item.quantity, 0);
 
     return (

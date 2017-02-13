@@ -65,13 +65,13 @@ const CartItem = React.createClass({
                 : <li>
                     <Popconfirm
                       placement="bottom"
-                      title="Remove from cart? Changes will be lost."
+                      title="Remove from order? Changes will be lost."
                       onConfirm={this._onRemove}
                       okText="Remove"
                       cancelText="Cancel"
                     >
                       <a>
-                        <Tooltip title="Remove item from cart">
+                        <Tooltip title="Remove item from order">
                           <Icon type="close" />
                         </Tooltip>
                       </a>
