@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import AlvarMap from './AlvarMap';
 import { Icon } from 'antd';
 import config from '../config';
-import { posterSizeToPhysicalDimensions } from '../util';
+import { posterSizeToPhysicalDimensions, posterSizeToPixels } from '../util';
 import './LightWall.css';
 
 const LightWall = React.createClass({
@@ -11,33 +11,34 @@ const LightWall = React.createClass({
     const { globalState } = this.props;
     const mapItem = globalState.cart[globalState.editCartItem];
 
-    const dimensions = posterSizeToPhysicalDimensions(
+    const physicalDimensions = posterSizeToPhysicalDimensions(
       mapItem.size,
       mapItem.orientation
     );
+    const dimensions = posterSizeToPixels(mapItem.size, mapItem.orientation);
 
     return (
       <div className="LightWall noselect">
-        <div className="LightWall__map-container">
-          <div className="LightWall__scaler" style={{ zoom: dimensions. zoom }}>
-            <div className="LightWall__wire-container">
-              <img className="LightWall__clip1" src="clip.png" />
-              <img className="LightWall__clip2" src="clip.png" />
-              <div className="LightWall__wire1"></div>
-              <div className="LightWall__wire2"></div>
-            </div>
+      <div className="LightWall__map-container">
+          <div className="LightWall__wire-container">
+            <img className="LightWall__clip1" src="clip.png" />
+            <img className="LightWall__clip2" src="clip.png" />
+            <div className="LightWall__wire1"></div>
+            <div className="LightWall__wire2"></div>
+          </div>
 
+          <div className="LightWall__scaler" style={{ zoom: dimensions.zoom }}>
             <AlvarMap />
           </div>
 
           <div className="LightWall__width-label">
             <div className="LightWall__width-label-line"></div>
-            <p>{dimensions.width} {dimensions.unit}</p>
+            <p>{physicalDimensions.width} {physicalDimensions.unit}</p>
           </div>
 
           <div className="LightWall__height-label">
             <div className="LightWall__height-label-line"></div>
-            <p>{dimensions.height} {dimensions.unit}</p>
+            <p>{physicalDimensions.height} {physicalDimensions.unit}</p>
           </div>
         </div>
 

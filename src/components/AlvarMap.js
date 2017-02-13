@@ -1,4 +1,6 @@
 import React from 'react';
+import L from 'leaflet';
+window.L = L;
 import { connect } from 'react-redux';
 import { setMapView } from '../actions';
 import { Spin } from 'antd';
@@ -31,13 +33,29 @@ const AlvarMap = React.createClass({
     if (mapItem.size !== nextMapItem.size ||
         mapItem.orientation !== nextMapItem.orientation) {
       if (this.state.glMap) {
-        setTimeout(() => this.state.glMap.resize(), 400);
+        setTimeout(() => this.state.glMap.resize(), 0);
       }
 
       if (this.refs.lMap) {
-        setTimeout(() => this.refs.lMap.leafletElement.invalidateSize(), 400);
+        setTimeout(() => this.refs.lMap.leafletElement.invalidateSize(), 0);
       }
     }
+
+    const dimensions = posterSizeToPixels(mapItem.size, mapItem.orientation);
+    const nextDimensions = posterSizeToPixels(nextMapItem.size, nextMapItem.orientation);
+    if (dimensions.zoom !== nextDimensions.zoom) {
+      // Ugly hack very very ugly, to fix:
+      // We are using our fork of Leaflet which implements this
+      // https://github.com/Leaflet/Leaflet/issues/2795
+      L.DomEvent.setContainerScale(nextDimensions.zoom);
+    }
+  },
+
+  componentDidMount() {
+    const { globalState } = this.props;
+    const mapItem = globalState.cart[globalState.editCartItem];
+    const dimensions = posterSizeToPixels(mapItem.size, mapItem.orientation);
+    L.DomEvent.setContainerScale(dimensions.zoom);
   },
 
   render() {
@@ -48,7 +66,7 @@ const AlvarMap = React.createClass({
     const dimensions = posterSizeToPixels(mapItem.size, mapItem.orientation);
     const style = getStyle(mapItem.mapStyle);
     return (
-      <div className="AlvarMap grabbable" style={dimensions}>
+      <div className="AlvarMap grabbable" style={{ width: dimensions.width, height: dimensions.height }}>
         <div className="AlvarMap__container">
           {
             style.type === 'vector'
@@ -73,6 +91,7 @@ const AlvarMap = React.createClass({
   _renderMapboxGl(style) {
     const { globalState } = this.props;
     const mapItem = globalState.cart[globalState.editCartItem];
+    const dimensions = posterSizeToPixels(mapItem.size, mapItem.orientation);
 
     return <ReactMapboxGl
       ref="map"
@@ -81,6 +100,7 @@ const AlvarMap = React.createClass({
       pitch={mapItem.pitch}
       movingMethod="flyTo"
       movingMethodOptions={{ speed: 2 }}
+      containerScale={dimensions.zoom}
       onStyleLoad={this._onStyleLoad}
       style={style.url}
       onMoveEnd={this._onGlMoveEnd}

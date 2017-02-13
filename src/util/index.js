@@ -29,7 +29,7 @@ function posterSizeToPixels(size, orientation) {
       dimensions = { width: 700, height: 1000, zoom: 0.6 };
       break;
     case '30x40cm':
-      dimensions = { width: 360, height: 480, zoom: 0.8 };
+      dimensions = { width: 360, height: 480, zoom: 0.7 };
       break;
     default:
       throw new Error(`Unknown size: ${size}`);

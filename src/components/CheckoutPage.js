@@ -26,10 +26,38 @@ const CheckoutPage = React.createClass({
           </a>
         </div>
 
-        <Affix className="CheckoutPage__summary-container" offsetTop={10}>
-          <CheckoutSummary globalState={this.props.globalState} />
-        </Affix>
-        <CheckoutForm />
+        <div className="CheckoutPage__row">
+          <Affix className="CheckoutPage__summary-container" offsetTop={10}>
+            <CheckoutSummary globalState={this.props.globalState} />
+          </Affix>
+          <CheckoutForm />
+        </div>
+
+        <footer className="CheckoutPage__footer">
+          <Row gutter={8}>
+            <Col span={12}>
+              <ul>
+                <li>
+                   <a href="#">Shipping &amp; Returns</a>
+                </li>
+                <li>
+                   <a href="#">FAQ</a>
+                </li>
+                <li>
+                   <a href="#">Help</a>
+                </li>
+              </ul>
+            </Col>
+            <Col span={12}>
+              <p>
+                Any questions? Send us mail to
+                <a href="mailto:help@alvarcarto.com"> help@alvarcarto.com </a>
+                or use the Facebook chat.
+              </p>
+              <p>We are located at Luova Laboratorio, Saaristonkatu 9, 90100 Oulu, Finland.</p>
+            </Col>
+          </Row>
+        </footer>
       </div>
     );
   },
