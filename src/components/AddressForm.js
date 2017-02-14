@@ -118,14 +118,18 @@ const AddressForm = React.createClass({
           />
         </Form.Item>
 
-        <Form.Item {...formErrors.phone} {...formItemLayout} label="Phone number" extra="In case needed by postal service.">
-          <Input
-            name="phone"
-            onBlur={this._onInputBlur}
-            onChange={this._onInputChange}
-            placeholder="Phone number"
-          />
-        </Form.Item>
+        {
+          this.props.disablePhone
+            ? null
+            : <Form.Item {...formErrors.phone} {...formItemLayout} label="Phone number" extra="In case needed by postal service.">
+                <Input
+                  name="phone"
+                  onBlur={this._onInputBlur}
+                  onChange={this._onInputChange}
+                  placeholder="Phone number"
+                />
+              </Form.Item>
+        }
       </div>
     );
   },

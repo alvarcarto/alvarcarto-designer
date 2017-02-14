@@ -100,6 +100,7 @@ const CheckoutForm = React.createClass({
                       {getIndex()}. Billing address
                     </h2>
                     <AddressForm
+                      disablePhone
                       validate={this.state.validateAll}
                       onChange={this._onBillingAddressFormChange}
                     />
