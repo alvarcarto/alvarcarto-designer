@@ -1,3 +1,5 @@
+/* global Stripe */
+
 import React from 'react';
 import _ from 'lodash';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
@@ -18,6 +20,10 @@ const form = {
 };
 
 const CheckoutForm = React.createClass({
+  propTypes: {
+    onSubmit: React.PropTypes.func.isRequired,
+  },
+
   getInitialState() {
     return {
       // Take all keys in form object and initialize their values
@@ -279,8 +285,16 @@ const CheckoutForm = React.createClass({
       return;
     }
 
-    // TODO: Submit
-    console.log('Submit!');
+    const { state } = this;
+    const orderForm = {
+      email: _.get(state.emailForm, 'values.email'),
+      emailSubscription: state.values.emailSubscription,
+      creditCard: _.get(state.creditCardForm, 'values'),
+      shippingAddress: _.get(state.shippingAddressForm, 'values'),
+      billingAddress: _.get(state.billingAddressForm, 'values'),
+    };
+
+    this.props.onSubmit(orderForm);
   }
 });
 

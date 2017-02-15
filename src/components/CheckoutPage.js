@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import { Row, Col, Icon, Affix } from 'antd';
-import { setViewState } from '../actions';
+import { setViewState, postOrder } from '../actions';
 import config from '../config';
 import CheckoutForm from './CheckoutForm';
 import CheckoutSummary from './CheckoutSummary';
@@ -29,7 +29,7 @@ const CheckoutPage = React.createClass({
           <Affix className="CheckoutPage__summary-container" offsetTop={10}>
             <CheckoutSummary globalState={this.props.globalState} />
           </Affix>
-          <CheckoutForm />
+          <CheckoutForm onSubmit={this._onFormSubmit} />
         </div>
 
         <footer className="CheckoutPage__footer">
@@ -62,6 +62,13 @@ const CheckoutPage = React.createClass({
 
   _onBackClick() {
     this.props.dispatch(setViewState('editor'));
+  },
+
+  _onFormSubmit(form) {
+    const order = _.merge({}, form, {
+      cart: this.props.globalState.cart,
+    });
+    this.props.dispatch(postOrder(order));
   }
 });
 
