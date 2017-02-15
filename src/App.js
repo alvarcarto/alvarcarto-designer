@@ -1,34 +1,54 @@
-const express = require('express');
-const morgan = require('morgan');
-const bodyParser = require('body-parser');
-const compression = require('compression');
-const errorResponder = require('./middleware/error-responder');
-const errorLogger = require('./middleware/error-logger');
-const createRouter = require('./router');
-const config = require('./config');
+import React from 'react';
+import _ from 'lodash';
+import config from './config';
+import { connect } from 'react-redux';
+import EditorPage from './components/EditorPage';
+import CheckoutPage from './components/CheckoutPage';
+import { initialState } from './reducers';
 
-function createApp() {
-  const app = express();
-  app.disable('x-powered-by');
+const App = React.createClass({
+  componentDidMount() {
+    if (!config.DEVELOPMENT) {
+      window.onbeforeunload = this._beforeLeavePage;
+    }
+  },
 
-  if (config.NODE_ENV !== 'production') {
-    app.use(morgan('dev'));
-  }
+  render() {
+    let className = 'App';
+    const { globalState } = this.props;
 
-  app.use(bodyParser.json({ limit: '1mb' }));
-  app.use(compression({
-    // Compress everything over 10 bytes
-    threshold: 10,
-  }));
+    const isCheckout = globalState.viewState === 'checkout';
+    if (isCheckout) {
+      className += ' App--checkout';
+    }
 
-  // Initialize routes
-  const router = createRouter();
-  app.use('/', router);
+    return (
+      <div className={className}>
+        <div className="App__layout">
+          {
+            isCheckout
+              ? <CheckoutPage />
+              : <EditorPage />
+          }
+        </div>
+      </div>
+    );
+  },
 
-  app.use(errorLogger());
-  app.use(errorResponder());
+  _beforeLeavePage() {
+    const importantFields = [
+      'viewState',
+      'cart',
+    ];
 
-  return app;
-}
+    const userHasMadeChanges = !_.isEqual(
+      _.pick(initialState, importantFields),
+      _.pick(this.props.globalState, importantFields),
+    );
+    if (userHasMadeChanges) {
+      return 'Do you want to leave this site?';
+    }
+  },
+});
 
-module.exports = createApp;
+export default connect(state => ({ globalState: state }))(App);

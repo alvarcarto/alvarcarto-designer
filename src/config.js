@@ -1,11 +1,13 @@
-/* eslint-disable no-process-env */
+import _ from 'lodash';
 
-// Env vars should be casted to correct types
-const config = {
-  // Must match to nginx config
-  PORT: 9000,
-  NODE_ENV: process.env.NODE_ENV,
-  LOG_LEVEL: process.env.LOG_LEVEL,
+const CONST = {
+  PUBLIC_URL: process.env.PUBLIC_URL,
+  DEVELOPMENT: process.env.NODE_ENV === 'development',
+  API_URL: process.env.API_URL || 'http://localhost:9000',
 };
 
-module.exports = config;
+if (_.endsWith(CONST.API_URL, '/')) {
+  throw new Error('Trailing slash in API_URL. Remove it.');
+}
+
+export default CONST;
