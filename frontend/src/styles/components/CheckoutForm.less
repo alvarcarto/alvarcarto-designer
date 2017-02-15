@@ -1,0 +1,109 @@
+.CheckoutForm__section {
+  margin: 10px 0 10px 0;
+}
+.CheckoutForm__section:first-of-type {
+  margin-top: 0;
+}
+
+.CheckoutForm__section::after {
+  content: "";
+  display: block;
+  width: 88%;
+  margin: 50px 0 15px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.CheckoutForm__section--last::after {
+  display: none;
+}
+
+.CheckoutForm h1 {
+  font-weight: 400;
+  text-transform: uppercase;
+  color: @primary-color;
+  margin-bottom: 30px;
+}
+
+.CheckoutForm__header > .anticon {
+  margin-right: 5px;
+}
+
+.CheckoutForm .CheckoutForm__new-address {
+  margin-top: 20px;
+  margin-bottom: -10px;
+}
+
+.CheckoutForm__form-header {
+  font-size: @font-size-medium;
+  margin-bottom: 34px;
+  text-transform: uppercase;
+}
+
+.CheckoutForm .CheckoutForm__terms {
+  display: block;
+  margin: 40px 0 12px 2px;
+}
+
+.CheckoutForm__terms a:hover {
+  text-decoration: underline;
+}
+
+.CheckoutForm .CheckoutForm__info {
+  font-size: 12px;
+  margin: 10px 0 20px 0;
+  background: #f9f9f9;
+  border-radius: 5px;
+  padding: 15px 20px;
+  width: 87.5%;
+  color: #888;
+  display: flex;
+  flex-direction: row;
+}
+
+.CheckoutForm .CheckoutForm__info > .anticon {
+  margin-top: 3px;
+  font-size: 1.4rem;
+}
+
+.CheckoutForm .CheckoutForm__info > p {
+  margin-left: 10px;
+}
+
+.CheckoutForm .CheckoutForm__badge-list {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: 40px 0;
+  width: 87.5%;
+}
+
+.CheckoutForm .CheckoutForm__badge-list li:last-of-type .CheckoutFormBadge {
+  margin-right: 0;
+}
+
+.CheckoutForm .CheckoutForm__badge {
+  margin-right: 60px;
+  text-align: center;
+  text-transform: uppercase;
+  width: 80px;
+}
+
+.CheckoutForm .CheckoutForm__badge > h4 {
+  margin-top: 5px;
+  font-size: 0.7rem;
+  color: #999;
+  text-align: center;
+}
+
+.CheckoutForm .CheckoutForm__badge > .anticon {
+  font-size: 3rem;
+  color: #89CCBD;
+  font-weight: 300;
+}
+
+
+.CheckoutForm .CheckoutForm__complete-button {
+  font-size: @font-size-x-small;
+  padding: 10px 20px;
+  width: 87.5%;
+}

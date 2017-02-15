@@ -1,0 +1,131 @@
+.Accordion {
+  border-bottom-width: 0;
+  overflow-y: hidden;
+  margin-top: 30px;
+}
+
+.Accordion__section > .Accordion__content {
+  height: 0;
+  overflow-y: hidden;
+}
+
+.Accordion__section--selected > .Accordion__content {
+  padding: 10px 30px 20px 60px;
+  height: auto;
+}
+
+.Accordion__start {
+  position: relative;
+  height: 40px;
+}
+
+.Accordion__start-header {
+  position: absolute;
+  left: 60px;
+  top: -3px;
+  font-size: 0.7rem;
+  color: #999;
+  font-weight: 400;
+}
+
+.Accordion__start-circle {
+  z-index: 20;
+  position: absolute;
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+  background: @primary-color;
+  left: 22px;
+}
+
+.Accordion__section .Accordion__header {
+  .condensed();
+  cursor: pointer;
+  font-weight: 400;
+  padding: 20px 60px;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  color: #555;
+  position: relative;
+  margin: 0;
+  /*transition: color 0.6s ease, background-color 0.6s ease;*/
+}
+
+.Accordion__header > h2 {
+  top: 1px;
+  font-weight: 400;
+  color: #555;
+  font-size: 1.1rem;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.Accordion__section--selected .Accordion__header > h2, .Accordion__header:hover > h2 {
+  color: @primary-color;
+}
+
+.Accordion__section .Accordion__header::after {
+  content: "\E61F";
+  font-family: "anticon" !important;
+  color: #bbb;
+  display: block;
+  position: absolute;
+  right: 30px;
+  top: 19px;
+  transition: color 0.3s ease;
+}
+
+.Accordion__section--selected .Accordion__header::after {
+  transform: rotate(90deg);
+  color: @primary-color;
+}
+.Accordion__header:hover:after {
+  color: @primary-color;
+}
+
+.Accordion__header > .Accordion__header-number {
+  z-index: 20;
+  position: absolute;
+  height: 22px;
+  width: 22px;
+  border-radius: 15px;
+  background: #fafafa;
+  border: 1px solid @primary-color;
+  color: @primary-color;
+  line-height: 23px;
+  text-indent: 0px;
+  left: 16px;
+  top: 50%;
+  margin-top: -11px;
+  text-align: center;
+  font-size: 0.7rem;
+}
+
+.Accordion__section:nth-of-type(1) .Accordion__header-number {
+  text-indent: -1px;
+}
+
+.Accordion__section .Accordion__progress-line {
+  position: absolute;
+  z-index: 10;
+  display: block;
+  height: 1000px;
+  bottom: 43px;
+  left: 26px;
+}
+
+.Accordion__section--selected .Accordion__progress-line {
+  border-left: 2px solid @primary-color !important;
+  z-index: 11;
+}
+
+.Accordion__section:last-of-type .Accordion__progress-line {
+  border-left: 2px dashed @primary-3;
+}
+
+.Accordion__section--selected .Accordion__header-number,
+.Accordion__section--highlight .Accordion__header-number {
+  background: @primary-color;
+  color: white;
+  border: none;
+}

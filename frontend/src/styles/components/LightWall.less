@@ -1,0 +1,144 @@
+.LightWall {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-width: 715px;
+  min-height: 720px;
+  /*
+  background-color: #fbfbfb;
+  background-image: url("data:image/svg+xml,%3Csvg width='100' height='20' viewBox='0 0 100 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M21.184 20c.357-.13.72-.264 1.088-.402l1.768-.661C33.64 15.347 39.647 14 50 14c10.271 0 15.362 1.222 24.629 4.928.955.383 1.869.74 2.75 1.072h6.225c-2.51-.73-5.139-1.691-8.233-2.928C65.888 13.278 60.562 12 50 12c-10.626 0-16.855 1.397-26.66 5.063l-1.767.662c-2.475.923-4.66 1.674-6.724 2.275h6.335zm0-20C13.258 2.892 8.077 4 0 4V2c5.744 0 9.951-.574 14.85-2h6.334zM77.38 0C85.239 2.966 90.502 4 100 4V2c-6.842 0-11.386-.542-16.396-2h-6.225zM0 14c8.44 0 13.718-1.21 22.272-4.402l1.768-.661C33.64 5.347 39.647 4 50 4c10.271 0 15.362 1.222 24.629 4.928C84.112 12.722 89.438 14 100 14v-2c-10.271 0-15.362-1.222-24.629-4.928C65.888 3.278 60.562 2 50 2 39.374 2 33.145 3.397 23.34 7.063l-1.767.662C13.223 10.84 8.163 12 0 12v2z' fill='%23d4d4d4' fill-opacity='0.18' fill-rule='evenodd'/%3E%3C/svg%3E");
+  */
+  /*background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cg fill='%23aba8b0' fill-opacity='0.09'%3E%3Cpolygon fill-rule='evenodd' points='8 4 12 6 8 8 6 12 4 8 0 6 4 4 6 0 8 4'/%3E%3C/g%3E%3C/svg%3E");*/
+  background-color: #f9f9f9;
+  /* background: linear-gradient(to right bottom, #FFF1D7 0%, #C6F8FF 100%); */
+
+  /* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
+  /* background-image: url("https://www.transparenttextures.com/patterns/concrete-wall-2.png"); */
+  /* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
+}
+
+.LightWall__map-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.LightWall__wire-container {
+  position: relative;
+}
+
+.LightWall__clip1, .LightWall__clip2 {
+  width: 44px;
+  position: absolute;
+  top: -20px;
+  z-index: 100;
+}
+
+.LightWall__clip1 {
+  left: 30px;
+}
+
+.LightWall__clip2 {
+  right: 9px;
+}
+
+.LightWall__wire1, .LightWall__wire2 {
+  position: absolute;
+  height: 4000px;
+  width: 3px;
+  border-right: 1px solid #ccc;
+  background: #ddd;
+  bottom: 0px;
+  box-shadow: 12px -2px 8px -1px rgba(0, 0, 0, 0.45);
+}
+
+.LightWall__wire1 {
+  left: 40px;
+}
+
+.LightWall__wire2 {
+  right: 40px;
+}
+
+.LightWall__logo img {
+  position: absolute;
+  top: 7px;
+  right: 3px;
+  height: 24px;
+}
+
+.LightWall__credits {
+  font-size: 0.6rem;
+  position: absolute;
+  bottom: 5px;
+  right: 13px;
+  color: #888;
+}
+
+.LightWall__credits-heart {
+  position: relative;
+  top: 2px;
+  right: 2px;
+  font-size: 0.9rem;
+}
+
+.LightWall__credits a {
+  color: #888;
+}
+
+.LightWall__width-label,
+.LightWall__width-label > *,
+.LightWall__height-label,
+.LightWall__height-label > * {
+  position: absolute;
+}
+
+.LightWall__width-label > p,
+.LightWall__height-label > p {
+  position: absolute;
+  color: #aaa;
+  font-size: 0.9rem;
+}
+
+.LightWall__width-label {
+  bottom: -22px;
+  left: 0;
+  width: 100%;
+  height: 10px;
+  border-left: 2px solid #ddd;
+  border-right: 2px solid #ddd;
+}
+.LightWall__width-label-line {
+  width: 100%;
+  top: 4px;
+  border-bottom: 2px solid #ddd;
+}
+.LightWall__width-label > p {
+  bottom: -20px;
+  right: 15px;
+}
+
+.LightWall__height-label {
+  right: -22px;
+  top: 0;
+  height: 100%;
+  width: 10px;
+  border-top: 2px solid #ddd;
+  border-bottom: 2px solid #ddd;
+}
+.LightWall__height-label-line {
+  height: 100%;
+  left: 4px;
+  border-right: 2px solid #ddd;
+}
+.LightWall__height-label > p {
+  bottom: 30px;
+  left: 30px;
+  transform: rotate(90deg);
+  transform-origin: left top 0;
+  width: 20px;
+  overflow: visible;
+  white-space: nowrap;
+}
+

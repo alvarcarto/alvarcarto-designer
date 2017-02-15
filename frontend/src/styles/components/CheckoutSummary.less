@@ -1,0 +1,65 @@
+.CheckoutSummary__header {
+  font-size: @font-size-medium;
+  margin-bottom: 24px;
+  text-transform: uppercase;
+}
+
+.CheckoutSummary__price-summary {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.CheckoutSummary__price-table {
+  margin-top: 0px;
+  font-size: 0.9rem;
+  text-align: right;
+}
+
+.CheckoutSummary__cart li:not(:first-of-type) .CartItem {
+  margin-top: 15px;
+}
+
+.CheckoutSummary__price-table tr {
+  line-height: 28px;
+}
+
+.CheckoutSummary__price-table td:last-of-type {
+  padding-left: 25px;
+}
+
+.CheckoutSummary__total-row {
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.CheckoutSummary__add {
+  margin: 13px 0 0 -5px;
+  cursor: pointer;
+}
+
+.CheckoutSummary__add a {
+  font-size: @font-size-xx-small;
+  padding: 10px;
+}
+
+.CheckoutSummary__add .anticon {
+  margin-right: 3px;
+  position: relative;
+  border: 1px solid @primary-color;
+  border-radius: 50%;
+  font-size: 9px;
+  font-weight: 700;
+  transition: color 0.15s ease, background 0.15s ease;
+  background: none;
+  color: @primary-color;
+  cursor: pointer;
+  width: 15px;
+  height: 15px;
+  line-height: 13px;
+  display: inline-block;
+}
+
+.CheckoutSummary__add:hover .anticon {
+  background: @primary-color;
+  color: white;
+}

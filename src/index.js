@@ -1,25 +1,39 @@
-/* global Stripe */
+const createApp = require('./app');
+const enableDestroy = require('server-destroy');
+const BPromise = require('bluebird');
+const logger = require('./util/logger')(__filename);
+const config = require('./config');
 
-import BPromise from 'bluebird';
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import { LocaleProvider } from 'antd';
-import enUS from 'antd/lib/locale-provider/en_US';
-import App from './App';
+BPromise.config({
+  warnings: config.NODE_ENV !== 'production',
+  longStackTraces: true,
+});
 
-import './bundle.css';
+const app = createApp();
+const server = app.listen(config.PORT, () => {
+  logger.info(
+    'Express server listening on http://localhost:%d/ in %s mode',
+    config.PORT,
+    app.get('env')
+  );
+});
+enableDestroy(server);
 
-import configureStore from './store/configure';
-const store = configureStore();
+function closeServer(signal) {
+  logger.info(`${signal} received`);
+  logger.info('Closing http.Server ..');
+  server.destroy();
+}
 
-Stripe.setPublishableKey('pk_test_PKlD56JoqROJNxZa8JoV5ILr');
+// Handle signals gracefully. Heroku will send SIGTERM before idle.
+process.on('SIGTERM', closeServer.bind(this, 'SIGTERM'));
+process.on('SIGINT', closeServer.bind(this, 'SIGINT(Ctrl-C)'));
 
-ReactDOM.render(
-  <Provider store={store}>
-    <LocaleProvider locale={enUS}>
-      <App />
-    </LocaleProvider>
-  </Provider>,
-  document.getElementById('root')
-);
+server.on('close', () => {
+  logger.info('Server closed');
+  process.emit('cleanup');
+
+  logger.info('Giving 100ms time to cleanup..');
+  // Give a small time frame to clean up
+  setTimeout(process.exit, 100);
+});

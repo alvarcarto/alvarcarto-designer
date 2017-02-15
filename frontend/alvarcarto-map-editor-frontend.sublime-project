@@ -1,0 +1,6 @@
+{
+    "folders": [{
+        "path": ".",
+        "folder_exclude_patterns": [".svn", "build"]
+    }]
+}

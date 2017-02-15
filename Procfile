@@ -1,0 +1,1 @@
+web: bin/start-nginx babel-node --presets es2015 src/index.js

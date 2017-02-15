@@ -1,54 +1,34 @@
-import React from 'react';
-import _ from 'lodash';
-import config from './config';
-import { connect } from 'react-redux';
-import EditorPage from './components/EditorPage';
-import CheckoutPage from './components/CheckoutPage';
-import { initialState } from './reducers';
+const express = require('express');
+const morgan = require('morgan');
+const bodyParser = require('body-parser');
+const compression = require('compression');
+const errorResponder = require('./middleware/error-responder');
+const errorLogger = require('./middleware/error-logger');
+const createRouter = require('./router');
+const config = require('./config');
 
-const App = React.createClass({
-  componentDidMount() {
-    if (!config.DEVELOPMENT) {
-      window.onbeforeunload = this._beforeLeavePage;
-    }
-  },
+function createApp() {
+  const app = express();
+  app.disable('x-powered-by');
 
-  render() {
-    let className = 'App';
-    const { globalState } = this.props;
+  if (config.NODE_ENV !== 'production') {
+    app.use(morgan('dev'));
+  }
 
-    const isCheckout = globalState.viewState === 'checkout';
-    if (isCheckout) {
-      className += ' App--checkout';
-    }
+  app.use(bodyParser.json({ limit: '1mb' }));
+  app.use(compression({
+    // Compress everything over 10 bytes
+    threshold: 10,
+  }));
 
-    return (
-      <div className={className}>
-        <div className="App__layout">
-          {
-            isCheckout
-              ? <CheckoutPage />
-              : <EditorPage />
-          }
-        </div>
-      </div>
-    );
-  },
+  // Initialize routes
+  const router = createRouter();
+  app.use('/', router);
 
-  _beforeLeavePage() {
-    const importantFields = [
-      'viewState',
-      'cart',
-    ];
+  app.use(errorLogger());
+  app.use(errorResponder());
 
-    const userHasMadeChanges = !_.isEqual(
-      _.pick(initialState, importantFields),
-      _.pick(this.props.globalState, importantFields),
-    );
-    if (userHasMadeChanges) {
-      return 'Do you want to leave this site?';
-    }
-  },
-});
+  return app;
+}
 
-export default connect(state => ({ globalState: state }))(App);
+module.exports = createApp;

@@ -1,0 +1,34 @@
+version: '2'
+
+services:
+  nginx:
+    image: nginx
+    volumes:
+     - ./mysite.template:/etc/nginx/conf.d/mysite.template
+     - '.:/app'
+    ports:
+     - '8080:80'
+    environment:
+     - NGINX_HOST=foobar.com
+     - NGINX_PORT=80
+    command: /bin/bash -c "envsubst < /etc/nginx/conf.d/mysite.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
+
+  postgres:
+    # This configuration will create two databases to the postgres container:
+    # * "postgres" for local development
+    # * "test" for testing
+    #
+    # Also see: https://hub.docker.com/_/postgres/
+    image: postgres:9.5
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=test
+    ports:
+      # Expose the postgres in 54321 port to prevent port collisions
+      - '54321:5432'
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata: {}
