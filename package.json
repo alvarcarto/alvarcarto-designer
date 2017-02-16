@@ -48,7 +48,7 @@
     "postcss": "postcss --use autoprefixer ./src/bundle.css -o ./src/bundle.css",
     "watch-css": "npm run build-css && chokidar \"src/**/*.less\" \"./src/styles/**/*.css\" -c \"npm run build-css\"",
     "start": "concurrently \"react-scripts start\" \"npm run watch-css\"",
-    "build": "react-scripts build && npm run build-css",
+    "build": "npm run build-css && react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "deploy": "npm run build && gh-pages -d build"
