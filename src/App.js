@@ -2,9 +2,12 @@ import React from 'react';
 import _ from 'lodash';
 import config from './config';
 import { connect } from 'react-redux';
+import { setLocation } from './actions';
 import EditorPage from './components/EditorPage';
 import CheckoutPage from './components/CheckoutPage';
+import ThankYouPage from './components/ThankYouPage';
 import { initialState } from './reducers';
+import history from './history';
 
 const App = React.createClass({
   componentDidMount() {
@@ -13,23 +16,34 @@ const App = React.createClass({
     }
   },
 
+  componentDidMount() {
+    // Listen for changes to the current location.
+    history.listen((location, action) => {
+      this.props.dispatch(setLocation(location));
+    });
+  },
+
   render() {
-    let className = 'App';
     const { globalState } = this.props;
 
-    const isCheckout = globalState.viewState === 'checkout';
-    if (isCheckout) {
-      className += ' App--checkout';
+    let page;
+
+    switch (_.trimEnd(globalState.location.pathname, '/')) {
+      case '/checkout':
+        page = <CheckoutPage />;
+        break;
+      case '/thank-you':
+        page = <ThankYouPage />;
+        break;
+      default:
+        page = <EditorPage />;
+        break;
     }
 
     return (
-      <div className={className}>
+      <div className="App">
         <div className="App__layout">
-          {
-            isCheckout
-              ? <CheckoutPage />
-              : <EditorPage />
-          }
+          {page}
         </div>
       </div>
     );
@@ -37,7 +51,7 @@ const App = React.createClass({
 
   _beforeLeavePage() {
     const importantFields = [
-      'viewState',
+      'location',
       'cart',
     ];
 

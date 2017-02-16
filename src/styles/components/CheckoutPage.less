@@ -5,6 +5,24 @@
   position: relative;
 }
 
+.CheckoutPage__overlay {
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: fixed;
+  z-index: 100000;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+}
+.CheckoutPage__overlay .Spinner {
+  margin-bottom: 10px;
+}
+
 .CheckoutPage__row {
   display: flex;
   flex-direction: row-reverse;

@@ -2,9 +2,9 @@ import Odometer from './Odometer';
 import React from 'react';
 import _ from 'lodash';
 import { Icon, Badge, Tooltip } from 'antd';
-import { setViewState } from '../actions';
 import { posterSizeToPixels, createApiUrlQuery } from '../util';
 import { calculatePrice, getCurrencySymbol } from '../util/price';
+import history from '../history';
 
 const PricePanel = React.createClass({
   render() {
@@ -40,7 +40,7 @@ const PricePanel = React.createClass({
   },
 
   _onCheckoutClick() {
-    this.props.dispatch(setViewState('checkout'));
+    history.push('/checkout');
   }
 });
 

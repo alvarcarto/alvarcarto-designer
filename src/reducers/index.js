@@ -1,9 +1,11 @@
 import _ from 'lodash';
 import * as actions from '../action-types';
 import { coordToPrettyText } from '../util';
+import history from '../history';
 
 const HELSINKI_CENTER = { lat: 60.159865, lng: 24.942334 };
 const initialState = {
+  location: history.location,
   viewState: 'editor',  // or 'checkout'
   cart: [
     {
@@ -22,17 +24,20 @@ const initialState = {
     }
   ],
   editCartItem: 0,
+  postingOrder: false,
+  postOrderResponse: null,
+  postOrderError: null,
 };
 
-const copyInitialStateJustInCase = _.cloneDeep(initialState);
-export { copyInitialStateJustInCase as initialState };
+const freshInitialState = _.cloneDeep(initialState);
+export { freshInitialState as initialState };
 
 function reducer(state = initialState, action) {
   let newAttrs, newState;
 
   switch (action.type) {
-    case actions.SET_VIEW_STATE:
-      return _.extend({}, state, { viewState: action.payload });
+    case actions.SET_LOCATION:
+      return _.extend({}, state, { location: action.payload });
 
     case actions.SET_MAP_VIEW:
       newAttrs = {
@@ -81,7 +86,7 @@ function reducer(state = initialState, action) {
 
      case actions.ADD_CART_ITEM:
       newState = _.cloneDeep(state);
-      const newEmptyItem = _.cloneDeep(copyInitialStateJustInCase.cart[0]);
+      const newEmptyItem = _.cloneDeep(freshInitialState.cart[0]);
       newState.cart.push(newEmptyItem);
       newState.viewState = 'editor';
       newState.editCartItem = newState.cart.length - 1;
@@ -107,6 +112,15 @@ function reducer(state = initialState, action) {
       newState.editCartItem = newEditCartItem;
       newState.cart.splice(removeIndex, 1);
       return newState;
+
+    case actions.POST_ORDER_REQUEST:
+      return _.extend({}, state, { postingOrder: true, postOrderResponse: null, postOrderError: null });
+
+    case actions.POST_ORDER_SUCCESS:
+      return _.extend({}, state, { postingOrder: false, postOrderResponse: action.payload, postOrderError: null });
+
+    case actions.POST_ORDER_FAILURE:
+      return _.extend({}, state, { postingOrder: false, postOrderResponse: null, postOrderError: action.payload });
 
     default:
       return state;

@@ -200,7 +200,7 @@ const AddressForm = React.createClass({
 
     this.props.onChange({
       isValid,
-      values: this.state.values,
+      values: _.omitBy(this.state.values, (val, key) => val === null || val === ''),
     });
   }
 });

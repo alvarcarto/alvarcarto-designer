@@ -3,9 +3,9 @@ import * as actions from '../action-types';
 import * as stripeUtil from '../util/stripe';
 import * as api from '../util/api';
 
-export const setViewState = (viewState) => ({
-  type: actions.SET_VIEW_STATE,
-  payload: viewState,
+export const setLocation = (location) => ({
+  type: actions.SET_LOCATION,
+  payload: location,
 });
 
 export const setMapView = (view) => ({
@@ -64,7 +64,7 @@ export const postOrder = (payload) => function(dispatch) {
     address_state: _.get(payload.billingAddress, 'state'),
     address_country: _.get(payload.billingAddress, 'country'),
   })
-    .then((response) => {
+    .then((stripeResponse) => {
       // WARNING: ONLY USE CREDIT CARD DETAILS FROM STRIPE RESPONSE
       // Do NOT send the full credit card number, CVC or any
       // more detailed credit card info to our API.
@@ -74,14 +74,12 @@ export const postOrder = (payload) => function(dispatch) {
         emailSubscription: payload.emailSubscription,
         shippingAddress: payload.shippingAddress,
         billingAddress: payload.billingAddress,
-        stripeResponse: response,
+        stripeTokenResponse: stripeResponse.response,
         cart: payload.cart,
       };
-      console.log('stripe response', response);
-      return api.postOrder(payload);
+      return api.postOrder(order);
     })
     .then(response => {
-      console.log('api response', response);
       dispatch({
         type: actions.POST_ORDER_SUCCESS,
         payload: response,

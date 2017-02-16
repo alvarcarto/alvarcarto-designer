@@ -1,16 +1,34 @@
 import React from 'react';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { connect } from 'react-redux';
+import history from '../history';
 import _ from 'lodash';
 import { Row, Col, Icon, Affix } from 'antd';
-import { setViewState, postOrder } from '../actions';
+import { postOrder } from '../actions';
 import config from '../config';
 import CheckoutForm from './CheckoutForm';
 import CheckoutSummary from './CheckoutSummary';
+import Spinner from './Spinner';
 
 const CheckoutPage = React.createClass({
   render() {
     return (
       <div className="CheckoutPage">
+        <ReactCSSTransitionGroup
+            transitionName="popin"
+            transitionEnterTimeout={300}
+            transitionLeaveTimeout={100}
+          >
+          {
+            this.props.globalState.postingOrder
+              ? <div className="CheckoutPage__overlay">
+                  <Spinner />
+                  <h5>Completing payment ..</h5>
+                </div>
+              : null
+          }
+        </ReactCSSTransitionGroup>
+
         <a onClick={this._onBackClick} className="CheckoutPage__back-link noselect">
           <Icon type="left" />
           Back to design
@@ -61,14 +79,16 @@ const CheckoutPage = React.createClass({
   },
 
   _onBackClick() {
-    this.props.dispatch(setViewState('editor'));
+    history.push('/');
   },
 
   _onFormSubmit(form) {
     const order = _.merge({}, form, {
       cart: this.props.globalState.cart,
     });
-    this.props.dispatch(postOrder(order));
+
+    this.props.dispatch(postOrder(order))
+      .then(() => history.push('/thank-you'));
   }
 });
 
