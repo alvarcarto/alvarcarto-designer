@@ -5,6 +5,7 @@ import { removeCartItem, editCartItem, addCartItemQuantity, addCartItem } from '
 import { calculateTotalPrice } from '../util/price';
 import _ from 'lodash';
 import CartItem from './CartItem';
+import history from '../history';
 
 const CheckoutSummary = React.createClass({
   render() {
@@ -78,6 +79,7 @@ const CheckoutSummary = React.createClass({
   },
 
   _onAddPoster() {
+    history.push('/');
     this.props.dispatch(addCartItem());
   }
 });
