@@ -3,7 +3,7 @@
 import React from 'react';
 import _ from 'lodash';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import { Form, Input, Icon, Checkbox, Select, Radio, Tooltip, Button } from 'antd';
+import { Modal, Form, Input, Icon, Checkbox, Select, Radio, Tooltip, Button } from 'antd';
 import EmailForm from './EmailForm';
 import AddressForm from './AddressForm';
 import ShippingMethodForm from './ShippingMethodForm';
@@ -153,6 +153,10 @@ const CheckoutForm = React.createClass({
               </li>
             </ul>
 
+            <div className="CheckoutForm__sec-info">
+              <a onClick={this._onMoreSecurityClick} href="#">Security details</a>
+            </div>
+
             <div className="CheckoutForm__info">
               <Icon type="solution" />
               <p>
@@ -265,6 +269,30 @@ const CheckoutForm = React.createClass({
 
   _onCreditCardFormChange(form) {
     this.setState((state) => ({ creditCardForm: form }));
+  },
+
+  _onMoreSecurityClick(e) {
+    e.preventDefault();
+
+    Modal.info({
+      title: 'Your payments are secured',
+      iconType: 'lock',
+      content: (
+        <div>
+          <p>
+            Alvar Carto is using <a target="_blank" href="https://stripe.com">Stripe </a>
+            to securely handle your payments.
+            Stripe <a target="_blank" href="https://stripe.com/docs/security/stripe"> is certified </a>
+            to PCI Service Provider Level 1, which is the
+            most stringent level of certification available.
+          </p>
+          <p>
+            Full credit card information is only sent to Stripe servers.
+            We only see the last 4 digits and the expiration date of your credit card.
+          </p>
+        </div>
+      ),
+    });
   },
 
   _onSubmit(e) {
