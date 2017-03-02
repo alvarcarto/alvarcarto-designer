@@ -63,6 +63,7 @@ const CheckoutSummary = React.createClass({
   },
 
   _onCartItemEditClick(index) {
+    history.push('/');
     this.props.dispatch(editCartItem(index));
   },
 
