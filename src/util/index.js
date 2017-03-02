@@ -7,7 +7,7 @@ const STYLES = [
     id: 'black-and-white',
     type: 'raster',
     image: `${config.PUBLIC_URL}/assets/bw@2x.png`,
-    url: 'http://tiles.alvarcarto.com:8080/alvar/{z}/{x}/{y}/tile.png',
+    url: `http://tiles.alvarcarto.com/tiles/alvar/{z}/{x}/{y}/tile.png`,
     name: 'B & W',
   },
   {
