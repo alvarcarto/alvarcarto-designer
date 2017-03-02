@@ -69,6 +69,13 @@ export const postOrder = (payload) => function(dispatch) {
       // Do NOT send the full credit card number, CVC or any
       // more detailed credit card info to our API.
       // Last 4 digits etc which are in stripe response are ok.
+      // https://support.stripe.com/questions/what-information-can-i-safely-store-about-my-users-payment-information
+      //  The only sensitive data that you want to avoid handling is your customers'
+      //  credit card number and CVC; other than that, you’re welcome to store
+      //  any other information on your local machines.
+      //  As a good rule, you can store anything returned by our API. In particular,
+      // you would not have any issues storing the last four digits of your
+      // customer’s card number or the expiration date for easy reference.
       const order = {
         email: payload.email,
         emailSubscription: payload.emailSubscription,
