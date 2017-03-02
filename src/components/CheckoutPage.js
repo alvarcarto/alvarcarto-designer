@@ -88,7 +88,8 @@ const CheckoutPage = React.createClass({
     });
 
     this.props.dispatch(postOrder(order))
-      .then(() => history.push('/thank-you'));
+      .then(() => history.push('/thank-you'))
+      .catch(err => alert(`Something went wrong when completing order. "${err.message}."`))
   }
 });
 
