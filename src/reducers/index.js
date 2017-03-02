@@ -6,7 +6,6 @@ import history from '../history';
 const HELSINKI_CENTER = { lat: 60.159865, lng: 24.942334 };
 const initialState = {
   location: history.location,
-  viewState: 'editor',  // or 'checkout'
   cart: [
     {
       quantity: 1,
@@ -80,7 +79,6 @@ function reducer(state = initialState, action) {
 
     case actions.EDIT_CART_ITEM:
       return _.extend({}, state, {
-        viewState: 'editor',
         editCartItem: action.payload,
       });
 
@@ -88,7 +86,6 @@ function reducer(state = initialState, action) {
       newState = _.cloneDeep(state);
       const newEmptyItem = _.cloneDeep(freshInitialState.cart[0]);
       newState.cart.push(newEmptyItem);
-      newState.viewState = 'editor';
       newState.editCartItem = newState.cart.length - 1;
       return newState;
 
