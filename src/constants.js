@@ -1,6 +1,7 @@
 const CONST = {
   SYMBOL_EUR: '\u20AC',
   PRIMARY_COLOR: '#0084FF',
+  EMPTY_MAP_PADDING_FACTOR: 0.03,
 };
 
 export default CONST;

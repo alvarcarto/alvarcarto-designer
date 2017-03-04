@@ -24,8 +24,23 @@
   transform: translate(-50%, -50%);
 }
 
+.LightWall .LightWall__zoom-container {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 2000;
+}
+
+.LightWall .LightWall__zoom-container .leaflet-control-zoom > a {
+  width: 23px;
+  height: 23px;
+  line-height: 23px;
+  font-size: 16px;
+}
+
 .LightWall__wire-container {
   position: relative;
+  z-index: 999999;
 }
 
 .LightWall__clip1, .LightWall__clip2 {

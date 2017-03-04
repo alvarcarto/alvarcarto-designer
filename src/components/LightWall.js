@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import AlvarMap from './AlvarMap';
 import { Icon } from 'antd';
 import config from '../config';
+import { setMapView } from '../actions';
 import { posterSizeToPhysicalDimensions, posterSizeToPixels } from '../util';
 
 const LightWall = React.createClass({
@@ -28,6 +29,13 @@ const LightWall = React.createClass({
 
           <div className="LightWall__scaler" style={{ zoom: dimensions.zoom }}>
             <AlvarMap />
+          </div>
+
+          <div className="LightWall__zoom-container">
+            <div className="leaflet-control-zoom leaflet-bar leaflet-control">
+              <a className="leaflet-control-zoom-in" href="#" title="Zoom in" role="button" aria-label="Zoom in" onClick={this._onZoomInClick}>+</a>
+              <a className="leaflet-control-zoom-out" href="#" title="Zoom out" role="button" aria-label="Zoom out" onClick={this._onZoomOutClick}>-</a>
+            </div>
           </div>
 
           <div className="LightWall__width-label">
@@ -57,7 +65,23 @@ const LightWall = React.createClass({
         </div>
       </div>
     );
-  }
+  },
+
+  _onZoomInClick() {
+    const { globalState } = this.props;
+    const mapItem = globalState.cart[globalState.editCartItem];
+    this.props.dispatch(setMapView({
+      zoom: mapItem.mapZoom + 1,
+    }));
+  },
+
+  _onZoomOutClick() {
+    const { globalState } = this.props;
+    const mapItem = globalState.cart[globalState.editCartItem];
+    this.props.dispatch(setMapView({
+      zoom: mapItem.mapZoom - 1,
+    }));
+  },
 });
 
 export default connect(state => ({ globalState: state }))(LightWall);

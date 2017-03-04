@@ -13,9 +13,13 @@ function calculateTotalPrice(cart) {
   return total;
 }
 
-function calculatePrice(item) {
+function calculatePrice(item, opts = {}) {
   const price = calculateUnitPrice(item.size);
-  price.value = price.value * item.quantity;
+
+  if (!opts.onlyUnitPrice) {
+    price.value = price.value * item.quantity;
+  }
+
   price.label = _toLabel(price);
   return price;
 }

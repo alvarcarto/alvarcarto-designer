@@ -98,12 +98,6 @@ const CartItem = React.createClass({
 
   _onDecreaseQuantity() {
     this.props.onDecreaseQuantityClick(this.props.index);
-  },
-
-  _createImageUrl() {
-    const { globalState } = this.props;
-    const query = createApiUrlQuery(globalState);
-    return `http://tiles.alvarcarto.com:5000/api/placeit${query}&resizeToWidth=600`;
   }
 });
 

@@ -1,19 +1,50 @@
-.AlvarMapLabels {
+.AlvarMapOverlay {
   z-index: 1000;
   pointer-events: none;
   cursor: move;
-  font-family: 'Proxima Nova', "proxima-nova", sans-serif;
   position: absolute;
-  padding: 35px 20px;
-  bottom: 0;
-  text-align: center;
-  background: linear-gradient(0deg, #fff 0%, #fff 40%, rgba(255, 255, 255, 0.7) 75%, rgba(255, 255, 255, 0) 100%) !important;
+  top: 0;
+  left: 0;
   width: 100%;
-  color: #222;
+  height: 100%;
   box-sizing: border-box;
+  background: none;
 }
 
-.AlvarMapLabels__header {
+.AlvarMapOverlay::after {
+  pointer-events: none;
+  content: "";
+  display: block;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: white;
+}
+
+.AlvarMapOverlay--loading::after {
+  opacity: 1;
+}
+
+.AlvarMapOverlay--error::after {
+  font-family: "anticon" !important;
+  color: @error-color;
+  font-size: @font-size-xx-large;
+  content: "\E6A9";
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.AlvarMapOverlay svg {
+  width: 100%;
+  height: 100%;
+}
+
+.AlvarMapOverlay__header {
   text-transform: uppercase;
   letter-spacing: 0.43rem;
   font-size: 2.5rem;
@@ -22,7 +53,7 @@
   font-weight: 700;
 }
 
-.AlvarMapLabels__small-header {
+.AlvarMapOverlay__small-header {
   text-transform: uppercase;
   font-weight: 400;
   letter-spacing: 0.6rem;
@@ -32,7 +63,7 @@
   position: relative;
 }
 
-.AlvarMapLabels__small-header::before {
+.AlvarMapOverlay__small-header::before {
   content: '';
   position: absolute;
   top: 10px;
@@ -42,7 +73,7 @@
   border-top: 1.5px solid #000;
 }
 
-.AlvarMapLabels__small-header::after {
+.AlvarMapOverlay__small-header::after {
   content: '';
   position: absolute;
   top: 10px;
@@ -52,7 +83,7 @@
   border-top: 1.5px solid #000;
 }
 
-.AlvarMapLabels__text {
+.AlvarMapOverlay__text {
   color: #777;
   font-smoothing: antialiased;
   text-transform: uppercase;

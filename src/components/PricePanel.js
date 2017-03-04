@@ -10,7 +10,7 @@ const PricePanel = React.createClass({
   render() {
     const { globalState } = this.props;
     const mapItem = globalState.cart[globalState.editCartItem];
-    const price = calculatePrice(mapItem);
+    const price = calculatePrice(mapItem, { onlyUnitPrice: true });
     const itemCount = _.reduce(globalState.cart, (memo, item) => memo + item.quantity, 0);
 
     return (

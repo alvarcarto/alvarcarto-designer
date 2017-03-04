@@ -1,11 +1,11 @@
 import React from 'react';
 import L from 'leaflet';
-window.L = L;
 import { connect } from 'react-redux';
 import { setMapView } from '../actions';
 import { Spin } from 'antd';
+import CONST from '../constants';
 import { posterSizeToPixels, getStyle } from '../util';
-import AlvarMapLabels from './AlvarMapLabels';
+import AlvarMapOverlay from './AlvarMapOverlay';
 import {
   Map as LeafletMap,
   TileLayer as LTileLayer,
@@ -64,8 +64,16 @@ const AlvarMap = React.createClass({
 
     const dimensions = posterSizeToPixels(mapItem.size, mapItem.orientation);
     const style = getStyle(mapItem.mapStyle);
+    const mapCssStyle = {
+      width: dimensions.width,
+      height: dimensions.height,
+    };
+
+    const minSide = Math.min(dimensions.width, dimensions.height);
+    const borderPadding = Math.floor(CONST.EMPTY_MAP_PADDING_FACTOR * minSide);
+
     return (
-      <div className="AlvarMap grabbable" style={{ width: dimensions.width, height: dimensions.height }}>
+      <div className="AlvarMap grabbable" style={mapCssStyle}>
         <div className="AlvarMap__container">
           {
             style.type === 'vector'
@@ -75,12 +83,11 @@ const AlvarMap = React.createClass({
 
           {
             mapItem.labelsEnabled
-              ? <AlvarMapLabels labels={{
-                  header: mapItem.labelHeader,
-                  smallHeader: mapItem.labelSmallHeader,
-                  text: mapItem.labelText,
-                }}/>
-              : null
+              ? <AlvarMapOverlay mapItem={mapItem} />
+              : <div
+                  className="AlvarMap__empty-overlay"
+                  style={{ border: `${borderPadding}px solid white` }}
+                ></div>
           }
         </div>
       </div>
@@ -120,7 +127,6 @@ const AlvarMap = React.createClass({
       zoom={mapItem.mapZoom}
     >
       <LTileLayer detectRetina url={style.url} />
-      <LZoomControl position="topright" />
     </LeafletMap>;
   },
 

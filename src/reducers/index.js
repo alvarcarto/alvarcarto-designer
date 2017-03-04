@@ -11,7 +11,7 @@ const initialState = {
       quantity: 1,
       mapCenter: HELSINKI_CENTER,
       mapZoom: 8,
-      mapStyle: 'black-and-white',
+      mapStyle: 'bw',
       mapPitch: 0,
       mapBearing: 0,
       orientation: 'portrait',

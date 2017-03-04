@@ -35,7 +35,7 @@ const CheckoutPage = React.createClass({
         </a>
 
         <div className="CheckoutPage__logo">
-          <a href="http://alvarcarto.com">
+          <a href="https://alvarcarto.com">
             <img
               src={`${config.PUBLIC_URL}/assets/logo.svg`}
               alt="Alvar Carto"
@@ -68,7 +68,7 @@ const CheckoutPage = React.createClass({
             <Col span={12}>
               <p>
                 Any questions? Send us mail to
-                <a href="mailto:help@alvarcarto.com"> help@alvarcarto.com</a>.
+                <a href="mailto:alvarcartohelp@gmail.com"> alvarcartohelp@gmail.com</a>.
               </p>
               <p>We are located at Luova Laboratorio, Saaristonkatu 9, 90100 Oulu, Finland.</p>
             </Col>

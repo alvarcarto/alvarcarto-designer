@@ -4,10 +4,10 @@ import config from '../config';
 
 const STYLES = [
   {
-    id: 'black-and-white',
+    id: 'bw',
     type: 'raster',
     image: `${config.PUBLIC_URL}/assets/bw@2x.png`,
-    url: `https://tiles.alvarcarto.com/tiles/alvar/{z}/{x}/{y}/tile.png`,
+    url: `${config.REACT_APP_TILE_API_URL}/bw/{z}/{x}/{y}/tile.png`,
     name: 'B & W',
   },
   {
@@ -29,7 +29,7 @@ function posterSizeToPixels(size, orientation) {
       dimensions = { width: 700, height: 1000, zoom: 0.6 };
       break;
     case '30x40cm':
-      dimensions = { width: 360, height: 480, zoom: 0.7 };
+      dimensions = { width: 360, height: 480, zoom: 1 };
       break;
     default:
       throw new Error(`Unknown size: ${size}`);
