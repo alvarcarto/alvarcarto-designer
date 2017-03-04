@@ -23,13 +23,13 @@ function posterSizeToPixels(size, orientation) {
   let dimensions;
   switch (size) {
     case '50x70cm':
-      dimensions = { width: 500, height: 700, zoom: 0.7 };
+      dimensions = { width: 600, height: 840, zoom: 1 };
       break;
     case '70x100cm':
-      dimensions = { width: 700, height: 1000, zoom: 0.6 };
+      dimensions = { width: 840, height: 1200, zoom: 1 };
       break;
     case '30x40cm':
-      dimensions = { width: 360, height: 480, zoom: 1 };
+      dimensions = { width: 420, height: 560, zoom: 1 };
       break;
     default:
       throw new Error(`Unknown size: ${size}`);

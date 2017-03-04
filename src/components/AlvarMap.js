@@ -1,5 +1,6 @@
 import React from 'react';
 import L from 'leaflet';
+window.L = L;
 import { connect } from 'react-redux';
 import { setMapView } from '../actions';
 import { Spin } from 'antd';

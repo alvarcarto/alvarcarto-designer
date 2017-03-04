@@ -1,4 +1,6 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
+import _ from 'lodash';
 import { connect } from 'react-redux';
 import AlvarMap from './AlvarMap';
 import { Icon } from 'antd';
@@ -7,6 +9,45 @@ import { setMapView } from '../actions';
 import { posterSizeToPhysicalDimensions, posterSizeToPixels } from '../util';
 
 const LightWall = React.createClass({
+  getInitialState() {
+    return {
+      zoom: this._calculateZoom(),
+      debouncedOnWindowResize: _.debounce(this._onWindowResize, 100),
+      container: null,
+    };
+  },
+
+  componentDidMount() {
+    window.addEventListener('resize', this.state.debouncedOnWindowResize);
+    this.setState({
+      container: ReactDOM.findDOMNode(this.refs.container),
+    }, () => this.setState({
+      zoom: this._calculateZoom(),
+    }));
+  },
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.state.debouncedOnWindowResize);
+  },
+
+  componentWillReceiveProps(nextProps) {
+    const { globalState } = this.props;
+    const mapItem = globalState.cart[globalState.editCartItem];
+
+    const nextGlobalState = nextProps.globalState;
+    const nextMapItem = nextGlobalState.cart[nextGlobalState.editCartItem];
+
+    const hasChanged =
+      mapItem.size !== nextMapItem.size ||
+      mapItem.orientation !== nextMapItem.orientation;
+
+    if (hasChanged) {
+      this.setState({
+        zoom: this._calculateZoom(nextMapItem),
+      });
+    }
+  },
+
   render() {
     const { globalState } = this.props;
     const mapItem = globalState.cart[globalState.editCartItem];
@@ -18,7 +59,7 @@ const LightWall = React.createClass({
     const dimensions = posterSizeToPixels(mapItem.size, mapItem.orientation);
 
     return (
-      <div className="LightWall noselect">
+      <div ref="container" className="LightWall noselect">
       <div className="LightWall__map-container">
           <div className="LightWall__wire-container">
             <img className="LightWall__clip1" src="clip.png" />
@@ -27,7 +68,7 @@ const LightWall = React.createClass({
             <div className="LightWall__wire2"></div>
           </div>
 
-          <div className="LightWall__scaler" style={{ zoom: dimensions.zoom }}>
+          <div className="LightWall__scaler" style={{ zoom: this.state.zoom }}>
             <AlvarMap />
           </div>
 
@@ -65,6 +106,40 @@ const LightWall = React.createClass({
         </div>
       </div>
     );
+  },
+
+  _onWindowResize() {
+    this.setState({
+      zoom: this._calculateZoom(),
+    });
+  },
+
+  _calculateZoom(mapItem) {
+    if (!this.state || !this.state.container) {
+      return 1;
+    }
+
+    if (!mapItem) {
+      const { globalState } = this.props;
+      mapItem = globalState.cart[globalState.editCartItem];
+    }
+
+    const dimensions = posterSizeToPixels(mapItem.size, mapItem.orientation);
+    const maxPosterSide = Math.max(dimensions.width, dimensions.height);
+
+    const containerWidth = this.state.container.offsetWidth;
+    const containerHeight = this.state.container.offsetHeight;
+    const minContainerSide = Math.min(containerWidth, containerHeight) - 150;
+
+    if (minContainerSide > maxPosterSide) {
+      return 1;
+    }
+
+    if (dimensions.width > dimensions.height) {
+      return minContainerSide / dimensions.width;
+    } else {
+      return minContainerSide / dimensions.height;
+    }
   },
 
   _onZoomInClick() {
