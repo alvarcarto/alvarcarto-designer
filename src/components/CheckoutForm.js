@@ -141,7 +141,7 @@ const CheckoutForm = React.createClass({
               <li>
                 <div className="CheckoutForm__badge">
                   <Icon type="lock" />
-                  <h4>TSL Secured Payments</h4>
+                  <h4>TLS Secured Payments</h4>
                 </div>
               </li>
               <li>

@@ -57,6 +57,7 @@ export const postOrder = (payload) => function(dispatch) {
     cvc: _.get(payload.creditCard, 'cc-cvc'),
     // Optional by Stripe
     name: _.get(payload.creditCard, 'cc-name'),
+    // TODO: If billingAddress is not defined, use shipping address
     address_zip: _.get(payload.billingAddress, 'postalCode'),
     address_line1: _.get(payload.billingAddress, 'address'),
     address_line2: _.get(payload.billingAddress, 'addressExtra'),
@@ -92,9 +93,13 @@ export const postOrder = (payload) => function(dispatch) {
         payload: response,
       });
     })
-    .catch(err => dispatch({
-      type: actions.POST_ORDER_FAILURE,
-      payload: err,
-      error: true,
-    }));
+    .catch(err => {
+      dispatch({
+        type: actions.POST_ORDER_FAILURE,
+        payload: err,
+        error: true,
+      });
+
+      throw err;
+    });
 };

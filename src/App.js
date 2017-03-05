@@ -30,7 +30,7 @@ const App = React.createClass({
       case '/checkout':
         page = <CheckoutPage />;
         break;
-      case '/thank-you':
+      case '/thankyou':
         page = <ThankYouPage />;
         break;
       default:
