@@ -9,13 +9,6 @@ const STYLES = [
     image: `${config.PUBLIC_URL}/assets/bw@2x.png`,
     url: `${config.REACT_APP_TILE_API_URL}/bw/{z}/{x}/{y}/tile.png`,
     name: 'B & W',
-  },
-  {
-    id: 'mapbox-orange',
-    type: 'vector',
-    image: `${config.PUBLIC_URL}/assets/orange@2x.png`,
-    url: 'mapbox://styles/alvarcarto/ciwknyyct00lw2pmq9ohha4bg',
-    name: 'Orange',
   }
 ];
 
