@@ -17,7 +17,7 @@ function calculatePrice(item, opts = {}) {
   const price = calculateUnitPrice(item.size);
 
   if (!opts.onlyUnitPrice) {
-    price.value = price.value * item.quantity;
+    price.value *= item.quantity;
   }
 
   price.label = _toLabel(price);

@@ -3,7 +3,7 @@
 import React from 'react';
 import _ from 'lodash';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import { Modal, Form, Input, Icon, Checkbox, Select, Radio, Tooltip, Button } from 'antd';
+import { Modal, Form, Icon, Checkbox, Tooltip, Button } from 'antd';
 import EmailForm from './EmailForm';
 import AddressForm from './AddressForm';
 import ShippingMethodForm from './ShippingMethodForm';
@@ -41,7 +41,6 @@ const CheckoutForm = React.createClass({
   },
 
   render() {
-    const { globalState } = this.props;
     const formItemLayout = {
       labelCol: { span: 7 },
       wrapperCol: { span: 14 },

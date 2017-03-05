@@ -1,9 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
-import config from '../config';
 import { Radio } from 'antd';
-import { calculateUnitPrice, getCurrencySymbol } from '../util/price';
-const { PosterIcon, TickIcon } = require('../util/svg');
+import { calculateUnitPrice } from '../util/price';
 import Price from './Price';
 
 const SIZES = [

@@ -50,6 +50,7 @@ const AlvarMapOverlay = React.createClass({
     }
 
     const source = CancelToken.source();
+    // eslint-disable-next-line react/no-direct-mutation-state
     this.state.cancelSource = source;  // Avoid causing re-render
 
     getPoster(mapItem, { cancelToken: source.token })
@@ -83,6 +84,7 @@ const AlvarMapOverlay = React.createClass({
   },
 
   _resetCancelSource() {
+    // eslint-disable-next-line react/no-direct-mutation-state
     this.state.cancelSource = null;
   },
 

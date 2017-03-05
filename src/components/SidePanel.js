@@ -1,12 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Icon } from 'antd';
 import AlvarMapDesignPanel from './AlvarMapDesignPanel';
 import PricePanel from './PricePanel';
 
 const SidePanel = React.createClass({
   render() {
-    let className = 'SidePanel';
     const { globalState } = this.props;
 
     return (

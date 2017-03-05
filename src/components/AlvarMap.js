@@ -3,14 +3,12 @@ import L from 'leaflet';
 window.L = L;
 import { connect } from 'react-redux';
 import { setMapView } from '../actions';
-import { Spin } from 'antd';
 import CONST from '../constants';
 import { posterSizeToPixels, getStyle } from '../util';
 import AlvarMapOverlay from './AlvarMapOverlay';
 import {
   Map as LeafletMap,
-  TileLayer as LTileLayer,
-  ZoomControl as LZoomControl
+  TileLayer as LTileLayer
 } from 'react-leaflet';
 
 const AlvarMap = React.createClass({
@@ -50,7 +48,7 @@ const AlvarMap = React.createClass({
   },
 
   render() {
-    const { state, props } = this;
+    const { props } = this;
     const { globalState } = props;
     const mapItem = globalState.cart[globalState.editCartItem];
 

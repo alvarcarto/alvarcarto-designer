@@ -56,14 +56,13 @@ const LightWall = React.createClass({
       mapItem.size,
       mapItem.orientation
     );
-    const dimensions = posterSizeToPixels(mapItem.size, mapItem.orientation);
 
     return (
       <div ref="container" className="LightWall noselect">
       <div className="LightWall__map-container">
           <div className="LightWall__wire-container">
-            <img className="LightWall__clip1" src="clip.png" />
-            <img className="LightWall__clip2" src="clip.png" />
+            <img className="LightWall__clip1" src="clip.png" role="presentation" />
+            <img className="LightWall__clip2" src="clip.png" role="presentation" />
             <div className="LightWall__wire1"></div>
             <div className="LightWall__wire2"></div>
           </div>

@@ -1,9 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
 import { getStyles } from '../util';
-import { Icon, Select, Radio } from 'antd';
-const { Option } = Select;
-import config from '../config';
 import { TickIcon } from '../util/svg';
 
 const MapStyleSelect = React.createClass({
@@ -42,7 +39,7 @@ const MapStyleItem = React.createClass({
           <img
             className="MapStyleSelectItem__circle-image"
             src={this.props.style.image}
-            alt="Map style image"
+            alt="Map style"
           />
           <div className="MapStyleSelectItem__circle-overlay">
             <TickIcon style={{ stroke: 'white' }}/>

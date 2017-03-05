@@ -1,6 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
-import { Form, Input, Icon, Checkbox, Select, Radio } from 'antd';
+import { Form, Input } from 'antd';
 
 const form = {
   email: (val) => {

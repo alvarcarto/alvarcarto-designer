@@ -13,6 +13,7 @@ const Odometer = React.createClass({
   },
 
   componentDidMount() {
+    // eslint-disable-next-line react/no-direct-mutation-state
     this.state.odometer = new HubspotOdometer({
       el: ReactDOM.findDOMNode(this.refs.container),
       value: 0,

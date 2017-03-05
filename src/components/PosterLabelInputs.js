@@ -1,7 +1,6 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { setMapLabels } from '../actions';
-import { Form, Icon, Input, Button, Switch } from 'antd';
+import { Form, Input, Switch } from 'antd';
 
 const PosterLabelInputs = React.createClass({
   render() {

@@ -1,15 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
-import { Form, Input, Icon, Checkbox, Select, Radio } from 'antd';
-import countries from 'i18n-iso-countries';
+import { Form, Input } from 'antd';
 import CountrySelect from './CountrySelect';
-
-const sortedCountries = _.sortBy(_.map(countries.getNames('en'), (name, code) => ({
-  name,
-  code,
-})), 'label');
-const selectFilterFunc = (input, option) =>
-  _.startsWith(option.props.name.toLowerCase(), input.toLowerCase());
 
 const form = {
   name: (val) => {

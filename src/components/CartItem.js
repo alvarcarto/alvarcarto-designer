@@ -1,8 +1,8 @@
 import React from 'react';
 import _ from 'lodash';
-import { Button, Icon, Tooltip, Popconfirm } from 'antd';
+import { Icon, Tooltip, Popconfirm } from 'antd';
 import { getStyle } from '../util';
-import { getCurrencySymbol, calculatePrice } from '../util/price';
+import { calculatePrice } from '../util/price';
 import { createPosterThumbnailUrl } from '../util';
 import CONST from '../constants';
 
@@ -45,7 +45,7 @@ const CartItem = React.createClass({
       <div className="CartItem">
         {
           item.mapBounds
-            ? <img src={createPosterThumbnailUrl(item)} className={cartImageClassName} />
+            ? <img src={createPosterThumbnailUrl(item)} className={cartImageClassName} alt="poster thumbnail" />
             : <div className={cartImageClassName}></div>
         }
 

@@ -11,16 +11,14 @@ import history from './history';
 
 const App = React.createClass({
   componentDidMount() {
-    if (!config.DEVELOPMENT) {
-      window.onbeforeunload = this._beforeLeavePage;
-    }
-  },
-
-  componentDidMount() {
     // Listen for changes to the current location.
     history.listen((location, action) => {
       this.props.dispatch(setLocation(location));
     });
+
+    if (!config.DEVELOPMENT) {
+      window.onbeforeunload = this._beforeLeavePage;
+    }
   },
 
   render() {

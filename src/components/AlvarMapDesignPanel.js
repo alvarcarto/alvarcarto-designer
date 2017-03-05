@@ -1,13 +1,11 @@
 import React from 'react';
 import _ from 'lodash';
 import { setMapView, setMapStyle, setPosterLayout, setMapLabels } from '../actions';
-import { coordToPrettyText, getStyles } from '../util';
-import { Select, Radio, Button, Icon } from 'antd';
-const { Option } = Select;
+import { coordToPrettyText } from '../util';
+import { Icon } from 'antd';
 import Accordion from './Accordion';
 import geodist from 'geodist';
 import GeoSearch from './GeoSearch';
-import CityButtonList from './CityButtonList';
 import PosterSizeSelect from './PosterSizeSelect';
 import OrientationSelect from './OrientationSelect';
 import PosterLabelInputs from './PosterLabelInputs';
