@@ -3,10 +3,10 @@ import * as actions from '../action-types';
 import { coordToPrettyText } from '../util';
 import history from '../history';
 
-const HELSINKI_CENTER = { lat: 60.159865, lng: 24.942334 };
-const HELSINKI_BOUNDS = {
-  southWest: { lat: 59.38638116, lng: 23.79089355 },
-  northEast: { lat: 60.91708455, lng: 26.09802246 },
+const PARIS_CENTER = { lat: 48.85658345, lng: 2.35244750 };
+const PARIS_BOUNDS = {
+  southWest: { lat: 48.6029494957, lng: 2.064056394 },
+  northEast: { lat: 49.10893881, lng: 2.640838623 },
 };
 
 const initialState = {
@@ -14,18 +14,18 @@ const initialState = {
   cart: [
     {
       quantity: 1,
-      mapCenter: HELSINKI_CENTER,
-      mapBounds: HELSINKI_BOUNDS,
-      mapZoom: 8,
+      mapCenter: PARIS_CENTER,
+      mapBounds: PARIS_BOUNDS,
+      mapZoom: 10,
       mapStyle: 'bw',
       mapPitch: 0,
       mapBearing: 0,
       orientation: 'portrait',
       size: '30x40cm',
       labelsEnabled: true,
-      labelHeader: 'Helsinki',
-      labelSmallHeader: 'Finland',
-      labelText: coordToPrettyText(HELSINKI_CENTER),
+      labelHeader: 'Romantic Paris',
+      labelSmallHeader: 'France',
+      labelText: coordToPrettyText(PARIS_CENTER),
     }
   ],
   editCartItem: 0,
