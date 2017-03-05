@@ -43,6 +43,10 @@ const AlvarMap = React.createClass({
     const mapItem = globalState.cart[globalState.editCartItem];
     const dimensions = posterSizeToPixels(mapItem.size, mapItem.orientation);
     L.DomEvent.setContainerScale(dimensions.zoom);
+
+    if (!mapItem.mapBounds) {
+      this._dispatchBounds();
+    }
   },
 
   render() {
@@ -99,17 +103,29 @@ const AlvarMap = React.createClass({
     const map = this.refs.lMap.leafletElement;
     const latLng = map.getCenter();
 
+
     this.props.dispatch(setMapView({
       center: { lat: latLng.lat, lng: latLng.lng },
-      zoom: map.getZoom()
+      bounds: this._getMapBounds(),
+      zoom: map.getZoom(),
     }));
   },
 
-  _flyTo(center, zoom) {
+  _dispatchBounds() {
     this.props.dispatch(setMapView({
-      center: center,
-      zoom: zoom,
+      bounds: this._getMapBounds(),
     }));
+  },
+
+  _getMapBounds() {
+    const map = this.refs.lMap.leafletElement;
+    const bounds = map.getBounds();
+    const southWest = bounds.getSouthWest();
+    const northEast = bounds.getNorthEast();
+    return {
+      southWest: { lat: southWest.lat, lng: southWest.lng },
+      northEast: { lat: northEast.lat, lng: northEast.lng },
+    };
   }
 });
 

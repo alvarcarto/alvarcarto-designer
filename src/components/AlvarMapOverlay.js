@@ -88,6 +88,11 @@ const AlvarMapOverlay = React.createClass({
 
   _updateLabels(mapItem) {
     const el = ReactDOM.findDOMNode(this.refs.container);
+    if (!el.querySelector('svg')) {
+      // SVG has not yet loaded
+      return;
+    }
+
     setText(el.querySelector('#header'), mapItem.labelHeader.toUpperCase());
     setText(el.querySelector('#small-header'), mapItem.labelSmallHeader.toUpperCase());
     setText(el.querySelector('#text'), mapItem.labelText.toUpperCase());

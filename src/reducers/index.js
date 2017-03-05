@@ -10,6 +10,7 @@ const initialState = {
     {
       quantity: 1,
       mapCenter: HELSINKI_CENTER,
+      mapBounds: null,
       mapZoom: 8,
       mapStyle: 'bw',
       mapPitch: 0,
@@ -41,6 +42,7 @@ function reducer(state = initialState, action) {
     case actions.SET_MAP_VIEW:
       newAttrs = {
         mapCenter: action.payload.center,
+        mapBounds: action.payload.bounds,
         mapZoom: action.payload.zoom,
         mapPitch: action.payload.pitch,
         mapBearing: action.payload.bearing,
