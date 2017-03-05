@@ -2,7 +2,7 @@ import Odometer from './Odometer';
 import React from 'react';
 import _ from 'lodash';
 import { Icon, Badge, Tooltip } from 'antd';
-import { posterSizeToPixels, createApiUrlQuery } from '../util';
+import { posterSizeToPixels } from '../util';
 import { calculatePrice, getCurrencySymbol } from '../util/price';
 import history from '../history';
 

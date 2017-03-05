@@ -6,13 +6,22 @@
 
 .CartItem__image {
   height: 70px;
+  min-width: 50px;
+  background: #f4f4f4;
   display: block;
+  border: 1px solid #ccc;
+}
+
+.CartItem__image--landscape {
+  height: 50px;
+  min-width: 70px;
 }
 
 .CartItem__content {
   flex: 1;
   padding-left: 10px;
   position: relative;
+  min-height: 70px;
 }
 
 .CartItem__price {

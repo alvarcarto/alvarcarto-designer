@@ -4,13 +4,18 @@ import { coordToPrettyText } from '../util';
 import history from '../history';
 
 const HELSINKI_CENTER = { lat: 60.159865, lng: 24.942334 };
+const HELSINKI_BOUNDS = {
+  southWest: { lat: 59.38638116, lng: 23.79089355 },
+  northEast: { lat: 60.91708455, lng: 26.09802246 },
+};
+
 const initialState = {
   location: history.location,
   cart: [
     {
       quantity: 1,
       mapCenter: HELSINKI_CENTER,
-      mapBounds: null,
+      mapBounds: HELSINKI_BOUNDS,
       mapZoom: 8,
       mapStyle: 'bw',
       mapPitch: 0,

@@ -51,20 +51,21 @@ function posterSizeToPhysicalDimensions(size, orientation) {
   return _resolveOrientation(dimensions, orientation);
 }
 
-function createApiUrlQuery(state) {
-  const dimensions = posterSizeToPixels(state.size, state.orientation);
-  const style = getStyle(state.mapStyle);
-
+function createPosterThumbnailUrl(mapItem) {
   return oneLineTrim`
-    ?lat=${state.mapCenter.lat}
-    &lng=${state.mapCenter.lng}
-    &zoom=${state.mapZoom}
-    &styleType=${style.type}
-    &stylUrl=${style.url}
-    &pitch=${state.mapPitch}
-    &bearing=${state.mapBearing}
-    &width=${dimensions.width}
-    &height=${dimensions.height}
+    ${config.REACT_APP_RENDER_API_URL}/api/raster/render
+    ?swLat=${mapItem.mapBounds.southWest.lat}
+    &swLng=${mapItem.mapBounds.southWest.lng}
+    &neLat=${mapItem.mapBounds.northEast.lat}
+    &neLng=${mapItem.mapBounds.northEast.lng}
+    &style=${mapItem.mapStyle}
+    &size=${mapItem.size}
+    &orientation=${mapItem.orientation}
+    &labelsEnabled=${mapItem.labelsEnabled}
+    &labelHeader=${mapItem.labelHeader.toUpperCase()}
+    &labelSmallHeader=${mapItem.labelSmallHeader.toUpperCase()}
+    &labelText=${mapItem.labelText.toUpperCase()}
+    &resizeToHeight=140
   `;
 }
 
@@ -104,7 +105,7 @@ function getStyles() {
 module.exports = {
   posterSizeToPixels,
   posterSizeToPhysicalDimensions,
-  createApiUrlQuery,
+  createPosterThumbnailUrl,
   coordToPrettyText,
   getStyle,
   getStyles,

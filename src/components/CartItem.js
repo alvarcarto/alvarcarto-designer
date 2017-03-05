@@ -3,7 +3,7 @@ import _ from 'lodash';
 import { Button, Icon, Tooltip, Popconfirm } from 'antd';
 import { getStyle } from '../util';
 import { getCurrencySymbol, calculatePrice } from '../util/price';
-import { createApiUrlQuery } from '../util';
+import { createPosterThumbnailUrl } from '../util';
 import CONST from '../constants';
 
 const CartItem = React.createClass({
@@ -11,6 +11,7 @@ const CartItem = React.createClass({
     index: React.PropTypes.number.isRequired,
     item: React.PropTypes.shape({
       quantity: React.PropTypes.number.isRequired,
+      mapBounds:  React.PropTypes.object.isOptional,
       mapCenter:  React.PropTypes.object.isRequired,
       mapZoom: React.PropTypes.number.isRequired,
       mapStyle: React.PropTypes.string.isRequired,
@@ -35,9 +36,19 @@ const CartItem = React.createClass({
     const price = calculatePrice(this.props.item);
     const styleName = getStyle(item.mapStyle).name;
     const isDecreaseDisabled = this.props.item.quantity < 2;
+    let cartImageClassName = 'CartItem__image';
+    if (item.orientation === 'landscape') {
+      cartImageClassName += ' CartItem__image--landscape';
+    }
+
     return (
       <div className="CartItem">
-        <img src="/assets/sf.png" className="CartItem__image" />
+        {
+          item.mapBounds
+            ? <img src={createPosterThumbnailUrl(item)} className={cartImageClassName} />
+            : <div className={cartImageClassName}></div>
+        }
+
         <div className="CartItem__content">
           <h3 className="CartItem__title">{item.labelHeader}</h3>
           <h4 className="CartItem__type">{styleName}, {item.size}</h4>
