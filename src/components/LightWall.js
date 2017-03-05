@@ -56,11 +56,14 @@ const LightWall = React.createClass({
       mapItem.size,
       mapItem.orientation
     );
+    // Zoom wires but don't not as much as canvas to avoid the clips
+    // being too small
+    const wireZoom = Math.max(Math.min(1, this.state.zoom * 1.2), 0.5);
 
     return (
       <div ref="container" className="LightWall noselect">
       <div className="LightWall__map-container">
-          <div className="LightWall__wire-container">
+          <div className="LightWall__wire-container" style={{ zoom: wireZoom }}>
             <img className="LightWall__clip1" src="clip.png" role="presentation" />
             <img className="LightWall__clip2" src="clip.png" role="presentation" />
             <div className="LightWall__wire1"></div>
