@@ -59,6 +59,7 @@ const LightWall = React.createClass({
     // Zoom wires but don't not as much as canvas to avoid the clips
     // being too small
     const wireZoom = Math.max(Math.min(1, this.state.zoom * 1.2), 0.5);
+    const scalerZoom = Math.max(this.state.zoom, 0.3);
 
     return (
       <div ref="container" className="LightWall noselect">
@@ -70,7 +71,7 @@ const LightWall = React.createClass({
             <div className="LightWall__wire2"></div>
           </div>
 
-          <div className="LightWall__scaler" style={{ zoom: this.state.zoom }}>
+          <div className="LightWall__scaler" style={{ zoom: scalerZoom }}>
             <AlvarMap />
           </div>
 

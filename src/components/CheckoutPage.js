@@ -75,11 +75,11 @@ const CheckoutPage = React.createClass({
             content: <div>
               <p>
                 Order could not be completed, because processing the
-                payment failed with reason: "{detailedError}".
+                payment failed with reason: <i>{detailedError}</i>.
               </p>
               <p>
                 We're sorry for the inconvenience. If the problem persists,
-                please contact our support at <a href="mailto:alvarcartohelp@gmail.com"> alvarcartohelp@gmail.com</a>.
+                please contact our support at <a target="_blank" href="mailto:alvarcartohelp@gmail.com"> alvarcartohelp@gmail.com</a>.
               </p>
             </div>
           });
@@ -90,11 +90,11 @@ const CheckoutPage = React.createClass({
             content: <div>
               <p>
                 Order could not be completed, because order form contained
-                invalid fields. Error message: "{detailedError}".
+                invalid fields. Error message: <i>{detailedError}</i>.
               </p>
               <p>
                 We're sorry for the inconvenience. If the problem persists,
-                please contact our support at <a href="mailto:alvarcartohelp@gmail.com"> alvarcartohelp@gmail.com</a>.
+                please contact our support at <a target="_blank" href="mailto:alvarcartohelp@gmail.com"> alvarcartohelp@gmail.com</a>.
               </p>
             </div>
           });
@@ -108,7 +108,7 @@ const CheckoutPage = React.createClass({
               </p>
               <p>
                 We're sorry for the inconvenience. If the problem persists,
-                please contact our support at <a href="mailto:alvarcartohelp@gmail.com"> alvarcartohelp@gmail.com</a>.
+                please contact our support at <a target="_blank" href="mailto:alvarcartohelp@gmail.com"> alvarcartohelp@gmail.com</a>.
               </p>
             </div>
           });
