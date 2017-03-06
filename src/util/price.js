@@ -27,11 +27,11 @@ function calculatePrice(item, opts = {}) {
 function calculateUnitPrice(size) {
   switch (size) {
     case '50x70cm':
-      return { value: 45, currency: 'EUR' };
+      return { value: 49, currency: 'EUR' };
     case '70x100cm':
-      return { value: 55, currency: 'EUR' };
+      return { value: 59, currency: 'EUR' };
     case '30x40cm':
-      return { value: 35, currency: 'EUR' };
+      return { value: 39, currency: 'EUR' };
     default:
       throw new Error(`Invalid size: ${size}`);
   }
