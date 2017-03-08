@@ -45,7 +45,7 @@ const PosterSizeSelect = React.createClass({
             >
               {item.label}
               <span className="PosterSizeSelect__price">
-                <Price value={price.value} currency={price.currency} />
+                <Price value={price.humanValue} currency={price.currency} />
               </span>
             </Radio>;
           })

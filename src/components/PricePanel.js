@@ -15,7 +15,7 @@ const PricePanel = React.createClass({
     return (
       <div className="PricePanel">
         <h5 className="PricePanel__price">
-          <Odometer value={price.value} />
+          <Odometer value={price.humanValue} />
           <span className="PricePanel__price-currency">{getCurrencySymbol(price.currency)}</span>
           <span className="PricePanel__price-shipping">+ Free shipping</span>
         </h5>
