@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Icon } from 'antd';
 import { removeCartItem, editCartItem, addCartItemQuantity, addCartItem } from '../actions';
-import { calculateTotalPrice } from '../util/price';
+import { calculateCartPrice } from 'alvarcarto-price-util';
 import _ from 'lodash';
 import CartItem from './CartItem';
 import history from '../history';
@@ -11,7 +11,7 @@ const CheckoutSummary = React.createClass({
   render() {
     const { cart } = this.props.globalState;
     const hideRemoveButton = cart.length < 2;
-    const totalPrice = calculateTotalPrice(cart);
+    const totalPrice = calculateCartPrice(cart);
 
     return (
       <div className="CheckoutSummary">

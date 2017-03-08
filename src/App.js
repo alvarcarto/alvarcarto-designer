@@ -2,7 +2,7 @@
 
 import React from 'react';
 import _ from 'lodash';
-import { Checkbox, Button, Modal } from 'antd';
+import { Checkbox, Modal } from 'antd';
 import config from './config';
 import { connect } from 'react-redux';
 import { setLocation } from './actions';
@@ -100,7 +100,7 @@ const App = React.createClass({
   },
 
   _onDismissUnsupportedChange(event) {
-    const { name, checked } = event.target;
+    const { checked } = event.target;
     saveDismissUnsupported(checked ? 'true' : 'false');
   }
 });

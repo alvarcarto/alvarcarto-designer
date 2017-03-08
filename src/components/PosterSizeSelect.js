@@ -1,7 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 import { Radio } from 'antd';
-import { calculateUnitPrice } from '../util/price';
+import { calculateUnitPrice } from 'alvarcarto-price-util';
 import Price from './Price';
 
 const SIZES = [

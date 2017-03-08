@@ -2,7 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 import { Icon, Tooltip, Popconfirm } from 'antd';
 import { getStyle } from '../util';
-import { calculatePrice } from '../util/price';
+import { calculateItemPrice } from 'alvarcarto-price-util';
 import { createPosterThumbnailUrl } from '../util';
 import CONST from '../constants';
 
@@ -33,7 +33,7 @@ const CartItem = React.createClass({
     const { props } = this;
     const item = props.item;
 
-    const price = calculatePrice(this.props.item);
+    const price = calculateItemPrice(this.props.item);
     const styleName = getStyle(item.mapStyle).name;
     const isDecreaseDisabled = this.props.item.quantity < 2;
     let cartImageClassName = 'CartItem__image';

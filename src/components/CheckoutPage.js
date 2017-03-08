@@ -3,7 +3,7 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { connect } from 'react-redux';
 import history from '../history';
 import _ from 'lodash';
-import { Row, Col, Icon, Affix, Modal } from 'antd';
+import { Icon, Affix, Modal } from 'antd';
 import { postOrder } from '../actions';
 import config from '../config';
 import CheckoutForm from './CheckoutForm';

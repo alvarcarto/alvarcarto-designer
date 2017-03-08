@@ -2,14 +2,14 @@ import Odometer from './Odometer';
 import React from 'react';
 import _ from 'lodash';
 import { Icon, Badge, Tooltip } from 'antd';
-import { calculatePrice, getCurrencySymbol } from '../util/price';
+import { calculateItemPrice, getCurrencySymbol } from 'alvarcarto-price-util';
 import history from '../history';
 
 const PricePanel = React.createClass({
   render() {
     const { globalState } = this.props;
     const mapItem = globalState.cart[globalState.editCartItem];
-    const price = calculatePrice(mapItem, { onlyUnitPrice: true });
+    const price = calculateItemPrice(mapItem, { onlyUnitPrice: true });
     const itemCount = _.reduce(globalState.cart, (memo, item) => memo + item.quantity, 0);
 
     return (

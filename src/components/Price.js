@@ -1,5 +1,5 @@
 import React from 'react';
-import { getCurrencySymbol } from '../util/price';
+import { getCurrencySymbol } from 'alvarcarto-price-util';
 
 const Price = (props) => <div className="Price">
   <span className="Price__value">{props.value}</span>

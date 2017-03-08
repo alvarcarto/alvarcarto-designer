@@ -1,13 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { getStyle, createPosterThumbnailUrl } from '../util';
-import { calculateTotalPrice, calculatePrice } from '../util/price';
+import { calculateCartPrice, calculateItemPrice } from 'alvarcarto-price-util';
 import _ from 'lodash';
 
 const FinalOrderSummary = React.createClass({
   render() {
     const { cart } = this.props.globalState;
-    const totalPrice = calculateTotalPrice(cart);
+    const totalPrice = calculateCartPrice(cart);
 
     return (
       <div className="FinalOrderSummary">
@@ -51,7 +51,7 @@ const OrderItem = React.createClass({
     const { props } = this;
     const item = props.item;
 
-    const price = calculatePrice(this.props.item);
+    const price = calculateItemPrice(this.props.item);
     const styleName = getStyle(item.mapStyle).name;
     let cartImageClassName = 'OrderItem__image';
     if (item.orientation === 'landscape') {
