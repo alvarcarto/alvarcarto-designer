@@ -32,6 +32,9 @@ const initialState = {
   postingOrder: false,
   postOrderResponse: null,
   postOrderError: null,
+  shippingAddress: {
+    city: 'your city'
+  },
 };
 
 const freshInitialState = _.cloneDeep(initialState);
@@ -118,7 +121,12 @@ function reducer(state = initialState, action) {
       return newState;
 
     case actions.POST_ORDER_REQUEST:
-      return _.extend({}, state, { postingOrder: true, postOrderResponse: null, postOrderError: null });
+      return _.extend({}, state, {
+        shippingAddress: action.payload.shippingAddress,
+        postingOrder: true,
+        postOrderResponse: null,
+        postOrderError: null
+      });
 
     case actions.POST_ORDER_SUCCESS:
       return _.extend({}, state, { postingOrder: false, postOrderResponse: action.payload, postOrderError: null });

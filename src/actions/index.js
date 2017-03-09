@@ -48,7 +48,7 @@ export const addCartItemQuantity = (payload) => ({
 });
 
 export const postOrder = (payload) => function(dispatch) {
-  dispatch({ type: actions.POST_ORDER_REQUEST });
+  dispatch({ type: actions.POST_ORDER_REQUEST, payload });
 
   return stripeUtil.createToken({
     number: _.get(payload.creditCard, 'cc-number'),
