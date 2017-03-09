@@ -3,7 +3,7 @@ import _ from 'lodash';
 const CONST = {
   PUBLIC_URL: process.env.PUBLIC_URL,
   DEVELOPMENT: process.env.NODE_ENV === 'development',
-  REACT_APP_ORDER_API_URL: process.env.REACT_APP_ORDER_API_URL || 'https://order-api-qa.alvarcarto.com',
+  REACT_APP_ORDER_API_URL: process.env.REACT_APP_ORDER_API_URL || 'http://localhost:3001',
 
   // In production the below APIs are served on the same endpoint,
   // but in development it's convenient to have them separate
