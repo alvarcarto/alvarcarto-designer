@@ -79,7 +79,7 @@ const CheckoutPage = React.createClass({
               </p>
               <p>
                 We're sorry for the inconvenience. If the problem persists,
-                please contact our support at <a target="_blank" href="mailto:alvarcartohelp@gmail.com"> alvarcartohelp@gmail.com</a>.
+                please contact our support at <a target="_blank" href="mailto:alvarcarto@gmail.com"> alvarcarto@gmail.com</a>.
               </p>
             </div>
           });
@@ -94,7 +94,7 @@ const CheckoutPage = React.createClass({
               </p>
               <p>
                 We're sorry for the inconvenience. If the problem persists,
-                please contact our support at <a target="_blank" href="mailto:alvarcartohelp@gmail.com"> alvarcartohelp@gmail.com</a>.
+                please contact our support at <a target="_blank" href="mailto:alvarcarto@gmail.com"> alvarcarto@gmail.com</a>.
               </p>
             </div>
           });
@@ -108,7 +108,7 @@ const CheckoutPage = React.createClass({
               </p>
               <p>
                 We're sorry for the inconvenience. If the problem persists,
-                please contact our support at <a target="_blank" href="mailto:alvarcartohelp@gmail.com"> alvarcartohelp@gmail.com</a>.
+                please contact our support at <a target="_blank" href="mailto:alvarcarto@gmail.com"> alvarcarto@gmail.com</a>.
               </p>
             </div>
           });
