@@ -99,15 +99,35 @@ function googleObjectToResult(obj) {
 }
 
 function findCityFromGoogleObject(obj) {
-  return _.find(obj.address_components, component => {
-    return component.types[0] === 'locality';
-  }).long_name;
+  let found = findAddressComponent(obj, 'locality');
+
+  if (!found) {
+    // If locality type is not found, try to iterate through all different
+    // administrative_area_level_x starting from the largest number, which is
+    // the most precise(smallest) area. This may end up with having e.g. state
+    // name as the City but that is OK compromise.
+    for (let i = 5; i >= 1; --i) {
+      const levelFound = findAddressComponent(obj, `administrative_area_level_${i}`);
+
+      if (levelFound) {
+        found = levelFound;
+        break;
+      }
+    }
+  }
+
+  return _.get(found, 'long_name', 'UNKNOWN CITY');
 }
 
 function findCountryFromGoogleObject(obj) {
-  return _.find(obj.address_components, component => {
-    return component.types[0] === 'country';
-  }).long_name;
+  const found = findAddressComponent(obj, 'country');
+  return _.get(found, 'long_name', 'UNKNOWN COUNTRY');
+}
+
+function findAddressComponent(searchResult, type) {
+  return _.find(searchResult.address_components, component => {
+    return _.includes(component.types, type);
+  });
 }
 
 export default GeoSearch;
