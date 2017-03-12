@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import * as actions from '../action-types';
-import { coordToPrettyText } from '../util';
+import { coordToPrettyText, getQueryParameterByName } from '../util';
 import history from '../history';
 
 const PARIS_CENTER = { lat: 48.85658345, lng: 2.35244750 };
@@ -10,6 +10,7 @@ const PARIS_BOUNDS = {
 };
 
 const initialState = {
+  debug: getQueryParameterByName('debug') === 'true',
   location: history.location,
   cart: [
     {

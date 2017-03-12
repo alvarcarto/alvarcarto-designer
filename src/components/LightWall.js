@@ -3,10 +3,10 @@ import ReactDOM from 'react-dom';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import AlvarMap from './AlvarMap';
-import { Icon } from 'antd';
+import { Icon, Switch } from 'antd';
 import config from '../config';
 import { setMapView } from '../actions';
-import { posterSizeToPhysicalDimensions, posterSizeToPixels } from '../util';
+import { posterSizeToPhysicalDimensions, posterSizeToPixels, createPosterImageUrl } from '../util';
 
 const LightWall = React.createClass({
   getInitialState() {
@@ -14,6 +14,7 @@ const LightWall = React.createClass({
       zoom: this._calculateZoom(),
       debouncedOnWindowResize: _.debounce(this._onWindowResize, 100),
       container: null,
+      showPreview: false,
     };
   },
 
@@ -73,6 +74,16 @@ const LightWall = React.createClass({
 
           <div className="LightWall__scaler" style={{ zoom: scalerZoom }}>
             <AlvarMap />
+
+            {
+              this.state.showPreview
+                ? <img
+                    className="LightWall__preview-image"
+                    src={createPosterImageUrl(mapItem)}
+                    role="presentation"
+                  />
+                : null
+            }
           </div>
 
           <div className="LightWall__zoom-container">
@@ -107,6 +118,14 @@ const LightWall = React.createClass({
             <Icon type="heart" /> Map data by <a href="http://www.openstreetmap.org/">OpenStreetMaps contributors</a>︎
           </p>
         </div>
+
+        {
+          globalState.debug
+            ? <div className="LightWall__debug-menu">
+                <Switch defaultChecked={false} onChange={this._onPreviewChange} />
+              </div>
+            : null
+        }
       </div>
     );
   },
@@ -160,6 +179,12 @@ const LightWall = React.createClass({
       zoom: mapItem.mapZoom - 1,
     }));
   },
+
+  _onPreviewChange(checked) {
+    this.setState({
+      showPreview: checked,
+    });
+  }
 });
 
 export default connect(state => ({ globalState: state }))(LightWall);

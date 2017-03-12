@@ -51,7 +51,7 @@ function posterSizeToPhysicalDimensions(size, orientation) {
   return _resolveOrientation(dimensions, orientation);
 }
 
-function createPosterThumbnailUrl(mapItem) {
+function createPosterImageUrl(mapItem) {
   return oneLineTrim`
     ${config.REACT_APP_RENDER_API_URL}/api/raster/render
     ?swLat=${mapItem.mapBounds.southWest.lat}
@@ -65,8 +65,11 @@ function createPosterThumbnailUrl(mapItem) {
     &labelHeader=${mapItem.labelHeader.toUpperCase()}
     &labelSmallHeader=${mapItem.labelSmallHeader.toUpperCase()}
     &labelText=${mapItem.labelText.toUpperCase()}
-    &resizeToHeight=140
   `;
+}
+
+function createPosterThumbnailUrl(mapItem) {
+  return `${createPosterImageUrl(mapItem)}&resizeToHeight=140`;
 }
 
 function coordToPrettyText(coord) {
@@ -125,13 +128,20 @@ function setStorageSafe(key, val) {
   return success;
 }
 
+function getQueryParameterByName(name) {
+  const match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
+  return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
+}
+
 module.exports = {
   posterSizeToPixels,
   posterSizeToPhysicalDimensions,
+  createPosterImageUrl,
   createPosterThumbnailUrl,
   coordToPrettyText,
   getStyle,
   getStyles,
   getStorageSafe,
   setStorageSafe,
+  getQueryParameterByName,
 };

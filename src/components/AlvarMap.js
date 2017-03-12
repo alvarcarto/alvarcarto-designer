@@ -101,7 +101,6 @@ const AlvarMap = React.createClass({
     const map = this.refs.lMap.leafletElement;
     const latLng = map.getCenter();
 
-
     this.props.dispatch(setMapView({
       center: { lat: latLng.lat, lng: latLng.lng },
       bounds: this._getMapBounds(),
