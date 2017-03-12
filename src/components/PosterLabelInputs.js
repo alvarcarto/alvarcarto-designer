@@ -14,7 +14,7 @@ const PosterLabelInputs = React.createClass({
             wrapperCol={{ span: 14 }}
             label="Print labels"
           >
-            <Switch size="default" defaultChecked onChange={this._onSwitchChange} />
+            <Switch size="default" defaultChecked={labels.enabled} onChange={this._onSwitchChange} />
           </Form.Item>
 
           <Form.Item
