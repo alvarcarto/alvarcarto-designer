@@ -66,8 +66,8 @@ const LightWall = React.createClass({
       <div ref="container" className="LightWall noselect">
       <div className="LightWall__map-container">
           <div className="LightWall__wire-container" style={{ zoom: wireZoom }}>
-            <img className="LightWall__clip1" src="clip.png" role="presentation" />
-            <img className="LightWall__clip2" src="clip.png" role="presentation" />
+            <img className="LightWall__clip1" src="clip.png" alt="" />
+            <img className="LightWall__clip2" src="clip.png" alt="" />
             <div className="LightWall__wire1"></div>
             <div className="LightWall__wire2"></div>
           </div>
@@ -80,7 +80,7 @@ const LightWall = React.createClass({
                 ? <img
                     className="LightWall__preview-image"
                     src={createPosterImageUrl(mapItem)}
-                    role="presentation"
+                    alt=""
                   />
                 : null
             }
