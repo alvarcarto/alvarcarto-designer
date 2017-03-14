@@ -6,11 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <meta name="author" content="Alvar Carto">
-    <meta name="description" content="Design and order your custom map posters. Choose any location on the planet.">
+    <meta name="description" content="Design and order unique custom-made map posters from any location on the planet. The posters are high class Scandinavian design.">
 
     <link href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed:400,700|Source+Sans+Pro:200,400,700|Roboto+Condensed:300,400,700" rel="stylesheet">
 
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css" />
     <link rel="shortcut icon" type="image/png" href="%PUBLIC_URL%/favicon.png">
     <!--
       Notice the use of %PUBLIC_URL% in the tag above.
@@ -22,7 +21,7 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <script src="%PUBLIC_URL%/libs/modernizr.min.js"></script>
-    <title>Alvar Carto - Design your custom map poster</title>
+    <title>Alvar Carto - Order custom-made map posters</title>
   </head>
   <body>
     <div class="root" id="root"></div>
@@ -36,8 +35,9 @@
       To begin the development, run `npm start`.
       To create a production bundle, use `npm run build`.
     -->
+
+    <script src="%PUBLIC_URL%/libs/polyfill.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAY5lRQvMhivV6E7Wga5e67_zVEM_gCSTA&libraries=places"></script>
-    <script src="https://use.typekit.net/lph2qsg.js"></script>
     <script>try{Typekit.load({ async: true });}catch(e){}</script>
     <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
     <script>

@@ -4,6 +4,7 @@
   "private": true,
   "devDependencies": {
     "autoprefixer": "^6.7.2",
+    "babel-plugin-import": "^1.1.1",
     "chokidar-cli": "^1.2.0",
     "clean-css-cli": "^4.0.6",
     "concurrently": "^3.3.0",
@@ -12,7 +13,7 @@
     "less-plugin-glob": "^2.0.0",
     "less-plugin-npm-import": "^2.1.0",
     "postcss-cli": "^2.6.0",
-    "react-scripts": "0.7.0",
+    "react-scripts": "git+https://github.com/kimmobrunfeldt/react-scripts-antd.git#master",
     "redux-logger": "^2.7.4"
   },
   "dependencies": {

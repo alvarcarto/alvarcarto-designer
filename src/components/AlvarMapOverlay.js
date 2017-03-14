@@ -1,7 +1,7 @@
-const ReactDOM = require('react-dom');
-const { message } = require('antd');
-const React = require('react');
-const axios = require('axios');
+import ReactDOM from 'react-dom';
+import { message } from 'antd';
+import React from 'react';
+import axios from 'axios';
 import config from '../config';
 const { CancelToken } = axios;
 

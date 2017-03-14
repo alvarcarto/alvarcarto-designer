@@ -1,6 +1,6 @@
-const React = require('react');
-const ReactDOM = require('react-dom');
-const HubspotOdometer = require('odometer');
+import React from 'react';
+import ReactDOM from 'react-dom';
+import HubspotOdometer from 'odometer';
 
 window.odometerOptions = {
   auto: false,
