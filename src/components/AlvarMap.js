@@ -93,7 +93,7 @@ const AlvarMap = React.createClass({
       center={mapItem.mapCenter}
       zoom={mapItem.mapZoom}
     >
-      <LTileLayer detectRetina url={style.url} />
+      <LTileLayer url={style.url} />
     </LeafletMap>;
   },
 
