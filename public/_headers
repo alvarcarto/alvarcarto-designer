@@ -1,6 +1,6 @@
 # Security improvements
 
-*
+/*
   X-Frame-Options: DENY
   X-XSS-Protection: 1; mode=block
   Content-Security-Policy: default-src 'self' https://www.google-analytics.com https://api.stripe.com https://js.stripe.com https://csi.gstatic.com https://*.googleapis.com http://*.hotjar.com:* https://*.hotjar.com:* ws://*.hotjar.com wss://*.hotjar.com 'unsafe-eval';
