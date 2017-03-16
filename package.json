@@ -31,6 +31,7 @@
     "normalize.css": "^5.0.0",
     "odometer": "^0.4.7",
     "payment": "kimmobrunfeldt/payment#master",
+    "raven-js": "^3.12.1",
     "react": "^15.4.2",
     "react-addons-css-transition-group": "^15.4.2",
     "react-addons-shallow-compare": "^15.4.1",

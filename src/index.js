@@ -1,5 +1,9 @@
 /* global Stripe */
 
+// Install Sentry client
+import Raven from 'raven-js';
+Raven.config('https://2456dddf26df432bae36dd00ea1d2a45@sentry.io/148773').install();
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
