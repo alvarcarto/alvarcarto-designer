@@ -3,7 +3,3 @@
 /*
   X-Frame-Options: DENY
   X-XSS-Protection: 1; mode=block
-  Content-Security-Policy: default-src 'self' https://*.alvarcarto.com https://sentry.io https://www.google-analytics.com https://api.stripe.com https://js.stripe.com https://csi.gstatic.com https://*.googleapis.com http://*.hotjar.com:* https://*.hotjar.com:* ws://*.hotjar.com wss://*.hotjar.com 'unsafe-eval' 'unsafe-inline';
-  Content-Security-Policy: img-src 'self' https://www.google-analytics.com https://*.alvarcarto.com data:;
-  Content-Security-Policy: style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-  Content-Security-Policy: font-src 'self' https://fonts.gstatic.com data:;
