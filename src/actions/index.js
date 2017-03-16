@@ -103,3 +103,8 @@ export const postOrder = (payload) => function(dispatch) {
       throw err;
     });
 };
+
+export const checkoutFormStateChange = (payload) => ({
+  type: actions.CHECKOUT_FORM_STATE_CHANGE,
+  payload: payload,
+});

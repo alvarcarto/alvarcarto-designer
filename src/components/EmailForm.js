@@ -16,12 +16,18 @@ const form = {
 
 const EmailForm = React.createClass({
   getInitialState() {
-    return {
+    let state = {
       // Take all keys in form object and initialize their values
       // with null and false
       values: _.mapValues(form, () => null),
       shouldValidate: _.mapValues(form, () => false),
     };
+
+    if (this.props.initialState) {
+      state.values = this.props.initialState.values;
+    }
+
+    return state;
   },
 
   render() {
@@ -40,7 +46,13 @@ const EmailForm = React.createClass({
           label="E-mail"
           extra="Order confirmation will be sent to your email."
         >
-          <Input name="email" onBlur={this._onInputBlur} onChange={this._onInputChange} placeholder="E-mail" />
+          <Input
+            name="email"
+            defaultValue={_.get(this.state.values, 'email')}
+            onBlur={this._onInputBlur}
+            onChange={this._onInputChange}
+            placeholder="E-mail"
+          />
         </Form.Item>
       </div>
     );

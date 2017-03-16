@@ -36,12 +36,18 @@ const form = {
 
 const AddressForm = React.createClass({
   getInitialState() {
-    return {
+    let state = {
       // Take all keys in form object and initialize their values
       // with null and false
       values: _.mapValues(form, () => null),
       shouldValidate: _.mapValues(form, () => false),
     };
+
+    if (this.props.initialState) {
+      state.values = this.props.initialState.values;
+    }
+
+    return state;
   },
 
   render() {
@@ -50,22 +56,31 @@ const AddressForm = React.createClass({
       wrapperCol: { span: 14 },
     };
 
+    const defaultCountry = _.get(this.state.values, 'country');
     const formErrors = this._getFormErrors(this.props.validate);
     return (
       <div className="AddressForm">
         <Form.Item {...formErrors.name} {...formItemLayout} required label="Full name">
-          <Input name="name" onBlur={this._onInputBlur} onChange={this._onInputChange} placeholder="Full name" />
+          <Input
+            name="name"
+            defaultValue={_.get(this.state.values, 'name')}
+            onBlur={this._onInputBlur}
+            onChange={this._onInputChange}
+            placeholder="Full name"
+          />
         </Form.Item>
 
         <Form.Item {...formErrors.address} {...formItemLayout} required label="Street address">
           <Input
             name="address"
+            defaultValue={_.get(this.state.values, 'address')}
             onBlur={this._onInputBlur}
             onChange={this._onInputChange}
             placeholder="Street address / PO Box"
           />
           <Input
             name="addressExtra"
+            defaultValue={_.get(this.state.values, 'addressExtra')}
             onBlur={this._onInputBlur}
             onChange={this._onInputChange}
             placeholder="Apartment / Floor"
@@ -76,6 +91,7 @@ const AddressForm = React.createClass({
         <Form.Item {...formErrors.city} {...formItemLayout} required label="City">
           <Input
             name="city"
+            defaultValue={_.get(this.state.values, 'city')}
             onBlur={this._onInputBlur}
             onChange={this._onInputChange}
             placeholder="City / Town"
@@ -85,6 +101,7 @@ const AddressForm = React.createClass({
         <Form.Item {...formErrors.postalCode} {...formItemLayout} required label="Postal code">
           <Input
             name="postalCode"
+            defaultValue={_.get(this.state.values, 'postalCode')}
             onBlur={this._onInputBlur}
             onChange={this._onInputChange}
             placeholder="ZIP / Postal code"
@@ -95,6 +112,7 @@ const AddressForm = React.createClass({
         <Form.Item {...formErrors.country} {...formItemLayout} required label="Country">
           <CountrySelect
             {...this.props}
+            {...defaultCountry ? { defaultValue: defaultCountry } : {}}
             onBlur={this._onCountryBlur}
             onChange={this._onCountryChange}
           />
@@ -103,6 +121,7 @@ const AddressForm = React.createClass({
         <Form.Item {...formErrors.state} {...formItemLayout} label="State">
           <Input
             name="state"
+            defaultValue={_.get(this.state.values, 'state')}
             onBlur={this._onInputBlur}
             onChange={this._onInputChange}
             placeholder="State"
@@ -116,6 +135,7 @@ const AddressForm = React.createClass({
             : <Form.Item {...formErrors.phone} {...formItemLayout} label="Phone number" extra="In case needed by postal service.">
                 <Input
                   name="phone"
+                  defaultValue={_.get(this.state.values, 'phone')}
                   onBlur={this._onInputBlur}
                   onChange={this._onInputChange}
                   placeholder="Phone number"

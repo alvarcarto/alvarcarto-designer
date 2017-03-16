@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import history from '../history';
 import _ from 'lodash';
 import { Icon, Affix, Modal } from 'antd';
-import { postOrder } from '../actions';
+import { postOrder, checkoutFormStateChange } from '../actions';
 import config from '../config';
 import CheckoutForm from './CheckoutForm';
 import Footer from './Footer';
@@ -12,6 +12,12 @@ import CheckoutSummary from './CheckoutSummary';
 import Spinner from './Spinner';
 
 const CheckoutPage = React.createClass({
+  getInitialState() {
+    return {
+      debouncedOnFormChange: _.debounce(this._onFormChange, 600),
+    };
+  },
+
   render() {
     return (
       <div className="CheckoutPage">
@@ -48,7 +54,11 @@ const CheckoutPage = React.createClass({
           <Affix className="CheckoutPage__summary-container" offsetTop={10}>
             <CheckoutSummary globalState={this.props.globalState} />
           </Affix>
-          <CheckoutForm onSubmit={this._onFormSubmit} />
+          <CheckoutForm
+            initialState={this.props.globalState.checkoutFormState}
+            onChange={this.state.debouncedOnFormChange}
+            onSubmit={this._onFormSubmit}
+          />
         </div>
 
         <Footer />
@@ -58,6 +68,10 @@ const CheckoutPage = React.createClass({
 
   _onBackClick() {
     history.push('/');
+  },
+
+  _onFormChange(state) {
+    this.props.dispatch(checkoutFormStateChange(state));
   },
 
   _onFormSubmit(form) {

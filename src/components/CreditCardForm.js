@@ -60,12 +60,18 @@ const form = {
 
 const CreditCardForm = React.createClass({
   getInitialState() {
-    return {
+    let state = {
       // Take all keys in form object and initialize their values
       // with null and false
       values: _.mapValues(form, () => null),
       shouldValidate: _.mapValues(form, () => false),
     };
+
+    if (this.props.initialState) {
+      state.values = this.props.initialState.values;
+    }
+
+    return state;
   },
 
   componentDidMount() {
@@ -84,15 +90,25 @@ const CreditCardForm = React.createClass({
       ? 'Unknown'
       : Stripe.card.cardType(this.state.values['cc-number']);
 
+    const initialExpMonth = _.get(this.state.values, 'cc-exp.month');
+    const initialExpYear = _.get(this.state.values, 'cc-exp.year');
+
     return (
       <div className="CreditCardForm">
         <Form.Item {...formErrors['cc-name']} {...formItemLayout} required label="Name on card">
-          <Input name="cc-name" onBlur={this._onInputBlur} onChange={this._onInputChange} placeholder="Full name" />
+          <Input
+            name="cc-name"
+            defaultValue={_.get(this.state.values, 'cc-name')}
+            onBlur={this._onInputBlur}
+            onChange={this._onInputChange}
+            placeholder="Full name"
+          />
         </Form.Item>
 
         <Form.Item {...formErrors['cc-number']} {...formItemLayout} required label="Card number">
           <Input
             ref="cc-number"
+            defaultValue={_.get(this.state.values, 'cc-number')}
             suffix={<Icon type="lock" />}
             maxLength="20"
             name="cc-number"
@@ -114,6 +130,7 @@ const CreditCardForm = React.createClass({
         >
           <Select
             size="large"
+            {...initialExpMonth ? { defaultValue: String(initialExpMonth) } : {}}
             placeholder="MM"
             className="CreditCardForm__expiry-month"
             onChange={this._onMonthChange}
@@ -129,6 +146,7 @@ const CreditCardForm = React.createClass({
           <span className="CreditCardForm__expiry-separator">/</span>
           <Select
             size="large"
+            {...initialExpYear ? { defaultValue: String(initialExpYear) } : {} }
             placeholder="YYYY"
             className="CreditCardForm__expiry-year"
             onChange={this._onYearChange}

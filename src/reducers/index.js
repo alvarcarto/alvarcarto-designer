@@ -29,6 +29,7 @@ const initialState = {
       labelText: coordToPrettyText(PARIS_CENTER),
     }
   ],
+  checkoutFormState: null,
   editCartItem: 0,
   postingOrder: false,
   postOrderResponse: null,
@@ -134,6 +135,9 @@ function reducer(state = initialState, action) {
 
     case actions.POST_ORDER_FAILURE:
       return _.extend({}, state, { postingOrder: false, postOrderResponse: null, postOrderError: action.payload });
+
+    case actions.CHECKOUT_FORM_STATE_CHANGE:
+      return _.extend({}, state, { checkoutFormState: action.payload });
 
     default:
       return state;

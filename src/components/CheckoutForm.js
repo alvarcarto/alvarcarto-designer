@@ -25,6 +25,13 @@ const CheckoutForm = React.createClass({
   },
 
   getInitialState() {
+    if (this.props.initialState) {
+      return _.merge({}, this.props.initialState, {
+        // Revalidate all when loading initial state
+        validateAll: true,
+      });
+    }
+
     return {
       // Take all keys in form object and initialize their values
       // with null and false
@@ -49,7 +56,7 @@ const CheckoutForm = React.createClass({
     let i = 0;
     const getIndex = () => ++i;
 
-    const { emailSubscription } = this.state.values;
+    const { emailSubscription, differentBillingAddress, termsAccepted } = this.state.values;
     const formErrors = this._getFormErrors();
     return (
       <div className="CheckoutForm">
@@ -60,6 +67,7 @@ const CheckoutForm = React.createClass({
             </h2>
 
             <EmailForm
+              initialState={this.state.emailForm}
               validate={this.state.validateAll}
               onChange={this._onEmailFormChange}
             />
@@ -81,12 +89,17 @@ const CheckoutForm = React.createClass({
             </Form.Item>
 
             <AddressForm
+              initialState={this.state.shippingAddressForm}
               validate={this.state.validateAll}
               onChange={this._onShippingAddressFormChange}
             />
 
             <Form.Item className="CheckoutForm__new-address" {...formItemLayout} label="&nbsp;">
-              <Checkbox name="differentBillingAddress" onChange={this._onCheckboxChange}>
+              <Checkbox
+                name="differentBillingAddress"
+                defaultChecked={differentBillingAddress}
+                onChange={this._onCheckboxChange}
+              >
                 Use a different address for billing
               </Checkbox>
             </Form.Item>
@@ -106,6 +119,7 @@ const CheckoutForm = React.createClass({
                     </h2>
                     <AddressForm
                       disablePhone
+                      initialState={this.state.billingAddressForm}
                       validate={this.state.validateAll}
                       onChange={this._onBillingAddressFormChange}
                     />
@@ -127,6 +141,7 @@ const CheckoutForm = React.createClass({
             </h2>
 
             <CreditCardForm
+              initialState={this.state.creditCardForm}
               validate={this.state.validateAll}
               onChange={this._onCreditCardFormChange}
             />
@@ -172,7 +187,12 @@ const CheckoutForm = React.createClass({
               className="CheckoutForm__terms"
               label="&nbsp;"
             >
-              <Checkbox name="termsAccepted" onChange={this._onCheckboxChange} onBlur={this._onCheckboxBlur}>
+              <Checkbox
+                name="termsAccepted"
+                defaultChecked={termsAccepted}
+                onChange={this._onCheckboxChange}
+                onBlur={this._onCheckboxBlur}
+              >
                 I accept the <a target="_blank" href="http://alvarcarto.com/tos">terms of service</a>
               </Checkbox>
             </Form.Item>
@@ -241,7 +261,7 @@ const CheckoutForm = React.createClass({
       values: _.extend(state.values, {
         [name]: checked
       }),
-    }));
+    }), this._onAnyChange);
   },
 
   _onCheckboxBlur(e) {
@@ -255,19 +275,19 @@ const CheckoutForm = React.createClass({
   },
 
   _onEmailFormChange(form) {
-    this.setState((state) => ({ emailForm: form }));
+    this.setState((state) => ({ emailForm: form }), this._onAnyChange);
   },
 
   _onShippingAddressFormChange(form) {
-    this.setState((state) => ({ shippingAddressForm: form }));
+    this.setState((state) => ({ shippingAddressForm: form }), this._onAnyChange);
   },
 
   _onBillingAddressFormChange(form) {
-    this.setState((state) => ({ billingAddressForm: form }));
+    this.setState((state) => ({ billingAddressForm: form }), this._onAnyChange);
   },
 
   _onCreditCardFormChange(form) {
-    this.setState((state) => ({ creditCardForm: form }));
+    this.setState((state) => ({ creditCardForm: form }), this._onAnyChange);
   },
 
   _onMoreSecurityClick(e) {
@@ -276,6 +296,7 @@ const CheckoutForm = React.createClass({
     Modal.info({
       title: 'Your payments are secured',
       iconType: 'lock',
+      onCancel: () => null,  // To prevent expection
       content: (
         <div>
           <p>
@@ -322,6 +343,18 @@ const CheckoutForm = React.createClass({
     };
 
     this.props.onSubmit(orderForm);
+  },
+
+  _onAnyChange() {
+    if (this.props.onChange) {
+      const stateCopy = _.cloneDeep(this.state);
+      // For safety, reset CVC when user goes to other view
+      _.set(stateCopy, 'creditCardForm.values.cc-cvc', null);
+      _.set(stateCopy, 'creditCardForm.isValid', false);
+      // Make sure user has to accept terms before confirming order
+      _.set(stateCopy, 'values.termsAccepted', false);
+      this.props.onChange(stateCopy);
+    }
   }
 });
 
