@@ -64,15 +64,15 @@ const LightWall = React.createClass({
 
     return (
       <div ref="container" className="LightWall noselect">
-      <div className="LightWall__map-container">
-          <div className="LightWall__wire-container" style={{ zoom: wireZoom }}>
+      <div className="LightWall__map-container" style={{ transform: `translate(-50%, -50%) scale(${scalerZoom})` }}>
+          <div className="LightWall__wire-container">
             <img className="LightWall__clip1" src="clip.png" alt="" />
             <img className="LightWall__clip2" src="clip.png" alt="" />
             <div className="LightWall__wire1"></div>
             <div className="LightWall__wire2"></div>
           </div>
 
-          <div className="LightWall__scaler" style={{ zoom: scalerZoom }}>
+          <div className="LightWall__scaler">
             <AlvarMap />
 
             {
