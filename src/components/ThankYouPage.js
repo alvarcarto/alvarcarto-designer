@@ -6,6 +6,22 @@ import FinalOrderSummary from './FinalOrderSummary';
 import Footer from './Footer';
 
 const ThankYouPage = React.createClass({
+  getInitialState() {
+    return {
+      step: 0,
+      firstIcon: 'loading',
+      firstText: 'Finalizing order ..'
+    };
+  },
+
+  componentDidMount() {
+    setTimeout(() => this.setState({
+      step: 1,
+      firstIcon: null,
+      firstText: 'We received your order.',
+    }), 3000);
+  },
+
   render() {
     const city = this.props.globalState.shippingAddress.city;
 
@@ -14,8 +30,12 @@ const ThankYouPage = React.createClass({
         <div className="ThankYouPage__content">
           <h1>Thank you!</h1>
 
-          <Steps current={1}>
-            <Steps.Step title="Design &amp; order" description="We received your order." />
+          <Steps current={this.state.step}>
+            <Steps.Step
+              title="Design &amp; order"
+              description={this.state.firstText}
+              {...this.state.firstIcon ? { icon: <Icon type={this.state.firstIcon} /> } : {} }
+            />
             <Steps.Step title="Print &amp; delivery" description="Your posters are soon printed and shipped." icon={<Icon type="clock-circle-o" />} />
             <Steps.Step title="Delivery arrives" description={`Posters arrive to ${city}.`} icon={<Icon type="heart-o" />} />
           </Steps>
