@@ -23,6 +23,7 @@ const App = React.createClass({
 
     // Listen for changes to the current location.
     history.listen((location, action) => {
+      window.scrollTo(0, 0);
       this.props.dispatch(setLocation(location));
     });
 
