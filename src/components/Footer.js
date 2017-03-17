@@ -6,20 +6,20 @@ const Footer = () => <footer className="Footer">
     <Col span={12}>
       <ul>
         <li>
-           <a href="#">Shipping &amp; Returns</a>
+           <a target="_blank" href="https://alvarcarto.com/help/#shipping_and_returns">Shipping &amp; Returns</a>
         </li>
         <li>
-           <a href="#">FAQ</a>
+           <a target="_blank" href="https://alvarcarto.com/help">Frequently asked questions</a>
         </li>
         <li>
-           <a href="#">Help</a>
+           <a target="_blank" href="https://alvarcarto.com/privacy">Privacy policy</a>
         </li>
       </ul>
     </Col>
     <Col span={12}>
       <p>
         Any questions? Send us mail to
-        <a href="mailto:alvarcarto@gmail.com"> alvarcarto@gmail.com</a>.
+        <a target="_blank" href="mailto:alvarcarto@gmail.com"> alvarcarto@gmail.com</a>.
       </p>
       <p>We are located at Luova Laboratorio, Saaristonkatu 9, 90100 Oulu, Finland.</p>
     </Col>
