@@ -60,7 +60,7 @@ const OrderItem = React.createClass({
 
     return (
       <div className="OrderItem">
-        <img src={createPosterThumbnailUrl(item)} className={cartImageClassName} alt="poster thumbnail" />
+        <img src={createPosterThumbnailUrl(item)} className={cartImageClassName} alt="" />
 
         <div className="OrderItem__content">
           <h3 className="OrderItem__title">{item.labelHeader}</h3>

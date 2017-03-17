@@ -45,7 +45,7 @@ const CartItem = React.createClass({
       <div className="CartItem">
         {
           item.mapBounds
-            ? <img src={createPosterThumbnailUrl(item)} className={cartImageClassName} alt="poster thumbnail" />
+            ? <img src={createPosterThumbnailUrl(item)} className={cartImageClassName} alt="" />
             : <div className={cartImageClassName}></div>
         }
 
