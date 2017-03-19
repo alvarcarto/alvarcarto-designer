@@ -121,8 +121,11 @@ const CheckoutPage = React.createClass({
                 Our engineers will fix the problem as soon as possible.
               </p>
               <p>
-                We're sorry for the inconvenience. If the problem persists,
+                We're sorry for the inconvenience. If you were charged,
                 please contact our support at <a target="_blank" href="mailto:alvarcarto@gmail.com"> alvarcarto@gmail.com</a>.
+              </p>
+              <p>
+                Don't worry, we promise to fix the situation.
               </p>
             </div>
           });

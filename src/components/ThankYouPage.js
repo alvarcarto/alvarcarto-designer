@@ -10,7 +10,7 @@ const ThankYouPage = React.createClass({
     return {
       step: 0,
       firstIcon: 'loading',
-      firstText: 'Finalizing order ..'
+      firstText: 'Finalizing the order ..'
     };
   },
 
@@ -36,7 +36,7 @@ const ThankYouPage = React.createClass({
               description={this.state.firstText}
               {...this.state.firstIcon ? { icon: <Icon type={this.state.firstIcon} /> } : {} }
             />
-            <Steps.Step title="Print &amp; delivery" description="Your posters are soon printed and shipped." icon={<Icon type="clock-circle-o" />} />
+            <Steps.Step title="Print &amp; delivery" description="Waiting to be printed and shipped." icon={<Icon type="clock-circle-o" />} />
             <Steps.Step title="Delivery arrives" description={`Posters arrive to ${city}.`} icon={<Icon type="heart-o" />} />
           </Steps>
 
