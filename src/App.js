@@ -34,19 +34,21 @@ const App = React.createClass({
 
   render() {
     const { globalState } = this.props;
+    const pathname = _.trimEnd(globalState.location.pathname, '/');
 
     let page;
+    if (pathname === '/checkout') {
+      page = <CheckoutPage />;
+    } else if (pathname.match(/^\/orders\/[a-zA-Z0-9-]+$/)) {
+      // If matches /orders/:id, where id is alphanumeric and may contain dash
+      const orderId = _.last(pathname.split('/'));
 
-    switch (_.trimEnd(globalState.location.pathname, '/')) {
-      case '/checkout':
-        page = <CheckoutPage />;
-        break;
-      case '/thankyou':
-        page = <ThankYouPage />;
-        break;
-      default:
-        page = <EditorPage />;
-        break;
+      page = <ThankYouPage
+        initialAnimation={globalState.postOrderResponse !== null}
+        orderId={orderId}
+      />;
+    } else {
+      page = <EditorPage />;
     }
 
     return (

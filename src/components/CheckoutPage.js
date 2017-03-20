@@ -80,7 +80,15 @@ const CheckoutPage = React.createClass({
     });
 
     this.props.dispatch(postOrder(order))
-      .then(() => history.push('/thankyou'))
+      .then((res) => {
+        const data = _.get(res, 'data');
+        const orderId = _.get(data, 'orderId');
+        if (!orderId) {
+          throw new Error(`API did not respond with order id. Data: ${data}`);
+        }
+
+        history.push(`/orders/${orderId}`, { initialAnimation: true });
+      })
       .catch(err => {
         if (_.get(err, 'response.status') === 402) {
           const detailedError = _.get(err, 'response.data.messages.0', 'Unexpected error');
@@ -112,7 +120,7 @@ const CheckoutPage = React.createClass({
               </p>
             </div>
           });
-        } else {
+        } else if (_.get(err, 'response.status') > 400) {
           Modal.error({
             title: 'Unexpected error',
             content: <div>
@@ -129,6 +137,8 @@ const CheckoutPage = React.createClass({
               </p>
             </div>
           });
+        } else {
+          throw err;
         }
       });
   }

@@ -1,44 +1,84 @@
+import _ from 'lodash';
 import React from 'react';
-import { connect } from 'react-redux';
 import { Icon, Steps } from 'antd';
+import { getOrder } from '../util/api';
 import config from '../config';
+import Spinner from './Spinner';
 import FinalOrderSummary from './FinalOrderSummary';
 import Footer from './Footer';
+
+const STEPS_FIRST = {
+  stepIndex: 0,
+  firstIcon: 'loading',
+  firstText: 'Finalizing the order ..'
+};
+const STEPS_SECOND = {
+  stepIndex: 1,
+  firstIcon: null,
+  firstText: 'We received your order.',
+};
 
 const ThankYouPage = React.createClass({
   getInitialState() {
     return {
-      step: 0,
-      firstIcon: 'loading',
-      firstText: 'Finalizing the order ..'
+      error: null,
+      order: null,
+      loading: true,
+      steps: this.props.initialAnimation ? STEPS_FIRST : STEPS_SECOND,
     };
   },
 
   componentDidMount() {
-    setTimeout(() => this.setState({
-      step: 1,
-      firstIcon: null,
-      firstText: 'We received your order.',
-    }), 3000);
+    getOrder(this.props.orderId)
+      .then(res => {
+        this.setState({
+          order: res.data,
+          error: null,
+          loading: false,
+        });
+
+        setTimeout(() => this.setState({
+          steps: STEPS_SECOND,
+        }), 3000);
+      })
+      .catch(err => {
+        const state = {
+          loading: false,
+        };
+
+        if (_.get(err, 'response.status') === 404) {
+          state.error = {
+            message: 'Order not found',
+            text: `Couldn't find any order with ID: #${this.props.orderId}.` +
+                  ' Please contact our support if you think your order was lost.',
+            statusCode: 404,
+          }
+        } else if (_.get(err, 'response.status') === 400) {
+          state.error = {
+            message: 'Incorrect order ID',
+            text: `Incorrect order ID: #${this.props.orderId}. Please double check your order ID.` +
+                  ' Contact our support if you think your order was lost.',
+            statusCode: 400,
+          }
+        } else {
+          state.error = {
+            message: 'Unexpected error',
+            text: 'Something unexpected happened when trying to get order details.' +
+              ' If the problem persists, please contact our support',
+          };
+        }
+
+        this.setState(state, () => {
+          throw err;
+        });
+      })
   },
 
   render() {
-    const city = this.props.globalState.shippingAddress.city;
-
     return (
       <div className="ThankYouPage">
         <div className="ThankYouPage__content">
-          <h1>Thank you!</h1>
-
-          <Steps current={this.state.step}>
-            <Steps.Step
-              title="Design &amp; order"
-              description={this.state.firstText}
-              {...this.state.firstIcon ? { icon: <Icon type={this.state.firstIcon} /> } : {} }
-            />
-            <Steps.Step title="Print &amp; delivery" description="Waiting to be printed and shipped." icon={<Icon type="clock-circle-o" />} />
-            <Steps.Step title="Delivery arrives" description={`Posters arrive to ${city}.`} icon={<Icon type="heart-o" />} />
-          </Steps>
+          <h1>{this._renderHeader()}</h1>
 
           <div className="ThankYouPage__logo">
             <a href="https://alvarcarto.com">
@@ -49,25 +89,92 @@ const ThankYouPage = React.createClass({
             </a>
           </div>
 
-          <p>
-            Your unique posters will be printed and shipped within a few days to {city}.
-            In case you chose Express Shipping, the posters will be printed
-            and shipped today if the order was sent before 12PM (12:00).
-          </p>
-
-          <p>
-            Receipt of the purchase will be sent to your email by Stripe.
-          </p>
-
-          <div className="ThankYouPage__order-container">
-            <FinalOrderSummary />
-          </div>
-
-          <Footer />
+          {
+            this.state.loading
+              ? null
+              : this._renderContent()
+          }
         </div>
       </div>
     );
+  },
+
+  _renderHeader() {
+    if (this.state.loading) {
+      return <Spinner dark />;
+    } else if (this.state.error) {
+      return this.state.error.message;
+    }
+
+    return 'Thank you!';
+  },
+
+  _renderContent() {
+    if (this.state.error) {
+      return <div>
+        <p>
+          {this.state.error.text}
+        </p>
+
+        <h3 className="ThankYouPage__help-links">Links</h3>
+        <ul>
+          <li>
+            <a href="/">Design a poster</a>
+          </li>
+          <li>
+            <a href="https://alvarcarto.com/help">Help</a>
+          </li>
+        </ul>
+
+        <Footer />
+      </div>;
+    }
+
+    return this._renderOrderContent();
+  },
+
+  _renderOrderContent() {
+    if (!this.state.order) {
+
+    }
+
+    const { cart } = this.state.order;
+    const { city, country } = this.state.order.shippingAddress;
+    const { stepIndex, firstText, firstIcon } = this.state.steps;
+
+    return <div>
+      <Steps current={stepIndex}>
+        <Steps.Step
+          title="Design &amp; order"
+          description={firstText}
+          {...firstIcon ? { icon: <Icon type={firstIcon} /> } : {} }
+        />
+        <Steps.Step title="Print &amp; delivery" description="Waiting to be printed and delivered." icon={<Icon type="clock-circle-o" />} />
+        <Steps.Step title="Delivery arrives" description={`Posters arrive to ${city}.`} icon={<Icon type="heart-o" />} />
+      </Steps>
+
+      <p>
+        Your unique posters will be printed and shipped to {city} within a few days.
+        In case you chose Express Shipping, the posters will be printed
+        and shipped today if the order was sent before 12PM (12:00).
+      </p>
+
+      <p>
+        Receipt of the purchase will be sent to your email by Stripe.
+        {
+          country !== 'FI'
+            ? ' We\'ll send the delivery tracking code via email as soon as we get it.'
+            : ' Unfortunately we don\'t provide tracking code for deliveries to Finland.'
+        }
+      </p>
+
+      <div className="ThankYouPage__order-container">
+        <FinalOrderSummary cart={cart} orderId={this.props.orderId} />
+      </div>
+
+      <Footer />
+    </div>;
   }
 });
 
-export default connect(state => ({ globalState: state }))(ThankYouPage);
+export default ThankYouPage;

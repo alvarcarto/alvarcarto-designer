@@ -5,3 +5,6 @@ export function postOrder(order) {
   return axios.post(`${CONST.REACT_APP_ORDER_API_URL}/api/orders`, order);
 }
 
+export function getOrder(orderId) {
+  return axios.get(`${CONST.REACT_APP_ORDER_API_URL}/api/orders/${orderId}`);
+}

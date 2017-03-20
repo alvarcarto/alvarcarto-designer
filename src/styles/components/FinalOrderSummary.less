@@ -1,7 +1,19 @@
+.FinalOrderSummary__header-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: center;
+}
+
 .FinalOrderSummary__header {
   font-size: @font-size-medium;
   margin-bottom: 24px;
   text-transform: uppercase;
+}
+.FinalOrderSummary__header:last-child {
+  top: 2px;
+  position: relative;
+  font-size: @font-size-small;
 }
 
 .FinalOrderSummary__price-summary {

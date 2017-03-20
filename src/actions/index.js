@@ -92,6 +92,8 @@ export const postOrder = (payload) => function(dispatch) {
         type: actions.POST_ORDER_SUCCESS,
         payload: response,
       });
+
+      return response;
     })
     .catch(err => {
       dispatch({

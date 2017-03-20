@@ -6,12 +6,15 @@ import _ from 'lodash';
 
 const FinalOrderSummary = React.createClass({
   render() {
-    const { cart } = this.props.globalState;
+    const { cart } = this.props;
     const totalPrice = calculateCartPrice(cart);
 
     return (
       <div className="FinalOrderSummary">
-        <h2 className="FinalOrderSummary__header">Order summary</h2>
+        <div className="FinalOrderSummary__header-row">
+          <h2 className="FinalOrderSummary__header">Order summary</h2>
+          <h2 className="FinalOrderSummary__header">ID: #{this.props.orderId}</h2>
+        </div>
 
         <ul className="FinalOrderSummary__cart">
           {
@@ -75,4 +78,4 @@ const OrderItem = React.createClass({
   },
 });
 
-export default connect(state => ({ globalState: state }))(FinalOrderSummary);
+export default FinalOrderSummary;
