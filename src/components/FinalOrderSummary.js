@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { getStyle, createPosterThumbnailUrl } from '../util';
 import { calculateCartPrice, calculateItemPrice } from 'alvarcarto-price-util';
 import _ from 'lodash';

@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import * as actions from '../action-types';
 import { coordToPrettyText, getQueryParameterByName } from '../util';
+import dummyCheckoutState from '../util/dummy-checkout-state';
 import history from '../history';
 
 const PARIS_CENTER = { lat: 48.85658345, lng: 2.35244750 };
@@ -9,8 +10,10 @@ const PARIS_BOUNDS = {
   northEast: { lat: 49.10893881, lng: 2.640838623 },
 };
 
+const DEBUG = getQueryParameterByName('debug') === 'true';
+
 const initialState = {
-  debug: getQueryParameterByName('debug') === 'true',
+  debug: DEBUG,
   location: history.location,
   cart: [
     {
@@ -29,7 +32,7 @@ const initialState = {
       labelText: coordToPrettyText(PARIS_CENTER),
     }
   ],
-  checkoutFormState: null,
+  checkoutFormState: DEBUG ? dummyCheckoutState : null,
   editCartItem: 0,
   postingOrder: false,
   postOrderResponse: null,
