@@ -82,8 +82,8 @@ export const postOrder = (payload) => function(dispatch) {
       // customer’s card number or the expiration date for easy reference.
       const order = {
         email: payload.email,
-        differentBillingAddress: payload.differentBillingAddress,
-        emailSubscription: payload.emailSubscription,
+        differentBillingAddress: _.get(payload, 'differentBillingAddress', false),
+        emailSubscription: _.get(payload, 'emailSubscription', false),
         shippingAddress: payload.shippingAddress,
         billingAddress: payload.billingAddress,
         stripeTokenResponse: stripeResponse.response,
