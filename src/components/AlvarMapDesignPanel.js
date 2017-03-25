@@ -20,7 +20,7 @@ const AlvarMapDesignPanel = React.createClass({
     return (
       <div className={`AlvarMapDesignPanel ${this.props.className}`}>
         <Accordion selected={0}>
-          <Accordion.Section header="Location & style">
+          <Accordion.Section header="Location &amp; style">
 
             <div className="ant-row ant-form-item">
               <div className="ant-col-5 ant-form-item-label">
@@ -50,7 +50,7 @@ const AlvarMapDesignPanel = React.createClass({
             </div>
           </Accordion.Section>
 
-          <Accordion.Section header="Layout & size">
+          <Accordion.Section header="Orientation &amp; Size">
             <div className="AlvarMapDesignPanel__group">
               <h4>Orientation</h4>
               <OrientationSelect selected={mapItem.orientation} onChange={this._onOrientationChange} />
