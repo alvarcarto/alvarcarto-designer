@@ -86,9 +86,9 @@ const CreditCardForm = React.createClass({
 
     const yearNow = new Date().getFullYear();
     const formErrors = this._getFormErrors(this.props.validate);
-    const cardType = _.isNull(this.state.values['cc-number'])
-      ? 'Unknown'
-      : Stripe.card.cardType(this.state.values['cc-number']);
+    const cardType = _.isString(this.state.values['cc-number'])
+      ? Stripe.card.cardType(this.state.values['cc-number'])
+      : 'Unknown';
 
     const initialExpMonth = _.get(this.state.values, 'cc-exp.month');
     const initialExpYear = _.get(this.state.values, 'cc-exp.year');
