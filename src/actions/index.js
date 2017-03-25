@@ -50,6 +50,10 @@ export const addCartItemQuantity = (payload) => ({
 export const postOrder = (payload) => function(dispatch) {
   dispatch({ type: actions.POST_ORDER_REQUEST, payload });
 
+  const addressObj = payload.differentBillingAddress
+    ? payload.billingAddress
+    : payload.shippingAddress;
+
   return stripeUtil.createToken({
     number: _.get(payload.creditCard, 'cc-number'),
     exp_month: _.get(payload.creditCard, 'cc-exp.month'),
@@ -57,13 +61,12 @@ export const postOrder = (payload) => function(dispatch) {
     cvc: _.get(payload.creditCard, 'cc-cvc'),
     // Optional by Stripe
     name: _.get(payload.creditCard, 'cc-name'),
-    // TODO: If billingAddress is not defined, use shipping address
-    address_zip: _.get(payload.billingAddress, 'postalCode'),
-    address_line1: _.get(payload.billingAddress, 'address'),
-    address_line2: _.get(payload.billingAddress, 'addressExtra'),
-    address_city: _.get(payload.billingAddress, 'city'),
-    address_state: _.get(payload.billingAddress, 'state'),
-    address_country: _.get(payload.billingAddress, 'country'),
+    address_zip: _.get(addressObj, 'postalCode'),
+    address_line1: _.get(addressObj, 'address'),
+    address_line2: _.get(addressObj, 'addressExtra'),
+    address_city: _.get(addressObj, 'city'),
+    address_state: _.get(addressObj, 'state'),
+    address_country: _.get(addressObj, 'country'),
   })
     .then((stripeResponse) => {
       // WARNING: ONLY USE CREDIT CARD DETAILS FROM STRIPE RESPONSE
@@ -79,6 +82,7 @@ export const postOrder = (payload) => function(dispatch) {
       // customer’s card number or the expiration date for easy reference.
       const order = {
         email: payload.email,
+        differentBillingAddress: payload.differentBillingAddress,
         emailSubscription: payload.emailSubscription,
         shippingAddress: payload.shippingAddress,
         billingAddress: payload.billingAddress,

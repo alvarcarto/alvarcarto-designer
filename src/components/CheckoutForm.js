@@ -338,6 +338,7 @@ const CheckoutForm = React.createClass({
       email: _.get(state.emailForm, 'values.email'),
       emailSubscription: state.values.emailSubscription,
       creditCard: _.get(state.creditCardForm, 'values'),
+      differentBillingAddress: _.get(state, 'values.differentBillingAddress'),
       shippingAddress: _.get(state.shippingAddressForm, 'values'),
       billingAddress: _.get(state.billingAddressForm, 'values'),
     };
