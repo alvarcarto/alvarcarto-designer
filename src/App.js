@@ -30,6 +30,10 @@ const App = React.createClass({
     if (!config.DEVELOPMENT) {
       window.onbeforeunload = this._beforeLeavePage;
     }
+
+    if (window.screen.availWidth < 500) {
+      this._showTooNarrowScreen();
+    }
   },
 
   render() {
@@ -98,6 +102,31 @@ const App = React.createClass({
         >
           Don't show this again
         </Checkbox>
+      </div>,
+    });
+  },
+
+  _showTooNarrowScreen() {
+    Modal.warning({
+      title: 'No mobile support yet',
+      okText: 'OK',
+      content: <div>
+        <p>
+          Unfortunately this page doesn't work well with a narrow screen
+          device yet. You can try to use the page in landscape orientation.
+          For best user experience, please use a tablet or a desktop.
+        </p>
+
+        <p>
+          If you'd definitely want to order a poster via mobile,
+          please let us know via feedback. Yes, you can joke about out our
+          non-mobile-first design.
+        </p>
+
+        <p>
+          If you still want to view the possibly broken page layout,
+          press OK.
+        </p>
       </div>,
     });
   },
