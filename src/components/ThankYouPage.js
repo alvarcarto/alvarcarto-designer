@@ -139,7 +139,7 @@ const ThankYouPage = React.createClass({
     }
 
     const { cart } = this.state.order;
-    const { city, country } = this.state.order.shippingAddress;
+    const { city, countryCode } = this.state.order.shippingAddress;
     const { stepIndex, firstText, firstIcon } = this.state.steps;
 
     return <div>
@@ -162,7 +162,7 @@ const ThankYouPage = React.createClass({
       <p>
         Receipt of the purchase will be sent to your email by Stripe.
         {
-          country !== 'FI'
+          countryCode !== 'FI'
             ? ' We\'ll send the delivery tracking code via email as soon as we get it.'
             : ' Unfortunately we don\'t provide tracking code for deliveries to Finland.'
         }
