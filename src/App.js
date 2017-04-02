@@ -74,7 +74,8 @@ const App = React.createClass({
       _.pick(initialState, importantFields),
       _.pick(this.props.globalState, importantFields),
     );
-    if (userHasMadeChanges) {
+    const userHasOrderedPoster = this.props.globalState.postOrderResponse !== null;
+    if (!userHasOrderedPoster && userHasMadeChanges) {
       return 'Do you want to leave this site?';
     }
   },
