@@ -1,3 +1,4 @@
+import BPromise from 'bluebird';
 import axios from 'axios';
 import CONST from '../config';
 
@@ -7,4 +8,17 @@ export function postOrder(order) {
 
 export function getOrder(orderId) {
   return axios.get(`${CONST.REACT_APP_ORDER_API_URL}/api/orders/${orderId}`);
+}
+
+export function assertHealth() {
+  return axios.get(`${CONST.REACT_APP_ORDER_API_URL}/api/health`)
+    .catch(() =>
+      _retryHealthOnce()
+        .catch(() => _retryHealthOnce())
+    )
+}
+
+function _retryHealthOnce() {
+  return BPromise.delay(3000)
+    .then(() => axios.get(`${CONST.REACT_APP_ORDER_API_URL}/api/health`));
 }

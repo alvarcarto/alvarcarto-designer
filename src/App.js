@@ -11,6 +11,7 @@ import EditorPage from './components/EditorPage';
 import CheckoutPage from './components/CheckoutPage';
 import ThankYouPage from './components/ThankYouPage';
 import { initialState } from './reducers';
+import { assertHealth } from './util/api';
 import history from './history';
 
 const App = React.createClass({
@@ -34,6 +35,8 @@ const App = React.createClass({
     if (window.screen.availWidth < 500) {
       this._showTooNarrowScreen();
     }
+
+    this._alertIfBackendDown();
   },
 
   render() {
@@ -127,6 +130,36 @@ const App = React.createClass({
         <p>
           If you still want to view the possibly broken page layout,
           press OK.
+        </p>
+      </div>,
+    });
+  },
+
+  _alertIfBackendDown() {
+    assertHealth()
+      .catch(err => this._showBackendDown());
+  },
+
+  _showBackendDown() {
+    Modal.error({
+      title: 'Unable to connect order system',
+      okText: 'OK',
+      content: <div>
+        <p>
+          This means you can't safely order a poster at this time. You could
+          try to reload the page.
+        </p>
+
+        <p>
+          Our engineers have been notified
+          about the incident and you can be sure we'll fix it as soon as
+          possible.
+        </p>
+
+        <p>
+          We're sorry for the inconvenience. If the problem persists,
+          please contact our support at
+          <a target="_blank" href="mailto:alvarcarto@gmail.com"> alvarcarto@gmail.com</a>.
         </p>
       </div>,
     });
