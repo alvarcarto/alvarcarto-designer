@@ -20,23 +20,54 @@ const AlvarMapDesignPanel = React.createClass({
     return (
       <div className={`AlvarMapDesignPanel ${this.props.className}`}>
         <Accordion selected={0}>
-          <Accordion.Section header="Location &amp; style">
-
+          <Accordion.Section className="AlvarMapDesignPanel__location-section" header="Location &amp; Size">
             <div className="ant-row ant-form-item">
-              <div className="ant-col-5 ant-form-item-label">
+              <div className="ant-col-6 ant-form-item-label">
                 <label>Location</label>
               </div>
-              <div className="ant-col-19">
+              <div className="ant-col-18">
                 <GeoSearch onChange={this._onGeoSearch} />
               </div>
             </div>
 
+            <div className="ant-row ant-form-item">
+              <div className="ant-col-6 ant-form-item-label">
+                <label>Size</label>
+              </div>
+              <div className="ant-col-18">
+                <PosterSizeSelect
+                  orientation={mapItem.orientation}
+                  selected={mapItem.size}
+                  onChange={this._onSizeChange}
+                />
+              </div>
+            </div>
+
+            <div className="ant-row ant-form-item">
+              <div className="ant-col-6 ant-form-item-label">
+                <label>Orientation</label>
+              </div>
+              <div className="ant-col-18">
+                <OrientationSelect selected={mapItem.orientation} onChange={this._onOrientationChange} />
+              </div>
+            </div>
+
+            <div className="AlvarMapDesignPanel__info">
+              <Alert>
+                <Icon type="picture" />
+                <p>Our posters fit to standard frames which you can find anywhere.</p>
+              </Alert>
+            </div>
+
+            {/*
             <div className="AlvarMapDesignPanel__group">
               <MapStyleSelect
                 selected={mapItem.mapStyle}
                 onChange={this._onStyleChange}
               />
             </div>
+            */}
+
           </Accordion.Section>
 
           <Accordion.Section header="Labels">
@@ -47,28 +78,6 @@ const AlvarMapDesignPanel = React.createClass({
                 smallHeader: mapItem.labelSmallHeader,
                 text: mapItem.labelText,
               }} />
-            </div>
-          </Accordion.Section>
-
-          <Accordion.Section header="Orientation &amp; Size">
-            <div className="AlvarMapDesignPanel__group">
-              <h4>Orientation</h4>
-              <OrientationSelect selected={mapItem.orientation} onChange={this._onOrientationChange} />
-            </div>
-
-            <div className="AlvarMapDesignPanel__group">
-              <h4>Size</h4>
-              <PosterSizeSelect
-                orientation={mapItem.orientation}
-                selected={mapItem.size}
-                onChange={this._onSizeChange}
-              />
-            </div>
-            <div className="AlvarMapDesignPanel__info">
-              <Alert>
-                <Icon type="picture" />
-                <p>Our posters fit to standard frames which you can find anywhere.</p>
-              </Alert>
             </div>
           </Accordion.Section>
         </Accordion>

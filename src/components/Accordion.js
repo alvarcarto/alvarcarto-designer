@@ -57,6 +57,9 @@ Accordion.Section = React.createClass({
     if (this.props.highlight) {
       className += ' Accordion__section--highlight'
     }
+    if (this.props.className) {
+      className += ` ${this.props.className}`;
+    }
 
     return (
       <div className={className}>
