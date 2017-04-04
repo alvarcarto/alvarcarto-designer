@@ -58,7 +58,7 @@ const GeoSearch = React.createClass({
       return BPromise.resolve({ options: [] });
     }
 
-    return getPlacePredictions({ input: input, types: ['(cities)'] })
+    return getPlacePredictions({ input: input, types: ['(regions)'] })
       .then(results => ({
         options: _.take(_.map(results, result => ({
           value: String(result.place_id),
