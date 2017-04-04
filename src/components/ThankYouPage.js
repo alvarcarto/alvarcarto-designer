@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React from 'react';
-import { Icon, Steps } from 'antd';
+import { Icon, Steps, Button } from 'antd';
 import { getOrder } from '../util/api';
 import config from '../config';
 import Spinner from './Spinner';
@@ -172,8 +172,24 @@ const ThankYouPage = React.createClass({
         <FinalOrderSummary cart={cart} orderId={this.props.orderId} />
       </div>
 
+      <div className="ThankYouPage__ok-container">
+        <p>
+          Now sit back and relax, your posters will arrive soon. This page can be
+          safely closed.
+        </p>
+
+        <Button type="primary" onClick={this._onBackToStartClick}>
+          Back to start
+        </Button>
+      </div>
+
       <Footer />
     </div>;
+  },
+
+  _onBackToStartClick() {
+    // We are doing a page reload on purpose. It will clear state
+    window.location = '/';
   }
 });
 
