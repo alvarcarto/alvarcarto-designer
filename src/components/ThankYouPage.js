@@ -150,7 +150,7 @@ const ThankYouPage = React.createClass({
           {...firstIcon ? { icon: <Icon type={firstIcon} /> } : {} }
         />
         <Steps.Step title="Print &amp; delivery" description="Waiting to be printed and delivered." icon={<Icon type="clock-circle-o" />} />
-        <Steps.Step title="Delivery arrives" description={`Posters arrive to ${city}.`} icon={<Icon type="heart-o" />} />
+        <Steps.Step title="Delivery arrives" description={`Package arrives to ${city}.`} icon={<Icon type="heart-o" />} />
       </Steps>
 
       <p>
