@@ -19,7 +19,7 @@ const Footer = () => <footer className="Footer">
     <Col span={12}>
       <p>
         Any questions? Send us mail to
-        <a target="_blank" href="mailto:alvarcarto@gmail.com"> alvarcarto@gmail.com</a>.
+        <a target="_blank" href="mailto:help@alvarcarto.com"> help@alvarcarto.com</a>.
       </p>
       <p>We are located at Luova Laboratorio, Saaristonkatu 9, 90100 Oulu, Finland.</p>
     </Col>
