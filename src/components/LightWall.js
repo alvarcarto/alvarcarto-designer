@@ -168,7 +168,7 @@ const LightWall = React.createClass({
     const { globalState } = this.props;
     const mapItem = globalState.cart[globalState.editCartItem];
     this.props.dispatch(setMapView({
-      zoom: mapItem.mapZoom + 0.5,
+      zoom: mapItem.mapZoom + 0.25,
     }));
   },
 
@@ -176,7 +176,7 @@ const LightWall = React.createClass({
     const { globalState } = this.props;
     const mapItem = globalState.cart[globalState.editCartItem];
     this.props.dispatch(setMapView({
-      zoom: mapItem.mapZoom - 0.5,
+      zoom: mapItem.mapZoom - 0.25,
     }));
   },
 

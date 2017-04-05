@@ -89,8 +89,8 @@ const AlvarMap = React.createClass({
     return <LeafletMap
       ref="lMap"
       zoomControl={false}
-      zoomDelta={0.5}
-      zoomSnap={0.5}
+      zoomDelta={0.25}
+      zoomSnap={0.25}
       onMoveEnd={this._onLeafletMoveEnd}
       center={mapItem.mapCenter}
       zoom={mapItem.mapZoom}
