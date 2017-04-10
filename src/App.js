@@ -123,7 +123,7 @@ const App = React.createClass({
 
         <p>
           If you'd definitely want to order a poster via mobile,
-          please let us know via feedback. Yes, you can joke about out our
+          please let us know via feedback. Yes, you can joke about our
           non-mobile-first design.
         </p>
 
