@@ -2,12 +2,13 @@
 
 import Raven from 'raven-js';
 import WebFont from 'webfontloader';
+import config from './config';
 
 // Install Sentry client
 Raven.config('https://2456dddf26df432bae36dd00ea1d2a45@sentry.io/148773').install();
 
 // Stripe
-Stripe.setPublishableKey('pk_test_PKlD56JoqROJNxZa8JoV5ILr');
+Stripe.setPublishableKey(config.REACT_APP_STRIPE_PUBLISHABLE_KEY);
 
 // Hotjar
 (function(h,o,t,j,a,r){
