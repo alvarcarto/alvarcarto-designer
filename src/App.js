@@ -118,8 +118,8 @@ const App = React.createClass({
       okText: 'OK',
       content: <div>
         <p>
-          You can freely test the service, but real orders are not yet accepted.
-          Please come back in a few days.
+          You can freely test the service, but real orders are not processed.
+          Just a few more days!
         </p>
       </div>,
     });
