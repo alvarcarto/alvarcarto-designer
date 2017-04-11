@@ -36,6 +36,8 @@ const App = React.createClass({
       this._showTooNarrowScreen();
     }
 
+    this._showLaunchInfo();
+
     this._alertIfBackendDown();
   },
 
@@ -106,6 +108,19 @@ const App = React.createClass({
         >
           Don't show this again
         </Checkbox>
+      </div>,
+    });
+  },
+
+  _showLaunchInfo() {
+    Modal.warning({
+      title: 'We are launching soon' ,
+      okText: 'OK',
+      content: <div>
+        <p>
+          You can freely test the service, but real orders are not yet accepted.
+          Please come back in a few days.
+        </p>
       </div>,
     });
   },
