@@ -11,7 +11,7 @@ const ShippingMethodForm = React.createClass({
             <Radio.Group value="free">
               <Radio value="free">Worldwide Priority Mail</Radio>
             </Radio.Group>
-            <div className="ShippingMethodForm__radio-info">Delivered in 5-14 days</div>
+            <div className="ShippingMethodForm__radio-info">Delivered in 3-14 days to your nearest post office.</div>
           </Col>
           <Col span={8} className="ShippingMethodForm__right-col">
             <span className="ShippingMethodForm__item-price">0 €</span>
