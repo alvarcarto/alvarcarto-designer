@@ -134,7 +134,13 @@ function reducer(state = initialState, action) {
       });
 
     case actions.POST_ORDER_SUCCESS:
-      return _.extend({}, state, { postingOrder: false, postOrderResponse: action.payload, postOrderError: null });
+      return _.extend({}, state, {
+        postingOrder: false,
+        postOrderResponse: action.payload,
+        postOrderError: null,
+        // Clear checkout forms after successful purchase
+        checkoutFormState: null,
+      });
 
     case actions.POST_ORDER_FAILURE:
       return _.extend({}, state, { postingOrder: false, postOrderResponse: null, postOrderError: action.payload });
