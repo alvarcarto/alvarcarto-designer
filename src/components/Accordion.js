@@ -7,7 +7,7 @@ const Accordion = React.createClass({
 
   getInitialState() {
     return {
-      selected: this.props.selected
+      selected: this.props.initialSelected
     };
   },
 

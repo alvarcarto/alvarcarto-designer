@@ -1,8 +1,10 @@
 import React from 'react';
 import _ from 'lodash';
 import { Radio } from 'antd';
-import { calculateUnitPrice } from 'alvarcarto-price-util';
+import MediaQuery from 'react-responsive';
+import { calculateUnitPrice, getCurrencySymbol } from 'alvarcarto-price-util';
 import Price from './Price';
+import CONST from '../constants';
 
 const SIZES = [
   {
@@ -34,24 +36,53 @@ const SIZES = [
 const PosterSizeSelect = React.createClass({
   render() {
     return (
-      <Radio.Group className="PosterSizeSelect" value={this.props.selected} onChange={this._onChange}>
-        {
-          _.map(SIZES, item => {
-            const price = calculateUnitPrice(item.id);
-
-            return <Radio
-              key={item.id}
-              value={item.id}
-            >
-              {item.label}
-              <span className="PosterSizeSelect__price">
-                <Price value={price.humanValue} currency={price.currency} />
-              </span>
-            </Radio>;
-          })
-        }
-      </Radio.Group>
+      <MediaQuery maxWidth={CONST.SCREEN_SM}>
+          {(matches) => {
+            if (matches) {
+              return this._renderSelect();
+            } else {
+              return this._renderRadio();
+            }
+          }}
+        </MediaQuery>
     );
+  },
+
+  _renderSelect() {
+    return <select className="PosterSizeSelect" value={this.props.selected} onChange={this._onChange}>
+      {
+        _.map(SIZES, (item) => {
+          const price = calculateUnitPrice(item.id);
+
+          return <option
+            value={item.id}
+            key={item.id}
+          >
+            {item.label} {price.humanValue}{getCurrencySymbol(price.currency)}
+          </option>;
+        })
+      }
+    </select>;
+  },
+
+  _renderRadio() {
+    return <Radio.Group className="PosterSizeSelect" value={this.props.selected} onChange={this._onChange}>
+      {
+        _.map(SIZES, item => {
+          const price = calculateUnitPrice(item.id);
+
+          return <Radio
+            key={item.id}
+            value={item.id}
+          >
+            {item.label}
+            <span className="PosterSizeSelect__price">
+              <Price value={price.humanValue} currency={price.currency} />
+            </span>
+          </Radio>;
+        })
+      }
+    </Radio.Group>;
   },
 
   _onChange(e) {

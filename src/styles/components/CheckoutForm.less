@@ -8,7 +8,6 @@
 .CheckoutForm__section::after {
   content: "";
   display: block;
-  width: 88%;
   margin: 50px 0 15px 0;
   border-bottom: 1px solid #eee;
 }
@@ -59,7 +58,6 @@
   background: #f9f9f9;
   border-radius: 5px;
   padding: 15px 20px;
-  width: 87.5%;
   color: #888;
   display: flex;
   flex-direction: row;
@@ -79,7 +77,6 @@
   flex-direction: row;
   justify-content: center;
   margin: 40px 0;
-  width: 87.5%;
 }
 
 .CheckoutForm .CheckoutForm__badge-list li:last-of-type .CheckoutFormBadge {
@@ -110,5 +107,50 @@
 .CheckoutForm .CheckoutForm__complete-button {
   font-size: @font-size-x-small;
   padding: 10px 20px;
-  width: 87.5%;
+  width: 100%;
+}
+
+@media @screen-gt-sm-media {
+  .CheckoutForm .CheckoutForm__complete-button,
+  .CheckoutForm .CheckoutForm__badge-list,
+  .CheckoutForm .CheckoutForm__info,
+  .CheckoutForm__section::after {
+    width: 87.5%;
+  }
+}
+
+@media @screen-lt-sm-media {
+  .CheckoutForm .CheckoutForm__badge-list {
+    justify-content: flex-start;
+  }
+
+  .CheckoutForm .CheckoutForm__badge {
+    margin-right: 30px;
+  }
+
+  .CheckoutForm .CheckoutForm__badge > .anticon {
+    font-size: 2.6rem;
+  }
+
+  .CheckoutForm .CheckoutForm__badge > h4 {
+    font-size: 0.6rem;
+  }
+}
+
+@media @screen-lt-xs-media {
+  .CheckoutForm .CheckoutForm__badge-list {
+    justify-content: space-between;
+  }
+
+  .CheckoutForm .CheckoutForm__badge {
+    margin-right: 0;
+  }
+
+  .CheckoutForm .CheckoutForm__badge > .anticon {
+    font-size: 2.4rem;
+  }
+
+  .CheckoutForm .CheckoutForm__badge > h4 {
+    font-size: 0.5rem;
+  }
 }

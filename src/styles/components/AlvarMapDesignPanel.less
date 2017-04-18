@@ -1,5 +1,20 @@
 .AlvarMapDesignPanel {
   width: 100%;
+  height: 100%;
+}
+
+.AlvarMapDesignPanel > * {
+  width: 100%;
+  height: 100%;
+  /* Needed for child TabView to fill the whole area
+   * http://stackoverflow.com/questions/31421364/nested-flexbox-100-height-not-working-in-safari
+   */
+  position: relative;
+}
+
+.AlvarMapDesignPanel__wide {
+  border-top: 3px solid @primary-color;
+  background: white;
 }
 
 .AlvarMapDesignPanel__location-section .ant-form-item:first-of-type {
@@ -57,3 +72,30 @@
   float: left;
   color: #888;
 }
+
+@media @screen-lt-sm-media {
+  .AlvarMapDesignPanel__info {
+    display: none;
+    visibility: hidden;
+  }
+
+  .AlvarMapDesignPanel .OrientationSelect,
+  .AlvarMapDesignPanel .PosterSizeSelect,
+  .AlvarMapDesignPanel .GeoSearch {
+    margin-top: 0;
+  }
+
+  .AlvarMapDesignPanel__orientation-select {
+    margin-top: 16px;
+  }
+
+  .AlvarMapDesignPanel__orientation-select .ant-form-item-label {
+    margin-top: 8px;
+  }
+
+  .AlvarMapDesignPanel__orientation-select .OrientationSelect {
+    position: relative;
+    left: -3px
+  }
+}
+

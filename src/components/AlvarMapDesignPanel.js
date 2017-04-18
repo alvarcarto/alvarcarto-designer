@@ -2,15 +2,21 @@ import React from 'react';
 import _ from 'lodash';
 import { setMapView, setMapStyle, setPosterLayout, setMapLabels } from '../actions';
 import { coordToPrettyText } from '../util';
-import { Icon } from 'antd';
+import { Icon, Row, Col } from 'antd';
 import Accordion from './Accordion';
+import TabView from './TabView';
+import MediaQuery from 'react-responsive';
 import geodist from 'geodist';
 import GeoSearch from './GeoSearch';
 import PosterSizeSelect from './PosterSizeSelect';
 import OrientationSelect from './OrientationSelect';
 import PosterLabelInputs from './PosterLabelInputs';
 import MapStyleSelect from './MapStyleSelect';
+import CONST from '../constants';
 import Alert from './Alert';
+
+const formColLabel = { span: 5, md: { span: 6 }, lg: { span: 6 } };
+const formColInput = { span: 19, md: { span: 18 }, lg: { span: 18 } };
 
 const AlvarMapDesignPanel = React.createClass({
   render() {
@@ -19,68 +25,15 @@ const AlvarMapDesignPanel = React.createClass({
 
     return (
       <div className={`AlvarMapDesignPanel ${this.props.className}`}>
-        <Accordion selected={0}>
-          <Accordion.Section className="AlvarMapDesignPanel__location-section" header="Location &amp; Size">
-            <div className="ant-row ant-form-item">
-              <div className="ant-col-6 ant-form-item-label">
-                <label>Location</label>
-              </div>
-              <div className="ant-col-18">
-                <GeoSearch onChange={this._onGeoSearch} />
-              </div>
-            </div>
-
-            <div className="ant-row ant-form-item">
-              <div className="ant-col-6 ant-form-item-label">
-                <label>Size</label>
-              </div>
-              <div className="ant-col-18">
-                <PosterSizeSelect
-                  orientation={mapItem.orientation}
-                  selected={mapItem.size}
-                  onChange={this._onSizeChange}
-                />
-              </div>
-            </div>
-
-            <div className="ant-row ant-form-item">
-              <div className="ant-col-6 ant-form-item-label">
-                <label>Orientation</label>
-              </div>
-              <div className="ant-col-18">
-                <OrientationSelect selected={mapItem.orientation} onChange={this._onOrientationChange} />
-              </div>
-            </div>
-
-            <div className="AlvarMapDesignPanel__info">
-              <Alert>
-                <Icon type="picture" />
-                <p>Our posters fit to standard frames which you can find anywhere.</p>
-              </Alert>
-            </div>
-
-            {/*
-            <div className="AlvarMapDesignPanel__group">
-              <MapStyleSelect
-                selected={mapItem.mapStyle}
-                onChange={this._onStyleChange}
-              />
-            </div>
-            */}
-
-          </Accordion.Section>
-
-          <Accordion.Section header="Labels">
-            <div className="AlvarMapDesignPanel__group">
-              <PosterLabelInputs dispatch={this.props.dispatch} labels={{
-                enabled: mapItem.labelsEnabled,
-                header: mapItem.labelHeader,
-                smallHeader: mapItem.labelSmallHeader,
-                text: mapItem.labelText,
-              }} />
-            </div>
-          </Accordion.Section>
-        </Accordion>
+        <MediaQuery maxWidth={CONST.SCREEN_SM}>
+          {(matches) => {
+            if (matches) {
+              return this._renderNarrowView(mapItem);
+            } else {
+              return this._renderWideView(mapItem);
+            }
+          }}
+        </MediaQuery>
 
         {/*
         <div className="AlvarMapDesignPanel__recommend">
@@ -90,6 +43,95 @@ const AlvarMapDesignPanel = React.createClass({
         */}
       </div>
     );
+  },
+
+  _renderNarrowView(mapItem) {
+    return <div className="AlvarMapDesignPanel__narrow">
+      <div className="AlvarMapDesignPanel__narrow-spacer"></div>
+      <TabView initialSelected={0}>
+        <TabView.Panel className="AlvarMapDesignPanel__location-section" header="Basics">
+          {this._renderLocationAndSizePanel(mapItem)}
+        </TabView.Panel>
+        <TabView.Panel header="Labels">
+          {this._renderLabelsPanel(mapItem)}
+        </TabView.Panel>
+      </TabView>
+    </div>;
+  },
+
+  _renderWideView(mapItem) {
+    return <div className="AlvarMapDesignPanel__wide">
+      <Accordion initialSelected={0}>
+        <Accordion.Section className="AlvarMapDesignPanel__location-section" header="Location &amp; Size">
+          {this._renderLocationAndSizePanel(mapItem)}
+        </Accordion.Section>
+        <Accordion.Section header="Labels">
+          {this._renderLabelsPanel(mapItem)}
+        </Accordion.Section>
+      </Accordion>
+    </div>;
+  },
+
+  _renderLocationAndSizePanel(mapItem) {
+    return <div className="AlvarMapDesignPanel__group">
+      <Row className="ant-form-item">
+        <Col {...formColLabel} className="ant-form-item-label">
+          <label>Location</label>
+        </Col>
+        <Col {...formColInput}>
+          <GeoSearch onChange={this._onGeoSearch} />
+        </Col>
+      </Row>
+
+      <Row className="ant-form-item">
+        <Col {...formColLabel} className="ant-form-item-label">
+          <label>Size</label>
+        </Col>
+        <Col {...formColInput}>
+          <PosterSizeSelect
+            orientation={mapItem.orientation}
+            selected={mapItem.size}
+            onChange={this._onSizeChange}
+          />
+        </Col>
+      </Row>
+
+      <Row className="ant-form-item AlvarMapDesignPanel__orientation-select">
+        <Col {...formColLabel} className="ant-form-item-label">
+          <label>Layout</label>
+        </Col>
+        <Col {...formColInput}>
+          <OrientationSelect selected={mapItem.orientation} onChange={this._onOrientationChange} />
+        </Col>
+      </Row>
+
+      <div className="AlvarMapDesignPanel__info">
+        <Alert>
+          <Icon type="picture" />
+          <p>Our posters fit to standard frames which you can find anywhere.</p>
+        </Alert>
+      </div>
+
+      {/*
+      <div className="AlvarMapDesignPanel__group">
+        <MapStyleSelect
+          selected={mapItem.mapStyle}
+          onChange={this._onStyleChange}
+        />
+      </div>
+      */}
+    </div>;
+  },
+
+  _renderLabelsPanel(mapItem) {
+    return <div className="AlvarMapDesignPanel__group">
+      <PosterLabelInputs dispatch={this.props.dispatch} labels={{
+        enabled: mapItem.labelsEnabled,
+        header: mapItem.labelHeader,
+        smallHeader: mapItem.labelSmallHeader,
+        text: mapItem.labelText,
+      }} />
+    </div>;
   },
 
   _onGeoSearch(result) {

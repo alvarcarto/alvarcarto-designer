@@ -57,7 +57,7 @@
   font-size: 0.8rem;
   font-weight: 400;
   padding: 10px 20px;
-  top: -80px;
+  top: -79px;
   left: 10px;
   transform: translate3d(0, 0, 0);
   transition: transform 0.3s ease, color 0.3s ease;
@@ -70,4 +70,10 @@
 .CheckoutPage__back-link:hover {
   transform: translate3d(-8px, 0, 0);
   padding-right: 40px;
+}
+
+@media @screen-lt-sm-media {
+  .CheckoutPage__row {
+    flex-direction: column;
+  }
 }

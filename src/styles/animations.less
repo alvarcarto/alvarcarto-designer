@@ -71,3 +71,22 @@
   -webkit-animation-name: shake;
   animation-name: shake;
 }
+
+.bounce {
+  animation-duration: 2.3s;
+  animation-fill-mode: both;
+  animation-name: bounce;
+  animation-iteration-count: infinite;
+}
+
+@keyframes bounce {
+  0%, 40%, 55%, 65%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+  60% {
+    transform: translateY(-2px);
+  }
+}

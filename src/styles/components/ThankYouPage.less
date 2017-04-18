@@ -1,7 +1,7 @@
 .ThankYouPage__content {
   max-width: 800px;
   margin: 0 auto;
-  padding: 40px 10px 40px 10px;
+  padding: 40px 20px 40px 20px;
   position: relative;
 }
 
@@ -20,7 +20,7 @@
 }
 
 .ThankYouPage .FinalOrderSummary {
-  margin-bottom: 160px;
+  margin-bottom: 100px;
 }
 
 .ThankYouPage__hero-image {
@@ -30,7 +30,7 @@
 .ThankYouPage__logo {
   position: absolute;
   top: 53px;
-  right: 0;
+  right: 10px;
 }
 
 .ThankYouPage__logo img {
@@ -52,4 +52,10 @@
 .FinalOrderSummary {
   margin-top: 40px;
   max-width: 400px;
+}
+
+@media @screen-lt-sm-media {
+  .ThankYouPage .ant-steps {
+    margin: 25px 0;
+  }
 }

@@ -1,8 +1,10 @@
 import _ from 'lodash';
 import React from 'react';
+import MediaQuery from 'react-responsive';
 import { Icon, Steps, Button } from 'antd';
 import { getOrder } from '../util/api';
 import config from '../config';
+import CONST from '../constants';
 import Spinner from './Spinner';
 import FinalOrderSummary from './FinalOrderSummary';
 import Footer from './Footer';
@@ -143,15 +145,19 @@ const ThankYouPage = React.createClass({
     const { stepIndex, firstText, firstIcon } = this.state.steps;
 
     return <div>
-      <Steps current={stepIndex}>
-        <Steps.Step
-          title="Design &amp; order"
-          description={firstText}
-          {...firstIcon ? { icon: <Icon type={firstIcon} /> } : {} }
-        />
-        <Steps.Step title="Print &amp; delivery" description="Waiting to be printed and delivered." icon={<Icon type="clock-circle-o" />} />
-        <Steps.Step title="Delivery arrives" description={`Package arrives to ${city}.`} icon={<Icon type="heart-o" />} />
-      </Steps>
+      <MediaQuery maxWidth={CONST.SCREEN_SM}>
+        {(matches) =>
+          <Steps direction={matches ? 'vertical' : 'horizontal'} current={stepIndex}>
+            <Steps.Step
+              title="Design &amp; order"
+              description={firstText}
+              {...firstIcon ? { icon: <Icon type={firstIcon} /> } : {} }
+            />
+            <Steps.Step title="Print &amp; delivery" description="Waiting to be printed and delivered." icon={<Icon type="clock-circle-o" />} />
+            <Steps.Step title="Delivery arrives" description={`Package arrives to ${city}.`} icon={<Icon type="heart-o" />} />
+          </Steps>
+        }
+      </MediaQuery>
 
       <p>
         Your unique posters will be printed and shipped to {city} within a few days.

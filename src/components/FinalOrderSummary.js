@@ -12,7 +12,7 @@ const FinalOrderSummary = React.createClass({
       <div className="FinalOrderSummary">
         <div className="FinalOrderSummary__header-row">
           <h2 className="FinalOrderSummary__header">Order summary</h2>
-          <h2 className="FinalOrderSummary__header">ID: #{this.props.orderId}</h2>
+          <h2 className="FinalOrderSummary__header">ID: <span className="no-wrap">#{this.props.orderId}</span></h2>
         </div>
 
         <ul className="FinalOrderSummary__cart">

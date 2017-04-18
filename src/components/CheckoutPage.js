@@ -1,11 +1,13 @@
 import React from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { connect } from 'react-redux';
+import MediaQuery from 'react-responsive';
 import history from '../history';
 import _ from 'lodash';
 import { Icon, Affix, Modal } from 'antd';
 import { postOrder, checkoutFormStateChange } from '../actions';
 import config from '../config';
+import CONST from '../constants';
 import CheckoutForm from './CheckoutForm';
 import Footer from './Footer';
 import CheckoutSummary from './CheckoutSummary';
@@ -51,9 +53,17 @@ const CheckoutPage = React.createClass({
         </div>
 
         <div className="CheckoutPage__row">
-          <Affix className="CheckoutPage__summary-container" offsetTop={10}>
-            <CheckoutSummary globalState={this.props.globalState} />
-          </Affix>
+          <MediaQuery maxWidth={CONST.SCREEN_SM}>
+            {(matches) => {
+              if (matches) {
+                return <CheckoutSummary globalState={this.props.globalState} />;
+              } else {
+                return <Affix className="CheckoutPage__summary-container" offsetTop={10}>
+                  <CheckoutSummary globalState={this.props.globalState} />
+                </Affix>;
+              }
+            }}
+          </MediaQuery>
           <CheckoutForm
             initialState={this.props.globalState.checkoutFormState}
             onChange={this.state.debouncedOnFormChange}

@@ -18,6 +18,7 @@
 }
 
 .LightWall__map-container {
+  z-index: 5;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -101,6 +102,7 @@
 }
 
 .LightWall__credits {
+  height: 15px;
   font-size: 0.6rem;
   position: absolute;
   bottom: 5px;
@@ -172,5 +174,18 @@
   width: 20px;
   overflow: visible;
   white-space: nowrap;
+}
+
+@media @screen-lt-sm-media {
+  .LightWall__credits, .LightWall__credits a {
+    color: #aaa;
+  }
+
+  .LightWall__credits {
+    bottom: 3px;
+    transform-origin: 0 0;
+    transform: rotate(-90deg);
+    left: 5px;
+  }
 }
 

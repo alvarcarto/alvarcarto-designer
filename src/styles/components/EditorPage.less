@@ -2,18 +2,44 @@
   display: flex;
   flex-direction: row;
   height: 100%;
+  overflow-y: hidden;
 }
 
 .EditorPage > * {
   height: 100%;
 }
 
-.EditorPage .SidePanel {
-  flex: 1;
-  min-width: 380px;
-  max-width: 600px;
-}
-
 .EditorPage .LightWall {
   flex: 2;
+}
+
+@media @screen-lt-sm-media {
+  .EditorPage {
+    flex-direction: column-reverse;
+  }
+
+  .EditorPage .SidePanel {
+    height: (@sidepanel-upper-narrow-height + @sidepanel-lower-narrow-height);
+  }
+
+  /*
+  .EditorPage {
+    position: relative;
+  }
+
+  .EditorPage > * {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  */
+}
+
+@media @screen-gt-sm-media {
+  .EditorPage .SidePanel {
+    flex: 1;
+    min-width: 360px;
+  }
 }

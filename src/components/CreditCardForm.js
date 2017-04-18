@@ -80,8 +80,8 @@ const CreditCardForm = React.createClass({
 
   render() {
     const formItemLayout = {
-      labelCol: { span: 7 },
-      wrapperCol: { span: 14 },
+      labelCol: { span: 24, sm: { span: 7 }, md: { span: 7 }, lg: { span: 7 } },
+      wrapperCol: { span: 24, sm: { span: 14 }, md: { span: 14 }, lg: { span: 14 } },
     };
 
     const yearNow = new Date().getFullYear();
@@ -177,8 +177,8 @@ const CreditCardForm = React.createClass({
         </Form.Item>
 
         <Row>
-          <Col span={formItemLayout.labelCol.span}></Col>
-          <Col span={formItemLayout.wrapperCol.span}>
+          <Col {...formItemLayout.labelCol}></Col>
+          <Col {...formItemLayout.wrapperCol}>
             <ul className="CreditCardForm__logos">
               <li className={cardType === 'Visa' ? 'CreditCardForm__logo--highlight' : ''}>
                 <img
