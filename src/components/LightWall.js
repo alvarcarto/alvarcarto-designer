@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import autoprefix from 'auto-prefixer';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import AlvarMap from './AlvarMap';
@@ -7,6 +8,10 @@ import { Icon, Switch } from 'antd';
 import config from '../config';
 import { setMapView } from '../actions';
 import { posterSizeToPhysicalDimensions, posterSizeToPixels, createPosterImageUrl } from '../util';
+
+// Padding which should be left unfilled when scaling poster to light wall
+const POSTER_PADDING_WIDTH = 45;
+const POSTER_PADDING_HEIGHT = 45;
 
 const LightWall = React.createClass({
   getInitialState() {
@@ -57,14 +62,23 @@ const LightWall = React.createClass({
       mapItem.size,
       mapItem.orientation
     );
-    // Zoom wires but don't not as much as canvas to avoid the clips
-    // being too small
-    const wireZoom = Math.max(Math.min(1, this.state.zoom * 1.2), 0.5);
-    const scalerZoom = Math.max(this.state.zoom, 0.3);
+    const scalerZoom = Math.max(this.state.zoom, 0.15);
+
+    const dimensions = posterSizeToPixels(mapItem.size, mapItem.orientation);
+    const mapContainerCss = {
+      transform: `translate(-50%, -50%) translateZ(0)`,
+      // http://stackoverflow.com/questions/10858523/css-transform-with-element-resizing
+      width: dimensions.width * scalerZoom,
+      height: dimensions.height * scalerZoom,
+    };
+
+    const scalerCss = {
+      transform: `scale(${scalerZoom}) translateZ(0)`,
+    };
 
     return (
       <div ref="container" className="LightWall noselect">
-      <div className="LightWall__map-container" style={{ transform: `translate(-50%, -50%) scale(${scalerZoom})` }}>
+        <div className="LightWall__map-container" style={autoprefix(mapContainerCss)}>
           <div className="LightWall__wire-container">
             <img className="LightWall__clip1" src="clip.png" alt="" />
             <img className="LightWall__clip2" src="clip.png" alt="" />
@@ -72,7 +86,7 @@ const LightWall = React.createClass({
             <div className="LightWall__wire2"></div>
           </div>
 
-          <div className="LightWall__scaler">
+          <div className="LightWall__scaler" style={autoprefix(scalerCss)}>
             <AlvarMap />
 
             {
@@ -147,21 +161,18 @@ const LightWall = React.createClass({
     }
 
     const dimensions = posterSizeToPixels(mapItem.size, mapItem.orientation);
-    const maxPosterSide = Math.max(dimensions.width, dimensions.height);
+    const containerWidth = this.state.container.offsetWidth - (POSTER_PADDING_WIDTH * 2);
+    const containerHeight = this.state.container.offsetHeight - (POSTER_PADDING_HEIGHT * 2);
 
-    const containerWidth = this.state.container.offsetWidth;
-    const containerHeight = this.state.container.offsetHeight;
-    const minContainerSide = Math.min(containerWidth, containerHeight) - 150;
+    const fitRatio = calculateAspectRatioFit(
+      dimensions.width,
+      dimensions.height,
+      containerWidth,
+      containerHeight
+    );
 
-    if (minContainerSide > maxPosterSide) {
-      return 1;
-    }
-
-    if (dimensions.width > dimensions.height) {
-      return minContainerSide / dimensions.width;
-    } else {
-      return minContainerSide / dimensions.height;
-    }
+    // Limit zoom always to maximum 1.0
+    return Math.min(1, fitRatio);
   },
 
   _onZoomInClick() {
@@ -186,5 +197,19 @@ const LightWall = React.createClass({
     });
   }
 });
+
+/**
+ * Conserve aspect ratio of the orignal region. Useful when shrinking/enlarging
+ * images to fit into a certain area.
+ *
+ * @param {Number} srcWidth Source area width
+ * @param {Number} srcHeight Source area height
+ * @param {Number} maxWidth Fittable area maximum available width
+ * @param {Number} maxHeight Fittable area maximum available height
+ * @return {Number} ratio to multiple src dimensions to get perfect fit
+ */
+function calculateAspectRatioFit(srcWidth, srcHeight, maxWidth, maxHeight) {
+  return Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
+}
 
 export default connect(state => ({ globalState: state }))(LightWall);
