@@ -49,20 +49,25 @@ const PosterSizeSelect = React.createClass({
   },
 
   _renderSelect() {
-    return <select className="PosterSizeSelect" value={this.props.selected} onChange={this._onChange}>
-      {
-        _.map(SIZES, (item) => {
-          const price = calculateUnitPrice(item.id);
+    return <div className="PosterSizeSelect pure-css-select-style theme-default">
+      <select
+        value={this.props.selected}
+        onChange={this._onChange}
+      >
+        {
+          _.map(SIZES, (item) => {
+            const price = calculateUnitPrice(item.id);
 
-          return <option
-            value={item.id}
-            key={item.id}
-          >
-            {item.label} {price.humanValue}{getCurrencySymbol(price.currency)}
-          </option>;
-        })
-      }
-    </select>;
+            return <option
+              value={item.id}
+              key={item.id}
+            >
+              {item.label} ({price.humanValue}{getCurrencySymbol(price.currency)})
+            </option>;
+          })
+        }
+      </select>
+    </div>;
   },
 
   _renderRadio() {
