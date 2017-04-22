@@ -1,0 +1,50 @@
+.IconButton {
+  display: flex;
+  align-items: center;
+  color: @primary-color;
+  cursor: pointer;
+  line-height: 21px;
+}
+
+.IconButton__text {
+  margin-left: 5px;
+}
+
+.IconButton svg {
+  display: inline-block;
+  height: 21px;
+}
+
+.IconButton svg g {
+  stroke: @primary-color;
+}
+
+.IconButton svg circle {
+  transition: fill 0.15s ease;
+  fill: white;
+}
+
+.IconButton:hover svg circle {
+  fill: @primary-color;
+}
+
+.IconButton svg path {
+  transition: stroke 0.15s ease;
+  stroke: @primary-color;
+}
+
+.IconButton:hover svg path {
+  stroke: white;
+}
+
+.IconButton.IconButton--disabled {
+  cursor: initial;
+  color: #ccc;
+}
+.IconButton.IconButton--disabled svg circle, .IconButton.IconButton--disabled svg path {
+  fill: white;
+  stroke: #ccc;
+}
+.IconButton.IconButton--disabled:hover svg path {
+  stroke: #ccc;
+}

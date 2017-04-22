@@ -4,6 +4,7 @@ import { Icon, Tooltip, Popconfirm } from 'antd';
 import { getStyle } from '../util';
 import { calculateItemPrice } from 'alvarcarto-price-util';
 import { createPosterThumbnailUrl } from '../util';
+import IconButton from './IconButton';
 import CONST from '../constants';
 
 const CartItem = React.createClass({
@@ -54,13 +55,14 @@ const CartItem = React.createClass({
           <h4 className="CartItem__type">{styleName}, {item.size}</h4>
           <h4 className="CartItem__price">{price.label}</h4>
           <div className="CartItem__quantity">
-            <Icon
-              className={isDecreaseDisabled ? 'CartItem__quantity-action--disabled noselect' : 'noselect'}
+            <IconButton
+              disabled={isDecreaseDisabled}
+              className="noselect"
               onClick={isDecreaseDisabled ? null : this._onDecreaseQuantity}
               type="minus"
             />
             <span className="CartItem__quantity-number">{item.quantity}</span>
-            <Icon className="noselect" onClick={this._onIncreaseQuantity} type="plus" />
+            <IconButton className="noselect" onClick={this._onIncreaseQuantity} type="plus" />
           </div>
           <ul className="CartItem__actions noselect">
             <li>

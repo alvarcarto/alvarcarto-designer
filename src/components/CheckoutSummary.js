@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Icon } from 'antd';
 import { removeCartItem, editCartItem, addCartItemQuantity, addCartItem } from '../actions';
 import { calculateCartPrice } from 'alvarcarto-price-util';
 import _ from 'lodash';
 import CartItem from './CartItem';
+import IconButton from './IconButton';
 import history from '../history';
 
 const CheckoutSummary = React.createClass({
@@ -34,9 +34,7 @@ const CheckoutSummary = React.createClass({
             )
           }
           <li className="CheckoutSummary__add noselect">
-            <a onClick={this._onAddPoster}>
-              <Icon type="plus" /> Add poster
-            </a>
+            <IconButton onClick={this._onAddPoster} type="plus">Add poster</IconButton>
           </li>
         </ul>
 
