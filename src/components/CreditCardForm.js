@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom';
 import _ from 'lodash';
 import Payment from 'payment';
 import { Form, Input, Select, Row, Col, Icon } from 'antd';
+import ResponsiveSelect from './ResponsiveSelect';
 import config from '../config';
 
 const ACCEPTED_CARD_TYPES = [
@@ -115,7 +116,7 @@ const CreditCardForm = React.createClass({
             onBlur={this._onInputBlur}
             onChange={this._onInputChange}
             placeholder="•••• •••• •••• ••••"
-            pattern="[0-9 ]*"
+            pattern="\d*"
             autoComplete="cc-number"
             className="CreditCardForm__number"
           />
@@ -128,37 +129,31 @@ const CreditCardForm = React.createClass({
           label="Expiry date"
           className="CreditCardForm__expiry-date"
         >
-          <Select
+          <ResponsiveSelect
             size="large"
             {...initialExpMonth ? { defaultValue: String(initialExpMonth) } : {}}
             placeholder="MM"
             className="CreditCardForm__expiry-month"
             onChange={this._onMonthChange}
-          >
-            {
-              _.map(_.range(1, 13), (month) =>
-                <Select.Option key={month} value={String(month)}>
-                  {_.padStart(month, 2, '0')}
-                </Select.Option>
-              )
-            }
-          </Select>
+            options={_.map(_.range(1, 13), (month) => ({
+              key: month,
+              value: String(month),
+              label: _.padStart(month, 2, '0'),
+            }))}
+          />
           <span className="CreditCardForm__expiry-separator">/</span>
-          <Select
+          <ResponsiveSelect
             size="large"
             {...initialExpYear ? { defaultValue: String(initialExpYear) } : {} }
             placeholder="YYYY"
             className="CreditCardForm__expiry-year"
             onChange={this._onYearChange}
-          >
-            {
-              _.map(_.range(yearNow, yearNow + 16), (year) =>
-                <Select.Option key={year} value={String(year)}>
-                  {year}
-                </Select.Option>
-              )
-            }
-          </Select>
+            options={_.map(_.range(yearNow, yearNow + 16), (year) => ({
+              key: year,
+              value: String(year),
+              label: year,
+            }))}
+          />
         </Form.Item>
 
         <Form.Item {...formErrors['cc-cvc']} {...formItemLayout} required

@@ -2,6 +2,7 @@ import _ from 'lodash';
 import React from 'react';
 import { Select } from 'antd';
 import countries from 'i18n-iso-countries';
+import ResponsiveSelect from './ResponsiveSelect';
 
 const sortedCountries = _.sortBy(_.map(countries.getNames('en'), (name, code) => ({
   name,
@@ -13,7 +14,7 @@ const selectFilterFunc = (input, option) =>
 const CountrySelect = React.createClass({
   render() {
     return (
-      <Select
+      <ResponsiveSelect
         {...this.props}
         size="large"
         className="CountrySelect__search"
@@ -21,13 +22,13 @@ const CountrySelect = React.createClass({
         placeholder="Enter a country"
         optionFilterProp="children"
         filterOption={selectFilterFunc}
-      >
-        {
-          _.map(sortedCountries, (item) =>
-            <Select.Option name={item.name} key={item.code} value={item.code}>{item.name}</Select.Option>
-          )
-        }
-      </Select>
+        options={_.map(sortedCountries, (item) => ({
+          key: item.code,
+          name: item.name,
+          value: item.code,
+          label: item.name,
+        }))}
+      />
     );
   }
 });
