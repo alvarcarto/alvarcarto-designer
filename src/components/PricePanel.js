@@ -14,16 +14,18 @@ const PricePanel = React.createClass({
 
     return (
       <div className="PricePanel">
-        <h5 className="PricePanel__price">
-          <Odometer value={price.humanValue} />
-          <span className="PricePanel__price-currency">{getCurrencySymbol(price.currency)}</span>
-          <span className="PricePanel__price-shipping">+ Free shipping</span>
-        </h5>
+        <div className="PricePanel__container">
+          <h5 className="PricePanel__price">
+            <Odometer value={price.humanValue} />
+            <span className="PricePanel__price-currency">{getCurrencySymbol(price.currency)}</span>
+            <span className="PricePanel__price-shipping">+ Free shipping</span>
+          </h5>
 
-        <a onClick={this._onCheckoutClick} className="PricePanel__checkout-link">
-          Checkout
-          <Icon type="right" />
-        </a>
+          <a onClick={this._onCheckoutClick} className="PricePanel__checkout-link">
+            Checkout
+            <Icon type="right" />
+          </a>
+        </div>
 
         {
           itemCount > 1
