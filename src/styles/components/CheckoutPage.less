@@ -80,4 +80,9 @@
   .CheckoutPage__row {
     flex-direction: column;
   }
+
+  .CheckoutPage .CheckoutForm, .CheckoutPage .CheckoutPage__summary-container {
+    /* Fix problem with IE11 layout */
+    flex: auto;
+  }
 }
