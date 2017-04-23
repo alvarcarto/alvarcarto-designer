@@ -17,8 +17,7 @@ import history from './history';
 const App = React.createClass({
   componentDidMount() {
     const shouldShow = shouldShowUnsupported();
-    const hasFlexbox = Modernizr.flexbox || Modernizr.flexboxtweener;
-    if (shouldShow && !hasFlexbox) {
+    if (shouldShow && !Modernizr.flexbox) {
       this._showUnsupportedWarning();
     }
 
