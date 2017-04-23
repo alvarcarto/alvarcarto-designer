@@ -79,6 +79,11 @@ const LightWall = React.createClass({
       // transform relative to that point
       transformOrigin: '10px 90%',
     };
+    const padding = 0.032 * scalerZoom * Math.max(dimensions.width, dimensions.height);
+    const zoomContainerCss = {
+      top: `${padding}px`,
+      left: `${padding}px`,
+    };
     return (
       <div ref="container" className="LightWall noselect">
         <div className="LightWall__map-container" style={autoprefix(mapContainerCss)}>
@@ -103,7 +108,7 @@ const LightWall = React.createClass({
             }
           </div>
 
-          <div className="LightWall__zoom-container">
+          <div className="LightWall__zoom-container" style={zoomContainerCss}>
             <div className="leaflet-control-zoom leaflet-bar leaflet-control">
               <a className="leaflet-control-zoom-in" href="#" title="Zoom in" role="button" aria-label="Zoom in" onClick={this._onZoomInClick}>+</a>
               <a className="leaflet-control-zoom-out" href="#" title="Zoom out" role="button" aria-label="Zoom out" onClick={this._onZoomOutClick}>-</a>
