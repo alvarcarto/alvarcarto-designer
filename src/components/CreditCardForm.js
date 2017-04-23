@@ -4,7 +4,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import _ from 'lodash';
 import Payment from 'payment';
-import { Form, Input, Select, Row, Col, Icon } from 'antd';
+import { Form, Input, Row, Col, Icon } from 'antd';
 import ResponsiveSelect from './ResponsiveSelect';
 import config from '../config';
 

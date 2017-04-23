@@ -1,6 +1,5 @@
 import _ from 'lodash';
 import React from 'react';
-import { Select } from 'antd';
 import countries from 'i18n-iso-countries';
 import ResponsiveSelect from './ResponsiveSelect';
 

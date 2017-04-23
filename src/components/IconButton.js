@@ -1,24 +1,4 @@
 import React from 'react';
-import { Icon } from 'antd';
-import config from '../config';
-
-const IconButton = (props) => {
-  let className = 'IconButton';
-  if (props.disabled) {
-    className += ' IconButton--disabled';
-  }
-  if (props.className) {
-    className += ` ${props.className}`;
-  }
-
-  return <div onClick={props.onClick} className={className}>
-    {icons[props.type]}{
-      props.children
-        ? <span className="IconButton__text">{props.children}</span>
-        : null
-    }
-  </div>;
-}
 
 const icons = {
   plus: <svg width="21px" height="21px" viewBox="0 0 21 21" version="1.1">
@@ -39,5 +19,23 @@ const icons = {
     </g>
   </svg>,
 };
+
+const IconButton = (props) => {
+  let className = 'IconButton';
+  if (props.disabled) {
+    className += ' IconButton--disabled';
+  }
+  if (props.className) {
+    className += ` ${props.className}`;
+  }
+
+  return <div onClick={props.onClick} className={className}>
+    {icons[props.type]}{
+      props.children
+        ? <span className="IconButton__text">{props.children}</span>
+        : null
+    }
+  </div>;
+}
 
 export default IconButton;
