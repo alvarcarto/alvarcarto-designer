@@ -4,10 +4,10 @@ import { coordToPrettyText, getQueryParameterByName } from '../util';
 import dummyCheckoutState from '../util/dummy-checkout-state';
 import history from '../history';
 
-const PARIS_CENTER = { lat: 48.85658345, lng: 2.35244750 };
-const PARIS_BOUNDS = {
-  southWest: { lat: 48.6029494957, lng: 2.064056394 },
-  northEast: { lat: 49.10893881, lng: 2.640838623 },
+const BARCELONA_CENTER = { lat: 41.382486097756924, lng: 2.166636589082849 };
+const BARCELONA_BOUNDS = {
+  southWest: { lat: 41.19935000018967, lng: 1.962713939614754 },
+  northEast: { lat: 41.56365477513209, lng: 2.3705567107488723 },
 };
 
 const DEBUG = getQueryParameterByName('debug') === 'true';
@@ -18,18 +18,18 @@ const initialState = {
   cart: [
     {
       quantity: 1,
-      mapCenter: PARIS_CENTER,
-      mapBounds: PARIS_BOUNDS,
-      mapZoom: 10,
+      mapCenter: BARCELONA_CENTER,
+      mapBounds: BARCELONA_BOUNDS,
+      mapZoom: 10.5,
       mapStyle: 'bw',
       mapPitch: 0,
       mapBearing: 0,
       orientation: 'portrait',
-      size: '30x40cm',
+      size: '50x70cm',
       labelsEnabled: true,
-      labelHeader: 'Romantic Paris',
-      labelSmallHeader: 'France',
-      labelText: coordToPrettyText(PARIS_CENTER),
+      labelHeader: 'Barcelona',
+      labelSmallHeader: 'Spain / Catalonia',
+      labelText: coordToPrettyText(BARCELONA_CENTER),
     }
   ],
   checkoutFormState: DEBUG ? dummyCheckoutState : null,
