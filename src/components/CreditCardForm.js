@@ -116,7 +116,7 @@ const CreditCardForm = React.createClass({
             onBlur={this._onInputBlur}
             onChange={this._onInputChange}
             placeholder="•••• •••• •••• ••••"
-            pattern="\d*"
+            pattern="[0-9 ]*"
             autoComplete="cc-number"
             className="CreditCardForm__number"
           />
