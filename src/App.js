@@ -85,7 +85,7 @@ const App = React.createClass({
       content: <div>
         <p>
           Unfortunately this page doesn't work well with your browser.
-          For best user experience, you should use IE11+, Chrome, Firefox or
+          For best user experience, you should use Chrome, Firefox, Safari, IE11+, or
           Opera browser.
         </p>
 
