@@ -48,6 +48,7 @@ const EmailForm = React.createClass({
         >
           <Input
             name="email"
+            type="email"
             defaultValue={_.get(this.state.values, 'email')}
             onBlur={this._onInputBlur}
             onChange={this._onInputChange}
