@@ -26,13 +26,11 @@ const AlvarMap = React.createClass({
       }
     }
 
-    const dimensions = posterSizeToPixels(mapItem.size, mapItem.orientation);
-    const nextDimensions = posterSizeToPixels(nextMapItem.size, nextMapItem.orientation);
-    if (dimensions.zoom !== nextDimensions.zoom) {
+    if (this.props.scaleZoom !== nextProps.scaleZoom) {
       // Ugly hack very very ugly, to fix:
       // We are using our fork of Leaflet which implements this
       // https://github.com/Leaflet/Leaflet/issues/2795
-      L.DomEvent.setContainerScale(nextDimensions.zoom);
+      L.DomEvent.setContainerScale(nextProps.scaleZoom);
     }
   },
 
@@ -40,7 +38,7 @@ const AlvarMap = React.createClass({
     const { globalState } = this.props;
     const mapItem = globalState.cart[globalState.editCartItem];
     const dimensions = posterSizeToPixels(mapItem.size, mapItem.orientation);
-    L.DomEvent.setContainerScale(dimensions.zoom);
+    L.DomEvent.setContainerScale(this.props.scaleZoom);
 
     if (!mapItem.mapBounds) {
       this._dispatchBounds();

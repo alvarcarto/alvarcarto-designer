@@ -66,28 +66,31 @@ const LightWall = React.createClass({
 
     const dimensions = posterSizeToPixels(mapItem.size, mapItem.orientation);
     const mapContainerCss = {
-      transform: `translate(-50%, -50%) translateZ(0)`,
       // http://stackoverflow.com/questions/10858523/css-transform-with-element-resizing
       width: dimensions.width * scalerZoom,
       height: dimensions.height * scalerZoom,
     };
-
     const scalerCss = {
-      transform: `scale(${scalerZoom}) translateZ(0)`,
+      transform: `scale(${scalerZoom})`,
     };
-
+    const wireScalerCss = {
+      transform: `scale(${dimensions.clipScale})`,
+      // 10px from left in the clip image is about the center of the clip
+      // transform relative to that point
+      transformOrigin: '10px 90%',
+    };
     return (
       <div ref="container" className="LightWall noselect">
         <div className="LightWall__map-container" style={autoprefix(mapContainerCss)}>
           <div className="LightWall__wire-container">
-            <img className="LightWall__clip1" src="clip.png" alt="" />
-            <img className="LightWall__clip2" src="clip.png" alt="" />
+            <img className="LightWall__clip1" src="clip.png" alt="" style={autoprefix(wireScalerCss)} />
+            <img className="LightWall__clip2" src="clip.png" alt="" style={autoprefix(wireScalerCss)} />
             <div className="LightWall__wire1"></div>
             <div className="LightWall__wire2"></div>
           </div>
 
           <div className="LightWall__scaler" style={autoprefix(scalerCss)}>
-            <AlvarMap />
+            <AlvarMap scaleZoom={scalerZoom} />
 
             {
               this.state.showPreview
