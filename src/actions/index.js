@@ -64,7 +64,7 @@ export const postOrder = (payload) => function(dispatch) {
     address_state: _.get(addressObj, 'state'),
     address_country: _.get(addressObj, 'countryCode'),
   })
-    .then((stripeResponse) => {
+    .then((stripeResponseToken) => {
       // WARNING: ONLY USE CREDIT CARD DETAILS FROM STRIPE RESPONSE
       // Do NOT send the full credit card number, CVC or any
       // more detailed credit card info to our API.
@@ -82,7 +82,7 @@ export const postOrder = (payload) => function(dispatch) {
         emailSubscription: Boolean(payload.emailSubscription),
         shippingAddress: payload.shippingAddress,
         billingAddress: payload.billingAddress,
-        stripeTokenResponse: stripeResponse.token,
+        stripeTokenResponse: stripeResponseToken,
         cart: payload.cart,
       };
       return api.postOrder(order);

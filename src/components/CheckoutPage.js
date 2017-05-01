@@ -100,8 +100,14 @@ const CheckoutPage = React.createClass({
         history.push(`/orders/${orderId}`, { initialAnimation: true });
       })
       .catch(err => {
-        if (_.get(err, 'response.status') === 402) {
-          const detailedError = _.get(err, 'response.data.messages.0', 'Unexpected error');
+        const isPaymentError = _.get(err, 'response.status') === 402 ||
+                               _.get(err, 'type') === 'card_error';
+
+        if (isPaymentError) {
+          const detailedError = _.get(err, 'type') === 'card_error'
+            ? _.get(err, 'message', 'Unexpected error')
+            : _.get(err, 'response.data.messages.0', 'Unexpected error');
+
           Modal.error({
             title: 'Payment error',
             content: <div>
