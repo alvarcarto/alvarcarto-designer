@@ -4,17 +4,17 @@ import { Form, Input } from 'antd';
 import CountrySelect from './CountrySelect';
 
 const form = {
-  name: (val) => {
+  personName: (val) => {
     if (_.isEmpty(val)) {
       return new Error('Full name is required.');
     }
   },
-  address: (val) => {
+  streetAddress: (val) => {
     if (_.isEmpty(val)) {
       return new Error('Street address is required.');
     }
   },
-  addressExtra: () => null,
+  streetAddressExtra: () => null,
   city: (val) => {
     if (_.isEmpty(val)) {
       return new Error('City is required.');
@@ -25,13 +25,13 @@ const form = {
       return new Error('Postal code is required.');
     }
   },
-  country: (val) => {
+  countryCode: (val) => {
     if (_.isEmpty(val)) {
       return new Error('Country is required.');
     }
   },
   state: () => null,
-  phone: () => null,
+  contactPhone: () => null,
 };
 
 const AddressForm = React.createClass({
@@ -56,31 +56,31 @@ const AddressForm = React.createClass({
       wrapperCol: { span: 24, sm: { span: 14 }, md: { span: 14 }, lg: { span: 14 } },
     };
 
-    const defaultCountry = _.get(this.state.values, 'country');
+    const defaultCountry = _.get(this.state.values, 'countryCode');
     const formErrors = this._getFormErrors(this.props.validate);
     return (
       <div className="AddressForm">
-        <Form.Item {...formErrors.name} {...formItemLayout} required label="Full name">
+        <Form.Item {...formErrors.personName} {...formItemLayout} required label="Full name">
           <Input
             name="name"
-            defaultValue={_.get(this.state.values, 'name')}
+            defaultValue={_.get(this.state.values, 'personName')}
             onBlur={this._onInputBlur}
             onChange={this._onInputChange}
             placeholder="Full name"
           />
         </Form.Item>
 
-        <Form.Item {...formErrors.address} {...formItemLayout} required label="Street address">
+        <Form.Item {...formErrors.streetAddress} {...formItemLayout} required label="Street address">
           <Input
             name="address"
-            defaultValue={_.get(this.state.values, 'address')}
+            defaultValue={_.get(this.state.values, 'streetAddress')}
             onBlur={this._onInputBlur}
             onChange={this._onInputChange}
             placeholder="Street address / PO Box"
           />
           <Input
-            name="addressExtra"
-            defaultValue={_.get(this.state.values, 'addressExtra')}
+            name="streetAddressExtra"
+            defaultValue={_.get(this.state.values, 'streetAddressExtra')}
             onBlur={this._onInputBlur}
             onChange={this._onInputChange}
             placeholder="Apartment / Floor"
@@ -109,7 +109,7 @@ const AddressForm = React.createClass({
           />
         </Form.Item>
 
-        <Form.Item {...formErrors.country} {...formItemLayout} required label="Country">
+        <Form.Item {...formErrors.countryCode} {...formItemLayout} required label="Country">
           <CountrySelect
             {...this.props}
             {...defaultCountry ? { defaultValue: defaultCountry } : {}}
@@ -132,10 +132,10 @@ const AddressForm = React.createClass({
         {
           this.props.disablePhone
             ? null
-            : <Form.Item {...formErrors.phone} {...formItemLayout} label="Phone number" extra="In case needed by postal service.">
+            : <Form.Item {...formErrors.contactPhone} {...formItemLayout} label="Phone number" extra="In case needed by postal service.">
                 <Input
                   name="phone"
-                  defaultValue={_.get(this.state.values, 'phone')}
+                  defaultValue={_.get(this.state.values, 'contactPhone')}
                   onBlur={this._onInputBlur}
                   onChange={this._onInputChange}
                   placeholder="Phone number"
@@ -194,7 +194,7 @@ const AddressForm = React.createClass({
   _onCountryChange(value) {
     this.setState((state) => ({
       values: _.extend(state.values, {
-        country: value
+        countryCode: value
       }),
     }), this._emitOnChange);
   },
@@ -202,7 +202,7 @@ const AddressForm = React.createClass({
   _onCountryBlur() {
     this.setState((state) => ({
       shouldValidate: _.extend(state.shouldValidate, {
-        country: true,
+        countryCode: true,
       }),
     }));
   },

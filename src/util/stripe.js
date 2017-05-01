@@ -1,18 +1,9 @@
 /* global Stripe */
 
 import BPromise from 'bluebird';
+import config from '../config';
 
-// Promisified helper function
-export function createToken(opts) {
-  return new BPromise((resolve, reject) => {
-    Stripe.card.createToken(opts, (status, response) => {
-      if (response.error) {
-        const err = new Error(response.error.message);
-        err.code = response.error.code;
-        return reject(err);
-      }
-
-      return resolve({ status, response });
-    })
-  });
+export const stripeInstance = Stripe(config.REACT_APP_STRIPE_PUBLISHABLE_KEY);
+export function createToken(element, opts) {
+  return BPromise.resolve(stripeInstance.createToken(element, opts));
 }

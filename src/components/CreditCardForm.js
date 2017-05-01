@@ -1,82 +1,95 @@
-/* global Stripe */
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 import _ from 'lodash';
-import Payment from 'payment';
 import { Form, Input, Row, Col, Icon } from 'antd';
 import ResponsiveSelect from './ResponsiveSelect';
 import config from '../config';
+import { stripeInstance } from '../util/stripe';
 
+const ELEMENTS_STYLE = {
+  base: {
+    color: '#303238',
+    fontSize: '14px',
+    fontFamily: 'Courier, sans-serif',
+    lineHeight: '14px',
+    fontSmoothing: 'antialiased',
+    '::placeholder': {
+      color: '#ccc',
+    },
+  }
+};
 const ACCEPTED_CARD_TYPES = [
-  'Visa',
-  'MasterCard',
-  'American Express',
+  'visa',
+  'mastercard',
+  'amex',
 ];
-
-const form = {
-  'cc-name': (val) => {
-    if (_.isEmpty(val)) {
-      return new Error('Card holder name is required.');
-    }
-  },
-  'cc-number': (val) => {
-    if (_.isEmpty(val)) {
-      return new Error('Credit card number is required.');
-    }
-
-    if (!Stripe.card.validateCardNumber(val)) {
-      return new Error('Invalid credit card number.')
-    }
-
-    const type = Stripe.card.cardType(val);
-    if (!_.includes(ACCEPTED_CARD_TYPES, type)) {
-      return new Error(`
-        Unfortunately we don't accept ${type} card at the moment.
-        We accept ${ACCEPTED_CARD_TYPES.join(', ')}.`);
-    }
-  },
-  'cc-exp': (val) => {
-    if (_.isEmpty(val) || !_.isFinite(val.month) || !_.isFinite(val.year)) {
-      return new Error('Expiry date is required.');
-    }
-
-    const now = new Date();
-    const currentYear = now.getFullYear();
-    const currentMonth = now.getMonth() + 1;
-    if (val.year <= currentYear && val.month < currentMonth) {
-      return new Error('Expiry date should not be in the past.');
-    }
-  },
-  'cc-cvc': (val) => {
-    if (_.isEmpty(val)) {
-      return new Error('CVC is required.');
-    }
-
-    if (!Stripe.card.validateCVC(val)) {
-      return new Error('Invalid CVC.');
-    }
-  },
+// http://stackoverflow.com/questions/42262887/enabling-brand-icon-in-cardnumber-type-element-in-stripe
+const CARD_TYPE_TO_LABEL = {
+  visa: 'Visa',
+  mastercard: 'Mastercard',
+  amex: 'American Express',
+  discover: 'Discover',
+  diners: 'Diner\'s',
+  jcb: 'JCB',
+  unknown: 'Unknown',
 };
 
 const CreditCardForm = React.createClass({
   getInitialState() {
-    let state = {
-      // Take all keys in form object and initialize their values
-      // with null and false
-      values: _.mapValues(form, () => null),
-      shouldValidate: _.mapValues(form, () => false),
+    return {
+      shouldValidate: {
+        cardNumber: this.props.validate,
+        cardExpiry: this.props.validate,
+        cardCvc: this.props.validate,
+      },
+      elementsErrors: {
+        cardNumber: new Error('Credit card number is required.'),
+        cardExpiry: new Error('Expiry date is required.'),
+        cardCvc: new Error('CVC is required.'),
+      },
+      elements: {
+        cardNumber: null,
+        cardExpiry: null,
+        cardCvc: null,
+      },
+      cardType: 'unknown',
     };
-
-    if (this.props.initialState) {
-      state.values = this.props.initialState.values;
-    }
-
-    return state;
   },
 
   componentDidMount() {
-    Payment.formatCardNumber(ReactDOM.findDOMNode(this.refs['cc-number']));
+    const elements = stripeInstance.elements();
+    const numberContainer = ReactDOM.findDOMNode(this.refs['cc-number']);
+    const cardNumber = elements.create('cardNumber', {
+      style: ELEMENTS_STYLE,
+    });
+    cardNumber.mount(numberContainer);
+    cardNumber.on('change', this._onCardNumberChange);
+
+    const expiryContainer = ReactDOM.findDOMNode(this.refs['cc-expiry']);
+    const cardExpiry = elements.create('cardExpiry', {
+      style: ELEMENTS_STYLE,
+    });
+    cardExpiry.mount(expiryContainer);
+    cardExpiry.on('change', this._onCardExpiryChange);
+
+    const cvcContainer = ReactDOM.findDOMNode(this.refs['cc-cvc']);
+    const cardCvc = elements.create('cardCvc', {
+      style: ELEMENTS_STYLE,
+    });
+    cardCvc.mount(cvcContainer);
+    cardCvc.on('change', this._onCardCvcChange);
+
+    this.setState({ elements: {
+      cardNumber,
+      cardExpiry,
+      cardCvc,
+    }});
+  },
+
+  componentWillUnmount() {
+    this.state.elements.cardNumber.off('change', this._onCardNumberChange);
+    this.state.elements.cardExpiry.off('change', this._onCardNumberChange);
+    this.state.elements.cardCvc.off('change', this._onCardNumberChange);
   },
 
   render() {
@@ -84,110 +97,57 @@ const CreditCardForm = React.createClass({
       labelCol: { span: 24, sm: { span: 7 }, md: { span: 7 }, lg: { span: 7 } },
       wrapperCol: { span: 24, sm: { span: 14 }, md: { span: 14 }, lg: { span: 14 } },
     };
-
-    const yearNow = new Date().getFullYear();
     const formErrors = this._getFormErrors(this.props.validate);
-    const cardType = _.isString(this.state.values['cc-number'])
-      ? Stripe.card.cardType(this.state.values['cc-number'])
-      : 'Unknown';
+    const cardType = this.state.cardType;
 
-    const initialExpMonth = _.get(this.state.values, 'cc-exp.month');
-    const initialExpYear = _.get(this.state.values, 'cc-exp.year');
+    let className = 'CreditCardForm';
+    if (this.props.validate) {
+      className += ' CreditCardForm--validate';
+    }
 
     return (
-      <div className="CreditCardForm">
-        <Form.Item {...formErrors['cc-name']} {...formItemLayout} required label="Name on card">
-          <Input
-            name="cc-name"
-            defaultValue={_.get(this.state.values, 'cc-name')}
-            onBlur={this._onInputBlur}
-            onChange={this._onInputChange}
-            placeholder="Full name"
-          />
-        </Form.Item>
-
-        <Form.Item {...formErrors['cc-number']} {...formItemLayout} required label="Card number">
-          <Input
-            ref="cc-number"
-            defaultValue={_.get(this.state.values, 'cc-number')}
-            suffix={<Icon type="lock" />}
-            maxLength="20"
-            name="cc-number"
-            onBlur={this._onInputBlur}
-            onChange={this._onInputChange}
-            placeholder="•••• •••• •••• ••••"
-            pattern="[0-9 ]*"
-            autoComplete="cc-number"
-            className="CreditCardForm__number"
-          />
+      <div className={className}>
+        <Form.Item {...formErrors['cardNumber']} {...formItemLayout} required label="Card number">
+          <div ref="cc-number" className="CreditCardForm__number"></div>
+          <Icon className="CreditCardForm__number-icon" type="lock" />
         </Form.Item>
 
         <Form.Item
-          {...formErrors['cc-exp']}
+          {...formErrors['cardExpiry']}
           {...formItemLayout}
           required
           label="Expiry date"
           className="CreditCardForm__expiry-date"
         >
-          <ResponsiveSelect
-            size="large"
-            {...initialExpMonth ? { defaultValue: String(initialExpMonth) } : {}}
-            placeholder="MM"
-            className="CreditCardForm__expiry-month"
-            onChange={this._onMonthChange}
-            options={_.map(_.range(1, 13), (month) => ({
-              key: month,
-              value: String(month),
-              label: _.padStart(month, 2, '0'),
-            }))}
-          />
-          <span className="CreditCardForm__expiry-separator">/</span>
-          <ResponsiveSelect
-            size="large"
-            {...initialExpYear ? { defaultValue: String(initialExpYear) } : {} }
-            placeholder="YYYY"
-            className="CreditCardForm__expiry-year"
-            onChange={this._onYearChange}
-            options={_.map(_.range(yearNow, yearNow + 16), (year) => ({
-              key: year,
-              value: String(year),
-              label: year,
-            }))}
-          />
+          <div ref="cc-expiry" className="CreditCardForm__expiry"></div>
         </Form.Item>
 
-        <Form.Item {...formErrors['cc-cvc']} {...formItemLayout} required
+        <Form.Item
+          {...formErrors['cardCvc']}
+          {...formItemLayout}
+          required
           label="CVC"
         >
-          <Input
-            maxLength="4"
-            name="cc-cvc"
-            autoComplete="off"
-            pattern="\d*"
-            onBlur={this._onInputBlur}
-            onChange={this._onInputChange}
-            placeholder="CVC"
-            className="CreditCardForm__cvc input--short"
-          />
+          <div ref="cc-cvc" className="CreditCardForm__cvc"></div>
         </Form.Item>
 
         <Row>
           <Col {...formItemLayout.labelCol}></Col>
           <Col {...formItemLayout.wrapperCol}>
             <ul className="CreditCardForm__logos">
-              <li className={cardType === 'Visa' ? 'CreditCardForm__logo--highlight' : ''}>
+              <li className={cardType === 'visa' ? 'CreditCardForm__logo--highlight' : ''}>
                 <img
                   src={`${config.PUBLIC_URL}/assets/card-logo-visa.svg`}
                   alt="Visa"
                 />
               </li>
-              <li className={cardType === 'MasterCard' ? 'CreditCardForm__logo--highlight' : ''}>
+              <li className={cardType === 'mastercard' ? 'CreditCardForm__logo--highlight' : ''}>
                 <img
                   src={`${config.PUBLIC_URL}/assets/card-logo-mastercard.svg`}
                   alt="MasterCard"
                 />
               </li>
-              <li className={cardType === 'American Express' ? 'CreditCardForm__logo--highlight' : ''}>
+              <li className={cardType === 'amex' ? 'CreditCardForm__logo--highlight' : ''}>
                 <img
                   src={`${config.PUBLIC_URL}/assets/card-logo-amex.svg`}
                   alt="American Express"
@@ -202,13 +162,12 @@ const CreditCardForm = React.createClass({
 
   _getFormErrors(validateAll) {
     const formErrors = {};
-    _.forEach(this.state.values, (val, key) => {
+    _.forEach(this.state.elementsErrors, (err, key) => {
       const shouldValidate = validateAll ? true : this.state.shouldValidate[key];
-      if (!_.isFunction(form[key]) || !shouldValidate) {
+      if (!shouldValidate) {
         return;
       }
 
-      const err = form[key](val);
       if (_.isError(err)) {
         formErrors[key] = {
           validateStatus: 'error',
@@ -220,79 +179,58 @@ const CreditCardForm = React.createClass({
     return formErrors;
   },
 
+  _onCardNumberChange(event) {
+    const cardType = event.brand;
+    const cardLabel = CARD_TYPE_TO_LABEL[cardType];
+    if (event.complete && !_.includes(ACCEPTED_CARD_TYPES, cardType)) {
+      let message = `Unfortunately we don't accept "${cardLabel}" cards.`;
+      message += ' Visa, Mastercard and American Express are supported.';
+      const err = new Error(message);
+      event.error = err;
+    }
+
+    this._onElementsChange('cardNumber', event);
+
+    this.setState({
+      cardType: event.brand,
+    });
+  },
+
+  _onCardExpiryChange(event) {
+    this._onElementsChange('cardExpiry', event);
+  },
+
+  _onCardCvcChange(event) {
+    this._onElementsChange('cardCvc', event);
+  },
+
+  _onElementsChange(name, event) {
+    const state = this.state;
+
+    if (!event.error) {
+      return this.setState({
+        elementsErrors: _.extend(state.elementsErrors, {
+          [name]: null,
+        }),
+        shouldValidate: _.extend(state.shouldValidate, {
+          [name]: false,
+        }),
+      }, this._emitOnChange);
+    }
+
+    return this.setState({
+      elementsErrors: _.extend(state.elementsErrors, {
+        [name]: new Error(_.get(event, 'error.message')),
+      }),
+      shouldValidate: _.extend(state.shouldValidate, {
+        [name]: true,
+      }),
+    }, this._emitOnChange);
+  },
+
   _hasFormErrors() {
     const errs = this._getFormErrors(true);
     return _.keys(errs).length > 0;
-  },
-
-  _onInputChange(e) {
-    const { name, value } = e.target;
-    this._setValue(name, value);
-    this._setShouldValidate(name, false);
-  },
-
-  _onInputBlur(e) {
-    const { name } = e.target;
-    if (name === 'cc-cvc') {
-      this._setShouldValidate('cc-exp', true);
-    }
-
-    this._setShouldValidate(name, true);
-  },
-
-  _onMonthChange(_value) {
-    const value = Number(_value);
-
-    this.setState((state) => ({
-      values: _.extend(state.values, {
-        'cc-exp': _.extend(state.values['cc-exp'], {
-          month: value,
-        }),
-      }),
-    }), this._emitOnChange);
-
-    this._removeExpiryValidate('month', value);
-  },
-
-  _onYearChange(_value) {
-    const value = Number(_value);
-
-    this.setState((state) => ({
-      values: _.extend(state.values, {
-        'cc-exp': _.extend(state.values['cc-exp'], {
-          year: value,
-        }),
-      }),
-    }), this._emitOnChange);
-
-    this._removeExpiryValidate('year', value);
-  },
-
-  _removeExpiryValidate(name, newVal) {
-    const newExp = _.merge({}, this.state.values['cc-exp'], {
-      [name]: newVal
-    });
-    const err = form['cc-exp'](newExp);
-
-    if (!_.isError(err)) {
-      this._setShouldValidate('cc-exp', false);
-    }
-  },
-
-  _setValue(name, val) {
-    this.setState((state) => ({
-      values: _.extend(state.values, {
-        [name]: val
-      }),
-    }), this._emitOnChange);
-  },
-
-  _setShouldValidate(name, val) {
-    this.setState((state) => ({
-      shouldValidate: _.extend(state.shouldValidate, {
-        [name]: val
-      }),
-    }));
   },
 
   _emitOnChange() {
@@ -300,9 +238,9 @@ const CreditCardForm = React.createClass({
 
     this.props.onChange({
       isValid,
-      values: this.state.values,
+      element: this.state.elements.cardNumber,
     });
-  }
+  },
 });
 
 export default CreditCardForm;

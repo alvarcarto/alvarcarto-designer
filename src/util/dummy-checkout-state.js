@@ -2,18 +2,7 @@
 
 const DUMMY_DATA = {
   "billingAddressForm": null,
-  "creditCardForm": {
-    "isValid": false,
-    "values": {
-      "cc-cvc": null,
-      "cc-exp": {
-        "month": 1,
-        "year": 2020
-      },
-      "cc-name": "John Doe",
-      "cc-number": "4242 4242 4242 4242 "
-    }
-  },
+  "creditCardForm": null,
   "emailForm": {
     "isValid": true,
     "values": {
@@ -23,11 +12,11 @@ const DUMMY_DATA = {
   "shippingAddressForm": {
     "isValid": true,
     "values": {
-      "address": "Mannerheimintie 1",
+      "streetAddress": "Mannerheimintie 1",
       "city": "Helsinki",
-      "country": "FI",
-      "name": "John Doe",
-      "phone": "0501234567",
+      "countryCode": "FI",
+      "personName": "John Doe",
+      "contactPhone": "0501234567",
       "postalCode": "00100"
     }
   },

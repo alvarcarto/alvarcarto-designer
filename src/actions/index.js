@@ -54,19 +54,15 @@ export const postOrder = (payload) => function(dispatch) {
     ? payload.billingAddress
     : payload.shippingAddress;
 
-  return stripeUtil.createToken({
-    number: _.get(payload.creditCard, 'cc-number'),
-    exp_month: _.get(payload.creditCard, 'cc-exp.month'),
-    exp_year: _.get(payload.creditCard, 'cc-exp.year'),
-    cvc: _.get(payload.creditCard, 'cc-cvc'),
+  return stripeUtil.createToken(payload.stripeElement, {
     // Optional by Stripe
-    name: _.get(payload.creditCard, 'cc-name'),
+    name: _.get(addressObj, 'personName'),
     address_zip: _.get(addressObj, 'postalCode'),
-    address_line1: _.get(addressObj, 'address'),
-    address_line2: _.get(addressObj, 'addressExtra'),
+    address_line1: _.get(addressObj, 'streetAddress'),
+    address_line2: _.get(addressObj, 'streetAddressExtra'),
     address_city: _.get(addressObj, 'city'),
     address_state: _.get(addressObj, 'state'),
-    address_country: _.get(addressObj, 'country'),
+    address_country: _.get(addressObj, 'countryCode'),
   })
     .then((stripeResponse) => {
       // WARNING: ONLY USE CREDIT CARD DETAILS FROM STRIPE RESPONSE
@@ -74,19 +70,19 @@ export const postOrder = (payload) => function(dispatch) {
       // more detailed credit card info to our API.
       // Last 4 digits etc which are in stripe response are ok.
       // https://support.stripe.com/questions/what-information-can-i-safely-store-about-my-users-payment-information
-      //  The only sensitive data that you want to avoid handling is your customers'
+      //  "The only sensitive data that you want to avoid handling is your customers'
       //  credit card number and CVC; other than that, you’re welcome to store
       //  any other information on your local machines.
       //  As a good rule, you can store anything returned by our API. In particular,
-      // you would not have any issues storing the last four digits of your
-      // customer’s card number or the expiration date for easy reference.
+      //  you would not have any issues storing the last four digits of your
+      //  customer’s card number or the expiration date for easy reference."
       const order = {
         email: payload.email,
         differentBillingAddress: Boolean(payload.differentBillingAddress),
         emailSubscription: Boolean(payload.emailSubscription),
         shippingAddress: payload.shippingAddress,
         billingAddress: payload.billingAddress,
-        stripeTokenResponse: stripeResponse.response,
+        stripeTokenResponse: stripeResponse.token,
         cart: payload.cart,
       };
       return api.postOrder(order);

@@ -7,9 +7,6 @@ import config from './config';
 // Install Sentry client
 Raven.config('https://2456dddf26df432bae36dd00ea1d2a45@sentry.io/148773').install();
 
-// Stripe
-Stripe.setPublishableKey(config.REACT_APP_STRIPE_PUBLISHABLE_KEY);
-
 // Hotjar
 (function(h,o,t,j,a,r){
   h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};

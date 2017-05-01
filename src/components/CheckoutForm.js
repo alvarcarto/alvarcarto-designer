@@ -1,5 +1,3 @@
-/* global Stripe */
-
 import React from 'react';
 import _ from 'lodash';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
@@ -141,7 +139,6 @@ const CheckoutForm = React.createClass({
             </h2>
 
             <CreditCardForm
-              initialState={this.state.creditCardForm}
               validate={this.state.validateAll}
               onChange={this._onCreditCardFormChange}
             />
@@ -337,7 +334,7 @@ const CheckoutForm = React.createClass({
     const orderForm = {
       email: _.get(state.emailForm, 'values.email'),
       emailSubscription: state.values.emailSubscription,
-      creditCard: _.get(state.creditCardForm, 'values'),
+      stripeElement: _.get(state.creditCardForm, 'element'),
       differentBillingAddress: _.get(state, 'values.differentBillingAddress'),
       shippingAddress: _.get(state.shippingAddressForm, 'values'),
       billingAddress: _.get(state.billingAddressForm, 'values'),
@@ -349,9 +346,6 @@ const CheckoutForm = React.createClass({
   _onAnyChange() {
     if (this.props.onChange) {
       const stateCopy = _.cloneDeep(this.state);
-      // For safety, reset CVC when user goes to other view
-      _.set(stateCopy, 'creditCardForm.values.cc-cvc', null);
-      _.set(stateCopy, 'creditCardForm.isValid', false);
       // Make sure user has to accept terms before confirming order
       _.set(stateCopy, 'values.termsAccepted', false);
       this.props.onChange(stateCopy);

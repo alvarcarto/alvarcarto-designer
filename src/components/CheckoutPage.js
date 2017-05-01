@@ -107,7 +107,7 @@ const CheckoutPage = React.createClass({
             content: <div>
               <p>
                 Order could not be completed, because processing the
-                payment failed with reason: <i>{detailedError}</i>.
+                payment failed with reason: <i>{detailedError}</i>
               </p>
               <p>
                 We're sorry for the inconvenience. If the problem persists,
