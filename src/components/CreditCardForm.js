@@ -1,8 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import _ from 'lodash';
-import { Form, Input, Row, Col, Icon } from 'antd';
-import ResponsiveSelect from './ResponsiveSelect';
+import { Form, Row, Col, Icon } from 'antd';
 import config from '../config';
 import { stripeInstance } from '../util/stripe';
 

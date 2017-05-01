@@ -37,7 +37,6 @@ const AlvarMap = React.createClass({
   componentDidMount() {
     const { globalState } = this.props;
     const mapItem = globalState.cart[globalState.editCartItem];
-    const dimensions = posterSizeToPixels(mapItem.size, mapItem.orientation);
     L.DomEvent.setContainerScale(this.props.scaleZoom);
 
     if (!mapItem.mapBounds) {
