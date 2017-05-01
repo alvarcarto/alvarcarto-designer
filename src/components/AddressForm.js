@@ -62,7 +62,7 @@ const AddressForm = React.createClass({
       <div className="AddressForm">
         <Form.Item {...formErrors.personName} {...formItemLayout} required label="Full name">
           <Input
-            name="name"
+            name="personName"
             defaultValue={_.get(this.state.values, 'personName')}
             onBlur={this._onInputBlur}
             onChange={this._onInputChange}
@@ -72,7 +72,7 @@ const AddressForm = React.createClass({
 
         <Form.Item {...formErrors.streetAddress} {...formItemLayout} required label="Street address">
           <Input
-            name="address"
+            name="streetAddress"
             defaultValue={_.get(this.state.values, 'streetAddress')}
             onBlur={this._onInputBlur}
             onChange={this._onInputChange}
@@ -134,7 +134,7 @@ const AddressForm = React.createClass({
             ? null
             : <Form.Item {...formErrors.contactPhone} {...formItemLayout} label="Phone number" extra="In case needed by postal service.">
                 <Input
-                  name="phone"
+                  name="contactPhone"
                   defaultValue={_.get(this.state.values, 'contactPhone')}
                   onBlur={this._onInputBlur}
                   onChange={this._onInputChange}
