@@ -4,8 +4,8 @@ import { Form, Input } from 'antd';
 import CountrySelect from './CountrySelect';
 
 const form = {
-  personName: (val) => {
-    if (_.isEmpty(val)) {
+  personName: (val, props) => {
+    if (!props.disableName && _.isEmpty(val)) {
       return new Error('Full name is required.');
     }
   },
@@ -60,15 +60,19 @@ const AddressForm = React.createClass({
     const formErrors = this._getFormErrors(this.props.validate);
     return (
       <div className="AddressForm">
-        <Form.Item {...formErrors.personName} {...formItemLayout} required label="Full name">
-          <Input
-            name="personName"
-            defaultValue={_.get(this.state.values, 'personName')}
-            onBlur={this._onInputBlur}
-            onChange={this._onInputChange}
-            placeholder="Full name"
-          />
-        </Form.Item>
+        {
+          this.props.disableName
+            ? null
+            : <Form.Item {...formErrors.personName} {...formItemLayout} required label="Full name">
+                <Input
+                  name="personName"
+                  defaultValue={_.get(this.state.values, 'personName')}
+                  onBlur={this._onInputBlur}
+                  onChange={this._onInputChange}
+                  placeholder="Full name"
+                />
+              </Form.Item>
+        }
 
         <Form.Item {...formErrors.streetAddress} {...formItemLayout} required label="Street address">
           <Input
@@ -154,7 +158,7 @@ const AddressForm = React.createClass({
         return;
       }
 
-      const err = form[key](val);
+      const err = form[key](val, this.props);
       if (_.isError(err)) {
         formErrors[key] = {
           validateStatus: 'error',

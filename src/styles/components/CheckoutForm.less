@@ -27,14 +27,16 @@
   margin-right: 5px;
 }
 
-.CheckoutForm .CheckoutForm__new-address {
-  margin-top: 20px;
-  margin-bottom: -10px;
-}
-
 .CheckoutForm__form-header {
   font-size: @font-size-medium;
   margin-bottom: 34px;
+  text-transform: uppercase;
+}
+
+.CheckoutForm__form-sub-header {
+  color: #666;
+  font-size: 0.85rem;
+  margin-bottom: 10px;
   text-transform: uppercase;
 }
 
@@ -107,7 +109,35 @@
 .CheckoutForm .CheckoutForm__complete-button {
   font-size: @font-size-x-small;
   padding: 10px 20px;
+  height: 41px;
   width: 100%;
+}
+
+.CheckoutForm .CreditCardForm {
+  margin-bottom: 25px;
+}
+
+.CheckoutForm .CheckoutForm__new-address {
+  margin-top: 0;
+  margin-bottom: 22px
+}
+
+.CheckoutForm .CheckoutForm__new-address .ant-radio-wrapper {
+  display: block;
+  margin-top: 10px;
+}
+
+.CheckoutForm .CheckoutForm__new-address .ant-radio-wrapper:last-of-type {
+  margin-top: 0;
+}
+
+.CheckoutForm .CheckoutForm__new-address-text {
+  display: block;
+  white-space: normal;
+  margin-left: 20px;
+  margin-top: 8px;
+  color: #aaa;
+  font-style: italic;
 }
 
 @media @screen-gt-sm-media {

@@ -2,6 +2,7 @@ import _ from 'lodash';
 import * as actions from '../action-types';
 import * as stripeUtil from '../util/stripe';
 import * as api from '../util/api';
+import { stringEqualsIgnoreWhitespace } from '../util';
 
 export const setLocation = (location) => ({
   type: actions.SET_LOCATION,
@@ -50,13 +51,14 @@ export const addCartItemQuantity = (payload) => ({
 export const postOrder = (payload) => function(dispatch) {
   dispatch({ type: actions.POST_ORDER_REQUEST, payload });
 
-  const addressObj = payload.differentBillingAddress
+  const differentBillingAddress = Boolean(payload.differentBillingAddress);
+  const addressObj = differentBillingAddress
     ? payload.billingAddress
     : payload.shippingAddress;
 
   return stripeUtil.createToken(payload.stripeElement, {
     // Optional by Stripe
-    name: _.get(addressObj, 'personName'),
+    name: _.get(payload, 'creditCardPersonName'),
     address_zip: _.get(addressObj, 'postalCode'),
     address_line1: _.get(addressObj, 'streetAddress'),
     address_line2: _.get(addressObj, 'streetAddressExtra'),
@@ -76,12 +78,30 @@ export const postOrder = (payload) => function(dispatch) {
       //  As a good rule, you can store anything returned by our API. In particular,
       //  you would not have any issues storing the last four digits of your
       //  customer’s card number or the expiration date for easy reference."
+
+      const shippingAddressName = _.get(payload, 'shippingAddress.personName');
+      const creditCardPersonName = _.get(payload, 'creditCardPersonName');
+
+      let billingAddress = payload.billingAddress;
+      if (differentBillingAddress) {
+        // Using different billing address, add name on card to that address
+        billingAddress = _.merge({}, payload.billingAddress, {
+          personName: creditCardPersonName,
+        });
+      } else if (!stringEqualsIgnoreWhitespace(creditCardPersonName, shippingAddressName)) {
+        // Person chose to use shipping address also as billing address, but
+        // they gave a different name for credit card
+        billingAddress = _.merge({}, payload.shippingAddress, {
+          personName: creditCardPersonName,
+        });
+      }
+
       const order = {
         email: payload.email,
-        differentBillingAddress: Boolean(payload.differentBillingAddress),
+        differentBillingAddress,
         emailSubscription: Boolean(payload.emailSubscription),
         shippingAddress: payload.shippingAddress,
-        billingAddress: payload.billingAddress,
+        billingAddress,
         stripeTokenResponse: stripeResponseToken,
         cart: payload.cart,
       };

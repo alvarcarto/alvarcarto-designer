@@ -133,6 +133,16 @@ function getQueryParameterByName(name) {
   return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
 }
 
+function stringEqualsIgnoreWhitespace(str1, str2) {
+  if (!_.isString(str1) || !_.isString(str2)) {
+    return false;
+  }
+
+  const str1Trimmed = str1.replace(/\s/g, '');
+  const str2Trimmed = str2.replace(/\s/g, '');
+  return str1Trimmed.toLowerCase() === str2Trimmed.toLowerCase();
+}
+
 module.exports = {
   posterSizeToPixels,
   posterSizeToPhysicalDimensions,
@@ -144,4 +154,5 @@ module.exports = {
   getStorageSafe,
   setStorageSafe,
   getQueryParameterByName,
+  stringEqualsIgnoreWhitespace,
 };

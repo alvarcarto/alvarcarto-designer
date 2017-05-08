@@ -1,7 +1,8 @@
 import React from 'react';
 import _ from 'lodash';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import { Modal, Form, Icon, Checkbox, Tooltip, Button } from 'antd';
+import { Modal, Form, Icon, Checkbox, Tooltip, Button, Radio } from 'antd';
+import countries from 'i18n-iso-countries';
 import EmailForm from './EmailForm';
 import AddressForm from './AddressForm';
 import ShippingMethodForm from './ShippingMethodForm';
@@ -51,17 +52,19 @@ const CheckoutForm = React.createClass({
       wrapperCol: { span: 24, sm: { span: 14 }, md: { span: 14 }, lg: { span: 14 } },
     };
 
-    let i = 0;
-    const getIndex = () => ++i;
+    const {
+      emailSubscription,
+      differentBillingAddress,
+      termsAccepted,
+    } = this.state.values;
 
-    const { emailSubscription, differentBillingAddress, termsAccepted } = this.state.values;
     const formErrors = this._getFormErrors();
     return (
       <div className="CheckoutForm">
         <Form onSubmit={this._onSubmit}>
           <section className="CheckoutForm__section">
             <h2 className="CheckoutForm__form-header">
-              {getIndex()}. Shipping details
+              1. Shipping details
             </h2>
 
             <EmailForm
@@ -81,7 +84,7 @@ const CheckoutForm = React.createClass({
                   name="emailSubscription"
                   onChange={this._onCheckboxChange}
                 >
-                    Subscribe me to exclusive offers
+                  Subscribe me to exclusive offers
                 </Checkbox>
               </Tooltip>
             </Form.Item>
@@ -91,43 +94,11 @@ const CheckoutForm = React.createClass({
               validate={this.state.validateAll}
               onChange={this._onShippingAddressFormChange}
             />
-
-            <Form.Item className="CheckoutForm__new-address" {...formItemLayout} label="&nbsp;">
-              <Checkbox
-                name="differentBillingAddress"
-                defaultChecked={differentBillingAddress}
-                onChange={this._onCheckboxChange}
-              >
-                Use a different address for billing
-              </Checkbox>
-            </Form.Item>
           </section>
-
-          <ReactCSSTransitionGroup
-            transitionName="popin"
-            transitionEnterTimeout={400}
-            transitionLeaveTimeout={300}
-          >
-            {
-              !this.state.values.differentBillingAddress
-                ? null
-                : <section className="CheckoutForm__section">
-                    <h2 className="CheckoutForm__form-header">
-                      {getIndex()}. Billing address
-                    </h2>
-                    <AddressForm
-                      disablePhone
-                      initialState={this.state.billingAddressForm}
-                      validate={this.state.validateAll}
-                      onChange={this._onBillingAddressFormChange}
-                    />
-                  </section>
-            }
-          </ReactCSSTransitionGroup>
 
           <section className="CheckoutForm__section">
             <h2 className="CheckoutForm__form-header">
-              {getIndex()}. Shipping method
+              2. Shipping method
             </h2>
 
             <ShippingMethodForm />
@@ -135,13 +106,47 @@ const CheckoutForm = React.createClass({
 
           <section className="CheckoutForm__section CheckoutForm__section--last">
             <h2 className="CheckoutForm__form-header">
-              {getIndex()}. Payment details
+              3. Payment details
             </h2>
 
             <CreditCardForm
               validate={this.state.validateAll}
               onChange={this._onCreditCardFormChange}
             />
+
+            <Form.Item {...formItemLayout} className="CheckoutForm__new-address" label="Billing address" required>
+              <Radio.Group
+                name="differentBillingAddress"
+                defaultValue={differentBillingAddress ? 'different' : 'same'}
+                onChange={this._onDifferentBillingAddressChange}
+              >
+                <Radio className="CheckoutForm__new-address-same-option" value="same">
+                  Same as shipping address
+                  <span className="CheckoutForm__new-address-text">
+                    {this._getShippingAddressAsText(this.state.shippingAddressForm)}
+                  </span>
+                </Radio>
+                <Radio value="different">Use a different billing address</Radio>
+              </Radio.Group>
+            </Form.Item>
+
+            <ReactCSSTransitionGroup
+              transitionName="popin"
+              transitionEnterTimeout={400}
+              transitionLeaveTimeout={300}
+            >
+              {
+                !this.state.values.differentBillingAddress
+                  ? null
+                  : <AddressForm
+                      disablePhone
+                      disableName
+                      initialState={this.state.billingAddressForm}
+                      validate={this.state.validateAll}
+                      onChange={this._onBillingAddressFormChange}
+                    />
+              }
+            </ReactCSSTransitionGroup>
 
             <ul className="CheckoutForm__badge-list">
               <li>
@@ -200,6 +205,7 @@ const CheckoutForm = React.createClass({
                 : 'CheckoutForm__complete-button'
               }
               type="primary"
+              size="large"
               htmlType="submit"
             >
               <Icon type="shopping-cart" />
@@ -209,6 +215,24 @@ const CheckoutForm = React.createClass({
         </Form>
       </div>
     );
+  },
+
+  _getShippingAddressAsText(shippingAddressForm) {
+    if (!shippingAddressForm || !shippingAddressForm.isValid || !shippingAddressForm.values) {
+      return 'Fill in your shipping details';
+    }
+
+    const values = shippingAddressForm.values;
+
+    const streetAddressLabel = `${values.streetAddress} ${_.get(values, 'streetAddressExtra', '')}`;
+    const cityLabel = `${values.postalCode} ${values.city}`;
+    const countryLabel = `${countries.getName(values.countryCode, 'en')} ${_.get(values, 'state', '')}`;
+
+    return <span>
+      {streetAddressLabel}<br/>
+      {cityLabel}<br/>
+      {countryLabel}
+    </span>;
   },
 
   _getFormErrors(validateAll) {
@@ -249,6 +273,16 @@ const CheckoutForm = React.createClass({
       : true;
 
     return requiredFormsAreValid && isBillingAddressOk;
+  },
+
+  _onDifferentBillingAddressChange(e) {
+    const { value } = e.target;
+
+    this.setState((state) => ({
+      values: _.extend(state.values, {
+        differentBillingAddress: value === 'different',
+      }),
+    }), this._onAnyChange);
   },
 
   _onCheckboxChange(e) {
@@ -335,6 +369,7 @@ const CheckoutForm = React.createClass({
       email: _.get(state.emailForm, 'values.email'),
       emailSubscription: state.values.emailSubscription,
       stripeElement: _.get(state.creditCardForm, 'element'),
+      creditCardPersonName: _.get(state.creditCardForm, 'values.nameOnCard'),
       differentBillingAddress: _.get(state, 'values.differentBillingAddress'),
       shippingAddress: _.get(state.shippingAddressForm, 'values'),
       billingAddress: _.get(state.billingAddressForm, 'values'),

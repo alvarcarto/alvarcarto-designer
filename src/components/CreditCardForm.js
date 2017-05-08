@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import _ from 'lodash';
-import { Form, Row, Col, Icon } from 'antd';
+import { Input, Form, Row, Col, Icon } from 'antd';
 import config from '../config';
 import { stripeInstance } from '../util/stripe';
 
@@ -36,12 +36,17 @@ const CARD_TYPE_TO_LABEL = {
 const CreditCardForm = React.createClass({
   getInitialState() {
     return {
+      values: {
+        nameOnCard: null,
+      },
       shouldValidate: {
+        nameOnCard: this.props.validate,
         cardNumber: this.props.validate,
         cardExpiry: this.props.validate,
         cardCvc: this.props.validate,
       },
       elementsErrors: {
+        nameOnCard: null,
         cardNumber: new Error('Credit card number is required.'),
         cardExpiry: new Error('Expiry date is required.'),
         cardCvc: new Error('CVC is required.'),
@@ -106,6 +111,16 @@ const CreditCardForm = React.createClass({
 
     return (
       <div className={className}>
+        <Form.Item {...formErrors['nameOnCard']} {...formItemLayout} required label="Name on card">
+          <Input
+            name="name"
+            defaultValue={_.get(this.state.values, 'nameOnCard')}
+            onBlur={this._onNameBlur}
+            onChange={this._onNameChange}
+            placeholder="Full name"
+          />
+        </Form.Item>
+
         <Form.Item {...formErrors['cardNumber']} {...formItemLayout} required label="Card number">
           <div ref="cc-number" className="CreditCardForm__number"></div>
           <Icon className="CreditCardForm__number-icon" type="lock" />
@@ -175,7 +190,33 @@ const CreditCardForm = React.createClass({
       }
     });
 
+    const shouldValidateName = validateAll ? true : this.state.shouldValidate.nameOnCard;
+    if (shouldValidateName && _.isEmpty(this.state.values.nameOnCard)) {
+      formErrors.nameOnCard = {
+        validateStatus: 'error',
+        help: 'Name on card is required.',
+      };
+    }
+
     return formErrors;
+  },
+
+  _onNameChange(event) {
+    const { value } = event.target;
+
+    this.setState((state) => ({
+      values: _.extend(state.values, {
+        nameOnCard: value
+      }),
+    }));
+  },
+
+  _onNameBlur(event) {
+    this.setState((state) => ({
+      shouldValidate: _.extend(state.shouldValidate, {
+        nameOnCard: true
+      }),
+    }));
   },
 
   _onCardNumberChange(event) {
@@ -238,6 +279,7 @@ const CreditCardForm = React.createClass({
     this.props.onChange({
       isValid,
       element: this.state.elements.cardNumber,
+      values: this.state.values,
     });
   },
 });
