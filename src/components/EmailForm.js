@@ -44,7 +44,7 @@ const EmailForm = React.createClass({
           {...formItemLayout}
           required
           label="E-mail"
-          extra="Order confirmation will be sent to your email."
+          extra="Receipt and order details will be sent to your email."
         >
           <Input
             name="email"
