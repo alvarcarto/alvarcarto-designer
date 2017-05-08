@@ -82,6 +82,7 @@ const App = React.createClass({
     Modal.warning({
       title: 'Unsupported browser',
       okText: 'OK',
+      onCancel: () => null,  // To prevent expection
       content: <div>
         <p>
           Unfortunately this page doesn't work well with your browser.
@@ -114,6 +115,7 @@ const App = React.createClass({
     Modal.error({
       title: 'Unable to connect order system',
       okText: 'OK',
+      onCancel: () => null,  // To prevent expection
       content: <div>
         <p>
           This means you can't safely order a poster at this time. You could

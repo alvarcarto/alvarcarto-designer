@@ -110,6 +110,7 @@ const CheckoutPage = React.createClass({
 
           Modal.error({
             title: 'Payment error',
+            onCancel: () => null,  // To prevent expection
             content: <div>
               <p>
                 Order could not be completed, because processing the
@@ -125,6 +126,7 @@ const CheckoutPage = React.createClass({
           const detailedError = _.get(err, 'response.data.errors.0.messages.0', 'Unexpected error');
           Modal.error({
             title: 'Invalid order details',
+            onCancel: () => null,  // To prevent expection
             content: <div>
               <p>
                 Order could not be completed, because order form contained
@@ -139,6 +141,7 @@ const CheckoutPage = React.createClass({
         } else if (_.get(err, 'response.status') > 400) {
           Modal.error({
             title: 'Unexpected error',
+            onCancel: () => null,  // To prevent expection
             content: <div>
               <p>
                 Order could not be completed, because of an unexpected error.
@@ -156,6 +159,7 @@ const CheckoutPage = React.createClass({
         } else {
           Modal.error({
             title: 'Unexpected error',
+            onCancel: () => null,  // To prevent expection
             content: <div>
               <p>
                 Order could not be completed, because of an unexpected error.
