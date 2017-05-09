@@ -79,23 +79,6 @@ export const postOrder = (payload) => function(dispatch) {
       //  you would not have any issues storing the last four digits of your
       //  customer’s card number or the expiration date for easy reference."
 
-      const shippingAddressName = _.get(payload, 'shippingAddress.personName');
-      const creditCardPersonName = _.get(payload, 'creditCardPersonName');
-
-      let billingAddress = payload.billingAddress;
-      if (differentBillingAddress) {
-        // Using different billing address, add name on card to that address
-        billingAddress = _.merge({}, payload.billingAddress, {
-          personName: creditCardPersonName,
-        });
-      } else if (!stringEqualsIgnoreWhitespace(creditCardPersonName, shippingAddressName)) {
-        // Person chose to use shipping address also as billing address, but
-        // they gave a different name for credit card
-        billingAddress = _.merge({}, payload.shippingAddress, {
-          personName: creditCardPersonName,
-        });
-      }
-
       const order = {
         email: payload.email,
         differentBillingAddress,
@@ -105,6 +88,26 @@ export const postOrder = (payload) => function(dispatch) {
         stripeTokenResponse: stripeResponseToken,
         cart: payload.cart,
       };
+
+      const shippingAddressName = _.get(payload, 'shippingAddress.personName');
+      const creditCardPersonName = _.get(payload, 'creditCardPersonName');
+
+      let billingAddress = payload.billingAddress;
+      if (differentBillingAddress) {
+        // Using different billing address, add name on card to that address
+        order.billingAddress = _.merge({}, payload.billingAddress, {
+          personName: creditCardPersonName,
+        });
+        order.differentBillingAddress = true;
+      } else if (!stringEqualsIgnoreWhitespace(creditCardPersonName, shippingAddressName)) {
+        // Person chose to use shipping address also as billing address, but
+        // they gave a different name for credit card
+        order.billingAddress = _.merge({}, payload.shippingAddress, {
+          personName: creditCardPersonName,
+        });
+        order.differentBillingAddress = true;
+      }
+
       return api.postOrder(order);
     })
     .then(response => {
