@@ -1,4 +1,5 @@
 import React from 'react';
+import { Input, Icon, Button } from 'antd';
 import { connect } from 'react-redux';
 import { removeCartItem, editCartItem, addCartItemQuantity, addCartItem } from '../actions';
 import { calculateCartPrice } from 'alvarcarto-price-util';
@@ -39,6 +40,20 @@ const CheckoutSummary = React.createClass({
         </ul>
 
         <div className="CheckoutSummary__price-summary">
+          <div className="CheckoutSummary__add-promotion">
+            <Input
+              className="CheckoutSummary__add-promotion-input"
+              placeholder="Promotion code"
+              onChange={console.log}
+            />
+            <Button
+              type="primary"
+              size="small"
+              ghost
+            >
+              Apply
+            </Button>
+          </div>
           <table className="CheckoutSummary__price-table">
             <tbody>
               <tr>
