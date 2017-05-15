@@ -1,13 +1,27 @@
 import _ from 'lodash';
 import * as actions from '../action-types';
-import { coordToPrettyText, getQueryParameterByName } from '../util';
+import {
+  coordToPrettyText,
+  getQueryParameterByName,
+  getNumberQueryParameterByName
+} from '../util';
 import dummyCheckoutState from '../util/dummy-checkout-state';
 import history from '../history';
 
-const BARCELONA_CENTER = { lat: 41.382486097756924, lng: 2.166636589082849 };
-const BARCELONA_BOUNDS = {
-  southWest: { lat: 41.19935000018967, lng: 1.962713939614754 },
-  northEast: { lat: 41.56365477513209, lng: 2.3705567107488723 },
+const MAP_BOUNDS = {
+  southWest: {
+    lat: Number(getNumberQueryParameterByName('swLat')) || 41.19935000018967,
+    lng: Number(getNumberQueryParameterByName('swLng')) || 1.962713939614754
+  },
+  northEast: {
+    lat: Number(getNumberQueryParameterByName('neLat')) || 41.56365477513209,
+    lng: Number(getNumberQueryParameterByName('neLng')) || 2.3705567107488723
+  },
+};
+
+const MAP_CENTER = {
+  lat: 41.382486097756924,
+  lng: 2.166636589082849
 };
 
 const DEBUG = getQueryParameterByName('debug') === 'true';
@@ -18,18 +32,18 @@ const initialState = {
   cart: [
     {
       quantity: 1,
-      mapCenter: BARCELONA_CENTER,
-      mapBounds: BARCELONA_BOUNDS,
-      mapZoom: 10.5,
-      mapStyle: 'bw',
+      mapCenter: MAP_CENTER,
+      mapBounds: MAP_BOUNDS,
+      mapZoom: getNumberQueryParameterByName('zoom') || 10.5,
+      mapStyle: getQueryParameterByName('style') || 'bw',
       mapPitch: 0,
       mapBearing: 0,
-      orientation: 'portrait',
-      size: '50x70cm',
-      labelsEnabled: true,
-      labelHeader: 'Barcelona',
-      labelSmallHeader: 'Spain / Catalonia',
-      labelText: coordToPrettyText(BARCELONA_CENTER),
+      orientation: getQueryParameterByName('orientation') || 'portrait',
+      size: getQueryParameterByName('size') || '50x70cm',
+      labelsEnabled: getQueryParameterByName('labelsEnabled') === 'true',
+      labelHeader: getQueryParameterByName('labelHeader') || 'Barcelona',
+      labelSmallHeader: getQueryParameterByName('labelSmallHeader') || 'Spain / Catalonia',
+      labelText: getQueryParameterByName('labelText') || coordToPrettyText(MAP_CENTER),
     }
   ],
   checkoutFormState: DEBUG ? dummyCheckoutState : null,

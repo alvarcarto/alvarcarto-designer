@@ -133,6 +133,16 @@ function getQueryParameterByName(name) {
   return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
 }
 
+function getNumberQueryParameterByName(name) {
+  const val = getQueryParameterByName(name);
+  if (!val) {
+    return undefined;
+  }
+
+  const num = parseFloat(val);
+  return _.isFinite(num) ? num : undefined;
+}
+
 function stringEqualsIgnoreWhitespace(str1, str2) {
   if (!_.isString(str1) || !_.isString(str2)) {
     return false;
@@ -154,5 +164,6 @@ module.exports = {
   getStorageSafe,
   setStorageSafe,
   getQueryParameterByName,
+  getNumberQueryParameterByName,
   stringEqualsIgnoreWhitespace,
 };
