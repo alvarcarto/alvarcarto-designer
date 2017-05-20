@@ -10,18 +10,18 @@ import history from '../history';
 
 const MAP_BOUNDS = {
   southWest: {
-    lat: Number(getNumberQueryParameterByName('swLat')) || 41.19935000018967,
-    lng: Number(getNumberQueryParameterByName('swLng')) || 1.962713939614754
+    lat: getNumberQueryParameterByName('swLat') || 41.19935000018967,
+    lng: getNumberQueryParameterByName('swLng') || 1.962713939614754
   },
   northEast: {
-    lat: Number(getNumberQueryParameterByName('neLat')) || 41.56365477513209,
-    lng: Number(getNumberQueryParameterByName('neLng')) || 2.3705567107488723
+    lat: getNumberQueryParameterByName('neLat') || 41.56365477513209,
+    lng: getNumberQueryParameterByName('neLng') || 2.3705567107488723
   },
 };
 
 const MAP_CENTER = {
-  lat: 41.382486097756924,
-  lng: 2.166636589082849
+  lat: getNumberQueryParameterByName('cLat') || 41.382486097756924,
+  lng: getNumberQueryParameterByName('cLng') || 2.166636589082849
 };
 
 const DEBUG = getQueryParameterByName('debug') === 'true';
