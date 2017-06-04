@@ -1,7 +1,13 @@
 import React from 'react';
 import _ from 'lodash';
-import { setMapView, setMapStyle, setPosterLayout, setMapLabels } from '../actions';
-import { coordToPrettyText } from '../util';
+import {
+  setMapView,
+  setMapStyle,
+  setPosterStyle,
+  setPosterLayout,
+  setMapLabels
+} from '../actions';
+import { coordToPrettyText, getPosterLook } from '../util';
 import { Icon, Row, Col } from 'antd';
 import Accordion from './Accordion';
 import TabView from './TabView';
@@ -11,6 +17,7 @@ import GeoSearch from './GeoSearch';
 import PosterSizeSelect from './PosterSizeSelect';
 import OrientationSelect from './OrientationSelect';
 import PosterLabelInputs from './PosterLabelInputs';
+import PosterStyleSelect from './PosterStyleSelect';
 import MapStyleSelect from './MapStyleSelect';
 import CONST from '../constants';
 import Alert from './Alert';
@@ -50,7 +57,7 @@ const AlvarMapDesignPanel = React.createClass({
       <div className="AlvarMapDesignPanel__narrow-spacer"></div>
       <TabView initialSelected={0}>
         <TabView.Panel className="AlvarMapDesignPanel__location-section" header="Basics">
-          {this._renderLocationAndSizePanel(mapItem)}
+          {this._renderLocationAndStylePanel(mapItem)}
         </TabView.Panel>
         <TabView.Panel header="Labels">
           {this._renderLabelsPanel(mapItem)}
@@ -62,8 +69,11 @@ const AlvarMapDesignPanel = React.createClass({
   _renderWideView(mapItem) {
     return <div className="AlvarMapDesignPanel__wide">
       <Accordion initialSelected={0}>
-        <Accordion.Section className="AlvarMapDesignPanel__location-section" header="Location &amp; Size">
-          {this._renderLocationAndSizePanel(mapItem)}
+        <Accordion.Section className="AlvarMapDesignPanel__location-section" header="Location &amp; Style">
+          {this._renderLocationAndStylePanel(mapItem)}
+        </Accordion.Section>
+        <Accordion.Section className="AlvarMapDesignPanel__location-section" header="Size &amp; Layout">
+          {this._renderSizePanel(mapItem)}
         </Accordion.Section>
         <Accordion.Section header="Labels">
           {this._renderLabelsPanel(mapItem)}
@@ -72,7 +82,9 @@ const AlvarMapDesignPanel = React.createClass({
     </div>;
   },
 
-  _renderLocationAndSizePanel(mapItem) {
+  _renderLocationAndStylePanel(mapItem) {
+    const posterLook = getPosterLook(mapItem.posterStyle);
+
     return <div className="AlvarMapDesignPanel__group">
       <Row className="ant-form-item">
         <Col {...formColLabel} className="ant-form-item-label">
@@ -83,6 +95,28 @@ const AlvarMapDesignPanel = React.createClass({
         </Col>
       </Row>
 
+      <div className="AlvarMapDesignPanel__group">
+        <h4>Poster look</h4>
+        <PosterStyleSelect
+          defaultValue={mapItem.posterStyle}
+          selected={mapItem.posterStyle}
+          onChange={this._onPosterStyleChange}
+        />
+      </div>
+
+      <div className="AlvarMapDesignPanel__group">
+        <h4>Map color</h4>
+        <MapStyleSelect
+          showStyles={posterLook.allowedMapStyles}
+          selected={mapItem.mapStyle}
+          onChange={this._onMapStyleChange}
+        />
+      </div>
+    </div>;
+  },
+
+  _renderSizePanel(mapItem) {
+    return <div className="AlvarMapDesignPanel__group">
       <Row className="ant-form-item">
         <Col {...formColLabel} className="ant-form-item-label">
           <label>Size</label>
@@ -111,22 +145,16 @@ const AlvarMapDesignPanel = React.createClass({
           <p>Our posters fit to standard frames which you can find anywhere.</p>
         </Alert>
       </div>
-
-      {/*
-      <div className="AlvarMapDesignPanel__group">
-        <MapStyleSelect
-          selected={mapItem.mapStyle}
-          onChange={this._onStyleChange}
-        />
-      </div>
-      */}
     </div>;
   },
 
   _renderLabelsPanel(mapItem) {
+    const posterLook = getPosterLook(mapItem.posterStyle);
+
     return <div className="AlvarMapDesignPanel__group">
       <PosterLabelInputs dispatch={this.props.dispatch} labels={{
         enabled: mapItem.labelsEnabled,
+        showLabels: posterLook.labels,
         header: mapItem.labelHeader,
         smallHeader: mapItem.labelSmallHeader,
         text: mapItem.labelText,
@@ -167,8 +195,12 @@ const AlvarMapDesignPanel = React.createClass({
     }));
   },
 
-  _onStyleChange(value) {
+  _onMapStyleChange(value) {
     this.props.dispatch(setMapStyle(value));
+  },
+
+  _onPosterStyleChange(value) {
+    this.props.dispatch(setPosterStyle(value));
   },
 
   _onOrientationChange(value) {

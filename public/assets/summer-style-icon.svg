@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="386px" height="386px" viewBox="0 0 386 386" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 3.8.3 (29802) - http://www.bohemiancoding.com/sketch -->
+    <title>summer-style-icon</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Summer" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Icon">
+            <circle id="Border" cx="193" cy="193" r="192.5"></circle>
+            <path d="M193,92 C200,116 223,123 244,106 C238,130 254,147 281,143 C263,161 269,184 295,193 C270,200 264,223 281,244 C257,238 240,254 244,281 C226,263 203,269 193,295 C187,270 164,264 143,281 C149,257 132,240 106,244 C123,226 117,203 92,193 C116,187 123,164 106,143 C130,149 147,132 143,106 C161,123 184,117 193,92 L193,92 Z M193.5,142 C221.862319,142 245,165.137681 245,193.5 C245,221.862319 221.862319,245 193.5,245 C165.137681,245 142,221.862319 142,193.5 C142,165.137681 165.137681,142 193.5,142 L193.5,142 Z" id="Shape" fill="#2A2A2A"></path>
+        </g>
+    </g>
+</svg>

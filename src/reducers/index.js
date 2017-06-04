@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import * as actions from '../action-types';
-import { coordToPrettyText, getQueryParameterByName } from '../util';
+import { coordToPrettyText, getQueryParameterByName, getPosterLook } from '../util';
 import dummyCheckoutState from '../util/dummy-checkout-state';
 import history from '../history';
 
@@ -22,6 +22,7 @@ const initialState = {
       mapBounds: BARCELONA_BOUNDS,
       mapZoom: 10.5,
       mapStyle: 'bw',
+      posterStyle: 'bw',
       mapPitch: 0,
       mapBearing: 0,
       orientation: 'portrait',
@@ -75,6 +76,20 @@ function reducer(state = initialState, action) {
 
     case actions.SET_MAP_STYLE:
       return extendCurrentCartItem(state, { mapStyle: action.payload });
+
+    case actions.SET_POSTER_STYLE:
+      let posterStyle = action.payload;
+      const posterLook = getPosterLook(posterStyle);
+      const currentItem = getCurrentCartItem(state);
+
+      if (_.isArray(posterLook.allowedMapStyles) && !_.includes(posterLook.allowedMapStyles, currentItem.mapStyle)) {
+        return extendCurrentCartItem(state, {
+          mapStyle: posterLook.allowedMapStyles[0],
+          posterStyle: action.payload,
+        });
+      }
+
+      return extendCurrentCartItem(state, { posterStyle: action.payload });
 
     case actions.SET_POSTER_LAYOUT:
       newAttrs = {
@@ -151,6 +166,11 @@ function reducer(state = initialState, action) {
     default:
       return state;
   }
+}
+
+function getCurrentCartItem(state) {
+  const index = state.editCartItem;
+  return state.cart[index];
 }
 
 function extendCurrentCartItem(state, newAttrs) {

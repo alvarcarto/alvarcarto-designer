@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React from 'react';
 import { setMapLabels } from '../actions';
 import { Form, Input, Switch } from 'antd';
@@ -20,29 +21,41 @@ const PosterLabelInputs = React.createClass({
             <Switch size="default" defaultChecked={labels.enabled} onChange={this._onSwitchChange} />
           </Form.Item>
 
-          <Form.Item
-            labelCol={formColLabel}
-            wrapperCol={formColInput}
-            label="Header"
-          >
-            <Input disabled={!labels.enabled} placeholder="Header" value={labels.header} onChange={this._onHeaderChange} />
-          </Form.Item>
+          {
+            _.includes(labels.showLabels, 'header')
+              ? <Form.Item
+                  labelCol={formColLabel}
+                  wrapperCol={formColInput}
+                  label="Header"
+                >
+                  <Input disabled={!labels.enabled} placeholder="Header" value={labels.header} onChange={this._onHeaderChange} />
+                </Form.Item>
+              : null
+          }
 
-          <Form.Item
-            labelCol={formColLabel}
-            wrapperCol={formColInput}
-            label="Small header"
-          >
-            <Input disabled={!labels.enabled} placeholder="Small header" value={labels.smallHeader} onChange={this._onSmallHeaderChange} />
-          </Form.Item>
+          {
+            _.includes(labels.showLabels, 'smallHeader')
+              ? <Form.Item
+                  labelCol={formColLabel}
+                  wrapperCol={formColInput}
+                  label="Small header"
+                >
+                  <Input disabled={!labels.enabled} placeholder="Small header" value={labels.smallHeader} onChange={this._onSmallHeaderChange} />
+                </Form.Item>
+              : null
+          }
 
-          <Form.Item
-            labelCol={formColLabel}
-            wrapperCol={formColInput}
-            label="Text"
-          >
-            <Input disabled={!labels.enabled} placeholder="Text" value={labels.text} onChange={this._onTextChange} />
-          </Form.Item>
+          {
+            _.includes(labels.showLabels, 'text')
+              ? <Form.Item
+                  labelCol={formColLabel}
+                  wrapperCol={formColInput}
+                  label="Text"
+                >
+                  <Input disabled={!labels.enabled} placeholder="Text" value={labels.text} onChange={this._onTextChange} />
+                </Form.Item>
+              : null
+          }
         </Form>
       </div>
     );

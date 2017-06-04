@@ -24,6 +24,11 @@ export const setMapStyle = (style) => ({
   payload: style,
 });
 
+export const setPosterStyle = (style) => ({
+  type: actions.SET_POSTER_STYLE,
+  payload: style,
+});
+
 export const setPosterLayout = (layout) => ({
   type: actions.SET_POSTER_LAYOUT,
   payload: layout,

@@ -2,11 +2,13 @@ import ReactDOM from 'react-dom';
 import { message } from 'antd';
 import React from 'react';
 import axios from 'axios';
+import { getStyle, getPosterLook } from '../util';
 import config from '../config';
 const { CancelToken } = axios;
 
 function getPoster(mapItem, axiosOpts) {
-  const name = `${mapItem.mapStyle}-${mapItem.size}-${mapItem.orientation}.svg`;
+  const styleObj = getStyle(mapItem.mapStyle);
+  const name = `${mapItem.posterStyle}-${mapItem.size}-${mapItem.orientation}.svg`;
   return axios.get(`${config.REACT_APP_RENDER_API_URL}/posters/${name}`, axiosOpts);
 }
 
@@ -26,6 +28,7 @@ const AlvarMapOverlay = React.createClass({
     const nextItem = nextProps.mapItem;
     const hasChanged =
       oldItem.mapStyle !== nextItem.mapStyle ||
+      oldItem.posterStyle !== nextItem.posterStyle ||
       oldItem.size !== nextItem.size ||
       oldItem.orientation !== nextItem.orientation;
 
@@ -95,19 +98,44 @@ const AlvarMapOverlay = React.createClass({
       return;
     }
 
-    setText(el.querySelector('#header'), mapItem.labelHeader.toUpperCase());
-    setText(el.querySelector('#small-header'), mapItem.labelSmallHeader.toUpperCase());
-    setText(el.querySelector('#text'), mapItem.labelText.toUpperCase());
+    const posterLook = getPosterLook(mapItem.posterStyle);
+    const { upperCaseLabels } = posterLook;
+    const styleObj = getStyle(mapItem.mapStyle);
+    const { labelColor } = styleObj;
+
+    const labelHeader = upperCaseLabels
+      ? mapItem.labelHeader.toUpperCase()
+      : mapItem.labelHeader;
+    updateText(el.querySelector('#header'), labelHeader, { color: labelColor });
+
+    const smallHeaderEl = el.querySelector('#small-header');
+    if (smallHeaderEl) {
+      const labelSmallHeader = upperCaseLabels
+        ? mapItem.labelSmallHeader.toUpperCase()
+        : mapItem.labelSmallHeader;
+      updateText(smallHeaderEl, labelSmallHeader, { color: labelColor });
+    }
+
+    const textEl = el.querySelector('#text');
+    if (textEl) {
+      const labelText = upperCaseLabels
+        ? mapItem.labelText.toUpperCase()
+        : mapItem.labelText;
+      updateText(textEl, labelText, { color: labelColor });
+    }
   }
 })
 
-function setText(textNode, value) {
+function updateText(textNode, value, opts = {}) {
   const tspanList = textNode.getElementsByTagName('tspan');
   if (tspanList.length < 1) {
     throw new Error(`Unexpected amount of tspan elements found: ${tspanList.length}`);
   }
 
   tspanList.item(0).textContent = value;
+  if (opts.color) {
+    textNode.setAttribute('fill', opts.color);
+  }
 }
 
 module.exports = AlvarMapOverlay;

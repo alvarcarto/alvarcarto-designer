@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="170px" height="170px" viewBox="0 0 170 170" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 3.8.3 (29802) - http://www.bohemiancoding.com/sketch -->
+    <title>classy-style-icon</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Classy" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Icon" transform="translate(1.000000, 1.000000)">
+            <circle id="Border" cx="84" cy="84" r="84"></circle>
+            <g id="Group" transform="translate(39.000000, 53.000000)" fill="#424242">
+                <path d="M45.003,78 C44.344,78 43.719,77.703 43.304,77.193 L0.49,24.709 C-0.155,23.919 -0.164,22.791 0.466,21.989 L17.113,0.836 C17.527,0.309 18.163,0 18.836,0 L71.164,0 C71.837,0 72.473,0.309 72.887,0.836 L89.533,21.989 C90.164,22.791 90.154,23.919 89.51,24.709 L46.702,77.193 C46.286,77.703 45.662,78 45.003,78 L45.003,78 Z M4.99,23.311 L45.003,72.363 L85.01,23.311 L70.099,4.36 L19.901,4.36 L4.99,23.311 L4.99,23.311 Z" id="Shape"></path>
+                <rect id="Rectangle-path" x="2.189" y="21.154" width="85.621" height="4.359"></rect>
+                <path d="M45.003,78 C44.076,78 43.248,77.417 42.94,76.547 L16.772,2.907 L20.9,1.452 L45.003,69.283 L69.102,1.453 L73.23,2.907 L47.068,76.547 C46.758,77.417 45.93,78 45.003,78 L45.003,78 Z" id="Shape"></path>
+                <path d="M62.004,24.772 L45,5.484 L27.998,24.772 L24.707,21.895 L43.355,0.742 C43.771,0.271 44.37,0 45,0 C45.63,0 46.229,0.27 46.645,0.742 L65.294,21.895 L62.004,24.772 L62.004,24.772 Z" id="Shape"></path>
+            </g>
+        </g>
+    </g>
+</svg>

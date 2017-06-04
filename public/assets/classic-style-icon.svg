@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="457px" height="457px" viewBox="0 0 457 457" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 3.8.3 (29802) - http://www.bohemiancoding.com/sketch -->
+    <title>original-style-icon</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Original" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Icon" transform="translate(1.000000, 1.000000)">
+            <circle id="Border" cx="227.5" cy="227.5" r="227.5"></circle>
+            <g id="Group" transform="translate(96.000000, 96.000000)" fill="#000000">
+                <path d="M188,73 L166,111 L258,128 C261,129 261,132 258,133 L165,151 L188,188 L150,166 L133,258 C132,261 129,261 128,258 L110,165 L73,188 L95,150 L3,133 C0,132 0,129 3,128 L97,110 L73,73 L111,95 L128,3 C129,0 132,0 133,3 L151,97 L188,73 L188,73 Z M131,108 C143,108 153,118 153,131 C153,143 143,153 131,153 C118,153 108,143 108,131 C108,118 118,108 131,108 L131,108 Z M115,98 L130,107 L130,19 L115,98 L115,98 Z M98,146 L107,131 L19,131 L98,146 L98,146 Z M146,163 L131,154 L131,242 L146,163 L146,163 Z M163,115 L154,130 L242,130 L163,115 L163,115 Z" id="Shape"></path>
+                <circle id="Oval" cx="131" cy="131" r="13"></circle>
+            </g>
+        </g>
+    </g>
+</svg>

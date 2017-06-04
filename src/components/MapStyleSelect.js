@@ -1,14 +1,19 @@
 import React from 'react';
 import _ from 'lodash';
+import { Tooltip } from 'antd';
 import { getStyles } from '../util';
 import { TickIcon } from '../util/svg';
 
 const MapStyleSelect = React.createClass({
   render() {
+    const styles = _.isArray(this.props.showStyles)
+      ? _.filter(getStyles(), s => _.includes(this.props.showStyles, s.id))
+      : getStyles();
+
     return (
       <div className="MapStyleSelect">
         {
-          _.map(getStyles(), style => {
+          _.map(styles, style => {
             return <MapStyleItem
               onClick={this._onClickItem}
               key={style.id}
@@ -33,22 +38,13 @@ const MapStyleItem = React.createClass({
       className += ' MapStyleSelectItem--selected';
     }
 
+    const style = {
+      background: this.props.style.color,
+    };
     return (
-      <div className={className} onClick={this._onClick}>
-        <div className="MapStyleSelectItem__circle noselect">
-          <img
-            className="MapStyleSelectItem__circle-image"
-            src={this.props.style.image}
-            alt="Map style"
-          />
-          <div className="MapStyleSelectItem__circle-overlay">
-            <TickIcon style={{ stroke: 'white' }}/>
-          </div>
-        </div>
-        <div className="MapStyleSelectItem__label">
-          {this.props.style.name}
-        </div>
-      </div>
+      <Tooltip title={this.props.style.name}>
+        <div className={className} style={style} onClick={this._onClick}></div>
+      </Tooltip>
     );
   },
 

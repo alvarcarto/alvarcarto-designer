@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="62px" height="62px" viewBox="0 0 62 62" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 3.8.3 (29802) - http://www.bohemiancoding.com/sketch -->
+    <title>modern-style-icon</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Modern" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Icon" transform="translate(1.000000, 1.000000)">
+            <circle id="Border" cx="30" cy="30" r="30"></circle>
+            <path d="M24.0116951,27 L17,27 L17,44 L34,44 L34,36.9883049 C34.1656914,36.9960726 34.332387,37 34.5,37 C40.2989899,37 45,32.2989899 45,26.5 C45,20.7010101 40.2989899,16 34.5,16 C28.7010101,16 24,20.7010101 24,26.5 C24,26.667613 24.0039274,26.8343086 24.0116951,27 Z M24.0116951,27 L34,27 L34,36.9883049 C28.5988746,36.7350962 24.2649038,32.4011254 24.0116951,27 Z" id="Combined-Shape" fill="#3C3C3C"></path>
+        </g>
+    </g>
+</svg>
