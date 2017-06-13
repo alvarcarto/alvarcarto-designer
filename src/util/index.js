@@ -1,120 +1,7 @@
 import _ from 'lodash';
 import { oneLineTrim } from 'common-tags';
 import config from '../config';
-
-const POSTER_LOOKS = [
-  /*{
-    id: 'classic',
-    allowedMapStyles: ['bw', 'gray', 'black'],
-    upperCaseLabels: true,
-    labels: ['header', 'smallHeader', 'text'],
-    icon: `${config.PUBLIC_URL}/assets/classic-style-icon.svg`,
-    name: 'Classic',
-  },*/
-  {
-    id: 'bw',
-    allowedMapStyles: ['bw', 'gray', 'black'],
-    upperCaseLabels: true,
-    labels: ['header', 'smallHeader', 'text'],
-    icon: `${config.PUBLIC_URL}/assets/modern-style-icon.svg`,
-    name: 'Modern',
-  },
-  {
-    id: 'sharp',
-    upperCaseLabels: true,
-    labels: ['header'],
-    icon: `${config.PUBLIC_URL}/assets/sharp-style-icon.svg`,
-    name: 'Sharp',
-  },
-  {
-    id: 'pacific',
-    upperCaseLabels: false,
-    labels: ['header'],
-    icon: `${config.PUBLIC_URL}/assets/pacific-style-icon.svg`,
-    name: 'Pacific',
-  },
-  {
-    id: 'summer',
-    upperCaseLabels: true,
-    labels: ['header'],
-    icon: `${config.PUBLIC_URL}/assets/summer-style-icon.svg`,
-    name: 'Summer',
-  },
-  {
-    id: 'round',
-    upperCaseLabels: true,
-    labels: ['header'],
-    icon: `${config.PUBLIC_URL}/assets/round-style-icon.svg`,
-    name: 'Round',
-  },
-];
-
-const MAP_STYLES = [
-  {
-    id: 'bw',
-    color: '#fff',
-    labelColor: '#000',
-    type: 'raster',
-    url: `${config.REACT_APP_TILE_API_URL}/bw/{z}/{x}/{y}/tile.png`,
-    name: 'White',
-  },
-  {
-    id: 'gray',
-    color: '#ddd',
-    labelColor: '#000',
-    type: 'raster',
-    url: `${config.REACT_APP_TILE_API_URL}/gray/{z}/{x}/{y}/tile.png`,
-    name: 'Gray',
-  },
-  {
-    id: 'black',
-    color: '#000',
-    labelColor: '#000',
-    type: 'raster',
-    url: `${config.REACT_APP_TILE_API_URL}/black/{z}/{x}/{y}/tile.png`,
-    name: 'Black',
-  },
-  {
-    id: 'petrol',
-    color: '#4b7b8f',
-    labelColor: '#4b7b8f',
-    type: 'raster',
-    url: `${config.REACT_APP_TILE_API_URL}/petrol/{z}/{x}/{y}/tile.png`,
-    name: 'Petrol',
-  },
-  {
-    id: 'pastel-blue',
-    color: '#94D5E0',
-    labelColor: '#94D5E0',
-    type: 'raster',
-    url: `${config.REACT_APP_TILE_API_URL}/pastel-blue/{z}/{x}/{y}/tile.png`,
-    name: 'Pastel blue',
-  },
-  {
-    id: 'cotton',
-    color: '#FFB8D4',
-    labelColor: '#FFB8D4',
-    type: 'raster',
-    url: `${config.REACT_APP_TILE_API_URL}/cotton/{z}/{x}/{y}/tile.png`,
-    name: 'Cotton',
-  },
-  {
-    id: 'copper',
-    color: '#DE8E65',
-    labelColor: '#DE8E65',
-    type: 'raster',
-    url: `${config.REACT_APP_TILE_API_URL}/copper/{z}/{x}/{y}/tile.png`,
-    name: 'Copper',
-  },
-  {
-    id: 'pastel-green',
-    color: '#BDECB6',
-    labelColor: '#BDECB6',
-    type: 'raster',
-    url: `${config.REACT_APP_TILE_API_URL}/pastel-green/{z}/{x}/{y}/tile.png`,
-    name: 'Pastel green',
-  }
-];
+import { POSTER_STYLES, MAP_STYLES } from 'alvarcarto-common';
 
 function posterSizeToPixels(size, orientation) {
   let dimensions;
@@ -162,7 +49,8 @@ function createPosterImageUrl(mapItem) {
     &swLng=${mapItem.mapBounds.southWest.lng}
     &neLat=${mapItem.mapBounds.northEast.lat}
     &neLng=${mapItem.mapBounds.northEast.lng}
-    &style=${mapItem.mapStyle}
+    &mapStyle=${mapItem.mapStyle}
+    &posterStyle=${mapItem.posterStyle}
     &size=${mapItem.size}
     &orientation=${mapItem.orientation}
     &labelsEnabled=${mapItem.labelsEnabled}
@@ -201,20 +89,42 @@ function _resolveOrientation(dimensions, orientation) {
   return dimensions;
 }
 
+function _transformStyle(styleObj) {
+  return _.extend({}, styleObj, {
+    url: `${config.REACT_APP_TILE_API_URL}/${styleObj.id}/{z}/{x}/{y}/tile.png`,
+  });
+}
+
 function getStyle(styleId) {
-  return _.find(MAP_STYLES, { id: styleId });
+  const found = _.find(MAP_STYLES, { id: styleId });
+  if (found) {
+    return _transformStyle(found);
+  }
+
+  return null;
 }
 
 function getStyles() {
-  return MAP_STYLES;
+  return _.map(MAP_STYLES, _transformStyle);
+}
+
+function _transformPosterStyle(styleObj) {
+  return _.extend({}, styleObj, {
+    icon: `${config.PUBLIC_URL}/assets/${styleObj.id}-style-icon.svg`,
+  });
 }
 
 function getPosterLook(id) {
-  return _.find(POSTER_LOOKS, { id: id });
+  const found = _.find(POSTER_STYLES, { id: id });
+  if (found) {
+    return _transformPosterStyle(found);
+  }
+
+  return null;
 }
 
 function getPosterLooks() {
-  return POSTER_LOOKS;
+  return _.map(POSTER_STYLES, _transformPosterStyle);
 }
 
 function getStorageSafe(key) {

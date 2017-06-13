@@ -72,7 +72,7 @@ const AlvarMapDesignPanel = React.createClass({
         <Accordion.Section className="AlvarMapDesignPanel__location-section" header="Location &amp; Style">
           {this._renderLocationAndStylePanel(mapItem)}
         </Accordion.Section>
-        <Accordion.Section className="AlvarMapDesignPanel__location-section" header="Size &amp; Layout">
+        <Accordion.Section className="AlvarMapDesignPanel__size-section" header="Size &amp; Layout">
           {this._renderSizePanel(mapItem)}
         </Accordion.Section>
         <Accordion.Section header="Labels">
@@ -86,16 +86,11 @@ const AlvarMapDesignPanel = React.createClass({
     const posterLook = getPosterLook(mapItem.posterStyle);
 
     return <div className="AlvarMapDesignPanel__group">
-      <Row className="ant-form-item">
-        <Col {...formColLabel} className="ant-form-item-label">
-          <label>Location</label>
-        </Col>
-        <Col {...formColInput}>
-          <GeoSearch onChange={this._onGeoSearch} />
-        </Col>
-      </Row>
-
       <div className="AlvarMapDesignPanel__group">
+        <GeoSearch onChange={this._onGeoSearch} />
+      </div>
+
+      <div className="AlvarMapDesignPanel__group AlvarMapDesignPanel__poster-style">
         <h4>Poster look</h4>
         <PosterStyleSelect
           defaultValue={mapItem.posterStyle}
@@ -117,33 +112,25 @@ const AlvarMapDesignPanel = React.createClass({
 
   _renderSizePanel(mapItem) {
     return <div className="AlvarMapDesignPanel__group">
-      <Row className="ant-form-item">
-        <Col {...formColLabel} className="ant-form-item-label">
-          <label>Size</label>
-        </Col>
-        <Col {...formColInput}>
-          <PosterSizeSelect
-            orientation={mapItem.orientation}
-            selected={mapItem.size}
-            onChange={this._onSizeChange}
-          />
-        </Col>
-      </Row>
-
-      <Row className="ant-form-item AlvarMapDesignPanel__orientation-select">
-        <Col {...formColLabel} className="ant-form-item-label">
-          <label>Layout</label>
-        </Col>
-        <Col {...formColInput}>
-          <OrientationSelect selected={mapItem.orientation} onChange={this._onOrientationChange} />
-        </Col>
-      </Row>
-
       <div className="AlvarMapDesignPanel__info">
         <Alert>
           <Icon type="picture" />
           <p>Our posters fit to standard frames which you can find anywhere.</p>
         </Alert>
+      </div>
+
+      <div className="AlvarMapDesignPanel__group">
+        <h4>Size</h4>
+        <PosterSizeSelect
+          orientation={mapItem.orientation}
+          selected={mapItem.size}
+          onChange={this._onSizeChange}
+        />
+      </div>
+
+      <div className="AlvarMapDesignPanel__group">
+        <h4>Layout</h4>
+        <OrientationSelect selected={mapItem.orientation} onChange={this._onOrientationChange} />
       </div>
     </div>;
   },

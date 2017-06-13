@@ -1,7 +1,9 @@
+import _ from 'lodash';
 import ReactDOM from 'react-dom';
 import { message } from 'antd';
 import React from 'react';
 import axios from 'axios';
+import { addOrUpdateLines } from 'alvarcarto-common';
 import { getStyle, getPosterLook } from '../util';
 import config from '../config';
 const { CancelToken } = axios;
@@ -114,6 +116,17 @@ const AlvarMapOverlay = React.createClass({
         ? mapItem.labelSmallHeader.toUpperCase()
         : mapItem.labelSmallHeader;
       updateText(smallHeaderEl, labelSmallHeader, { color: labelColor });
+
+      if (posterLook.addLines) {
+        addOrUpdateLines(document, el.querySelector('svg'), smallHeaderEl, {
+          getBBoxForSvgElement: getBBoxForSvgElement,
+          svgAttributes: {
+            stroke: '#2d2d2d',
+            'stroke-width': '6px',
+            'stroke-linecap': 'square',
+          },
+        });
+      }
     }
 
     const textEl = el.querySelector('#text');
@@ -122,6 +135,24 @@ const AlvarMapOverlay = React.createClass({
         ? mapItem.labelText.toUpperCase()
         : mapItem.labelText;
       updateText(textEl, labelText, { color: labelColor });
+    }
+
+    const mapping = {
+      header: 'labelHeader',
+      smallHeader: 'labelSmallHeader',
+      text: 'labelText',
+    };
+    const rule = _.find(posterLook.labelRules, (rule) => {
+      const mapItemAttr = mapping[rule.label];
+      const str = mapItem[mapItemAttr];
+      return str.length >= rule.minLength;
+    });
+
+    if (rule) {
+      const ruleTargetEl = el.querySelector(`#${rule.label}`);
+      _.forEach(rule.svgAttributes, (val, key) => {
+        ruleTargetEl.setAttribute(key, val);
+      });
     }
   }
 })
@@ -136,6 +167,10 @@ function updateText(textNode, value, opts = {}) {
   if (opts.color) {
     textNode.setAttribute('fill', opts.color);
   }
+}
+
+function getBBoxForSvgElement(svgElem) {
+  return svgElem.getBBox();
 }
 
 module.exports = AlvarMapOverlay;

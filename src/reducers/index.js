@@ -22,7 +22,7 @@ const initialState = {
       mapBounds: BARCELONA_BOUNDS,
       mapZoom: 10.5,
       mapStyle: 'bw',
-      posterStyle: 'bw',
+      posterStyle: 'sharp',
       mapPitch: 0,
       mapBearing: 0,
       orientation: 'portrait',

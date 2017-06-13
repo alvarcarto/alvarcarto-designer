@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="455px" height="455px" viewBox="0 0 455 455" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 3.8.3 (29802) - http://www.bohemiancoding.com/sketch -->
+    <title>sans-style-icon</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="sans-style-icon">
+            <g id="Original">
+                <g id="Icon">
+                    <circle id="Border" cx="227.5" cy="227.5" r="227.5"></circle>
+                    <g id="Group" transform="translate(96.000000, 96.000000)">
+                        <path d="M188,73 L166,111 L258,128 C261,129 261,132 258,133 L165,151 L188,188 L150,166 L133,258 C132,261 129,261 128,258 L110,165 L73,188 L95,150 L3,133 C0,132 0,129 3,128 L97,110 L73,73 L111,95 L128,3 C129,0 132,0 133,3 L151,97 L188,73 L188,73 L188,73 Z" id="Shape" stroke="#000000" stroke-width="5" fill="#FFFFFF"></path>
+                        <polygon id="Shape-path" points="163 115 154 130 242 130 163 115"></polygon>
+                        <polygon id="Shape-path" points="146 163 131 154 131 242 146 163"></polygon>
+                        <polygon id="Shape-path" points="98 146 107 131 19 131 98 146"></polygon>
+                        <polygon id="Shape-path" points="115 98 130 107 130 19 115 98"></polygon>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
