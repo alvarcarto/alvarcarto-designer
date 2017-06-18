@@ -6,8 +6,8 @@ import history from '../history';
 
 const BARCELONA_CENTER = { lat: 41.382486097756924, lng: 2.166636589082849 };
 const BARCELONA_BOUNDS = {
-  southWest: { lat: 41.19935000018967, lng: 1.962713939614754 },
-  northEast: { lat: 41.56365477513209, lng: 2.3705567107488723 },
+  southWest: { lat: 41.20008064593956, lng: 1.985047735210639 },
+  northEast: { lat: 41.56438133922028, lng: 2.3491965063447577 },
 };
 
 const DEBUG = getQueryParameterByName('debug') === 'true';

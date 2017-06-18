@@ -12,6 +12,7 @@ const CONST = {
   // but in development it's convenient to have them separate
   REACT_APP_TILE_API_URL: process.env.REACT_APP_TILE_API_URL || 'https://tile-api.alvarcarto.com/tiles',
   REACT_APP_RENDER_API_URL: process.env.REACT_APP_RENDER_API_URL || 'https://tile-api.alvarcarto.com/render',
+  REACT_APP_RENDER_API_KEY: process.env.REACT_APP_RENDER_API_KEY,
 };
 
 if (!CONST.REACT_APP_STRIPE_PUBLISHABLE_KEY) {

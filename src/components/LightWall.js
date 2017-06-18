@@ -96,16 +96,6 @@ const LightWall = React.createClass({
 
           <div className="LightWall__scaler" style={autoprefix(scalerCss)}>
             <AlvarMap scaleZoom={scalerZoom} />
-
-            {
-              this.state.showPreview
-                ? <img
-                    className="LightWall__preview-image"
-                    src={createPosterImageUrl(mapItem)}
-                    alt=""
-                  />
-                : null
-            }
           </div>
 
           <div className="LightWall__zoom-container" style={zoomContainerCss}>
@@ -124,6 +114,16 @@ const LightWall = React.createClass({
             <div className="LightWall__height-label-line"></div>
             <p>{physicalDimensions.height} {physicalDimensions.unit}</p>
           </div>
+
+          {
+            this.state.showPreview
+              ? <img
+                  className="LightWall__preview-image"
+                  src={`${createPosterImageUrl(mapItem)}&apiKey=${config.REACT_APP_RENDER_API_KEY}`}
+                  alt=""
+                />
+              : null
+          }
         </div>
 
         <div className="LightWall__logo">

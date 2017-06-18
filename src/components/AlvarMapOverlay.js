@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { message } from 'antd';
 import React from 'react';
 import axios from 'axios';
-import { addOrUpdateLines } from 'alvarcarto-common';
+import { addOrUpdateLines, changeDynamicAttributes } from 'alvarcarto-common';
 import { getStyle, getPosterLook } from '../util';
 import config from '../config';
 const { CancelToken } = axios;
@@ -125,6 +125,7 @@ const AlvarMapOverlay = React.createClass({
             'stroke-width': '6px',
             'stroke-linecap': 'square',
           },
+          debugLines: false
         });
       }
     }
@@ -137,23 +138,7 @@ const AlvarMapOverlay = React.createClass({
       updateText(textEl, labelText, { color: labelColor });
     }
 
-    const mapping = {
-      header: 'labelHeader',
-      smallHeader: 'labelSmallHeader',
-      text: 'labelText',
-    };
-    const rule = _.find(posterLook.labelRules, (rule) => {
-      const mapItemAttr = mapping[rule.label];
-      const str = mapItem[mapItemAttr];
-      return str.length >= rule.minLength;
-    });
-
-    if (rule) {
-      const ruleTargetEl = el.querySelector(`#${rule.label}`);
-      _.forEach(rule.svgAttributes, (val, key) => {
-        ruleTargetEl.setAttribute(key, val);
-      });
-    }
+    changeDynamicAttributes(el.querySelector('svg'), mapItem);
   }
 })
 
