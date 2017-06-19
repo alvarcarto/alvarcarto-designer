@@ -3,7 +3,11 @@ import ReactDOM from 'react-dom';
 import { message } from 'antd';
 import React from 'react';
 import axios from 'axios';
-import { addOrUpdateLines, changeDynamicAttributes } from 'alvarcarto-common';
+import {
+  addOrUpdateLines,
+  changeDynamicAttributes,
+  posterSizeToMiddleLineStrokeWidth,
+} from 'alvarcarto-common';
 import { getStyle, getPosterLook } from '../util';
 import config from '../config';
 const { CancelToken } = axios;
@@ -121,9 +125,7 @@ const AlvarMapOverlay = React.createClass({
         addOrUpdateLines(document, el.querySelector('svg'), smallHeaderEl, {
           getBBoxForSvgElement: getBBoxForSvgElement,
           svgAttributes: {
-            stroke: '#2d2d2d',
-            'stroke-width': '6px',
-            'stroke-linecap': 'square',
+            'stroke-width': posterSizeToMiddleLineStrokeWidth(mapItem.size),
           },
           debugLines: false
         });
