@@ -1,7 +1,7 @@
 const CONST = {
   SYMBOL_EUR: '\u20AC',
   PRIMARY_COLOR: '#0084FF',
-  EMPTY_MAP_PADDING_FACTOR: 0.03,
+  EMPTY_MAP_PADDING_FACTOR: 0.035,
   // We are using maxWidth in all MediaQuery components, let's
   // -1 px to be consistent with CSS ranges
   SCREEN_XS: 480 - 1,
