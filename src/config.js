@@ -2,6 +2,7 @@ import _ from 'lodash';
 
 const CONST = {
   PUBLIC_URL: process.env.PUBLIC_URL,
+  NODE_ENV: process.env.NODE_ENV,
   DEVELOPMENT: process.env.NODE_ENV === 'development',
 
   REACT_APP_STRIPE_PUBLISHABLE_KEY: process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY || 'pk_test_PKlD56JoqROJNxZa8JoV5ILr',
