@@ -59,6 +59,9 @@ const AlvarMapDesignPanel = React.createClass({
         <TabView.Panel className="AlvarMapDesignPanel__location-section" header="Basics">
           {this._renderLocationAndStylePanel(mapItem)}
         </TabView.Panel>
+        <TabView.Panel className="AlvarMapDesignPanel__size-section" header="Size">
+          {this._renderSizePanel(mapItem)}
+        </TabView.Panel>
         <TabView.Panel header="Labels">
           {this._renderLabelsPanel(mapItem)}
         </TabView.Panel>
@@ -128,7 +131,7 @@ const AlvarMapDesignPanel = React.createClass({
         />
       </div>
 
-      <div className="AlvarMapDesignPanel__group">
+      <div className="AlvarMapDesignPanel__group AlvarMapDesignPanel__orientation-select">
         <h4>Layout</h4>
         <OrientationSelect selected={mapItem.orientation} onChange={this._onOrientationChange} />
       </div>

@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { Icon } from 'antd';
 
 const TabView = React.createClass({
@@ -63,27 +64,52 @@ const TabView = React.createClass({
 });
 
 TabView.Panel = React.createClass({
+  getInitialState() {
+    return {
+      contentHeight: 0,
+    };
+  },
+
+  componentDidMount() {
+    this._setHeightState();
+  },
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.selected) {
+      this._setHeightState();
+    }
+  },
+
   render() {
     let className = 'TabView__panel';
-    if (this.props.selected) {
-      className += ' TabView__panel--selected'
-    }
     if (this.props.className) {
       className += ` ${this.props.className}`;
     }
 
+    const style = {};
+    if (this.props.selected) {
+      style.transform = `translateY(-${this.state.contentHeight + 100}px)`;
+    }
+
     return (
-      <div className={className}>
+      <div className={className} style={style} ref={(div) => this.div = div}>
         <div className="TabView__panel-close-container">
           <a onClick={this._onClose}>
             <Icon className="bounce" type="down" />
           </a>
         </div>
         <div className="TabView__panel-content">
-          {this.props.children}
+          <div ref={(div) => this.contentDiv = div}>
+            {this.props.children}
+          </div>
         </div>
       </div>
     );
+  },
+
+  _setHeightState() {
+    const contentDivEl = ReactDOM.findDOMNode(this.contentDiv);
+    this.setState({ contentHeight: contentDivEl.clientHeight });
   },
 
   _onClose() {

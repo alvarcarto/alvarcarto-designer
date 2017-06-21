@@ -1,8 +1,10 @@
 import React from 'react';
 import _ from 'lodash';
 import { Tooltip } from 'antd';
+import MediaQuery from 'react-responsive';
 import { getStyles } from '../util';
 import { TickIcon } from '../util/svg';
+import CONST from '../constants';
 
 const MapStyleSelect = React.createClass({
   render() {
@@ -10,20 +12,23 @@ const MapStyleSelect = React.createClass({
       ? _.filter(getStyles(), s => _.includes(this.props.showStyles, s.id))
       : getStyles();
 
-    return (
-      <div className="MapStyleSelect">
-        {
-          _.map(styles, style => {
-            return <MapStyleItem
-              onClick={this._onClickItem}
-              key={style.id}
-              style={style}
-              selected={this.props.selected === style.id}
-            />;
-          })
-        }
-      </div>
-    );
+    return <MediaQuery maxWidth={CONST.SCREEN_SM}>
+      {(matches) =>
+        <div className="MapStyleSelect">
+          {
+            _.map(styles, style => {
+              return <MapStyleItem
+                tooltip={!matches}
+                onClick={this._onClickItem}
+                key={style.id}
+                style={style}
+                selected={this.props.selected === style.id}
+              />;
+            })
+          }
+        </div>
+      }
+    </MediaQuery>;
   },
 
   _onClickItem(styleId) {
@@ -41,11 +46,14 @@ const MapStyleItem = React.createClass({
     const style = {
       background: this.props.style.color,
     };
-    return (
-      <Tooltip title={this.props.style.name}>
+
+    if (this.props.tooltip) {
+      return <Tooltip title={this.props.style.name}>
         <div className={className} style={style} onClick={this._onClick}></div>
-      </Tooltip>
-    );
+      </Tooltip>;
+    }
+
+    return <div className={className} style={style} onClick={this._onClick}></div>;
   },
 
   _onClick() {

@@ -1,17 +1,20 @@
 import React from 'react';
 import _ from 'lodash';
 import { Icon, Tooltip } from 'antd';
-import Slider from 'react-slick';
+import MediaQuery from 'react-responsive';
 import { getPosterLooks } from '../util';
 import { TickIcon } from '../util/svg';
+import CONST from '../constants';
 
 const PosterStyleSelect = React.createClass({
   render() {
-    return (
-      <div className="PosterStyleSelect">
+    return <MediaQuery maxWidth={CONST.SCREEN_SM}>
+      {(matches) =>
+        <div className="PosterStyleSelect">
           {
             _.map(getPosterLooks(), style => {
               return <PosterStyleItem
+                tooltip={!matches}
                 onClick={this._onClickItem}
                 key={style.id}
                 style={style}
@@ -19,8 +22,9 @@ const PosterStyleSelect = React.createClass({
               />;
             })
           }
-      </div>
-    );
+        </div>
+      }
+    </MediaQuery>;
   },
 
   _onClickItem(styleId) {
@@ -35,22 +39,30 @@ const PosterStyleItem = React.createClass({
       className += ' PosterStyleSelectItem--selected';
     }
 
-    return (
-      <div className={className} onClick={this._onClick}>
+    if (this.props.tooltip) {
+      return <div className={className} onClick={this._onClick}>
         <Tooltip title={this.props.style.name}>
-          <div className="PosterStyleSelectItem__circle noselect">
-            <img
-              className="PosterStyleSelectItem__circle-image"
-              src={this.props.style.icon}
-              alt=""
-            />
-            <div className="PosterStyleSelectItem__circle-overlay">
-              <TickIcon style={{ stroke: 'white' }}/>
-            </div>
-          </div>
+          {this._renderContent()}
         </Tooltip>
+      </div>;
+    }
+
+    return <div className={className} onClick={this._onClick}>
+      {this._renderContent()}
+    </div>;
+  },
+
+  _renderContent() {
+    return <div className="PosterStyleSelectItem__circle noselect">
+      <img
+        className="PosterStyleSelectItem__circle-image"
+        src={this.props.style.icon}
+        alt=""
+      />
+      <div className="PosterStyleSelectItem__circle-overlay">
+        <TickIcon style={{ stroke: 'white' }}/>
       </div>
-    );
+    </div>;
   },
 
   _onClick() {
