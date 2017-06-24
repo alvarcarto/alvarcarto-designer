@@ -5,7 +5,12 @@ import { getStyle } from '../util';
 import { calculateItemPrice } from 'alvarcarto-price-util';
 import { createPosterThumbnailUrl } from '../util';
 import IconButton from './IconButton';
+import ImageLoader from 'react-imageloader';
 import CONST from '../constants';
+
+function preloader() {
+  return <Icon type="loading" />;
+}
 
 const CartItem = React.createClass({
   propTypes: {
@@ -44,11 +49,13 @@ const CartItem = React.createClass({
 
     return (
       <div className="CartItem">
-        {
-          item.mapBounds
-            ? <img src={createPosterThumbnailUrl(item)} className={cartImageClassName} alt="" />
-            : <div className={cartImageClassName}></div>
-        }
+        <ImageLoader
+          className={cartImageClassName}
+          src={createPosterThumbnailUrl(item)}
+          preloader={preloader}
+        >
+          <Icon type="frown-o" />
+        </ImageLoader>
 
         <div className="CartItem__content">
           <h3 className="CartItem__title">{item.labelHeader}</h3>

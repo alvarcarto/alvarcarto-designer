@@ -41,6 +41,7 @@
     "react-addons-css-transition-group": "^15.4.2",
     "react-addons-shallow-compare": "^15.4.1",
     "react-dom": "^15.4.1",
+    "react-imageloader": "^2.1.0",
     "react-leaflet": "^1.1.2",
     "react-redux": "^4.4.6",
     "react-responsive": "^1.2.7",

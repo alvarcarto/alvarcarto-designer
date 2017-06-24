@@ -5,17 +5,25 @@
 }
 
 .CartItem__image {
+  border: 1px solid #ccc;
   height: 70px;
   min-width: 50px;
   max-width: 100px;
   background: #f4f4f4;
-  display: block;
-  border: 1px solid #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-
-.CartItem__image--landscape {
-  height: 50px;
-  min-width: 70px;
+.CartItem__image:not(.CartItem__image--landscape) > img {
+  height: 100%;
+}
+.CartItem__image.CartItem__image--landscape {
+  height: auto;
+  max-height: 50px;
+  width: 70px;
+}
+.CartItem__image.CartItem__image--landscape > img {
+  width: 100%;
 }
 
 .CartItem__content {
