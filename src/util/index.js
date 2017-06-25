@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import { oneLineTrim } from 'common-tags';
 import config from '../config';
+import geolib from 'geolib';
 import { POSTER_STYLES, MAP_STYLES } from 'alvarcarto-common';
 
 function posterSizeToPixels(size, orientation) {
@@ -155,6 +156,61 @@ function getQueryParameterByName(name) {
   return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
 }
 
+function getQuery(name, type, defaultVal, allowList) {
+  const found = getQueryParameterByName(name);
+  if (_.isNull(found) || _.isUndefined(found)) {
+    return defaultVal;
+  }
+
+  switch (type) {
+    case 'string':
+      return parseStringQuery(found, defaultVal, allowList);
+    case 'float':
+      return parseFloatQuery(found, defaultVal);
+    case 'integer':
+      return parseIntegerQuery(found, defaultVal);
+    case 'boolean':
+      return parseBooleanQuery(found);
+    default:
+      return defaultVal;
+  }
+}
+
+function parseStringQuery(found, defaultVal, allowList) {
+  if (!isAllowed(allowList, found)) {
+    return defaultVal;
+  }
+  return found;
+}
+
+function parseFloatQuery(found, defaultVal) {
+  const val = Number(found);
+  if (!_.isFinite(val)) {
+    return defaultVal;
+  }
+  return found;
+}
+
+function parseIntegerQuery(found, defaultVal) {
+  const val = parseInt(found, 10);
+  if (!_.isFinite(val)) {
+    return defaultVal;
+  }
+  return found;
+}
+
+function parseBooleanQuery(found) {
+  return found === 'true';
+}
+
+function isAllowed(allowList, val) {
+  if (!allowList) {
+    return true;
+  }
+
+  return _.includes(allowList, val);
+}
+
 function stringEqualsIgnoreWhitespace(str1, str2) {
   if (!_.isString(str1) || !_.isString(str2)) {
     return false;
@@ -163,6 +219,16 @@ function stringEqualsIgnoreWhitespace(str1, str2) {
   const str1Trimmed = str1.replace(/\s/g, '');
   const str2Trimmed = str2.replace(/\s/g, '');
   return str1Trimmed.toLowerCase() === str2Trimmed.toLowerCase();
+}
+
+function getCenterOfCoordinates(coords) {
+  const newCoords = _.map(coords, coord => ({
+    latitude: coord.lat,
+    longitude: coord.lng,
+  }));
+  const center = geolib.getCenter(newCoords);
+
+  return { lat: Number(center.latitude), lng: Number(center.longitude) };
 }
 
 module.exports = {
@@ -178,5 +244,7 @@ module.exports = {
   getStorageSafe,
   setStorageSafe,
   getQueryParameterByName,
+  getQuery,
   stringEqualsIgnoreWhitespace,
+  getCenterOfCoordinates,
 };

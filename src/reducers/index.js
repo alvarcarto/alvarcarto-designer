@@ -1,16 +1,40 @@
 import _ from 'lodash';
 import * as actions from '../action-types';
-import { coordToPrettyText, getQueryParameterByName, getPosterLook } from '../util';
+import {
+  coordToPrettyText,
+  getQuery,
+  getPosterLook,
+  getCenterOfCoordinates
+} from '../util';
 import dummyCheckoutState from '../util/dummy-checkout-state';
 import history from '../history';
+import {
+  POSTER_STYLES,
+  POSTER_SIZES,
+  POSTER_ORIENTATIONS,
+  MAP_STYLES,
+} from 'alvarcarto-common';
 
-const BARCELONA_CENTER = { lat: 41.382486097756924, lng: 2.166636589082849 };
+const DEBUG = getQuery('debug', 'boolean', false) === 'true';
 const BARCELONA_BOUNDS = {
   southWest: { lat: 41.20008064593956, lng: 1.985047735210639 },
   northEast: { lat: 41.56438133922028, lng: 2.3491965063447577 },
 };
 
-const DEBUG = getQueryParameterByName('debug') === 'true';
+const initialMapBounds = {
+  southWest: {
+    lat: getQuery('swLat', 'float', BARCELONA_BOUNDS.southWest.lat),
+    lng: getQuery('swLng', 'float', BARCELONA_BOUNDS.southWest.lng),
+  },
+  northEast: {
+    lat: getQuery('neLat', 'float', BARCELONA_BOUNDS.northEast.lat),
+    lng: getQuery('neLng', 'float', BARCELONA_BOUNDS.northEast.lng),
+  },
+};
+const initialMapCenter = getCenterOfCoordinates([
+  initialMapBounds.southWest,
+  initialMapBounds.northEast,
+]);
 
 const initialState = {
   debug: DEBUG,
@@ -18,19 +42,19 @@ const initialState = {
   cart: [
     {
       quantity: 1,
-      mapCenter: BARCELONA_CENTER,
-      mapBounds: BARCELONA_BOUNDS,
-      mapZoom: 10.5,
-      mapStyle: getQueryParameterByName('mapStyle') || 'bw',
-      posterStyle: getQueryParameterByName('posterStyle') || 'sharp',
+      mapCenter: initialMapCenter,
+      mapBounds: initialMapBounds,
+      mapZoom: getQuery('mapZoom', 'float', 10.5),
+      mapStyle: getQuery('mapStyle', 'string', 'bw', _.map(MAP_STYLES, 'id')),
+      posterStyle: getQuery('posterStyle', 'string', 'sharp', _.map(POSTER_STYLES, 'id')),
       mapPitch: 0,
       mapBearing: 0,
-      orientation: 'portrait',
-      size: '50x70cm',
-      labelsEnabled: true,
-      labelHeader: 'Barcelona',
-      labelSmallHeader: 'Spain / Catalonia',
-      labelText: coordToPrettyText(BARCELONA_CENTER),
+      orientation: getQuery('orientation', 'string', 'portrait', _.map(POSTER_ORIENTATIONS, 'id')),
+      size: getQuery('size', 'string', '50x70cm', _.map(POSTER_SIZES, 'id')),
+      labelsEnabled: getQuery('labelsEnabled', 'boolean', true),
+      labelHeader: getQuery('labelHeader', 'string', 'Barcelona'),
+      labelSmallHeader: getQuery('labelSmallHeader', 'string', 'Catalonia'),
+      labelText: coordToPrettyText(initialMapCenter),
     }
   ],
   checkoutFormState: DEBUG ? dummyCheckoutState : null,
