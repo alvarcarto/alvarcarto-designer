@@ -91,8 +91,8 @@ const AlvarMap = React.createClass({
       onMoveEnd={this._onLeafletMoveEnd}
       center={mapItem.mapCenter}
       zoom={mapItem.mapZoom}
-      minZoom={8}
-      maxZoom={19}
+      minZoom={CONST.MAP_MIN_ZOOOM}
+      maxZoom={CONST.MAP_MAX_ZOOM}
     >
       <LTileLayer zoomOffset={1} tileSize={128} url={style.url} />
     </LeafletMap>;
