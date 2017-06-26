@@ -188,7 +188,7 @@ function parseFloatQuery(found, defaultVal) {
   if (!_.isFinite(val)) {
     return defaultVal;
   }
-  return found;
+  return val;
 }
 
 function parseIntegerQuery(found, defaultVal) {
@@ -196,7 +196,7 @@ function parseIntegerQuery(found, defaultVal) {
   if (!_.isFinite(val)) {
     return defaultVal;
   }
-  return found;
+  return val;
 }
 
 function parseBooleanQuery(found) {
