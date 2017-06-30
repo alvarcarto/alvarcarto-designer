@@ -100,8 +100,8 @@ const LightWall = React.createClass({
 
           <div className="LightWall__zoom-container" style={zoomContainerCss}>
             <div className="leaflet-control-zoom leaflet-bar leaflet-control">
-              <a className="leaflet-control-zoom-in" href="#" title="Zoom in" role="button" aria-label="Zoom in" onClick={this._onZoomInClick}>+</a>
-              <a className="leaflet-control-zoom-out" href="#" title="Zoom out" role="button" aria-label="Zoom out" onClick={this._onZoomOutClick}>-</a>
+              <a className="leaflet-control-zoom-in" title="Zoom in" role="button" aria-label="Zoom in" onClick={this._onZoomInClick}>+</a>
+              <a className="leaflet-control-zoom-out" title="Zoom out" role="button" aria-label="Zoom out" onClick={this._onZoomOutClick}>-</a>
             </div>
           </div>
 
@@ -183,7 +183,9 @@ const LightWall = React.createClass({
     return Math.min(1, fitRatio);
   },
 
-  _onZoomInClick() {
+  _onZoomInClick(e) {
+    e.preventDefault();
+
     const { globalState } = this.props;
     const mapItem = globalState.cart[globalState.editCartItem];
     this.props.dispatch(setMapView({
@@ -191,7 +193,9 @@ const LightWall = React.createClass({
     }));
   },
 
-  _onZoomOutClick() {
+  _onZoomOutClick(e) {
+    e.preventDefault();
+
     const { globalState } = this.props;
     const mapItem = globalState.cart[globalState.editCartItem];
     this.props.dispatch(setMapView({
