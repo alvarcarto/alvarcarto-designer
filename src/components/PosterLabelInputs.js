@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React from 'react';
 import { setMapLabels } from '../actions';
-import { Form, Input, Switch } from 'antd';
+import { Form, Input, Switch, Checkbox } from 'antd';
 
 const formColLabel = { span: 6, md: { span: 6 }, lg: { span: 6 } };
 const formColInput = { span: 18, md: { span: 18 }, lg: { span: 18 } };
@@ -9,6 +9,7 @@ const formColInput = { span: 18, md: { span: 18 }, lg: { span: 18 } };
 const PosterLabelInputs = React.createClass({
   render() {
     const { labels } = this.props;
+    const { autoUpdateCoordinates } = labels;
 
     return (
       <div className="PosterLabelInputs">
@@ -48,11 +49,24 @@ const PosterLabelInputs = React.createClass({
           {
             _.includes(labels.showLabels, 'text')
               ? <Form.Item
+                  className="PosterLabelInputs__text"
                   labelCol={formColLabel}
                   wrapperCol={formColInput}
                   label="Text"
                 >
-                  <Input disabled={!labels.enabled} placeholder="Text" value={labels.text} onChange={this._onTextChange} />
+                  <Checkbox
+                    disabled={!labels.enabled}
+                    checked={autoUpdateCoordinates}
+                    onChange={this._onAutoUpdateCoordinatesChange}
+                  >
+                    Use map center coordinate as text
+                  </Checkbox>
+                  <Input
+                    disabled={!labels.enabled || autoUpdateCoordinates}
+                    placeholder="Text"
+                    value={labels.text}
+                    onChange={this._onTextChange}
+                  />
                 </Form.Item>
               : null
           }
@@ -82,6 +96,12 @@ const PosterLabelInputs = React.createClass({
   _onTextChange(event) {
     this.props.dispatch(setMapLabels({
       text: event.target.value,
+    }));
+  },
+
+  _onAutoUpdateCoordinatesChange(event) {
+    this.props.dispatch(setMapLabels({
+      autoUpdateCoordinates: event.target.checked,
     }));
   }
 });

@@ -147,6 +147,7 @@ const AlvarMapDesignPanel = React.createClass({
         showLabels: posterLook.labels,
         header: mapItem.labelHeader,
         smallHeader: mapItem.labelSmallHeader,
+        autoUpdateCoordinates: mapItem.autoUpdateCoordinates,
         text: mapItem.labelText,
       }} />
     </div>;

@@ -40,7 +40,7 @@ const AlvarMap = React.createClass({
     L.DomEvent.setContainerScale(this.props.scaleZoom);
 
     if (!mapItem.mapBounds) {
-      this._dispatchBounds();
+      this._dispatchMapView();
     }
   },
 
@@ -88,7 +88,7 @@ const AlvarMap = React.createClass({
       zoomControl={false}
       zoomDelta={0.25}
       zoomSnap={0.25}
-      onMoveEnd={this._onLeafletMoveEnd}
+      onMoveEnd={this._dispatchMapView}
       center={mapItem.mapCenter}
       zoom={mapItem.mapZoom}
       minZoom={CONST.MAP_MIN_ZOOOM}
@@ -98,7 +98,7 @@ const AlvarMap = React.createClass({
     </LeafletMap>;
   },
 
-  _onLeafletMoveEnd(event) {
+  _dispatchMapView() {
     const map = this.refs.lMap.leafletElement;
     const latLng = map.getCenter();
 
@@ -106,12 +106,6 @@ const AlvarMap = React.createClass({
       center: { lat: latLng.lat, lng: latLng.lng },
       bounds: this._getMapBounds(),
       zoom: map.getZoom(),
-    }));
-  },
-
-  _dispatchBounds() {
-    this.props.dispatch(setMapView({
-      bounds: this._getMapBounds(),
     }));
   },
 
