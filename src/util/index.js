@@ -46,10 +46,10 @@ function posterSizeToPhysicalDimensions(size, orientation) {
 function createPosterImageUrl(mapItem) {
   return oneLineTrim`
     ${config.REACT_APP_RENDER_API_URL}/api/raster/render
-    ?swLat=${mapItem.mapBounds.southWest.lat}
-    &swLng=${mapItem.mapBounds.southWest.lng}
-    &neLat=${mapItem.mapBounds.northEast.lat}
-    &neLng=${mapItem.mapBounds.northEast.lng}
+    ?swLat=${_.get(mapItem, 'mapBounds.southWest.lat')}
+    &swLng=${_.get(mapItem, 'mapBounds.southWest.lng')}
+    &neLat=${_.get(mapItem, 'mapBounds.northEast.lat')}
+    &neLng=${_.get(mapItem, 'mapBounds.northEast.lng')}
     &mapStyle=${mapItem.mapStyle}
     &posterStyle=${mapItem.posterStyle}
     &size=${mapItem.size}

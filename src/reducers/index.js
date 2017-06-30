@@ -51,6 +51,10 @@ const initialState = {
       labelHeader: getQuery('labelHeader', 'string', 'Barcelona'),
       labelSmallHeader: getQuery('labelSmallHeader', 'string', 'Catalonia'),
       labelText: getQuery('labelText', 'string', coordToPrettyText(initialMapCenter)),
+      // Used to save user entered text only. This can be used to recover what
+      // user wrote if they change autoUpdateCoordinates flag
+      labelTextManual: null,
+      autoUpdateCoordinates: true,
     }
   ],
   checkoutFormState: DEBUG ? dummyCheckoutState : null,
@@ -68,6 +72,7 @@ export { freshInitialState as initialState };
 
 function reducer(state = initialState, action) {
   let newAttrs, newState;
+  const currentItem = getCurrentCartItem(state);
 
   switch (action.type) {
     case actions.SET_LOCATION:
@@ -82,6 +87,10 @@ function reducer(state = initialState, action) {
         mapBearing: action.payload.bearing,
       };
 
+      if (currentItem.autoUpdateCoordinates && newAttrs.mapCenter) {
+        newAttrs.labelText = coordToPrettyText(newAttrs.mapCenter);
+      }
+
       return extendCurrentCartItem(state, _.omitBy(newAttrs, _.isNil));
 
     case actions.SET_MAP_LABELS:
@@ -90,7 +99,23 @@ function reducer(state = initialState, action) {
         labelHeader: action.payload.header,
         labelSmallHeader: action.payload.smallHeader,
         labelText: action.payload.text,
+        autoUpdateCoordinates: action.payload.autoUpdateCoordinates,
       };
+
+      if (_.isString(newAttrs.labelText) && !currentItem.autoUpdateCoordinates) {
+        newAttrs.labelTextManual = newAttrs.labelText;
+      }
+
+      if (_.isBoolean(newAttrs.autoUpdateCoordinates)) {
+        const willEnableAutoUpdate = !currentItem.autoUpdateCoordinates &&
+                                      newAttrs.autoUpdateCoordinates;
+
+        if (willEnableAutoUpdate) {
+          newAttrs.labelText = coordToPrettyText(currentItem.mapCenter);
+        } else {
+          newAttrs.labelText = currentItem.labelTextManual;
+        }
+      }
 
       return extendCurrentCartItem(state, _.omitBy(newAttrs, _.isNil));
 
@@ -100,7 +125,6 @@ function reducer(state = initialState, action) {
     case actions.SET_POSTER_STYLE:
       let posterStyle = action.payload;
       const posterLook = getPosterLook(posterStyle);
-      const currentItem = getCurrentCartItem(state);
 
       if (_.isArray(posterLook.allowedMapStyles) && !_.includes(posterLook.allowedMapStyles, currentItem.mapStyle)) {
         return extendCurrentCartItem(state, {
