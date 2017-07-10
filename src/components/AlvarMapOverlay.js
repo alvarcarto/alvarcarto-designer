@@ -12,6 +12,10 @@ import { getStyle, getPosterLook } from '../util';
 import config from '../config';
 const { CancelToken } = axios;
 
+// We are interested if the browser supports letter-spacing for SVG text elements
+// This code assumes that all other browsers than Firefox supports it
+const SUPPORTS_LETTER_SPACING = navigator.userAgent.toLowerCase().indexOf('firefox') === -1;
+
 function getPoster(mapItem, axiosOpts) {
   const styleObj = getStyle(mapItem.mapStyle);
   const name = `${mapItem.posterStyle}-${mapItem.size}-${mapItem.orientation}.svg`;
@@ -109,6 +113,8 @@ const AlvarMapOverlay = React.createClass({
     const styleObj = getStyle(mapItem.mapStyle);
     const { labelColor } = styleObj;
 
+    changeDynamicAttributes(el.querySelector('svg'), mapItem);
+
     const labelHeader = upperCaseLabels
       ? mapItem.labelHeader.toUpperCase()
       : mapItem.labelHeader;
@@ -139,21 +145,104 @@ const AlvarMapOverlay = React.createClass({
         : mapItem.labelText;
       updateText(textEl, labelText, { color: labelColor });
     }
-
-    changeDynamicAttributes(el.querySelector('svg'), mapItem);
   }
 })
 
 function updateText(textNode, value, opts = {}) {
+  const tspanEl = _getFirstTspanElement(textNode);
+  tspanEl.textContent = value;
+  if (opts.color) {
+    textNode.setAttribute('fill', opts.color);
+  }
+
+  if (!SUPPORTS_LETTER_SPACING) {
+    _convertLetterSpacingToDx(textNode);
+  }
+}
+
+function findParent(node, matcher) {
+  let found = null;
+
+  let currentNode = node;
+  while (currentNode && currentNode.tagName !== 'svg') {
+    if (currentNode && matcher(currentNode)) {
+      found = currentNode;
+      break;
+    }
+
+    currentNode = currentNode.parentNode;
+  }
+
+  return found;
+}
+
+function _convertLetterSpacingToDx(textEl) {
+  if (!textEl) {
+    return;
+  }
+
+  /*
+  if original-letter-spacing defined for textEl:
+    if letter-spacing not defined:
+      set letter-spacing as 0
+      use original-letter-spacing for dx
+    if letter-spacing === '0':
+      use original-letter-spacing for dx
+    if letter-spacing > 0:
+      // This means common has set the letter-spacing already
+      set letter-spacing as 0
+      use letter-spacing for dx
+  else:
+    find first letter-spacing in parent tree
+    set original-letter-spacing with the found one
+    use original-letter-spacing for dx
+    set letter-spacing as 0
+  */
+
+  const origLetterSpacing = textEl.getAttribute('original-letter-spacing');
+  if (origLetterSpacing) {
+    const letterSpacing = textEl.getAttribute('letter-spacing');
+    if (!letterSpacing || letterSpacing === '0') {
+      return _setDxForText(textEl, origLetterSpacing);
+    }
+
+    // This means common module has set the letter-spacing already
+    return _setDxForText(textEl, letterSpacing);
+  }
+
+  // This code is assuming that letter-spacing="0" evaluates as true.
+  // It should evaluate as true.
+  const foundEl = findParent(textEl, node => node.getAttribute('letter-spacing'));
+  if (!foundEl) {
+    // The whole parent tree doesn't have letter-spacing defined,
+    // nothing to do here.
+    return;
+  }
+
+  const newSpacing = foundEl.getAttribute('letter-spacing') || '0';
+  textEl.setAttribute('original-letter-spacing', newSpacing);
+  return _setDxForText(textEl, newSpacing);
+}
+
+function _setDxForText(textEl, letterSpacing) {
+  // Enforce 0 as letter-spacing so that possible parent letter-spacing
+  // will not have an effect
+  textEl.setAttribute('letter-spacing', '0');
+
+  const tspanEl = _getFirstTspanElement(textEl);
+  const text = textEl.textContent.trim();
+  const dxTail = _.repeat(` ${letterSpacing}`, text.length - 1);
+  tspanEl.setAttribute('dx', `0${dxTail}`);
+  tspanEl.removeAttribute('letter-spacing');
+}
+
+function _getFirstTspanElement(textNode) {
   const tspanList = textNode.getElementsByTagName('tspan');
   if (tspanList.length < 1) {
     throw new Error(`Unexpected amount of tspan elements found: ${tspanList.length}`);
   }
 
-  tspanList.item(0).textContent = value;
-  if (opts.color) {
-    textNode.setAttribute('fill', opts.color);
-  }
+  return tspanList.item(0);
 }
 
 function getBBoxForSvgElement(svgElem) {
