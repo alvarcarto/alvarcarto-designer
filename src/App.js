@@ -68,10 +68,17 @@ const App = React.createClass({
       'cart',
     ];
 
-    const userHasMadeChanges = !_.isEqual(
-      _.pick(initialState, importantFields),
-      _.pick(this.props.globalState, importantFields),
-    );
+    const initial = _.pick(initialState, importantFields);
+    // Ignore mapBounds since those are initially setautomatically
+    _.each(initial.cart, item => {
+      delete item.mapBounds;
+    });
+    const current = _.pick(this.props.globalState, importantFields);
+    _.each(current.cart, item => {
+      delete item.mapBounds;
+    });
+
+    const userHasMadeChanges = !_.isEqual(initial, current);
     const userHasOrderedPoster = this.props.globalState.postOrderResponse !== null;
     if (!userHasOrderedPoster && userHasMadeChanges) {
       return 'Do you want to leave this site?';
