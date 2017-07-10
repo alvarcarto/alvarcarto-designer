@@ -4,7 +4,7 @@ import Raven from 'raven-js';
 import WebFont from 'webfontloader';
 import config from './config';
 
-if (config.NODE_ENV === 'production') {
+if (config.REACT_APP_ANALYTICS_ENV === 'production') {
   // Install Sentry client
   Raven.config('https://2456dddf26df432bae36dd00ea1d2a45@sentry.io/148773').install();
 
