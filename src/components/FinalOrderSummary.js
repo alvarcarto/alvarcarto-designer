@@ -1,12 +1,21 @@
 import React from 'react';
+import ImageLoader from 'react-imageloader';
+import { Icon } from 'antd';
 import { getStyle, createPosterThumbnailUrl } from '../util';
 import { calculateCartPrice, calculateItemPrice } from 'alvarcarto-price-util';
 import _ from 'lodash';
 
+function preloader() {
+  return <Icon type="loading" />;
+}
+
 const FinalOrderSummary = React.createClass({
   render() {
-    const { cart } = this.props;
-    const totalPrice = calculateCartPrice(cart);
+    const { cart, promotion } = this.props;
+    const totalPrice = calculateCartPrice(cart, promotion, {
+      ignorePromotionExpiry: true,
+    });
+    const originalPrice = calculateCartPrice(cart);
 
     return (
       <div className="FinalOrderSummary">
@@ -30,12 +39,20 @@ const FinalOrderSummary = React.createClass({
             <tbody>
               <tr>
                 <td>Subtotal</td>
-                <td>{totalPrice.label}</td>
+                <td>{originalPrice.label}</td>
               </tr>
               <tr>
                 <td>Shipping</td>
                 <td>0.00 €</td>
               </tr>
+              {
+                totalPrice.discount
+                  ? <tr>
+                      <td>Promotion {promotion.label}</td>
+                      <td>-{totalPrice.discount.label}</td>
+                    </tr>
+                  : null
+              }
               <tr className="FinalOrderSummary__total-row">
                 <td>Total</td>
                 <td>{totalPrice.label}</td>
@@ -62,7 +79,13 @@ const OrderItem = React.createClass({
 
     return (
       <div className="OrderItem">
-        <img src={createPosterThumbnailUrl(item)} className={cartImageClassName} alt="" />
+        <ImageLoader
+          className={cartImageClassName}
+          src={createPosterThumbnailUrl(item)}
+          preloader={preloader}
+        >
+          <Icon type="frown-o" />
+        </ImageLoader>
 
         <div className="OrderItem__content">
           <h3 className="OrderItem__title">{item.labelHeader}</h3>

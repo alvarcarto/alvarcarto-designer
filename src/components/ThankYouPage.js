@@ -136,11 +136,7 @@ const ThankYouPage = React.createClass({
   },
 
   _renderOrderContent() {
-    if (!this.state.order) {
-
-    }
-
-    const { cart } = this.state.order;
+    const { cart, promotion } = this.state.order;
     const { city, countryCode } = this.state.order.shippingAddress;
     const { stepIndex, firstText, firstIcon } = this.state.steps;
 
@@ -175,7 +171,7 @@ const ThankYouPage = React.createClass({
       </p>
 
       <div className="ThankYouPage__order-container">
-        <FinalOrderSummary cart={cart} orderId={this.props.orderId} />
+        <FinalOrderSummary promotion={promotion} cart={cart} orderId={this.props.orderId} />
       </div>
 
       <div className="ThankYouPage__ok-container">

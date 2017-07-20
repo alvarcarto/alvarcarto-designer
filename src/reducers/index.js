@@ -156,7 +156,7 @@ function reducer(state = initialState, action) {
         editCartItem: action.payload,
       });
 
-     case actions.ADD_CART_ITEM:
+    case actions.ADD_CART_ITEM:
       newState = _.cloneDeep(state);
       const newEmptyItem = _.cloneDeep(freshInitialState.cart[0]);
       newState.cart.push(newEmptyItem);
@@ -183,6 +183,11 @@ function reducer(state = initialState, action) {
       newState.editCartItem = newEditCartItem;
       newState.cart.splice(removeIndex, 1);
       return newState;
+
+    case actions.SET_PROMOTION:
+      return _.extend({}, state, {
+        promotion: action.payload,
+      });
 
     case actions.POST_ORDER_REQUEST:
       return _.extend({}, state, {
