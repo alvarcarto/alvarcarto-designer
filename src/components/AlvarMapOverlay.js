@@ -17,7 +17,6 @@ const { CancelToken } = axios;
 const SUPPORTS_LETTER_SPACING = navigator.userAgent.toLowerCase().indexOf('firefox') === -1;
 
 function getPoster(mapItem, axiosOpts) {
-  const styleObj = getStyle(mapItem.mapStyle);
   const name = `${mapItem.posterStyle}-${mapItem.size}-${mapItem.orientation}.svg`;
   return axios.get(`${config.REACT_APP_RENDER_API_URL}/posters/${name}`, axiosOpts);
 }

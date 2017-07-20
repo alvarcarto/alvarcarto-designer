@@ -88,6 +88,9 @@ const CheckoutPage = React.createClass({
     const order = _.merge({}, form, {
       cart: this.props.globalState.cart,
     });
+    if (this.props.globalState.promotion) {
+      order.promotionCode = this.props.globalState.promotion.promotionCode;
+    }
 
     this.props.dispatch(postOrder(order))
       .then((res) => {

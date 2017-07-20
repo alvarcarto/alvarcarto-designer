@@ -32,13 +32,32 @@
   font-weight: 700;
 }
 
-.CheckoutSummary__add {
-  margin: 13px 0 0 -5px;
-  cursor: pointer;
+.CheckoutSummary__actions {
+  margin: 8px 0 0 -5px;
+  font-size: @font-size-xx-small;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
-.CheckoutSummary__add .IconButton {
-  font-size: @font-size-xx-small;
+.CheckoutSummary__actions .IconButton, .CheckoutSummary__actions a:last-of-type {
   padding: 10px;
+}
+
+.CheckoutSummary__actions .IconButton {
   padding-left: 5px;
+}
+.CheckoutSummary__actions a:last-of-type {
+  position: relative;
+  padding-right: 3px;
+  top: 2px;
+}
+
+.CheckoutSummary__add-promotion {
+  float: right;
+}
+
+.CheckoutSummary__add-promotion-input {
+  width: 110px;
+  text-transform: uppercase;
 }

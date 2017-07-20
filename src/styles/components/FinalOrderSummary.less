@@ -51,17 +51,25 @@
 }
 
 .OrderItem__image {
+  border: 1px solid #ccc;
   height: 70px;
   min-width: 50px;
   max-width: 100px;
   background: #f4f4f4;
-  display: block;
-  border: 1px solid #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-
-.OrderItem__image--landscape {
-  height: 50px;
-  min-width: 70px;
+.OrderItem__image:not(.OrderItem__image--landscape) > img {
+  height: 100%;
+}
+.OrderItem__image.OrderItem__image--landscape {
+  height: auto;
+  max-height: 50px;
+  width: 70px;
+}
+.OrderItem__image.OrderItem__image--landscape > img {
+  width: 100%;
 }
 
 .OrderItem__content {

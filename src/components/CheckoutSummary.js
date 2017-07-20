@@ -1,17 +1,25 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { removeCartItem, editCartItem, addCartItemQuantity, addCartItem } from '../actions';
+import {
+  removeCartItem,
+  editCartItem,
+  addCartItemQuantity,
+  addCartItem,
+  setPromotion
+} from '../actions';
 import { calculateCartPrice } from 'alvarcarto-price-util';
 import _ from 'lodash';
 import CartItem from './CartItem';
+import AddPromotionLink from './AddPromotionLink';
 import IconButton from './IconButton';
 import history from '../history';
 
 const CheckoutSummary = React.createClass({
   render() {
-    const { cart } = this.props.globalState;
+    const { cart, promotion } = this.props.globalState;
     const hideRemoveButton = cart.length < 2;
-    const totalPrice = calculateCartPrice(cart);
+    const totalPrice = calculateCartPrice(cart, promotion, { ignorePromotionExpiry: true });
+    const originalPrice = calculateCartPrice(cart);
 
     return (
       <div className="CheckoutSummary">
@@ -33,8 +41,9 @@ const CheckoutSummary = React.createClass({
               </li>
             )
           }
-          <li className="CheckoutSummary__add noselect">
+          <li className="CheckoutSummary__actions noselect">
             <IconButton onClick={this._onAddPoster} type="plus">Add poster</IconButton>
+            {this._getPromotionLink()}
           </li>
         </ul>
 
@@ -43,12 +52,20 @@ const CheckoutSummary = React.createClass({
             <tbody>
               <tr>
                 <td>Subtotal</td>
-                <td>{totalPrice.label}</td>
+                <td>{originalPrice.label}</td>
               </tr>
               <tr>
                 <td>Shipping</td>
                 <td>0.00 €</td>
               </tr>
+              {
+                totalPrice.discount
+                  ? <tr>
+                      <td>Promotion {promotion.label}</td>
+                      <td>-{totalPrice.discount.label}</td>
+                    </tr>
+                  : null
+              }
               <tr className="CheckoutSummary__total-row">
                 <td>Total</td>
                 <td>{totalPrice.label}</td>
@@ -58,6 +75,23 @@ const CheckoutSummary = React.createClass({
         </div>
       </div>
     );
+  },
+
+  _getPromotionLink() {
+    const { promotion } = this.props.globalState;
+    if (promotion) {
+      return <a onClick={this._onDeletePromotion}>Remove promotion</a>;
+    }
+
+    return <AddPromotionLink onPromotionApply={this._onApplyPromotion} />;
+  },
+
+  _onDeletePromotion() {
+    this.props.dispatch(setPromotion(null));
+  },
+
+  _onApplyPromotion(promotion) {
+    this.props.dispatch(setPromotion(promotion));
   },
 
   _onCartItemEditClick(index) {

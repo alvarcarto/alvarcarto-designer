@@ -10,6 +10,10 @@ export function getOrder(orderId) {
   return axios.get(`${CONST.REACT_APP_ORDER_API_URL}/api/orders/${orderId}`);
 }
 
+export function getPromotion(code, axiosOpts) {
+  return axios.get(`${CONST.REACT_APP_ORDER_API_URL}/api/promotions/${code}`, axiosOpts);
+}
+
 export function assertHealth() {
   return axios.get(`${CONST.REACT_APP_ORDER_API_URL}/api/health`)
     .catch(() =>

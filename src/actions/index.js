@@ -90,6 +90,11 @@ export const addCartItemQuantity = (payload) => ({
   payload: payload,
 });
 
+export const setPromotion = (payload) => ({
+  type: actions.SET_PROMOTION,
+  payload: payload,
+});
+
 export const postOrder = (payload) => function(dispatch) {
   dispatch({ type: actions.POST_ORDER_REQUEST, payload });
 
@@ -126,15 +131,15 @@ export const postOrder = (payload) => function(dispatch) {
         differentBillingAddress,
         emailSubscription: Boolean(payload.emailSubscription),
         shippingAddress: payload.shippingAddress,
-        billingAddress,
+        billingAddress: payload.billingAddress,
         stripeTokenResponse: stripeResponseToken,
         cart: payload.cart,
+        promotionCode: payload.promotionCode,
       };
 
       const shippingAddressName = _.get(payload, 'shippingAddress.personName');
       const creditCardPersonName = _.get(payload, 'creditCardPersonName');
 
-      let billingAddress = payload.billingAddress;
       if (differentBillingAddress) {
         // Using different billing address, add name on card to that address
         order.billingAddress = _.merge({}, payload.billingAddress, {

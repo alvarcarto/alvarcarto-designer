@@ -8,7 +8,7 @@ import {
   setMapLabels
 } from '../actions';
 import { coordToPrettyText, getPosterLook } from '../util';
-import { Icon, Row, Col } from 'antd';
+import { Icon } from 'antd';
 import Accordion from './Accordion';
 import TabView from './TabView';
 import MediaQuery from 'react-responsive';
@@ -22,9 +22,6 @@ import MapStyleSelect from './MapStyleSelect';
 import { triggerAnalyticsEvent } from '../util/analytics';
 import CONST from '../constants';
 import Alert from './Alert';
-
-const formColLabel = { span: 5, md: { span: 6 }, lg: { span: 6 } };
-const formColInput = { span: 19, md: { span: 18 }, lg: { span: 18 } };
 
 const AlvarMapDesignPanel = React.createClass({
   render() {

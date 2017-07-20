@@ -1,6 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
-import { Icon, Tooltip } from 'antd';
+import { Tooltip } from 'antd';
 import MediaQuery from 'react-responsive';
 import { getPosterLooks } from '../util';
 import { TickIcon } from '../util/svg';
