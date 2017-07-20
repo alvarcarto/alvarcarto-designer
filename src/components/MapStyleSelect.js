@@ -3,7 +3,6 @@ import _ from 'lodash';
 import { Tooltip } from 'antd';
 import MediaQuery from 'react-responsive';
 import { getStyles } from '../util';
-import { TickIcon } from '../util/svg';
 import CONST from '../constants';
 
 const MapStyleSelect = React.createClass({

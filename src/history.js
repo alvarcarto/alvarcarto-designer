@@ -1,7 +1,6 @@
 /* global dataLayer */
 
 import { createBrowserHistory } from 'history';
-import config from './config';
 
 const history = createBrowserHistory();
 history.listen((location) => {

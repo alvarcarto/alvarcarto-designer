@@ -3,8 +3,7 @@ import * as actions from '../action-types';
 import {
   coordToPrettyText,
   getQuery,
-  getPosterLook,
-  getCenterOfCoordinates
+  getPosterLook
 } from '../util';
 import dummyCheckoutState from '../util/dummy-checkout-state';
 import CONST from '../constants';

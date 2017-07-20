@@ -1,5 +1,4 @@
 import React from 'react';
-import { Input, Icon, Button } from 'antd';
 import { connect } from 'react-redux';
 import {
   removeCartItem,
