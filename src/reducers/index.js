@@ -33,6 +33,7 @@ if (mapZoom < CONST.MAP_MIN_ZOOM) {
 
 const initialState = {
   debug: DEBUG,
+  partnerMode: getQuery('friend', 'boolean', false),
   location: history.location,
   cart: [
     {

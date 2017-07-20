@@ -4,7 +4,7 @@ import autoprefix from 'auto-prefixer';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import AlvarMap from './AlvarMap';
-import { Icon, Switch } from 'antd';
+import { Icon, Switch, Button } from 'antd';
 import config from '../config';
 import { setMapView } from '../actions';
 import { posterSizeToPhysicalDimensions, posterSizeToPixels, createPosterImageUrl } from '../util';
@@ -148,6 +148,15 @@ const LightWall = React.createClass({
               </div>
             : null
         }
+
+        {
+          globalState.partnerMode
+            ? <div className="LightWall__download">
+                <Button type="primary" onClick={this._downloadCartAsJson}>Download</Button>
+                <a id="downloadJson" style={{ display: 'none'}}></a>
+              </div>
+            : null
+        }
       </div>
     );
   },
@@ -207,6 +216,17 @@ const LightWall = React.createClass({
     this.setState({
       showPreview: checked,
     });
+  },
+
+  _downloadCartAsJson() {
+    const obj = this.props.globalState.cart;
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(obj, null, 2));
+    const dlAnchorElem = document.getElementById('downloadJson');
+    dlAnchorElem.setAttribute('href', dataStr);
+
+    const timestamp = (new Date()).toISOString();
+    dlAnchorElem.setAttribute('download', `alvar-${timestamp}.json`);
+    dlAnchorElem.click();
   }
 });
 
