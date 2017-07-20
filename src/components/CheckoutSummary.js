@@ -5,6 +5,7 @@ import { removeCartItem, editCartItem, addCartItemQuantity, addCartItem } from '
 import { calculateCartPrice } from 'alvarcarto-price-util';
 import _ from 'lodash';
 import CartItem from './CartItem';
+import AddPromotionLink from './AddPromotionLink';
 import IconButton from './IconButton';
 import history from '../history';
 
@@ -41,19 +42,9 @@ const CheckoutSummary = React.createClass({
 
         <div className="CheckoutSummary__price-summary">
           <div className="CheckoutSummary__add-promotion">
-            <Input
-              className="CheckoutSummary__add-promotion-input"
-              placeholder="Promotion code"
-              onChange={console.log}
-            />
-            <Button
-              type="primary"
-              size="small"
-              ghost
-            >
-              Apply
-            </Button>
+            <AddPromotionLink />
           </div>
+
           <table className="CheckoutSummary__price-table">
             <tbody>
               <tr>
