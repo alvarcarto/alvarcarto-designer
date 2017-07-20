@@ -1,5 +1,8 @@
+import _ from 'lodash';
 import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk';
+import analytics from 'redux-analytics';
+import { triggerAnalyticsEvent } from '../util/analytics';
 import rootReducer from '../reducers'
 
 const configureStore = preloadedState => {
@@ -11,6 +14,11 @@ const configureStore = preloadedState => {
     middlewares.push(logger);
   }
   middlewares.push(thunk);
+
+  const analyticsMw = analytics(({ type, payload }) => triggerAnalyticsEvent(_.merge({}, {
+    event: type,
+  }, payload)));
+  middlewares.push(analyticsMw);
 
   const store = createStore(
     rootReducer,

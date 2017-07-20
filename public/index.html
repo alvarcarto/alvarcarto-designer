@@ -11,6 +11,13 @@
     Tell your story with a poster.">
 
     <link rel="shortcut icon" type="image/png" href="%PUBLIC_URL%/favicon.png">
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','%REACT_APP_GTM_ID%');</script>
+    <!-- End Google Tag Manager -->
 
     <!-- Social media meta tags -->
     <meta property="fb:app_id" content="1681659412130624" />
@@ -38,6 +45,11 @@
     <script src="%PUBLIC_URL%/libs/modernizr.min.js"></script>
   </head>
   <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=%REACT_APP_GTM_ID%"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
     <div class="root" id="root"></div>
     <!--
       This HTML file is a template.
@@ -53,5 +65,13 @@
     <script src="%PUBLIC_URL%/libs/polyfill.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAY5lRQvMhivV6E7Wga5e67_zVEM_gCSTA&libraries=places"></script>
     <script type="text/javascript" src="https://js.stripe.com/v3/"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: 'virtualPageView',
+      virtualPagePath: location.pathname + location.search,
+      virtualPageTitle: document.title
+    });
+    </script>
   </body>
 </html>

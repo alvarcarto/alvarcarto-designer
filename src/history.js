@@ -1,14 +1,15 @@
-/* global ga */
+/* global dataLayer */
 
 import { createBrowserHistory } from 'history';
 import config from './config';
 
 const history = createBrowserHistory();
 history.listen((location) => {
-  if (config.NODE_ENV === 'production') {
-    window.ga('set', 'page', location.pathname + location.search);
-    window.ga('send', 'pageview');
-  }
+  window.dataLayer.push({
+    event: 'virtualPageView',
+    virtualPagePath: location.pathname + location.search,
+    virtualPageTitle: document.title
+  });
 });
 
 export default history;

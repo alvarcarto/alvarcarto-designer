@@ -58,6 +58,10 @@ const GeoSearch = React.createClass({
       return BPromise.resolve({ options: [] });
     }
 
+    if (_.isFunction(this.props.onInputChange)) {
+      this.props.onInputChange(input);
+    }
+
     return getPlacePredictions({
       input: input,
       types: ['(regions)'],

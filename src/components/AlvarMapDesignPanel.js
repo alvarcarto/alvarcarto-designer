@@ -19,6 +19,7 @@ import OrientationSelect from './OrientationSelect';
 import PosterLabelInputs from './PosterLabelInputs';
 import PosterStyleSelect from './PosterStyleSelect';
 import MapStyleSelect from './MapStyleSelect';
+import { triggerAnalyticsEvent } from '../util/analytics';
 import CONST from '../constants';
 import Alert from './Alert';
 
@@ -90,7 +91,10 @@ const AlvarMapDesignPanel = React.createClass({
 
     return <div className="AlvarMapDesignPanel__group">
       <div className="AlvarMapDesignPanel__group">
-        <GeoSearch onChange={this._onGeoSearch} />
+        <GeoSearch
+          onInputChange={this._onGeoSearchInputChange}
+          onChange={this._onGeoSearch}
+        />
       </div>
 
       <div className="AlvarMapDesignPanel__group AlvarMapDesignPanel__poster-style">
@@ -171,6 +175,18 @@ const AlvarMapDesignPanel = React.createClass({
       smallHeader: result.country,
       text: coordToPrettyText({ lat, lng }),
     }));
+
+    triggerAnalyticsEvent({
+      event: 'designPlaceSearchFound',
+      searchText: result.formattedAddress,
+    });
+  },
+
+  _onGeoSearchInputChange(input) {
+    triggerAnalyticsEvent({
+      event: 'designPlaceSearch',
+      searchText: input,
+    });
   },
 
   _onCityButtonClick(item) {

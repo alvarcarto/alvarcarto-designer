@@ -1,13 +1,26 @@
 import _ from 'lodash';
+import { calculateCartPrice } from 'alvarcarto-price-util';
 import * as actions from '../action-types';
 import * as stripeUtil from '../util/stripe';
 import * as api from '../util/api';
 import { stringEqualsIgnoreWhitespace } from '../util';
 
-export const setLocation = (location) => ({
-  type: actions.SET_LOCATION,
-  payload: location,
-});
+export const setLocation = (location) => {
+  const action = {
+    type: actions.SET_LOCATION,
+    payload: location,
+  };
+
+  if (location.pathname === '/checkout') {
+    action.meta = {
+      analytics: {
+        type: 'designInitiateCheckout',
+      },
+    };
+  }
+
+  return action;
+};
 
 export const setMapView = (view) => ({
   type: actions.SET_MAP_VIEW,
@@ -22,16 +35,40 @@ export const setMapLabels = (labels) => ({
 export const setMapStyle = (style) => ({
   type: actions.SET_MAP_STYLE,
   payload: style,
+  meta: {
+    analytics: {
+      type: 'designChangeMapStyle',
+      payload: {
+        mapStyle: style,
+      },
+    },
+  },
 });
 
 export const setPosterStyle = (style) => ({
   type: actions.SET_POSTER_STYLE,
   payload: style,
+  meta: {
+    analytics: {
+      type: 'designChangePosterStyle',
+      payload: {
+        mapStyle: style,
+      },
+    },
+  },
 });
 
 export const setPosterLayout = (layout) => ({
   type: actions.SET_POSTER_LAYOUT,
   payload: layout,
+  meta: {
+    analytics: {
+      type: 'designChangeOrientation',
+      payload: {
+        orientation: layout,
+      },
+    },
+  },
 });
 
 export const addCartItem = () => ({
@@ -116,9 +153,21 @@ export const postOrder = (payload) => function(dispatch) {
       return api.postOrder(order);
     })
     .then(response => {
+      const price = calculateCartPrice(payload.cart);
+
       dispatch({
         type: actions.POST_ORDER_SUCCESS,
         payload: response,
+        meta: {
+          analytics: {
+            type: 'designPurchase',
+            payload: {
+              cartItemsAmount: payload.cart.length,
+              cartTotalPrice: price.humanValue,
+              priceCurrency: price.currency,
+            },
+          },
+        },
       });
 
       return response;
@@ -134,7 +183,19 @@ export const postOrder = (payload) => function(dispatch) {
     });
 };
 
-export const checkoutFormStateChange = (payload) => ({
-  type: actions.CHECKOUT_FORM_STATE_CHANGE,
-  payload: payload,
-});
+export const checkoutFormStateChange = (payload) => {
+  const action = {
+    type: actions.CHECKOUT_FORM_STATE_CHANGE,
+    payload: payload,
+  };
+
+  if (_.get(payload, 'creditCardForm.isValid')) {
+    action.meta = {
+      analytics: {
+        type: 'designAddPaymentInfo',
+      },
+    };
+  }
+
+  return action;
+}
