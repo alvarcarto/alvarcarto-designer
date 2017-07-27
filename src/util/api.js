@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import BPromise from 'bluebird';
 import axios from 'axios';
 import CONST from '../config';
@@ -12,6 +13,12 @@ export function getOrder(orderId) {
 
 export function getPromotion(code, axiosOpts) {
   return axios.get(`${CONST.REACT_APP_ORDER_API_URL}/api/promotions/${code}`, axiosOpts);
+}
+
+export function getCities(latLng, axiosOpts) {
+  return axios.get(`${CONST.REACT_APP_ORDER_API_URL}/api/cities`, _.merge({
+    params: latLng,
+  }, axiosOpts));
 }
 
 export function assertHealth() {

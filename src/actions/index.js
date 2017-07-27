@@ -25,6 +25,11 @@ export const setLocation = (location) => {
 export const setMapView = (view) => ({
   type: actions.SET_MAP_VIEW,
   payload: view,
+  meta: {
+    analytics: {
+      type: 'designViewContent',
+    },
+  },
 });
 
 export const setMapLabels = (labels) => ({
@@ -37,10 +42,7 @@ export const setMapStyle = (style) => ({
   payload: style,
   meta: {
     analytics: {
-      type: 'designChangeMapStyle',
-      payload: {
-        mapStyle: style,
-      },
+      type: 'designViewContent',
     },
   },
 });
@@ -50,10 +52,7 @@ export const setPosterStyle = (style) => ({
   payload: style,
   meta: {
     analytics: {
-      type: 'designChangePosterStyle',
-      payload: {
-        mapStyle: style,
-      },
+      type: 'designViewContent',
     },
   },
 });
