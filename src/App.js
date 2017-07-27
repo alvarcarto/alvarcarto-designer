@@ -78,9 +78,14 @@ const App = React.createClass({
       delete item.mapBounds;
     });
 
+    const startDate = this.props.globalState.initialLoadTime;
+    const timeDiff = (new Date()).getTime() - startDate.getTime();
+    const diffInSecs = Math.ceil(timeDiff / 1000);
+    const enoughTimeSpent = diffInSecs > 120;
+
     const userHasMadeChanges = !_.isEqual(initial, current);
     const userHasOrderedPoster = this.props.globalState.postOrderResponse !== null;
-    if (!userHasOrderedPoster && userHasMadeChanges) {
+    if (enoughTimeSpent && !userHasOrderedPoster && userHasMadeChanges) {
       return 'Do you want to leave this site?';
     }
   },

@@ -35,6 +35,7 @@ const initialState = {
   debug: DEBUG,
   partnerMode: getQuery('friend', 'boolean', false),
   location: history.location,
+  initialLoadTime: new Date(),
   cart: [
     {
       quantity: 1,
