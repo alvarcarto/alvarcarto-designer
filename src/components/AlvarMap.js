@@ -91,7 +91,7 @@ const AlvarMap = React.createClass({
       onMoveEnd={this._dispatchMapView}
       center={mapItem.mapCenter}
       zoom={mapItem.mapZoom}
-      minZoom={CONST.MAP_MIN_ZOOOM}
+      minZoom={CONST.MAP_MIN_ZOOM}
       maxZoom={CONST.MAP_MAX_ZOOM}
     >
       <LTileLayer zoomOffset={1} tileSize={128} url={style.url} />
