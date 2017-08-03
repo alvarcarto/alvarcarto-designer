@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { oneLineTrim } from 'common-tags';
+import qs from 'qs';
 import config from '../config';
 import geolib from 'geolib';
 import { POSTER_STYLES, MAP_STYLES } from 'alvarcarto-common';
@@ -43,26 +43,39 @@ function posterSizeToPhysicalDimensions(size, orientation) {
   return _resolveOrientation(dimensions, orientation);
 }
 
+function createPosterUrlParameters(mapItem) {
+  return {
+    swLat: _.get(mapItem, 'mapBounds.southWest.lat'),
+    swLng: _.get(mapItem, 'mapBounds.southWest.lng'),
+    neLat: _.get(mapItem, 'mapBounds.northEast.lat'),
+    neLng: _.get(mapItem, 'mapBounds.northEast.lng'),
+    mapStyle: mapItem.mapStyle,
+    posterStyle: mapItem.posterStyle,
+    size: mapItem.size,
+    orientation: mapItem.orientation,
+    labelsEnabled: mapItem.labelsEnabled,
+    labelHeader: mapItem.labelHeader,
+    labelSmallHeader: mapItem.labelSmallHeader,
+    labelText: mapItem.labelText,
+  };
+}
+
 function createPosterImageUrl(mapItem) {
-  return oneLineTrim`
-    ${config.REACT_APP_RENDER_API_URL}/api/raster/render
-    ?swLat=${_.get(mapItem, 'mapBounds.southWest.lat')}
-    &swLng=${_.get(mapItem, 'mapBounds.southWest.lng')}
-    &neLat=${_.get(mapItem, 'mapBounds.northEast.lat')}
-    &neLng=${_.get(mapItem, 'mapBounds.northEast.lng')}
-    &mapStyle=${mapItem.mapStyle}
-    &posterStyle=${mapItem.posterStyle}
-    &size=${mapItem.size}
-    &orientation=${mapItem.orientation}
-    &labelsEnabled=${mapItem.labelsEnabled}
-    &labelHeader=${mapItem.labelHeader}
-    &labelSmallHeader=${mapItem.labelSmallHeader}
-    &labelText=${mapItem.labelText}
-  `;
+  const query = qs.stringify(createPosterUrlParameters(mapItem));
+  return `${config.REACT_APP_RENDER_API_URL}/api/raster/render?${query}`;
+}
+
+function createPosterPreviewUrl(mapItem) {
+  const query = qs.stringify(createPosterUrlParameters(mapItem));
+  return [
+    `${config.REACT_APP_RENDER_API_URL}/api/raster/placeit?${query}`,
+    '&frames=black&resizeToHeight=1000',
+  ].join();
 }
 
 function createPosterThumbnailUrl(mapItem) {
-  return `${createPosterImageUrl(mapItem)}&resizeToHeight=140`;
+  const query = qs.stringify(createPosterUrlParameters(mapItem));
+  return `${config.REACT_APP_RENDER_API_URL}/api/raster/render?${query}&resizeToHeight=140`;
 }
 
 function coordToPrettyText(coord) {
@@ -236,6 +249,7 @@ module.exports = {
   posterSizeToPhysicalDimensions,
   createPosterImageUrl,
   createPosterThumbnailUrl,
+  createPosterPreviewUrl,
   coordToPrettyText,
   getStyle,
   getStyles,
