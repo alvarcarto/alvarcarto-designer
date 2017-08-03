@@ -82,20 +82,26 @@ const PosterLabelInputs = React.createClass({
   },
 
   _onHeaderChange(event) {
+    // XXX: This is a small hack, but it allows the user to leave labels
+    // empty if they don't want them. One space will print as invisible.
+    // It was easier to fix in frontend like this compared to whole stack
+    const val = event.target.value;
     this.props.dispatch(setMapLabels({
-      header: event.target.value,
+      header: val ? val : ' ',
     }));
   },
 
   _onSmallHeaderChange(event) {
+    const val = event.target.value;
     this.props.dispatch(setMapLabels({
-      smallHeader: event.target.value,
+      smallHeader: val ? val : ' ',
     }));
   },
 
   _onTextChange(event) {
+    const val = event.target.value;
     this.props.dispatch(setMapLabels({
-      text: event.target.value,
+      text: val ? val : ' ',
     }));
   },
 
