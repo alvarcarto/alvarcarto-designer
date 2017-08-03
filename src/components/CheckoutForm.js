@@ -5,6 +5,8 @@ import { Modal, Form, Icon, Checkbox, Tooltip, Button, Radio } from 'antd';
 import countries from 'i18n-iso-countries';
 import EmailForm from './EmailForm';
 import AddressForm from './AddressForm';
+import PosterPreview from './PosterPreview';
+import { Carousel } from 'react-responsive-carousel';
 import ShippingMethodForm from './ShippingMethodForm';
 import CreditCardForm from './CreditCardForm';
 
@@ -58,6 +60,8 @@ const CheckoutForm = React.createClass({
       termsAccepted,
     } = this.state.values;
 
+    const { cart } = this.props;
+
     const formErrors = this._getFormErrors();
     return (
       <div className="CheckoutForm">
@@ -104,7 +108,7 @@ const CheckoutForm = React.createClass({
             <ShippingMethodForm />
           </section>
 
-          <section className="CheckoutForm__section CheckoutForm__section--last">
+          <section className="CheckoutForm__section">
             <h2 className="CheckoutForm__form-header">
               3. Payment details
             </h2>
@@ -171,6 +175,29 @@ const CheckoutForm = React.createClass({
 
             <div className="CheckoutForm__sec-info">
               <a onClick={this._onMoreSecurityClick} href="#">Security details</a>
+            </div>
+          </section>
+
+          <section className="CheckoutForm__section CheckoutForm__section--last">
+            <h2 className="CheckoutForm__form-header">
+              4. Review &amp; Order
+            </h2>
+
+            <div className="CheckoutForm__preview">
+              <p>
+                Review your design{cart.length > 1 ? 's' : ''} for typos or mistakes.
+              </p>
+
+              <Carousel
+                className="CheckoutForm__preview-carousel noselect"
+                showThumbs={false}
+                showStatus={false}
+                showIndicators={cart.length > 1}
+              >
+                {_.map(cart, (item, i) => {
+                  return <div key={i}><PosterPreview mapItem={cart[i]} /></div>;
+                })}
+              </Carousel>
             </div>
 
             <div className="CheckoutForm__info">

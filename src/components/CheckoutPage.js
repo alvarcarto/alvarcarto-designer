@@ -65,6 +65,7 @@ const CheckoutPage = React.createClass({
             }}
           </MediaQuery>
           <CheckoutForm
+            cart={this.props.globalState.cart}
             initialState={this.props.globalState.checkoutFormState}
             onChange={this.state.debouncedOnFormChange}
             onSubmit={this._onFormSubmit}
