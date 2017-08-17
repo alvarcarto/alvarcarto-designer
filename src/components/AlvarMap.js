@@ -11,6 +11,9 @@ import {
   TileLayer as LTileLayer
 } from 'react-leaflet';
 
+const userAgent = navigator.userAgent.toLowerCase();
+const IS_ANDROID = userAgent.indexOf('android') > -1;
+
 const AlvarMap = React.createClass({
   componentWillReceiveProps(nextProps) {
     const { globalState } = this.props;
@@ -83,16 +86,23 @@ const AlvarMap = React.createClass({
     const { globalState } = this.props;
     const mapItem = globalState.cart[globalState.editCartItem];
 
+    const props = {};
+    if (IS_ANDROID) {
+      props.onViewportChanged = this._dispatchMapView;
+    } else {
+      props.onMoveEnd = this._dispatchMapView;
+    }
+
     return <LeafletMap
       ref="lMap"
       zoomControl={false}
       zoomDelta={0.25}
       zoomSnap={0.25}
-      onViewportChanged={this._dispatchMapView}
       center={mapItem.mapCenter}
       zoom={mapItem.mapZoom}
       minZoom={CONST.MAP_MIN_ZOOM}
       maxZoom={CONST.MAP_MAX_ZOOM}
+      {...props}
     >
       <LTileLayer zoomOffset={1} tileSize={128} url={style.url} />
     </LeafletMap>;
