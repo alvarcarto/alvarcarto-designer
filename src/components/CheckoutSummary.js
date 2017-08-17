@@ -7,7 +7,7 @@ import {
   addCartItem,
   setPromotion
 } from '../actions';
-import { calculateCartPrice } from 'alvarcarto-price-util';
+import { calculateCartPrice, getCurrencySymbol } from 'alvarcarto-price-util';
 import _ from 'lodash';
 import CartItem from './CartItem';
 import AddPromotionLink from './AddPromotionLink';
@@ -58,14 +58,7 @@ const CheckoutSummary = React.createClass({
                 <td>Shipping</td>
                 <td>0.00 €</td>
               </tr>
-              {
-                totalPrice.discount
-                  ? <tr>
-                      <td>Promotion {promotion.label}</td>
-                      <td>-{totalPrice.discount.label}</td>
-                    </tr>
-                  : null
-              }
+              {this._renderDiscountRow(totalPrice, promotion)}
               <tr className="CheckoutSummary__total-row">
                 <td>Total</td>
                 <td>{totalPrice.label}</td>
@@ -75,6 +68,21 @@ const CheckoutSummary = React.createClass({
         </div>
       </div>
     );
+  },
+
+  _renderDiscountRow(totalPrice, promotion) {
+    if (!totalPrice.discount) {
+      return null;
+    }
+
+    const discountCurrencySymbol = getCurrencySymbol(totalPrice.discount.currency);
+    const discountHumanValue = (-totalPrice.discount.value / 100).toFixed(2);
+    const discountPriceLabel = `${discountHumanValue} ${discountCurrencySymbol}`;
+
+    return <tr>
+      <td>{promotion.label}</td>
+      <td>{discountPriceLabel}</td>
+    </tr>;
   },
 
   _getPromotionLink() {

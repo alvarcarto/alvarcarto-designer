@@ -2,7 +2,7 @@ import React from 'react';
 import ImageLoader from 'react-imageloader';
 import { Icon } from 'antd';
 import { getStyle, createPosterThumbnailUrl } from '../util';
-import { calculateCartPrice, calculateItemPrice } from 'alvarcarto-price-util';
+import { calculateCartPrice, calculateItemPrice, getCurrencySymbol } from 'alvarcarto-price-util';
 import _ from 'lodash';
 
 function preloader() {
@@ -45,14 +45,7 @@ const FinalOrderSummary = React.createClass({
                 <td>Shipping</td>
                 <td>0.00 €</td>
               </tr>
-              {
-                totalPrice.discount
-                  ? <tr>
-                      <td>Promotion {promotion.label}</td>
-                      <td>-{totalPrice.discount.label}</td>
-                    </tr>
-                  : null
-              }
+              {this._renderDiscountRow(totalPrice, promotion)}
               <tr className="FinalOrderSummary__total-row">
                 <td>Total</td>
                 <td>{totalPrice.label}</td>
@@ -62,7 +55,22 @@ const FinalOrderSummary = React.createClass({
         </div>
       </div>
     );
-  }
+  },
+
+  _renderDiscountRow(totalPrice, promotion) {
+    if (!totalPrice.discount) {
+      return null;
+    }
+
+    const discountCurrencySymbol = getCurrencySymbol(totalPrice.discount.currency);
+    const discountHumanValue = (-totalPrice.discount.value / 100).toFixed(2);
+    const discountPriceLabel = `${discountHumanValue} ${discountCurrencySymbol}`;
+
+    return <tr>
+      <td>{promotion.label}</td>
+      <td>{discountPriceLabel}</td>
+    </tr>;
+  },
 });
 
 const OrderItem = React.createClass({
