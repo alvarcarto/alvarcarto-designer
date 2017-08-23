@@ -66,6 +66,7 @@ const CheckoutPage = React.createClass({
           </MediaQuery>
           <CheckoutForm
             cart={this.props.globalState.cart}
+            promotion={this.props.globalState.promotion}
             initialState={this.props.globalState.checkoutFormState}
             onChange={this.state.debouncedOnFormChange}
             onSubmit={this._onFormSubmit}
@@ -90,7 +91,7 @@ const CheckoutPage = React.createClass({
       cart: this.props.globalState.cart,
     });
     if (this.props.globalState.promotion) {
-      order.promotionCode = this.props.globalState.promotion.promotionCode;
+      order.promotion = this.props.globalState.promotion;
     }
 
     this.props.dispatch(postOrder(order))
