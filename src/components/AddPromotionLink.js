@@ -129,7 +129,10 @@ const AddPromotionLink = React.createClass({
     this.setState({ cancelSource: source });
     this.setState({ loading: true });
 
-    getPromotionSlow(inputValue, { cancelToken: source.token })
+    getPromotionSlow(inputValue, {
+      params: { expiredAsOk: 'false' },
+      cancelToken: source.token,
+    })
       .then(res => {
         this.setState({
           promotion: res.data,
