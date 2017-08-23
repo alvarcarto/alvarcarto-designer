@@ -120,7 +120,9 @@ export const postOrder = (payload) => function(dispatch) {
         differentBillingAddress,
         emailSubscription: Boolean(payload.emailSubscription),
         shippingAddress: payload.shippingAddress,
-        billingAddress: payload.billingAddress,
+        billingAddress: isFreeOrder
+          ? undefined
+          : payload.billingAddress,
         cart: payload.cart,
         stripeTokenResponse: isFreeOrder
           ? undefined
