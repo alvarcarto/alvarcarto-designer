@@ -125,7 +125,7 @@ export const postOrder = (payload) => function(dispatch) {
         stripeTokenResponse: isFreeOrder
           ? undefined
           : stripeResponseToken,
-        promotionCode: payload.promotion.promotionCode,
+        promotionCode: _.get(payload, 'promotion.promotionCode'),
       };
 
       const shippingAddressName = _.get(payload, 'shippingAddress.personName');
