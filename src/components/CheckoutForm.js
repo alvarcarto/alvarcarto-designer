@@ -3,6 +3,7 @@ import _ from 'lodash';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { Modal, Form, Icon, Checkbox, Tooltip, Button, Radio } from 'antd';
 import countries from 'i18n-iso-countries';
+import { calculateCartPrice } from 'alvarcarto-price-util';
 import EmailForm from './EmailForm';
 import AddressForm from './AddressForm';
 import PosterPreview from './PosterPreview';
@@ -56,11 +57,11 @@ const CheckoutForm = React.createClass({
 
     const {
       emailSubscription,
-      differentBillingAddress,
       termsAccepted,
     } = this.state.values;
 
     const { cart } = this.props;
+    const isFreeOrder = this._isFreeOrder();
 
     const formErrors = this._getFormErrors();
     return (
@@ -108,79 +109,11 @@ const CheckoutForm = React.createClass({
             <ShippingMethodForm />
           </section>
 
-          <section className="CheckoutForm__section">
-            <h2 className="CheckoutForm__form-header">
-              3. Payment details
-            </h2>
-
-            <CreditCardForm
-              validate={this.state.validateAll}
-              onChange={this._onCreditCardFormChange}
-            />
-
-            <Form.Item {...formItemLayout} className="CheckoutForm__new-address" label="Billing address" required>
-              <Radio.Group
-                name="differentBillingAddress"
-                defaultValue={differentBillingAddress ? 'different' : 'same'}
-                onChange={this._onDifferentBillingAddressChange}
-              >
-                <Radio className="CheckoutForm__new-address-same-option" value="same">
-                  Same as shipping address
-                  <span className="CheckoutForm__new-address-text">
-                    {this._getShippingAddressAsText(this.state.shippingAddressForm)}
-                  </span>
-                </Radio>
-                <Radio value="different">Use a different billing address</Radio>
-              </Radio.Group>
-            </Form.Item>
-
-            <ReactCSSTransitionGroup
-              transitionName="popin"
-              transitionEnterTimeout={400}
-              transitionLeaveTimeout={300}
-            >
-              {
-                !this.state.values.differentBillingAddress
-                  ? null
-                  : <AddressForm
-                      disablePhone
-                      disableName
-                      initialState={this.state.billingAddressForm}
-                      validate={this.state.validateAll}
-                      onChange={this._onBillingAddressFormChange}
-                    />
-              }
-            </ReactCSSTransitionGroup>
-
-            <ul className="CheckoutForm__badge-list">
-              <li>
-                <div className="CheckoutForm__badge">
-                  <Icon type="credit-card" />
-                  <h4>Trusted Gateway</h4>
-                </div>
-              </li>
-              <li>
-                <div className="CheckoutForm__badge">
-                  <Icon type="lock" />
-                  <h4>TLS Secured Payments</h4>
-                </div>
-              </li>
-              <li>
-                <div className="CheckoutForm__badge">
-                  <Icon type="hdd" />
-                  <h4>Privacy first</h4>
-                </div>
-              </li>
-            </ul>
-
-            <div className="CheckoutForm__sec-info">
-              <a onClick={this._onMoreSecurityClick} href="#">Security details</a>
-            </div>
-          </section>
+          { isFreeOrder ? null : this._renderPaymentDetailsSection(formItemLayout) }
 
           <section className="CheckoutForm__section CheckoutForm__section--last">
             <h2 className="CheckoutForm__form-header">
-              4. Review &amp; Order
+              { isFreeOrder ? '3' : '4'}. Review &amp; Order
             </h2>
 
             <div className="CheckoutForm__preview">
@@ -200,14 +133,25 @@ const CheckoutForm = React.createClass({
               </Carousel>
             </div>
 
-            <div className="CheckoutForm__info">
-              <Icon type="solution" />
-              <p>
-                Please ensure that your information is filled out correctly.
-                When clicking Complete order, your account will be charged via
-                a secure <a target="_blank" href="https://stripe.com">Stripe</a> payment.
-              </p>
-            </div>
+            {
+              isFreeOrder
+                ? <div className="CheckoutForm__info">
+                    <Icon type="gift" />
+                    <p>
+                      Your order is free of charge! Please ensure that your information is filled out correctly.
+                      When clicking Complete order, your one-time gift code or promotion will be
+                      used.
+                    </p>
+                  </div>
+                : <div className="CheckoutForm__info">
+                    <Icon type="solution" />
+                    <p>
+                      Please ensure that your information is filled out correctly.
+                      When clicking Complete order, your account will be charged via
+                      a secure <a target="_blank" href="https://stripe.com">Stripe</a> payment.
+                    </p>
+                  </div>
+            }
 
             <Form.Item
               {...formErrors.termsAccepted}
@@ -242,6 +186,87 @@ const CheckoutForm = React.createClass({
         </Form>
       </div>
     );
+  },
+
+  _renderPaymentDetailsSection(formItemLayout) {
+    const { differentBillingAddress } = this.state.values;
+
+    return <section className="CheckoutForm__section">
+      <h2 className="CheckoutForm__form-header">
+        3. Payment details
+      </h2>
+
+      <CreditCardForm
+        validate={this.state.validateAll}
+        onChange={this._onCreditCardFormChange}
+      />
+
+      <Form.Item {...formItemLayout} className="CheckoutForm__new-address" label="Billing address" required>
+        <Radio.Group
+          name="differentBillingAddress"
+          defaultValue={differentBillingAddress ? 'different' : 'same'}
+          onChange={this._onDifferentBillingAddressChange}
+        >
+          <Radio className="CheckoutForm__new-address-same-option" value="same">
+            Same as shipping address
+            <span className="CheckoutForm__new-address-text">
+              {this._getShippingAddressAsText(this.state.shippingAddressForm)}
+            </span>
+          </Radio>
+          <Radio value="different">Use a different billing address</Radio>
+        </Radio.Group>
+      </Form.Item>
+
+      <ReactCSSTransitionGroup
+        transitionName="popin"
+        transitionEnterTimeout={400}
+        transitionLeaveTimeout={300}
+      >
+        {
+          !differentBillingAddress
+            ? null
+            : <AddressForm
+                disablePhone
+                disableName
+                initialState={this.state.billingAddressForm}
+                validate={this.state.validateAll}
+                onChange={this._onBillingAddressFormChange}
+              />
+        }
+      </ReactCSSTransitionGroup>
+
+      <ul className="CheckoutForm__badge-list">
+        <li>
+          <div className="CheckoutForm__badge">
+            <Icon type="credit-card" />
+            <h4>Trusted Gateway</h4>
+          </div>
+        </li>
+        <li>
+          <div className="CheckoutForm__badge">
+            <Icon type="lock" />
+            <h4>TLS Secured Payments</h4>
+          </div>
+        </li>
+        <li>
+          <div className="CheckoutForm__badge">
+            <Icon type="hdd" />
+            <h4>Privacy first</h4>
+          </div>
+        </li>
+      </ul>
+
+      <div className="CheckoutForm__sec-info">
+        <a onClick={this._onMoreSecurityClick} href="#">Security details</a>
+      </div>
+    </section>
+  },
+
+  _isFreeOrder() {
+    const { cart, promotion } = this.props;
+    const totalPrice = calculateCartPrice(cart, promotion, { ignorePromotionExpiry: true });
+    const isFreeOrder = totalPrice.value <= 0;
+    return isFreeOrder;
   },
 
   _getShippingAddressAsText(shippingAddressForm) {
@@ -292,12 +317,21 @@ const CheckoutForm = React.createClass({
       return false;
     }
 
-    const keys = ['emailForm', 'shippingAddressForm', 'creditCardForm'];
-    const requiredFormsAreValid = _.every(keys, (key) => _.get(this.state[key], 'isValid') === true);
+    const isFreeOrder = this._isFreeOrder();
+    const requiredKeys = isFreeOrder
+      ? ['emailForm', 'shippingAddressForm']
+      : ['emailForm', 'shippingAddressForm', 'creditCardForm'];
 
-    const isBillingAddressOk = this.state.values.differentBillingAddress
-      ? _.get(this.state.billingAddressForm, 'isValid') === true
-      : true;
+    const requiredFormsAreValid = _.every(requiredKeys, (key) => _.get(this.state[key], 'isValid') === true);
+
+    let isBillingAddressOk = false;
+    if (isFreeOrder) {
+      isBillingAddressOk = true;
+    } else {
+      isBillingAddressOk = this.state.values.differentBillingAddress
+        ? _.get(this.state.billingAddressForm, 'isValid') === true
+        : true;
+    }
 
     return requiredFormsAreValid && isBillingAddressOk;
   },

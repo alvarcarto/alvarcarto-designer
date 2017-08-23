@@ -66,6 +66,7 @@ const initialState = {
   shippingAddress: {
     city: 'your city'
   },
+  promotion: null,
 };
 
 const freshInitialState = _.cloneDeep(initialState);
