@@ -162,8 +162,8 @@ const ThankYouPage = React.createClass({
       </p>
 
       <p>
-        Receipt of the purchase will be sent to your email by Stripe.
-        We\'ll send the delivery tracking code via email as soon as we get it.
+        Receipt of the purchase will be sent to your email.
+        We'll send the delivery tracking code via email as soon as we get it.
       </p>
 
       <div className="ThankYouPage__order-container">
