@@ -27,24 +27,87 @@ export const setMapView = (view) => ({
   type: actions.SET_MAP_VIEW,
   payload: view,
   meta: {
-    analytics: {
-      type: 'designViewContent',
-    },
+    analytics: [
+      {
+        type: 'designViewContent',
+        meta: { debounce: 1000 },
+      },
+      {
+        type: 'designSetMapView',
+        // payload set later
+        meta: { debounce: 1000 },
+      },
+    ],
   },
 });
 
-export const setMapLabels = (labels) => ({
-  type: actions.SET_MAP_LABELS,
-  payload: labels,
-});
+export const setMapLabels = (labels) => {
+  const action = {
+    type: actions.SET_MAP_LABELS,
+    payload: labels,
+    meta: { analytics: [] },
+  };
+
+  if (_.has(labels, 'enabled')) {
+    action.meta.analytics.push({
+      type: 'designSetPrintLabels',
+      payload: {
+        userActionParameter: labels.enabled ? 'true' : 'false',
+      },
+    });
+  }
+  if (_.has(labels, 'header')) {
+    action.meta.analytics.push({
+      type: 'designSetLabelHeader',
+      payload: {
+        userActionParameter: labels.header,
+      },
+      meta: {
+        debounce: 1000,
+      },
+    });
+  }
+  if (_.has(labels, 'smallHeader')) {
+    action.meta.analytics.push({
+      type: 'designSetLabelSmallHeader',
+      payload: {
+        userActionParameter: labels.smallHeader,
+      },
+      meta: {
+        debounce: 1000,
+      },
+    });
+  }
+  if (_.has(labels, 'text')) {
+    action.meta.analytics.push({
+      type: 'designSetLabelText',
+      payload: {
+        userActionParameter: labels.text,
+      },
+      meta: {
+        debounce: 1000,
+      },
+    });
+  }
+
+  return action;
+};
 
 export const setMapStyle = (style) => ({
   type: actions.SET_MAP_STYLE,
   payload: style,
   meta: {
-    analytics: {
-      type: 'designViewContent',
-    },
+    analytics: [
+      {
+        type: 'designViewContent',
+      },
+      {
+        type: 'designSetMapStyle',
+        payload: {
+          userActionParameter: style,
+        },
+      }
+    ],
   },
 });
 
@@ -52,47 +115,116 @@ export const setPosterStyle = (style) => ({
   type: actions.SET_POSTER_STYLE,
   payload: style,
   meta: {
-    analytics: {
-      type: 'designViewContent',
-    },
+    analytics: [
+      {
+        type: 'designViewContent',
+      },
+      {
+        type: 'designSetPosterStyle',
+        payload: {
+          userActionParameter: style,
+        },
+      }
+    ],
   },
 });
 
-export const setPosterLayout = (layout) => ({
-  type: actions.SET_POSTER_LAYOUT,
-  payload: layout,
-  meta: {
-    analytics: {
-      type: 'designChangeOrientation',
+export const setPosterLayout = (layout) => {
+  const action = {
+    type: actions.SET_POSTER_LAYOUT,
+    payload: layout,
+    meta: { analytics: [] },
+  };
+
+  if (_.has(layout, 'orientation')) {
+    action.meta.analytics.push({
+      type: 'designSetPosterOrientation',
       payload: {
-        orientation: layout,
+        userActionParameter: layout.orientation,
       },
-    },
-  },
-});
+    });
+  }
+  if (_.has(layout, 'size')) {
+    action.meta.analytics.push({
+      type: 'designSetPosterSize',
+      payload: {
+        userActionParameter: layout.size,
+      },
+    });
+  }
+
+  return action;
+};
 
 export const addCartItem = () => ({
   type: actions.ADD_CART_ITEM,
+  meta: {
+    analytics: {
+      type: 'designAddCartItem',
+      // payload enrichened in analytics.js
+    },
+  },
 });
 
 export const removeCartItem = (index) => ({
   type: actions.REMOVE_CART_ITEM,
   payload: index,
+  meta: {
+    analytics: {
+      type: 'designRemoveCartItem',
+      // payload added later
+    },
+  },
 });
 
 export const editCartItem = (index) => ({
   type: actions.EDIT_CART_ITEM,
   payload: index,
+  meta: {
+    analytics: {
+      type: 'designEditCartItem',
+      payload: {
+        userActionParameter: index,
+      },
+    },
+  },
 });
 
-export const addCartItemQuantity = (payload) => ({
-  type: actions.ADD_CART_ITEM_QUANTITY,
-  payload: payload,
-});
+export const addCartItemQuantity = (payload) => {
+  const action = {
+    type: actions.ADD_CART_ITEM_QUANTITY,
+    payload: payload,
+    meta: { analytics: [] },
+  };
+
+  if (payload.add < 0) {
+    action.meta.analytics.push({
+      type: 'designDecreaseCartItemQuantity',
+      payload,
+      // payload will be changed later
+    });
+  } else {
+    action.meta.analytics.push({
+      type: 'designIncreaseCartItemQuantity',
+      payload,
+      // payload will be changed later
+    });
+  }
+
+  return action;
+};
 
 export const setPromotion = (payload) => ({
   type: actions.SET_PROMOTION,
   payload: payload,
+  meta: {
+    analytics: {
+      type: 'designAddPromotion',
+      payload: {
+        userActionParameter: payload.promotionCode,
+      },
+    },
+  },
 });
 
 export const postOrder = (payload) => function(dispatch) {
@@ -160,6 +292,7 @@ export const postOrder = (payload) => function(dispatch) {
           analytics: {
             type: 'designPurchase',
             payload: {
+              userActionParameter: price.humanValue,
               cartItemsAmount: payload.cart.length,
               cartTotalPrice: price.humanValue,
               priceCurrency: price.currency,
@@ -175,6 +308,14 @@ export const postOrder = (payload) => function(dispatch) {
         type: actions.POST_ORDER_FAILURE,
         payload: err,
         error: true,
+        meta: {
+          analytics: {
+            type: 'designPurchaseError',
+            payload: {
+              userActionParameter: err.message,
+            },
+          },
+        },
       });
 
       throw err;
@@ -210,14 +351,47 @@ export const checkoutFormStateChange = (payload) => {
   const action = {
     type: actions.CHECKOUT_FORM_STATE_CHANGE,
     payload: payload,
+    meta: { analytics: [] },
   };
 
   if (_.get(payload, 'creditCardForm.isValid')) {
-    action.meta = {
-      analytics: {
-        type: 'designAddPaymentInfo',
+    action.meta.analytics.push({
+      type: 'designAddPaymentInfo',
+      payload: { userActionParameter: 'valid' },
+      meta: {
+        maxFireTimes: 1,
       },
-    };
+    });
+  }
+
+  if (_.get(payload, 'emailForm.isValid')) {
+    action.meta.analytics.push({
+      type: 'designAddValidEmail',
+      payload: { userActionParameter: 'valid' },
+      meta: {
+        maxFireTimes: 1,
+      },
+    });
+  }
+
+  if (_.get(payload, 'shippingAddressForm.isValid')) {
+    action.meta.analytics.push({
+      type: 'designAddValidShippingAddress',
+      payload: { userActionParameter: 'valid' },
+      meta: {
+        maxFireTimes: 1,
+      },
+    });
+  }
+
+  if (_.get(payload, 'billingAddressForm.isValid')) {
+    action.meta.analytics.push({
+      type: 'designAddValidBillingAddress',
+      payload: { userActionParameter: 'valid' },
+      meta: {
+        maxFireTimes: 1,
+      },
+    });
   }
 
   return action;

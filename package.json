@@ -30,6 +30,7 @@
     "bluebird": "^3.4.7",
     "common-tags": "^1.4.0",
     "debounce-promise": "^2.1.1",
+    "flux-standard-action": "^1.2.0",
     "geodist": "^0.2.1",
     "geolib": "^2.0.22",
     "history": "^4.5.1",
