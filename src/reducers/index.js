@@ -20,6 +20,8 @@ const BARCELONA_CENTER = {
   lat: 41.382374,
   lng: 2.166612,
 };
+export { BARCELONA_CENTER as DEFAULT_MAP_CENTER };
+
 const initialMapCenter = {
   lat: getQuery('lat', 'float', BARCELONA_CENTER.lat),
   lng: getQuery('lng', 'float', BARCELONA_CENTER.lng),

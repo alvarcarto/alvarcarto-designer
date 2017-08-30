@@ -3,6 +3,7 @@ import BPromise from 'bluebird';
 import { createProductId } from 'alvarcarto-common';
 import { triggerGtmEvent } from './util/gtm';
 import { getCities } from './util/api';
+import { DEFAULT_MAP_CENTER } from './reducers';
 
 // Keep this state while application is running in user's browser
 const firedCount = {};
@@ -109,16 +110,31 @@ function getCartProductIds(state, arrOfCities) {
 const handlers = {};
 handlers.designViewContent = (type, payload, state) => {
   const mapItem = getCurrentCartItem(state);
-  return getCities(mapItem.mapCenter)
+  const { mapCenter } = mapItem;
+
+  const startDate = state.initialLoadTime;
+  const timeDiff = (new Date()).getTime() - startDate.getTime();
+  const diffInSecs = Math.ceil(timeDiff / 1000);
+
+  // Prevent sending view content from the initially chosen city
+  const latCloseEnough = Math.abs(mapCenter.lat - DEFAULT_MAP_CENTER.lat) < 0.01;
+  const lngCloseEnough = Math.abs(mapCenter.lng - DEFAULT_MAP_CENTER.lng) < 0.01;
+  const enoughTimeSpent = diffInSecs > 5;
+  if (!enoughTimeSpent && latCloseEnough && lngCloseEnough) {
+    return;
+  }
+
+  return getCities(mapCenter)
     .then((res) => {
       const cities = res.data;
       if (!_.isArray(cities) || cities.length < 1) {
         return;
       }
 
+      const city = cities[0];
       triggerGtmEvent({
         event: type,
-        productIds: [getProductId(mapItem, cities[0].id)],
+        productIds: [getProductId(mapItem, city.id)],
       });
     });
 };
