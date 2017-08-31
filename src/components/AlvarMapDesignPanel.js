@@ -176,6 +176,9 @@ const AlvarMapDesignPanel = React.createClass({
     triggerGtmEvent({
       event: 'designPlaceSearchFound',
       searchText: result.formattedAddress,
+      payload: {
+        userActionParameter: result.formattedAddress,
+      },
     });
   },
 
