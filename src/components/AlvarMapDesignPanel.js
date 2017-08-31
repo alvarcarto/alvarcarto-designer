@@ -19,7 +19,7 @@ import OrientationSelect from './OrientationSelect';
 import PosterLabelInputs from './PosterLabelInputs';
 import PosterStyleSelect from './PosterStyleSelect';
 import MapStyleSelect from './MapStyleSelect';
-import { triggerAnalyticsEvent } from '../util/analytics';
+import { triggerGtmEvent } from '../util/gtm';
 import CONST from '../constants';
 import Alert from './Alert';
 
@@ -173,14 +173,17 @@ const AlvarMapDesignPanel = React.createClass({
       text: coordToPrettyText({ lat, lng }),
     }));
 
-    triggerAnalyticsEvent({
+    triggerGtmEvent({
       event: 'designPlaceSearchFound',
       searchText: result.formattedAddress,
+      payload: {
+        userActionParameter: result.formattedAddress,
+      },
     });
   },
 
   _onGeoSearchInputChange(input) {
-    triggerAnalyticsEvent({
+    triggerGtmEvent({
       event: 'designPlaceSearch',
       searchText: input,
     });

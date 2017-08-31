@@ -1,5 +1,5 @@
 /* global dataLayer */
 
-export function triggerAnalyticsEvent(eventObj) {
+export function triggerGtmEvent(eventObj) {
   window.dataLayer.push(eventObj);
 }
