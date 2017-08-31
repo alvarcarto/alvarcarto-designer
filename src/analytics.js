@@ -149,6 +149,7 @@ handlers.designInitiateCheckout = (type, payload, state) => {
       triggerGtmEvent({
         event: type,
         productIds: getCartProductIds(state, arrOfCities),
+        payload,
       });
     });
 };
@@ -162,6 +163,7 @@ handlers.designPurchase = (type, payload, state) => {
       triggerGtmEvent({
         event: type,
         productIds: getCartProductIds(state, arrOfCities),
+        payload,
       });
     });
 };
@@ -175,6 +177,7 @@ handlers.designAddPaymentInfo = (type, payload, state) => {
       triggerGtmEvent({
         event: type,
         productIds: getCartProductIds(state, arrOfCities),
+        payload,
       });
     });
 };
