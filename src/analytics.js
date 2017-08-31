@@ -5,6 +5,8 @@ import { triggerGtmEvent } from './util/gtm';
 import { getCities } from './util/api';
 import { DEFAULT_MAP_CENTER } from './reducers';
 
+const handlers = {};
+
 // Keep this state while application is running in user's browser
 const firedCount = {};
 const timeouts = {};
@@ -20,7 +22,7 @@ export function handleAnalyticsEvent(analyticsInfo, state) {
 }
 
 function _handleSingleEvent(analyticsInfo, state) {
-  const { type, payload } = analyticsInfo;
+  const { type } = analyticsInfo;
 
   const maxFireTimes = _.get(analyticsInfo, 'meta.maxFireTimes', Infinity);
   if (getFiredCount(type) >= maxFireTimes) {
@@ -107,7 +109,6 @@ function getCartProductIds(state, arrOfCities) {
   return _.filter(ids, i => !_.isNil(i));
 }
 
-const handlers = {};
 handlers.designViewContent = (type, payload, state) => {
   const mapItem = getCurrentCartItem(state);
   const { mapCenter } = mapItem;

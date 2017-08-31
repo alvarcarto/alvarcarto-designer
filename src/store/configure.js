@@ -1,4 +1,3 @@
-import BPromise from 'bluebird';
 import _ from 'lodash';
 import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk';
