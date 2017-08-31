@@ -202,12 +202,14 @@ export const addCartItemQuantity = (payload) => {
       type: 'designDecreaseCartItemQuantity',
       payload,
       // payload will be changed later
+      meta: { debounce: 1000 },
     });
   } else {
     action.meta.analytics.push({
       type: 'designIncreaseCartItemQuantity',
       payload,
       // payload will be changed later
+      meta: { debounce: 1000 },
     });
   }
 
