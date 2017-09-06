@@ -216,18 +216,25 @@ export const addCartItemQuantity = (payload) => {
   return action;
 };
 
-export const setPromotion = (payload) => ({
-  type: actions.SET_PROMOTION,
-  payload: payload,
-  meta: {
-    analytics: {
-      type: 'designAddPromotion',
-      payload: {
-        userActionParameter: payload.promotionCode,
+export const setPromotion = (payload) => {
+  const action = {
+    type: actions.SET_PROMOTION,
+    payload: payload,
+  };
+
+  if (_.get(payload, 'promotionCode')) {
+    action.meta = {
+      analytics: {
+        type: 'designAddPromotion',
+        payload: {
+          userActionParameter: payload.promotionCode,
+        },
       },
-    },
-  },
-});
+    };
+  }
+
+  return action;
+};
 
 export const postOrder = (payload) => function(dispatch) {
   dispatch({ type: actions.POST_ORDER_REQUEST, payload });
