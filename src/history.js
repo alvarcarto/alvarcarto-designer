@@ -4,6 +4,7 @@ import { createBrowserHistory } from 'history';
 import { triggerGtmEvent } from './util/gtm';
 import config from './config';
 
+// For debugging purposes
 window.BRANCH = config.REACT_APP_BRANCH;
 
 const history = createBrowserHistory();
