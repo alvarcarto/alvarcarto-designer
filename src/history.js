@@ -1,13 +1,14 @@
 /* global dataLayer */
 
 import { createBrowserHistory } from 'history';
+import { triggerGtmEvent } from './util/gtm';
 import config from './config';
 
 window.BRANCH = config.REACT_APP_BRANCH;
 
 const history = createBrowserHistory();
 history.listen((location) => {
-  window.dataLayer.push({
+  triggerGtmEvent({
     event: 'virtualPageView',
     virtualPagePath: location.pathname + location.search,
     virtualPageTitle: document.title,

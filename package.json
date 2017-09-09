@@ -61,7 +61,7 @@
     "build-css": "lessc --npm-import --glob ./src/styles/index.less ./src/bundle.css && npm run postcss",
     "postcss": "postcss --use autoprefixer ./src/bundle.css -o ./src/bundle.css",
     "watch-css": "npm run build-css && chokidar \"src/**/*.less\" \"./src/styles/**/*.css\" -c \"npm run build-css\"",
-    "start": "concurrently \"react-scripts start\" \"npm run watch-css\"",
+    "start": "REACT_APP_BRANCH=$(git rev-parse --abbrev-ref HEAD) concurrently \"react-scripts start\" \"npm run watch-css\"",
     "build": "npm run build-css && react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",

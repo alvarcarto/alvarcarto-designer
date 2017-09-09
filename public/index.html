@@ -70,7 +70,8 @@
     window.dataLayer.push({
       event: 'virtualPageView',
       virtualPagePath: location.pathname + location.search,
-      virtualPageTitle: document.title
+      virtualPageTitle: document.title,
+      branch: '%REACT_APP_BRANCH%'
     });
     </script>
   </body>
