@@ -3,6 +3,7 @@
 import { createBrowserHistory } from 'history';
 import config from './config';
 
+// nothing changed really
 window.BRANCH = config.REACT_APP_BRANCH;
 
 const history = createBrowserHistory();
