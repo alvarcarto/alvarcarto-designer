@@ -26,6 +26,8 @@ const CONST = {
 
   // By default design-qa.alvarcarto.com GTM ID is used
   REACT_APP_GTM_ID: process.env.REACT_APP_GTM_ID,
+
+  REACT_APP_BRANCH: process.env.REACT_APP_BRANCH || 'master',
 };
 
 if (!CONST.REACT_APP_STRIPE_PUBLISHABLE_KEY) {
