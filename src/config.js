@@ -30,6 +30,9 @@ const CONST = {
   REACT_APP_BRANCH: process.env.REACT_APP_BRANCH || 'master',
 };
 
+// For debugging purposes
+window.BRANCH = process.env.REACT_APP_BRANCH;
+
 if (!CONST.REACT_APP_STRIPE_PUBLISHABLE_KEY) {
   throw new Error('REACT_APP_STRIPE_PUBLISHABLE_KEY must be set.');
 }
