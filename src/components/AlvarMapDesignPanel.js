@@ -53,14 +53,14 @@ const AlvarMapDesignPanel = React.createClass({
   _renderNarrowView(mapItem) {
     return <div className="AlvarMapDesignPanel__narrow">
       <div className="AlvarMapDesignPanel__narrow-spacer"></div>
-      <TabView initialSelected={0}>
-        <TabView.Panel className="AlvarMapDesignPanel__location-section" header="Basics">
+      <TabView initialSelected={null}>
+        <TabView.Panel className="AlvarMapDesignPanel__location-section" header="1. Style">
           {this._renderLocationAndStylePanel(mapItem)}
         </TabView.Panel>
-        <TabView.Panel className="AlvarMapDesignPanel__size-section" header="Size">
+        <TabView.Panel className="AlvarMapDesignPanel__size-section" header="2. Size">
           {this._renderSizePanel(mapItem)}
         </TabView.Panel>
-        <TabView.Panel header="Labels">
+        <TabView.Panel header="3. Labels">
           {this._renderLabelsPanel(mapItem)}
         </TabView.Panel>
       </TabView>

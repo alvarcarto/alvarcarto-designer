@@ -38,4 +38,3 @@ To see documentation how to do common tasks in this project, see [Create React A
 * Start order service locally
 * Start tile service locally, or point frontend to QA
 * `npm start`
-
