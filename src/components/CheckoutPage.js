@@ -122,6 +122,10 @@ const CheckoutPage = React.createClass({
                 payment failed with reason: <i>{detailedError}</i>
               </p>
               <p>
+                <b>Your card was not charged yet.</b> You can try to complete
+                the purchase again.
+              </p>
+              <p>
                 We're sorry for the inconvenience. If the problem persists,
                 please contact our support at <a target="_blank" href="mailto:help@alvarcarto.com"> help@alvarcarto.com</a>.
               </p>
@@ -136,6 +140,10 @@ const CheckoutPage = React.createClass({
               <p>
                 Order could not be completed, because order form contained
                 invalid fields. Error message: <i>{detailedError}</i>.
+              </p>
+              <p>
+                <b>Your card was not charged yet.</b> You can try to complete
+                the purchase again.
               </p>
               <p>
                 We're sorry for the inconvenience. If the problem persists,
