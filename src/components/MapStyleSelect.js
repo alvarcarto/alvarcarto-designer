@@ -10,12 +10,17 @@ const MapStyleSelect = React.createClass({
     const styles = _.isArray(this.props.showStyles)
       ? _.filter(getStyles(), s => _.includes(this.props.showStyles, s.id))
       : getStyles();
+    const filteredStyles = _.reject(styles, style => _.includes([
+      'madang',
+      'iceberg',
+      'marshmellow',
+    ], style.id));
 
     return <MediaQuery maxWidth={CONST.SCREEN_SM}>
       {(matches) =>
         <div className="MapStyleSelect">
           {
-            _.map(styles, style => {
+            _.map(filteredStyles, style => {
               return <MapStyleItem
                 tooltip={!matches}
                 onClick={this._onClickItem}
