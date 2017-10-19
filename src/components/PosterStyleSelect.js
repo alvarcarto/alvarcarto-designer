@@ -8,11 +8,17 @@ import CONST from '../constants';
 
 const PosterStyleSelect = React.createClass({
   render() {
+    const styles = _.reject(getPosterLooks(), style => _.includes([
+      'summer',
+      'pacific',
+      'round',
+    ], style.id));
+
     return <MediaQuery maxWidth={CONST.SCREEN_SM}>
       {(matches) =>
         <div className="PosterStyleSelect">
           {
-            _.map(getPosterLooks(), style => {
+            _.map(styles, style => {
               return <PosterStyleItem
                 tooltip={!matches}
                 onClick={this._onClickItem}
