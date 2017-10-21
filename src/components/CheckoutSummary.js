@@ -18,7 +18,7 @@ const CheckoutSummary = React.createClass({
   render() {
     const { cart, promotion } = this.props.globalState;
     const hideRemoveButton = cart.length < 2;
-    const totalPrice = calculateCartPrice(cart, promotion, { ignorePromotionExpiry: true });
+    const totalPrice = calculateCartPrice(cart, { promotion, ignorePromotionExpiry: true });
     const originalPrice = calculateCartPrice(cart);
 
     return (

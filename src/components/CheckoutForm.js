@@ -264,7 +264,7 @@ const CheckoutForm = React.createClass({
 
   _isFreeOrder() {
     const { cart, promotion } = this.props;
-    const totalPrice = calculateCartPrice(cart, promotion, { ignorePromotionExpiry: true });
+    const totalPrice = calculateCartPrice(cart, { promotion, ignorePromotionExpiry: true });
     const isFreeOrder = totalPrice.value <= 0;
     return isFreeOrder;
   },

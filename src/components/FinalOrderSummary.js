@@ -12,7 +12,8 @@ function preloader() {
 const FinalOrderSummary = React.createClass({
   render() {
     const { cart, promotion } = this.props;
-    const totalPrice = calculateCartPrice(cart, promotion, {
+    const totalPrice = calculateCartPrice(cart, {
+      promotion,
       ignorePromotionExpiry: true,
     });
     const originalPrice = calculateCartPrice(cart);
