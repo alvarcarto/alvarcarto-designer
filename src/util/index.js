@@ -70,7 +70,7 @@ function createPosterPreviewUrl(mapItem) {
   return [
     `${config.REACT_APP_RENDER_API_URL}/api/raster/placeit?${query}`,
     '&frames=black&resizeToHeight=1000',
-  ].join();
+  ].join('');
 }
 
 function createPosterThumbnailUrl(mapItem) {
