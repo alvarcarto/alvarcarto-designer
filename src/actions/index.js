@@ -333,7 +333,7 @@ export const postOrder = (payload) => function(dispatch) {
 
 function _createStripeToken(payload) {
   const { cart, promotion } = payload;
-  const totalPrice = calculateCartPrice(cart, promotion, { ignorePromotionExpiry: true });
+  const totalPrice = calculateCartPrice(cart, { promotion, ignorePromotionExpiry: true });
   const isFreeOrder = totalPrice.value <= 0;
   if (isFreeOrder) {
     return BPromise.resolve(null);
