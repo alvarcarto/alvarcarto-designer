@@ -1,0 +1,200 @@
+.GiftCardCheckoutForm__section {
+  margin: 10px 0 10px 0;
+}
+.GiftCardCheckoutForm__section:first-of-type {
+  margin-top: 0;
+}
+
+.GiftCardCheckoutForm__section::after {
+  content: "";
+  display: block;
+  margin: 50px 0 15px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.GiftCardCheckoutForm__section--last::after {
+  display: none;
+}
+
+.GiftCardCheckoutForm h1 {
+  font-weight: 400;
+  text-transform: uppercase;
+  color: @primary-color;
+  margin-bottom: 30px;
+}
+
+.GiftCardCheckoutForm__header > .anticon {
+  margin-right: 5px;
+}
+
+.GiftCardCheckoutForm__form-header {
+  font-size: @font-size-medium;
+  margin-bottom: 34px;
+  text-transform: uppercase;
+}
+
+.GiftCardCheckoutForm__form-sub-header {
+  color: #666;
+  font-size: 0.85rem;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.GiftCardCheckoutForm .GiftCardCheckoutForm__terms {
+  display: block;
+  margin: 30px 0 12px 2px;
+}
+
+.GiftCardCheckoutForm__terms a:hover {
+  text-decoration: underline;
+}
+
+.GiftCardCheckoutForm .GiftCardCheckoutForm__sec-info {
+  font-size: 11px;
+  padding-left: 2px;
+}
+
+.GiftCardCheckoutForm .GiftCardCheckoutForm__info {
+  font-size: 12px;
+  margin: 15px 0 0 0;
+  background: #f9f9f9;
+  border-radius: 5px;
+  padding: 15px 20px;
+  color: #888;
+  display: flex;
+  flex-direction: row;
+}
+
+.GiftCardCheckoutForm .GiftCardCheckoutForm__info > .anticon {
+  margin-top: 3px;
+  font-size: 1.4rem;
+}
+
+.GiftCardCheckoutForm .GiftCardCheckoutForm__info > p {
+  margin-left: 10px;
+}
+
+.GiftCardCheckoutForm .GiftCardCheckoutForm__badge-list {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: 40px 0;
+}
+
+.GiftCardCheckoutForm .GiftCardCheckoutForm__badge-list li:last-of-type .GiftCardCheckoutFormBadge {
+  margin-right: 0;
+}
+
+.GiftCardCheckoutForm .GiftCardCheckoutForm__badge {
+  margin-right: 60px;
+  text-align: center;
+  text-transform: uppercase;
+  width: 80px;
+}
+
+.GiftCardCheckoutForm .GiftCardCheckoutForm__badge > h4 {
+  margin-top: 5px;
+  font-size: 0.7rem;
+  color: #999;
+  text-align: center;
+}
+
+.GiftCardCheckoutForm .GiftCardCheckoutForm__badge > .anticon {
+  font-size: 3rem;
+  color: #89CCBD;
+  font-weight: 300;
+}
+
+
+.GiftCardCheckoutForm .GiftCardCheckoutForm__complete-button {
+  font-size: @font-size-x-small;
+  padding: 10px 20px;
+  height: 41px;
+  width: 100%;
+}
+
+.GiftCardCheckoutForm .CreditCardForm {
+  margin-bottom: 25px;
+}
+
+.GiftCardCheckoutForm .GiftCardCheckoutForm__new-address {
+  margin-top: 0;
+  margin-bottom: 22px
+}
+
+.GiftCardCheckoutForm .GiftCardCheckoutForm__new-address .ant-radio-wrapper {
+  display: block;
+  margin-top: 10px;
+}
+
+.GiftCardCheckoutForm .GiftCardCheckoutForm__new-address .ant-radio-wrapper:last-of-type {
+  margin-top: 0;
+}
+
+.GiftCardCheckoutForm .GiftCardCheckoutForm__new-address-text {
+  display: block;
+  white-space: normal;
+  margin-left: 20px;
+  margin-top: 8px;
+  color: #aaa;
+  font-style: italic;
+}
+
+.GiftCardCheckoutForm .GiftCardCheckoutForm__preview {
+  p {
+    font-size: @font-size-x-small;
+    margin-bottom: 5px;
+  }
+}
+
+@media @screen-gt-sm-media {
+  .GiftCardCheckoutForm .GiftCardCheckoutForm__complete-button,
+  .GiftCardCheckoutForm .GiftCardCheckoutForm__badge-list,
+  .GiftCardCheckoutForm .GiftCardCheckoutForm__info,
+  .GiftCardCheckoutForm__section::after,
+  .GiftCardCheckoutForm .GiftCardCheckoutForm__preview {
+    width: 87.5%;
+  }
+
+  .GiftCardCheckoutForm .GiftCardCheckoutForm__preview-carousel {
+    .carousel {
+      width: 90%;
+    }
+  }
+}
+
+@media @screen-lt-sm-media {
+  .GiftCardCheckoutForm .GiftCardCheckoutForm__badge-list {
+    justify-content: flex-start;
+  }
+
+  .GiftCardCheckoutForm .GiftCardCheckoutForm__badge {
+    margin-right: 30px;
+  }
+
+  .GiftCardCheckoutForm .GiftCardCheckoutForm__badge > .anticon {
+    font-size: 2.6rem;
+  }
+
+  .GiftCardCheckoutForm .GiftCardCheckoutForm__badge > h4 {
+    font-size: 0.6rem;
+  }
+}
+
+@media @screen-lt-xs-media {
+  .GiftCardCheckoutForm .GiftCardCheckoutForm__badge-list {
+    justify-content: space-between;
+  }
+
+  .GiftCardCheckoutForm .GiftCardCheckoutForm__badge {
+    margin-right: 0;
+  }
+
+  .GiftCardCheckoutForm .GiftCardCheckoutForm__badge > .anticon {
+    font-size: 2.4rem;
+  }
+
+  .GiftCardCheckoutForm .GiftCardCheckoutForm__badge > h4 {
+    font-size: 0.5rem;
+  }
+}

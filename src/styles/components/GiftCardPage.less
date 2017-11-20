@@ -1,0 +1,26 @@
+.GiftCardPage {
+  max-width: 900px;
+  padding: 0 30px;
+  margin: 100px auto 50px auto;
+  position: relative;
+}
+
+.GiftCardPage__row {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+@media @screen-lt-sm-media {
+  html {
+    font-size: 18px;
+  }
+
+  .GiftCardPage__row {
+    flex-direction: column;
+  }
+
+  .GiftCardPage .GiftCardForm, .GiftCardPage .GiftCardPage__summary-container {
+    /* Fix problem with IE11 layout */
+    flex: auto;
+  }
+}

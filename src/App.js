@@ -9,6 +9,7 @@ import { setLocation } from './actions';
 import { getStorageSafe, setStorageSafe } from './util';
 import EditorPage from './components/EditorPage';
 import CheckoutPage from './components/CheckoutPage';
+import GiftCardPage from './components/GiftCardPage';
 import ThankYouPage from './components/ThankYouPage';
 import { initialState } from './reducers';
 import { assertHealth } from './util/api';
@@ -41,6 +42,8 @@ const App = React.createClass({
     let page;
     if (pathname === '/checkout') {
       page = <CheckoutPage />;
+    } else if (pathname === '/giftcard') {
+      page = <GiftCardPage />;
     } else if (pathname.match(/^\/orders\/[a-zA-Z0-9-]+$/)) {
       // If matches /orders/:id, where id is alphanumeric and may contain dash
       const orderId = _.last(pathname.split('/'));
