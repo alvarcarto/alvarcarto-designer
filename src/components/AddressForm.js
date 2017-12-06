@@ -136,7 +136,7 @@ const AddressForm = React.createClass({
         {
           this.props.disablePhone
             ? null
-            : <Form.Item {...formErrors.contactPhone} {...formItemLayout} label="Phone number" extra="In case needed by postal service.">
+            : <Form.Item {...formErrors.contactPhone} {...formItemLayout} label="Phone number" extra="Recommended. Postal service may inform you via SMS.">
                 <Input
                   name="contactPhone"
                   defaultValue={_.get(this.state.values, 'contactPhone')}
