@@ -9,6 +9,7 @@ import AddressForm from './AddressForm';
 import PosterPreview from './PosterPreview';
 import { Carousel } from 'react-responsive-carousel';
 import ShippingMethodForm from './ShippingMethodForm';
+import GiftCardCustomizeForm from './GiftCardCustomizeForm';
 import CreditCardForm from './CreditCardForm';
 
 const form = {
@@ -69,7 +70,15 @@ const GiftCardCheckoutForm = React.createClass({
         <Form onSubmit={this._onSubmit}>
           <section className="GiftCardCheckoutForm__section">
             <h2 className="GiftCardCheckoutForm__form-header">
-              1. Shipping details
+              1. Gift card
+            </h2>
+
+            <GiftCardCustomizeForm />
+          </section>
+
+          <section className="GiftCardCheckoutForm__section">
+            <h2 className="GiftCardCheckoutForm__form-header">
+              2. Delivery details
             </h2>
 
             <EmailForm
@@ -99,14 +108,6 @@ const GiftCardCheckoutForm = React.createClass({
               validate={this.state.validateAll}
               onChange={this._onShippingAddressFormChange}
             />
-          </section>
-
-          <section className="GiftCardCheckoutForm__section">
-            <h2 className="GiftCardCheckoutForm__form-header">
-              2. Shipping method
-            </h2>
-
-            <ShippingMethodForm />
           </section>
 
           { this._renderPaymentDetailsSection(formItemLayout) }

@@ -20,21 +20,6 @@ const GiftCardPage = React.createClass({
       <div className="GiftCardPage">
         <Row>
           <Col span={8}><h1>Order details</h1></Col>
-          <Col span={16}>
-            <Steps current={0}>
-              <Step title="Customize" />
-              <Step title="Delivery" />
-              <Step title="Payment" />
-            </Steps>
-          </Col>
-        </Row>
-        <Row>
-          <Col span={12}>
-            <GiftCardCustomizeForm />
-          </Col>
-          <Col span={12}>
-
-          </Col>
         </Row>
         <Row>
           <Col span={24}>

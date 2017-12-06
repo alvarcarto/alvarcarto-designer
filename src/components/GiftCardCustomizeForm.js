@@ -29,16 +29,18 @@ const GiftCardCustomizeForm = React.createClass({
 
     return (
       <div className="GiftCardCustomizeForm">
-        <Form.Item {...formItemLayout} label="&nbsp;">
+        <Form.Item {...formItemLayout} label="Gift card type" required>
           <Radio.Group
             onChange={this._onInputChange}
             value={_.get(this.state.values, 'giftCardType')}
           >
             <Radio value={1}>Digital gift card sent to your email address</Radio>
-            <Radio value={2}>Physical gift card posted in a premium letter (+6.90€)</Radio>
+            <Radio value={2}>Physical gift card posted in a premium letter (+6.90€)
+              <span className="GiftCardCustomizeForm-radio-explanation">
+                We highly recommend the physical gift card, it's an experience in itself.
+              </span>
+            </Radio>
           </Radio.Group>
-
-
         </Form.Item>
       </div>
     );
