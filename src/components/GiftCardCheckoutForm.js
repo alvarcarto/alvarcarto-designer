@@ -11,6 +11,7 @@ import { Carousel } from 'react-responsive-carousel';
 import ShippingMethodForm from './ShippingMethodForm';
 import GiftCardCustomizeForm from './GiftCardCustomizeForm';
 import CreditCardForm from './CreditCardForm';
+import FinalOrderSummary from './FinalOrderSummary';
 
 const form = {
   differentBillingAddress: () => null,
@@ -43,6 +44,12 @@ const GiftCardCheckoutForm = React.createClass({
       }),
       shouldValidate: _.mapValues(form, () => false),
       validateAll: false,
+      giftCardCustomizeForm: {
+        isValid: true,
+        values: {
+          giftCardType: 'digital',
+        },
+      },
       emailForm: null,
       shippingAddressForm: null,
       billingAddressForm: null,
@@ -56,15 +63,14 @@ const GiftCardCheckoutForm = React.createClass({
       wrapperCol: { span: 24, sm: { span: 14 }, md: { span: 14 }, lg: { span: 14 } },
     };
 
+    const { cart } = this.props;
     const {
       emailSubscription,
       termsAccepted,
     } = this.state.values;
-
-    const { cart } = this.props;
-    const isFreeOrder = this._isFreeOrder();
-
+    const giftCardType = this._getGiftCardType();
     const formErrors = this._getFormErrors();
+
     return (
       <div className="GiftCardCheckoutForm">
         <Form onSubmit={this._onSubmit}>
@@ -73,7 +79,10 @@ const GiftCardCheckoutForm = React.createClass({
               1. Gift card
             </h2>
 
-            <GiftCardCustomizeForm />
+            <GiftCardCustomizeForm
+              initialState={this.state.giftCardCustomizeForm}
+              onChange={this._onGiftCardCardFormChange}
+            />
           </section>
 
           <section className="GiftCardCheckoutForm__section">
@@ -103,16 +112,31 @@ const GiftCardCheckoutForm = React.createClass({
               </Tooltip>
             </Form.Item>
 
-            <AddressForm
-              initialState={this.state.shippingAddressForm}
-              validate={this.state.validateAll}
-              onChange={this._onShippingAddressFormChange}
-            />
+            <ReactCSSTransitionGroup
+              transitionName="popin"
+              transitionEnterTimeout={400}
+              transitionLeaveTimeout={300}
+            >
+              {
+                giftCardType === 'physical'
+                  ? <AddressForm
+                      initialState={this.state.shippingAddressForm}
+                      validate={this.state.validateAll}
+                      onChange={this._onShippingAddressFormChange}
+                    />
+                  : null
+              }
+            </ReactCSSTransitionGroup>
           </section>
 
           { this._renderPaymentDetailsSection(formItemLayout) }
 
           <section className="GiftCardCheckoutForm__section GiftCardCheckoutForm__section--last">
+            <h2 className="CheckoutForm__form-header">
+              4. Review &amp; Order
+            </h2>
+
+            <FinalOrderSummary cart={cart} />
 
             <div className="GiftCardCheckoutForm__info">
               <Icon type="solution" />
@@ -171,21 +195,31 @@ const GiftCardCheckoutForm = React.createClass({
         onChange={this._onCreditCardFormChange}
       />
 
-      <Form.Item {...formItemLayout} className="GiftCardCheckoutForm__new-address" label="Billing address" required>
-        <Radio.Group
-          name="differentBillingAddress"
-          defaultValue={differentBillingAddress ? 'different' : 'same'}
-          onChange={this._onDifferentBillingAddressChange}
-        >
-          <Radio className="GiftCardCheckoutForm__new-address-same-option" value="same">
-            Same as shipping address
-            <span className="GiftCardCheckoutForm__new-address-text">
-              {this._getShippingAddressAsText(this.state.shippingAddressForm)}
-            </span>
-          </Radio>
-          <Radio value="different">Use a different billing address</Radio>
-        </Radio.Group>
-      </Form.Item>
+      <ReactCSSTransitionGroup
+        transitionName="popin"
+        transitionEnterTimeout={400}
+        transitionLeaveTimeout={300}
+      >
+        {
+          this._getGiftCardType() === 'physical'
+            ? <Form.Item {...formItemLayout} className="GiftCardCheckoutForm__new-address" label="Billing address" required>
+                <Radio.Group
+                  name="differentBillingAddress"
+                  defaultValue={differentBillingAddress ? 'different' : 'same'}
+                  onChange={this._onDifferentBillingAddressChange}
+                >
+                  <Radio className="GiftCardCheckoutForm__new-address-same-option" value="same">
+                    Same as shipping address
+                    <span className="GiftCardCheckoutForm__new-address-text">
+                      {this._getShippingAddressAsText(this.state.shippingAddressForm)}
+                    </span>
+                  </Radio>
+                  <Radio value="different">Use a different billing address</Radio>
+                </Radio.Group>
+              </Form.Item>
+            : null
+        }
+      </ReactCSSTransitionGroup>
 
       <ReactCSSTransitionGroup
         transitionName="popin"
@@ -193,15 +227,15 @@ const GiftCardCheckoutForm = React.createClass({
         transitionLeaveTimeout={300}
       >
         {
-          !differentBillingAddress
-            ? null
-            : <AddressForm
+          differentBillingAddress || this._getGiftCardType() === 'digital'
+            ? <AddressForm
                 disablePhone
                 disableName
                 initialState={this.state.billingAddressForm}
                 validate={this.state.validateAll}
                 onChange={this._onBillingAddressFormChange}
               />
+            : null
         }
       </ReactCSSTransitionGroup>
 
@@ -232,13 +266,6 @@ const GiftCardCheckoutForm = React.createClass({
     </section>
   },
 
-  _isFreeOrder() {
-    const { cart, promotion } = this.props;
-    const totalPrice = calculateCartPrice(cart, { promotion, ignorePromotionExpiry: true });
-    const isFreeOrder = totalPrice.value <= 0;
-    return isFreeOrder;
-  },
-
   _getShippingAddressAsText(shippingAddressForm) {
     if (!shippingAddressForm || !shippingAddressForm.isValid || !shippingAddressForm.values) {
       return 'Fill in your shipping details';
@@ -255,6 +282,10 @@ const GiftCardCheckoutForm = React.createClass({
       {cityLabel}<br/>
       {countryLabel}
     </span>;
+  },
+
+  _getGiftCardType() {
+    return _.get(this.state, 'giftCardCustomizeForm.values.giftCardType');
   },
 
   _getFormErrors(validateAll) {
@@ -287,21 +318,14 @@ const GiftCardCheckoutForm = React.createClass({
       return false;
     }
 
-    const isFreeOrder = this._isFreeOrder();
-    const requiredKeys = isFreeOrder
-      ? ['emailForm', 'shippingAddressForm']
-      : ['emailForm', 'shippingAddressForm', 'creditCardForm'];
-
+    const requiredKeys = this._getGiftCardType() === 'physical'
+      ? ['emailForm', 'shippingAddressForm', 'creditCardForm']
+      : ['emailForm', 'billingAddressForm', 'creditCardForm'];
     const requiredFormsAreValid = _.every(requiredKeys, (key) => _.get(this.state[key], 'isValid') === true);
 
-    let isBillingAddressOk = false;
-    if (isFreeOrder) {
-      isBillingAddressOk = true;
-    } else {
-      isBillingAddressOk = this.state.values.differentBillingAddress
-        ? _.get(this.state.billingAddressForm, 'isValid') === true
-        : true;
-    }
+    const isBillingAddressOk = this.state.values.differentBillingAddress
+      ? _.get(this.state.billingAddressForm, 'isValid') === true
+      : true;
 
     return requiredFormsAreValid && isBillingAddressOk;
   },
@@ -334,6 +358,10 @@ const GiftCardCheckoutForm = React.createClass({
         [name]: true
       }),
     }));
+  },
+
+  _onGiftCardCardFormChange(form) {
+    this.setState((state) => ({ giftCardCustomizeForm: form }), this._onAnyChange);
   },
 
   _onEmailFormChange(form) {

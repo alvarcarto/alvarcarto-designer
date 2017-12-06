@@ -1,9 +1,9 @@
+import { iframeResizerContentWindow } from 'iframe-resizer';
 import React from 'react';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import { Row, Col, Steps } from 'antd';
 import { checkoutFormStateChange } from '../actions';
-import GiftCardCustomizeForm from './GiftCardCustomizeForm';
 import GiftCardCheckoutForm from './GiftCardCheckoutForm';
 
 const { Step } = Steps;
@@ -16,20 +16,21 @@ const GiftCardPage = React.createClass({
   },
 
   render() {
+    const { globalState } = this.props;
+    const giftCardType = _.get(globalState, 'checkoutFormState.giftCardCustomizeForm.values.giftCardType');
+    const cart = giftCardType === 'digital'
+      ? globalState.giftCardCart
+      : globalState.giftCardCart.concat([{ type: 'physicalGiftCard', quantity: 1 }]);
+
     return (
       <div className="GiftCardPage">
-        <Row>
-          <Col span={8}><h1>Order details</h1></Col>
-        </Row>
-        <Row>
-          <Col span={24}>
-            <GiftCardCheckoutForm
-              cart={this.props.globalState.cart}
-              onChange={this.state.debouncedOnFormChange}
-              onSubmit={this._onFormSubmit}
-            />
-          </Col>
-        </Row>
+        <h1>Order details</h1>
+
+        <GiftCardCheckoutForm
+          cart={cart}
+          onChange={this.state.debouncedOnFormChange}
+          onSubmit={this._onFormSubmit}
+        />
       </div>
     );
   },

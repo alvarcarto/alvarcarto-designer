@@ -29,13 +29,14 @@ const GiftCardCustomizeForm = React.createClass({
 
     return (
       <div className="GiftCardCustomizeForm">
-        <Form.Item {...formItemLayout} label="Gift card type" required>
+        <Form.Item {...formItemLayout} label="Card type" required>
           <Radio.Group
+            name="giftCardType"
             onChange={this._onInputChange}
             value={_.get(this.state.values, 'giftCardType')}
           >
-            <Radio value={1}>Digital gift card sent to your email address</Radio>
-            <Radio value={2}>Physical gift card posted in a premium letter (+6.90€)
+            <Radio name="giftCardType" value="digital">Digital gift card sent to your email address</Radio>
+            <Radio name="giftCardType" value="physical">Physical gift card posted in a premium letter (+6.90€)
               <span className="GiftCardCustomizeForm-radio-explanation">
                 We highly recommend the physical gift card, it's an experience in itself.
               </span>
@@ -57,10 +58,8 @@ const GiftCardCustomizeForm = React.createClass({
   },
 
   _emitOnChange() {
-    const isValid = !this._hasFormErrors();
-
     this.props.onChange({
-      isValid,
+      isValid: true,  // This can't have validation errors
       values: this.state.values,
     });
   },

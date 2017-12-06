@@ -60,6 +60,13 @@ const initialState = {
       autoUpdateCoordinates: true,
     }
   ],
+  giftCardCart: [
+    {
+      type: 'giftCardValue',
+      quantity: 1,
+      value: getQuery('value', 'number', 4900),
+    },
+  ],
   checkoutFormState: DEBUG ? dummyCheckoutState : null,
   editCartItem: 0,
   postingOrder: false,

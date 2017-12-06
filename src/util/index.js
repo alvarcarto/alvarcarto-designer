@@ -3,6 +3,7 @@ import qs from 'qs';
 import config from '../config';
 import geolib from 'geolib';
 import { POSTER_STYLES, MAP_STYLES } from 'alvarcarto-common';
+import { calculateItemPrice } from 'alvarcarto-price-util';
 
 function posterSizeToPixels(size, orientation) {
   let dimensions;
@@ -41,6 +42,23 @@ function posterSizeToPhysicalDimensions(size, orientation) {
   }
 
   return _resolveOrientation(dimensions, orientation);
+}
+
+function getCartLineName(item) {
+  const price = calculateItemPrice(item);
+
+  switch (item.type) {
+    case 'physicalGiftCard':
+      return 'Premium gift card';
+    case 'giftCardValue':
+      return `Gift card value`;
+    default:
+      if (item.labelsEnabled && item.labelHeader) {
+        return `Poster of ${item.labelHeader}, ${item.size}`;
+      }
+
+      return `Poster, ${item.size}`;
+  }
 }
 
 function createPosterUrlParameters(mapItem) {
@@ -261,4 +279,5 @@ module.exports = {
   getQuery,
   stringEqualsIgnoreWhitespace,
   getCenterOfCoordinates,
+  getCartLineName,
 };

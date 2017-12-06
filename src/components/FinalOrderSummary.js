@@ -1,7 +1,7 @@
 import React from 'react';
 import ImageLoader from 'react-imageloader';
 import { Icon } from 'antd';
-import { getStyle, createPosterThumbnailUrl } from '../util';
+import { getStyle, createPosterThumbnailUrl, getCartLineName } from '../util';
 import { calculateCartPrice, calculateItemPrice, getCurrencySymbol } from 'alvarcarto-price-util';
 import _ from 'lodash';
 
@@ -17,19 +17,34 @@ const FinalOrderSummary = React.createClass({
       ignorePromotionExpiry: true,
     });
     const originalPrice = calculateCartPrice(cart);
+    const shouldRenderSimple = _.find(cart, item => _.isString(item.type)) !== undefined;
+
+    let className = 'FinalOrderSummary';
+    if (shouldRenderSimple) {
+      className += ' FinalOrderSummary--simple';
+    }
 
     return (
-      <div className="FinalOrderSummary">
+      <div className={className}>
+
         <div className="FinalOrderSummary__header-row">
           <h2 className="FinalOrderSummary__header">Order summary</h2>
-          <h2 className="FinalOrderSummary__header">ID: <span className="no-wrap">#{this.props.orderId}</span></h2>
+          {
+            this.props.orderId
+              ? <h2 className="FinalOrderSummary__header">ID: <span className="no-wrap">#{this.props.orderId}</span></h2>
+              : null
+          }
         </div>
 
         <ul className="FinalOrderSummary__cart">
           {
             _.map(cart, (item, index) =>
               <li key={index}>
-                <OrderItem index={index} item={item} />
+                {
+                  shouldRenderSimple
+                    ? <SimpleOrderItem index={index} item={item} />
+                    : <OrderItem index={index} item={item} />
+                }
               </li>
             )
           }
@@ -78,7 +93,6 @@ const OrderItem = React.createClass({
   render() {
     const { props } = this;
     const item = props.item;
-
     const price = calculateItemPrice(this.props.item);
     const styleName = getStyle(item.mapStyle).name;
     let cartImageClassName = 'OrderItem__image';
@@ -104,6 +118,21 @@ const OrderItem = React.createClass({
             <span className="OrderItem__quantity-number">{item.quantity}x</span>
           </div>
         </div>
+      </div>
+    );
+  },
+});
+
+const SimpleOrderItem = React.createClass({
+  render() {
+    const { props } = this;
+    const item = props.item;
+    const price = calculateItemPrice(this.props.item);
+
+    return (
+      <div className="SimpleOrderItem">
+        <h3 className="SimpleOrderItem__title">{getCartLineName(item)}</h3>
+        <h4 className="SimpleOrderItem__price">{price.label}</h4>
       </div>
     );
   },

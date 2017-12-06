@@ -23,7 +23,7 @@
   "dependencies": {
     "@google/maps": "^0.3.1",
     "alvarcarto-common": "git+https://alvarcarto-integration:1c9888484a1db3a46fb46c4d465ea4edc6d93196@github.com/kimmobrunfeldt/alvarcarto-common.git#v4.2.0",
-    "alvarcarto-price-util": "git+https://alvarcarto-integration:1c9888484a1db3a46fb46c4d465ea4edc6d93196@github.com/kimmobrunfeldt/alvarcarto-price-util.git#v3.1.0",
+    "alvarcarto-price-util": "git+https://alvarcarto-integration:1c9888484a1db3a46fb46c4d465ea4edc6d93196@github.com/kimmobrunfeldt/alvarcarto-price-util.git#v3.2.0",
     "antd": "^2.6.3",
     "auto-prefixer": "^0.4.2",
     "axios": "^0.15.3",
@@ -35,6 +35,7 @@
     "geolib": "^2.0.22",
     "history": "^4.5.1",
     "i18n-iso-countries": "^1.8.0",
+    "iframe-resizer": "^3.5.15",
     "leaflet": "github:kimmobrunfeldt/Leaflet#master",
     "normalize.css": "^5.0.0",
     "odometer": "^0.4.7",
