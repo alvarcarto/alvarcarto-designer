@@ -165,6 +165,7 @@ const GiftCardCheckoutForm = React.createClass({
             </Form.Item>
 
             <Button
+              data-iframe-height
               className={this.state.invalidSubmit
                 ? 'GiftCardCheckoutForm__complete-button shake animated'
                 : 'GiftCardCheckoutForm__complete-button'
