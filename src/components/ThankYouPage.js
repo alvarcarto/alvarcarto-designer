@@ -20,6 +20,55 @@ const STEPS_SECOND = {
   firstText: 'We received your order.',
 };
 
+
+function hasShippableProducts(cart) {
+  return _.some(cart, item => item.type !== 'giftCardValue');
+}
+
+function hasMapPosters(cart) {
+  return _.some(cart, item => !item.type || item.type === 'mapPoster');
+}
+
+function hasPhysicalGiftCards(cart) {
+  return _.some(cart, item => item.type === 'physicalGiftCard');
+}
+
+function getItemsWording(cart) {
+  const words = [];
+
+  if (hasMapPosters(cart)) {
+    words.push('posters');
+  }
+  if (hasPhysicalGiftCards(cart)) {
+    words.push('gift cards');
+  }
+  return words.join(' and ');
+}
+
+function getFirstText(cart, city) {
+  if (hasShippableProducts(cart)) {
+    return [
+      `Your unique ${getItemsWording(cart)} will be printed and shipped to ${city}`,
+      'within a few days. In case you have an Express Shipping deal, the items will be printed',
+      'and shipped today if the order was sent before 12PM (12:00 Europe/Helsinki time).'
+    ].join(' ');
+  }
+
+  return [
+    'Your ordered items will be sent to you digitally via email as soon as possible.',
+  ].join(' ');
+}
+
+function getSecondText(cart) {
+  const pieces = ['Receipt of the purchase will be sent to your email.'];
+
+  if (hasShippableProducts(cart)) {
+    pieces.push('We\'ll keep you updated via email about the delivery details.');
+  }
+
+  return pieces.join(' ');
+}
+
 const ThankYouPage = React.createClass({
   getInitialState() {
     return {
@@ -137,8 +186,11 @@ const ThankYouPage = React.createClass({
 
   _renderOrderContent() {
     const { cart, promotion } = this.state.order;
-    const { city } = this.state.order.shippingAddress;
     const { stepIndex, firstText, firstIcon } = this.state.steps;
+    const city = _.get(this.state.order, 'shippingAddress.city');
+    const description = this.state.order.shippingAddress
+      ? `Package arrives to ${city}.`
+      : 'Digital assets arrive.';
 
     return <div>
       <MediaQuery maxWidth={CONST.SCREEN_SM}>
@@ -150,21 +202,13 @@ const ThankYouPage = React.createClass({
               {...firstIcon ? { icon: <Icon type={firstIcon} /> } : {} }
             />
             <Steps.Step title="Print &amp; delivery" description="Waiting to be printed and delivered." icon={<Icon type="clock-circle-o" />} />
-            <Steps.Step title="Delivery arrives" description={`Package arrives to ${city}.`} icon={<Icon type="heart-o" />} />
+            <Steps.Step title="Delivery arrives" description={description} icon={<Icon type="heart-o" />} />
           </Steps>
         }
       </MediaQuery>
 
-      <p>
-        Your unique posters will be printed and shipped to {city} within a few days.
-        In case you chose Express Shipping, the posters will be printed
-        and shipped today if the order was sent before 12PM (12:00).
-      </p>
-
-      <p>
-        Receipt of the purchase will be sent to your email.
-        We'll send the delivery tracking code via email as soon as we get it.
-      </p>
+      <p>{getFirstText(cart, city)}</p>
+      <p>{getSecondText(cart, city)}</p>
 
       <div className="ThankYouPage__order-container">
         <FinalOrderSummary promotion={promotion} cart={cart} orderId={this.props.orderId} />
@@ -172,7 +216,7 @@ const ThankYouPage = React.createClass({
 
       <div className="ThankYouPage__ok-container">
         <p>
-          Now sit back and relax, your posters will arrive soon. This page can be
+          Now sit back and relax. This page can be
           safely closed.
         </p>
 
@@ -186,6 +230,11 @@ const ThankYouPage = React.createClass({
   },
 
   _onBackToStartClick() {
+    if (this.props.startOverPath) {
+      window.location = this.props.startOverPath;
+      return;
+    }
+
     // We are doing a page reload on purpose. It will clear state
     window.location = '/';
   }

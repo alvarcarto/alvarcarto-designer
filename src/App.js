@@ -42,7 +42,7 @@ const App = React.createClass({
     let page;
     if (pathname === '/checkout') {
       page = <CheckoutPage />;
-    } else if (pathname === '/giftcard') {
+    } else if (pathname === '/giftcard' || pathname === '/gift-cards') {
       page = <GiftCardPage />;
     } else if (pathname.match(/^\/orders\/[a-zA-Z0-9-]+$/)) {
       // If matches /orders/:id, where id is alphanumeric and may contain dash

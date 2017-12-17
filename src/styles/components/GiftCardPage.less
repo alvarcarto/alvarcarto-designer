@@ -5,6 +5,27 @@
   position: relative;
 }
 
+.GiftCardPage__overlay {
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: fixed;
+  z-index: 100000;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+}
+.GiftCardPage__overlay .Spinner {
+  margin-bottom: 10px;
+}
+.GiftCardPage__overlay > * {
+  color: white;
+}
+
 .GiftCardPage h1 {
   margin-bottom: 30px;
 }

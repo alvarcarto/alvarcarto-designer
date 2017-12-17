@@ -41,6 +41,7 @@ const GiftCardCheckoutForm = React.createClass({
       // with null and false
       values: _.extend(_.mapValues(form, () => null), {
         emailSubscription: true,
+        differentBillingAddress: true,
       }),
       shouldValidate: _.mapValues(form, () => false),
       validateAll: false,
@@ -260,10 +261,6 @@ const GiftCardCheckoutForm = React.createClass({
           </div>
         </li>
       </ul>
-
-      <div className="GiftCardCheckoutForm__sec-info">
-        <a onClick={this._onMoreSecurityClick} href="#">Security details</a>
-      </div>
     </section>
   },
 
@@ -362,7 +359,13 @@ const GiftCardCheckoutForm = React.createClass({
   },
 
   _onGiftCardCardFormChange(form) {
-    this.setState((state) => ({ giftCardCustomizeForm: form }), this._onAnyChange);
+    const newState = { giftCardCustomizeForm: form };
+    if (form.values.giftCardType === 'digital') {
+      // As a side-effect when user selects digital gift card,
+      // user has to input billing address
+      newState.values = { differentBillingAddress: true };
+    }
+    this.setState((state) => newState, this._onAnyChange);
   },
 
   _onEmailFormChange(form) {
@@ -379,31 +382,6 @@ const GiftCardCheckoutForm = React.createClass({
 
   _onCreditCardFormChange(form) {
     this.setState((state) => ({ creditCardForm: form }), this._onAnyChange);
-  },
-
-  _onMoreSecurityClick(e) {
-    e.preventDefault();
-
-    Modal.info({
-      title: 'Your payments are secured',
-      iconType: 'lock',
-      onCancel: () => null,  // To prevent expection
-      content: (
-        <div>
-          <p>
-            Alvar Carto is using <a target="_blank" href="https://stripe.com">Stripe </a>
-            to securely handle your payments.
-            Stripe <a target="_blank" href="https://stripe.com/docs/security/stripe"> is certified </a>
-            to PCI Service Provider Level 1, which is the
-            most stringent level of certification available.
-          </p>
-          <p>
-            Full credit card information is only sent to Stripe servers.
-            We only see the last 4 digits and the expiration date of your credit card.
-          </p>
-        </div>
-      ),
-    });
   },
 
   _onSubmit(e) {

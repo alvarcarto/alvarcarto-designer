@@ -64,7 +64,7 @@ const initialState = {
     {
       type: 'giftCardValue',
       quantity: 1,
-      value: getQuery('value', 'number', 4900),
+      value: getQuery('value', 'integer', 4900),
     },
   ],
   checkoutFormState: DEBUG ? dummyCheckoutState : null,
@@ -221,7 +221,18 @@ function reducer(state = initialState, action) {
       return _.extend({}, state, { postingOrder: false, postOrderResponse: null, postOrderError: action.payload });
 
     case actions.CHECKOUT_FORM_STATE_CHANGE:
-      return _.extend({}, state, { checkoutFormState: action.payload });
+      newState = _.extend({}, state, { checkoutFormState: action.payload });
+      if (_.get(action.payload, 'giftCardCustomizeForm.values.giftCardType') === 'digital') {
+        newState.giftCardCart = _.filter(newState.giftCardCart, i => i.type === 'giftCardValue');
+      } else {
+        const valueItem = _.find(newState.giftCardCart, i => i.type === 'giftCardValue');
+        newState.giftCardCart = [
+          valueItem,
+          { type: 'physicalGiftCard', quantity: 1 }
+        ];
+      }
+
+      return newState;
 
     default:
       return state;
