@@ -17,7 +17,7 @@ const FinalOrderSummary = React.createClass({
       ignorePromotionExpiry: true,
     });
     const originalPrice = calculateCartPrice(cart);
-    const shouldRenderSimple = _.find(cart, item => item.type === 'mapPoster') !== undefined;
+    const shouldRenderSimple = _.find(cart, item => item.type !== 'mapPoster') !== undefined;
 
     let className = 'FinalOrderSummary';
     if (shouldRenderSimple) {
