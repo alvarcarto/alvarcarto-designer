@@ -50,7 +50,7 @@ function getFirstText(cart, city) {
     return [
       `Your unique ${getItemsWording(cart)} will be printed and shipped to ${city}`,
       'within a few days. In case you have an Express Shipping deal, the items will be printed',
-      'and shipped today if the order was sent before 12PM (12:00 Europe/Helsinki time).'
+      `and shipped on the next business day.`,
     ].join(' ');
   }
 
