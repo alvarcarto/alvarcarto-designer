@@ -102,6 +102,7 @@ const AlvarMap = React.createClass({
       zoom={mapItem.mapZoom}
       minZoom={CONST.MAP_MIN_ZOOM}
       maxZoom={CONST.MAP_MAX_ZOOM}
+      maxBounds={[{lat: 85, lng: -179}, {lat: -85, lng: 179}]}
       {...props}
     >
       <LTileLayer zoomOffset={1} tileSize={128} url={style.url} />

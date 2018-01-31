@@ -8,7 +8,7 @@ const CONST = {
   SCREEN_SM: 768 - 1,
   SCREEN_MD: 992 - 1,
   SCREEN_LG: 120 - 1,
-  MAP_MIN_ZOOM: 8,
+  MAP_MIN_ZOOM: 2,
   MAP_MAX_ZOOM: 19,
 };
 
