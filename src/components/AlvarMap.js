@@ -1,4 +1,5 @@
 import React from 'react';
+import { Tooltip } from 'antd';
 import L from 'leaflet';
 window.L = L;
 import { connect } from 'react-redux';
@@ -15,6 +16,13 @@ const userAgent = navigator.userAgent.toLowerCase();
 const IS_ANDROID = userAgent.indexOf('android') > -1;
 
 const AlvarMap = React.createClass({
+  getInitialState() {
+    return {
+      userHasClicked: false,
+      tooltipVisible: false,
+    };
+  },
+
   componentWillReceiveProps(nextProps) {
     const { globalState } = this.props;
     const mapItem = globalState.cart[globalState.editCartItem];
@@ -45,6 +53,16 @@ const AlvarMap = React.createClass({
     if (!mapItem.mapBounds) {
       this._dispatchMapView();
     }
+
+    setTimeout(() => {
+      if (!this.state.userHasClicked) {
+        this.setState(() => ({ tooltipVisible: true }));
+
+        setTimeout(() => {
+          this.setState(() => ({ tooltipVisible: false }));
+        }, 15000);
+      }
+    }, 15000);
   },
 
   render() {
@@ -63,23 +81,29 @@ const AlvarMap = React.createClass({
     const borderPadding = Math.floor(CONST.EMPTY_MAP_PADDING_FACTOR * minSide);
 
     return (
-      <div className="AlvarMap grabbable" style={mapCssStyle}>
-        <div className="AlvarMap__container">
-          {
-            this._renderLeaflet(style)
-          }
+      <div onClick={this._onMapClick} className="AlvarMap grabbable" style={mapCssStyle}>
+        <Tooltip visible={this.state.tooltipVisible} title={'You can move the map by dragging it!'}>
+          <div className="AlvarMap__container">
+            {
+              this._renderLeaflet(style)
+            }
 
-          {
-            mapItem.labelsEnabled
-              ? <AlvarMapOverlay mapItem={mapItem} />
-              : <div
-                  className="AlvarMap__empty-overlay"
-                  style={{ border: `${borderPadding}px solid white` }}
-                ></div>
-          }
-        </div>
+            {
+              mapItem.labelsEnabled
+                ? <AlvarMapOverlay mapItem={mapItem} />
+                : <div
+                    className="AlvarMap__empty-overlay"
+                    style={{ border: `${borderPadding}px solid white` }}
+                  ></div>
+            }
+          </div>
+        </Tooltip>
       </div>
     );
+  },
+
+  _onMapClick() {
+    this.setState(() => ({ userHasClicked: true }));
   },
 
   _renderLeaflet(style) {
