@@ -64,7 +64,7 @@ const GeoSearch = React.createClass({
 
     return getPlacePredictions({
       input: input,
-      types: ['(regions)'],
+      types: [],
       language: 'en',
     })
       .then(results => ({
@@ -124,7 +124,7 @@ function findCityFromGoogleObject(obj) {
     }
   }
 
-  return _.get(found, 'long_name', 'UNKNOWN CITY');
+  return _.get(found, 'long_name', findCountryFromGoogleObject(obj));
 }
 
 function findCountryFromGoogleObject(obj) {
