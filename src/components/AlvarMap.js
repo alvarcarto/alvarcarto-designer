@@ -5,6 +5,7 @@ window.L = L;
 import { connect } from 'react-redux';
 import { setMapView } from '../actions';
 import CONST from '../constants';
+import config from '../config';
 import { posterSizeToPixels, getStyle } from '../util';
 import AlvarMapOverlay from './AlvarMapOverlay';
 import {
@@ -80,9 +81,14 @@ const AlvarMap = React.createClass({
     const minSide = Math.min(dimensions.width, dimensions.height);
     const borderPadding = Math.floor(CONST.EMPTY_MAP_PADDING_FACTOR * minSide);
 
+    const tooltipContent = <p onClick={this._onTooltipClick} className="AlvarMap__tooltip">
+      You can move the map by dragging it!
+      <img className="AlvarMap__drag-icon" src={`${config.PUBLIC_URL}/assets/drag-icon.svg`} alt=""/>
+    </p>;
+
     return (
       <div onClick={this._onMapClick} className="AlvarMap grabbable" style={mapCssStyle}>
-        <Tooltip visible={this.state.tooltipVisible} title={'You can move the map by dragging it!'}>
+        <Tooltip visible={this.state.tooltipVisible} title={tooltipContent}>
           <div className="AlvarMap__container">
             {
               this._renderLeaflet(style)
@@ -104,6 +110,10 @@ const AlvarMap = React.createClass({
 
   _onMapClick() {
     this.setState(() => ({ userHasClicked: true }));
+  },
+
+  _onTooltipClick() {
+    this.setState(() => ({ tooltipVisible: false }));
   },
 
   _renderLeaflet(style) {

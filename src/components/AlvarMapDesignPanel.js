@@ -92,6 +92,9 @@ const AlvarMapDesignPanel = React.createClass({
           onInputChange={this._onGeoSearchInputChange}
           onChange={this._onGeoSearch}
         />
+        <p className="AlvarMapDesignPanel__label">
+          You can also zoom and drag the map to any location.
+        </p>
       </div>
 
       <div className="AlvarMapDesignPanel__group AlvarMapDesignPanel__poster-style">

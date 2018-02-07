@@ -31,3 +31,30 @@
 .leaflet-control-attribution {
   display: none;
 }
+
+.AlvarMap__tooltip {
+  height: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.AlvarMap__drag-icon {
+  width: 20px;
+  height: 20px;
+  margin-left: 8px;
+  animation-name: move;
+  animation-duration: 1s;
+  animation-iteration-count: 6;
+}
+
+@keyframes move {
+    from {
+      transform: translateX(0);
+    }
+    50% {
+      transform: translateX(-3px);
+    }
+    to {
+      transform: translateX(0);
+    }
+}
