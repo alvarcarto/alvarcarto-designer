@@ -35,6 +35,7 @@ if (mapZoom < CONST.MAP_MIN_ZOOM) {
 
 const initialState = {
   debug: DEBUG,
+  apiKey: getQuery('apiKey', 'string'),
   partnerMode: getQuery('friend', 'boolean', false),
   location: history.location,
   initialLoadTime: new Date(),

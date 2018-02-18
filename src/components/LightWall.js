@@ -119,7 +119,7 @@ const LightWall = React.createClass({
             this.state.showPreview
               ? <img
                   className="LightWall__preview-image"
-                  src={`${createPosterImageUrl(mapItem)}&apiKey=${config.REACT_APP_RENDER_API_KEY}`}
+                  src={`${createPosterImageUrl(mapItem)}&apiKey=${globalState.apiKey || config.REACT_APP_RENDER_API_KEY}`}
                   alt=""
                 />
               : null
@@ -144,6 +144,7 @@ const LightWall = React.createClass({
         {
           globalState.debug
             ? <div className="LightWall__debug-menu">
+                <Button type="primary" onClick={this._downloadImage}>Download</Button>
                 <Switch defaultChecked={false} onChange={this._onPreviewChange} />
               </div>
             : null
@@ -227,7 +228,14 @@ const LightWall = React.createClass({
     const timestamp = (new Date()).toISOString();
     dlAnchorElem.setAttribute('download', `alvar-${timestamp}.json`);
     dlAnchorElem.click();
-  }
+  },
+
+  _downloadImage() {
+    const { globalState } = this.props;
+    const mapItem = globalState.cart[globalState.editCartItem];
+    const newUrl = `${createPosterImageUrl(mapItem)}&apiKey=${globalState.apiKey}&download=true`;
+    window.open(newUrl, '_blank');
+  },
 });
 
 /**
