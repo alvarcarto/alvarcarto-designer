@@ -15,10 +15,6 @@ WebFont.load({
     families: [
       'Fira Sans Extra Condensed:400,700',
       'Source Sans Pro:200,400,700',
-      'Roboto Condensed:300,400,700',
-      'Josefin Sans:300,400,700',
-      'Pacifico:300,400,700',
-      'Amatic SC:300,400,700',
     ],
   },
 });
