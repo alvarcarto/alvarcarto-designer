@@ -28,7 +28,8 @@ const Footer = () => <footer className="Footer">
         Any questions? Send us mail to
         <a target="_blank" href="mailto:help@alvarcarto.com"> help@alvarcarto.com</a>.
       </p>
-      <p>We are located at <i>Rantakatu 3, 90100 Oulu, Finland.</i></p>
+      <p>We are located at Rantakatu 3, 90100 Oulu, Finland.</p>
+      <p>Alvar Carto Oy (VAT ID: FI28852264)</p>
     </Col>
   </Row>
 </footer>;
