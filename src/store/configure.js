@@ -3,12 +3,15 @@ import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk';
 import analytics from '../middleware/redux-analytics';
 import { handleAnalyticsEvent } from '../analytics';
-import rootReducer from '../reducers'
+import { getQuery } from '../util';
+import rootReducer from '../reducers';
+
+const REDUX_LOG = getQuery('reduxLog', 'boolean', false);
 
 const configureStore = preloadedState => {
   const middlewares = [];
 
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV === 'development' || REDUX_LOG) {
     const createLogger = require('redux-logger');
     const logger = createLogger();
     middlewares.push(logger);
