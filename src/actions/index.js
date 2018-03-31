@@ -30,12 +30,12 @@ export const setMapView = (view) => ({
     analytics: [
       {
         type: 'designViewContent',
-        meta: { debounce: 1000 },
+        meta: { debounce: 1000, minTimeOnPage: 2000 },
       },
       {
         type: 'designSetMapView',
         // payload set later
-        meta: { debounce: 1000 },
+        meta: { debounce: 1000, minTimeOnPage: 2000 },
       },
     ],
   },

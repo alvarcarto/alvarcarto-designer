@@ -5,6 +5,8 @@ import { triggerGtmEvent } from './util/gtm';
 import { getCities } from './util/api';
 import { DEFAULT_MAP_CENTER } from './reducers';
 
+const startTimeMs = (new Date()).getTime();
+
 const handlers = {};
 
 // Keep this state while application is running in user's browser
@@ -26,6 +28,12 @@ function _handleSingleEvent(analyticsInfo, state) {
 
   const maxFireTimes = _.get(analyticsInfo, 'meta.maxFireTimes', Infinity);
   if (getFiredCount(type) >= maxFireTimes) {
+    return;
+  }
+
+  const minTimeMs = _.get(analyticsInfo, 'meta.minTimeOnPage', 0)
+  const timeInSiteMs = (new Date()).getTime() - startTimeMs;
+  if (timeInSiteMs < minTimeMs) {
     return;
   }
 
