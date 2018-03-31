@@ -31,6 +31,8 @@ const GeoSearch = React.createClass({
             loadOptions={this.state.debouncedFetchOptions}
             value={_.get(this, 'state.selection.value')}
             onChange={this._onChange}
+            onSelectResetsInput={false}
+            onBlurResetsInput={false}
           />
           <Icon type="search" />
         </div>
