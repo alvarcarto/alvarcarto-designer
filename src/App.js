@@ -60,13 +60,13 @@ const App = React.createClass({
       <div className="App">
         {/* Preload fonts */}
         <div style={{height: 0, width: 0, visibility: 'hidden', opacity: 0}}>
-          <p style={{'font-family': 'JosefinSans-Bold'}}>T</p>
-          <p style={{'font-family': 'JosefinSans'}}>T</p>
-          <p style={{'font-family': 'JosefinSans-Light'}}>T</p>
-          <p style={{'font-family': 'RobotoCondensed-Light'}}>T</p>
-          <p style={{'font-family': 'RobotoCondensed-Bold'}}>T</p>
-          <p style={{'font-family': 'Pacifico'}}>T</p>
-          <p style={{'font-family': 'AmaticSC-Bold'}}>T</p>
+          <p style={{fontFamily: 'JosefinSans-Bold'}}>T</p>
+          <p style={{fontFamily: 'JosefinSans'}}>T</p>
+          <p style={{fontFamily: 'JosefinSans-Light'}}>T</p>
+          <p style={{fontFamily: 'RobotoCondensed-Light'}}>T</p>
+          <p style={{fontFamily: 'RobotoCondensed-Bold'}}>T</p>
+          <p style={{fontFamily: 'Pacifico'}}>T</p>
+          <p style={{fontFamily: 'AmaticSC-Bold'}}>T</p>
         </div>
 
         <div className="App__layout">
