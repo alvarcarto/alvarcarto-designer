@@ -2,6 +2,6 @@
     "folders": [{
         "path": ".",
         "file_exclude_patterns": ["bundle.css", "bundle.js"],
-        "folder_exclude_patterns": [".svn", "build"]
+        "folder_exclude_patterns": [".svn", "build", "node_modules"]
     }]
 }
