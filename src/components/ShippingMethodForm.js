@@ -9,18 +9,18 @@ const ShippingMethodForm = React.createClass({
         <Row>
           <Col span={13}>
             <Radio.Group value="free">
-              <Radio value="free">Worldwide Priority Mail</Radio>
+              <Radio value="free">Worldwide Express Mail</Radio>
             </Radio.Group>
             <div className="ShippingMethodForm__radio-info">
-              Delivery to your nearest post office.
+              Incredibly fast shipping. Delivery to your nearest post office.
 
               <div className="ShippingMethodForm__radio-info-estimates">
-                <span>Estimated delivery times:</span>
+                <span>Average delivery times:</span>
                 <ul>
-                  <li>Finland: 3-8 business days</li>
-                  <li>Europe: 7-11 business days</li>
-                  <li>US: 9-14 business days</li>
-                  <li>Other: 12-18 business days</li>
+                  <li>Finland: 2-5 business days</li>
+                  <li>Europe: 2-5 business days</li>
+                  <li>US: 3-6 business days</li>
+                  <li>Other: 3-7 business days</li>
                 </ul>
               </div>
             </div>
