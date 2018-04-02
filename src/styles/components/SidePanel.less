@@ -12,6 +12,15 @@
   padding: 10px 10px 20px 10px;
 }
 
+.SidePanel__middle {
+  z-index: 200;
+  position: relative;
+  height: 95px;
+  background: #f6f6f6;
+  width: 100%;
+  border-top: 1px solid @primary-color;
+}
+
 .SidePanel__lower {
   z-index: 200;
   height: @sidepanel-lower-narrow-height;
@@ -21,6 +30,18 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  border-top: 1px solid #ddd;
+}
+
+.SidePanel .SidePanel__badge {
+  font-family: tahoma;
+  position: absolute;
+  top: -15px;
+  right: 41px;
+  transform: translateX(50%);
+}
+.SidePanel .SidePanel__badge .ant-badge-count {
+  background: @primary-color;
 }
 
 @media @screen-lt-sm-media {
@@ -44,4 +65,3 @@
     overflow: auto;
   }
 }
-

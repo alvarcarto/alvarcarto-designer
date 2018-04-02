@@ -1,11 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Tooltip, Badge } from 'antd';
 import AlvarMapDesignPanel from './AlvarMapDesignPanel';
 import PricePanel from './PricePanel';
+import MiniCart from './MiniCart';
 
 const SidePanel = React.createClass({
   render() {
     const { globalState } = this.props;
+    const itemCount = globalState.cart.length
 
     return (
       <div className="SidePanel">
@@ -14,6 +17,19 @@ const SidePanel = React.createClass({
           dispatch={this.props.dispatch}
           globalState={globalState}
         />
+        <div className="SidePanel__middle">
+          <MiniCart dispatch={this.props.dispatch} globalState={globalState} />
+          {
+            itemCount > 1
+              ? <div className="SidePanel__badge">
+                  <Tooltip title={`You have ${itemCount} designs in your order.`}>
+                    <Badge count={itemCount} />
+                  </Tooltip>
+                </div>
+              : null
+          }
+        </div>
+
         <div className="SidePanel__lower">
           <PricePanel dispatch={this.props.dispatch} globalState={globalState} />
         </div>
