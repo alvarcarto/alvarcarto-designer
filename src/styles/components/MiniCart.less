@@ -4,13 +4,20 @@
   height: 100%;
   background: #eee;
   align-items: flex-end;
-  padding-bottom: 8px;
+}
+
+.MiniCart__cart-container {
+	height: 100%;
+	flex: 1;
+	display: flex;
+	overflow: hidden;
 }
 
 .MiniCart__cart {
-	flex: 1;
+	height: 100%;
+	transition: transform 0.3s ease;
+	padding-bottom: 8px;
 	display: flex;
-	overflow-x: scroll;
 
 	li {
 		display: flex;
@@ -18,11 +25,17 @@
 	}
 }
 
-.MiniCart__right {
-	width: 70px;
+.MiniCart__scroll-left, .MiniCart__scroll-right {
+	height: 100%;
+	width: 30px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	transition: background 0.3s ease;
+
+	&:hover {
+		background: rgba(0, 0, 0, 0.04);
+	}
 }
 
 .MiniCart__add-poster {
@@ -33,17 +46,21 @@
   width: 85px;
   cursor: pointer;
 
+  .MiniCart__poster {
+  	transition: border 0.3s ease, background 0.3s ease;
+  }
+
+  .MiniCart__poster .anticon, .MiniCart__add-poster-text {
+  	transition: color 0.3s ease;
+  }
+
   &:hover {
 		.MiniCart__poster {
 			border: 1px solid @primary-color;
 			background: white;
 		}
 
-		.MiniCart__poster .anticon {
-			color: @primary-color;
-		}
-
-		.MiniCart__add-poster-text {
+		.MiniCart__poster .anticon, .MiniCart__add-poster-text {
 			color: @primary-color;
 		}
 	}
@@ -51,30 +68,34 @@
 
 .MiniCart__poster {
 	width: 35px;
-	background: #fdfdfd;
 	height: 50px;
-	border: 1px solid rgba(0, 0, 0, 0);
+	background: rgba(0, 0, 0, 0);
+	border: 1px solid #555;
 	padding: 1px;
-	transition: border 0.25s ease;
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	margin-bottom: 3px;
 }
 
 .MiniCart__poster .anticon {
-	color: #999;
-	transition: color 0.25s ease;
+	color: #555;
 }
 
-.MiniCart__add-poster-text {
+.MiniCart__add-poster-text, .MiniCart__add-poster-sub-text {
 	font-size: @font-size-xx-small;
-  color: #aaa;
-  transition: color 0.25s ease;
+  color: #999;
+  max-width: 100%;
+  transition: color 0.3s ease;
   font-weight: bold;
   text-align: center;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+.MiniCart__add-poster-sub-text {
+  font-size: 0.6rem;
+  margin-top: -3px;
 }
 
 

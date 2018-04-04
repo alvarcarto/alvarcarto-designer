@@ -13,12 +13,8 @@
 }
 
 .SidePanel__middle {
-  z-index: 200;
-  position: relative;
-  height: 95px;
-  background: #f6f6f6;
-  width: 100%;
-  border-top: 1px solid @primary-color;
+  display: none;
+  visibility: hidden;
 }
 
 .SidePanel__lower {
@@ -63,5 +59,16 @@
     flex: 1;
     flex-shrink: 2;
     overflow: auto;
+  }
+
+  .SidePanel__middle {
+    display: block;
+    visibility: visible;
+    z-index: 200;
+    position: relative;
+    height: 96px;
+    background: #f6f6f6;
+    width: 100%;
+    border-top: 1px solid @primary-color;
   }
 }

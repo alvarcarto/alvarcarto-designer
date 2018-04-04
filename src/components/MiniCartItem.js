@@ -2,8 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 import { Icon, Tooltip, Popconfirm } from 'antd';
 import { getStyle } from '../util';
-import { calculateItemPrice } from 'alvarcarto-price-util';
-import { createPosterThumbnailUrl } from '../util';
+import { createPosterThumbnailUrl, posterSizeToThumbnailPixels, getPosterLook } from '../util';
 import IconButton from './IconButton';
 import ImageLoader from 'react-imageloader';
 import CONST from '../constants';
@@ -17,6 +16,7 @@ const MiniCartItem = React.createClass({
     selected: React.PropTypes.bool.isRequired,
     index: React.PropTypes.number.isRequired,
     item: React.PropTypes.shape({
+      posterStyle: React.PropTypes.string.isRequired,
       quantity: React.PropTypes.number.isRequired,
       mapBounds:  React.PropTypes.object.isOptional,
       mapCenter:  React.PropTypes.object.isRequired,
@@ -39,9 +39,6 @@ const MiniCartItem = React.createClass({
   render() {
     const { props } = this;
     const item = props.item;
-
-    const price = calculateItemPrice(this.props.item);
-    const styleName = getStyle(item.mapStyle).name;
     const isDecreaseDisabled = this.props.item.quantity < 2;
 
     let className = 'MiniCartItem';
@@ -54,9 +51,19 @@ const MiniCartItem = React.createClass({
       posterClassName += ' MiniCartItem__poster--landscape';
     }
 
+    const posterSize = posterSizeToThumbnailPixels(item.size, item.orientation);
+    const posterStyle = getPosterLook(item.posterStyle);
+    const mapStyle = getStyle(item.mapStyle);
+
     return (
-      <div className={className} onClick={this._onEdit}>
-        <div className={posterClassName}>
+      <div style={props.style} className={className} onClick={this._onEdit}>
+        <div className={posterClassName} style={{ width: `${posterSize.width}px`, height: `${posterSize.height}px` }}>
+          <img
+            className="MiniCartItem__style-icon"
+            src={posterStyle.icon}
+            alt=""
+          />
+          <div style={{ background: mapStyle.color }} className="MiniCartItem__map-color"></div>
           <span className="MiniCartItem__quantity-number">{item.quantity}</span>
 
           <ul className="MiniCartItem__actions noselect">
@@ -91,7 +98,8 @@ const MiniCartItem = React.createClass({
           </ul>
         </div>
 
-        <p className="MiniCartItem__title">{item.size}</p>
+        <p className="MiniCartItem__title">{item.labelHeader.trim() ? item.labelHeader : <span>&nbsp;</span>}</p>
+        {/*<p className="MiniCartItem__sub-title"></p>*/}
       </div>
     );
   },
