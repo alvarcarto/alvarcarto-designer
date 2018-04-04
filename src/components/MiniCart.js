@@ -22,7 +22,8 @@ const MiniCart = React.createClass({
     return {
       position: 0,
       scrollButtonWidth: 30,
-      minItemWidth: 80,
+      minItemWidth: 82,
+      cartSidePadding: 5,
     };
   },
 
@@ -46,7 +47,7 @@ const MiniCart = React.createClass({
       <a style={{ width: scrollButtonWidth }} className="MiniCart__scroll-left" onClick={this._moveItemsRight}>
         <Icon type="left" />
       </a>
-      <div className="MiniCart__cart-container">
+      <div className="MiniCart__cart-container" style={{borderLeft: `${this.state.cartSidePadding}px solid #eee`, borderRight: `${this.state.cartSidePadding}px solid #eee`}}>
         <ul className="MiniCart__cart" style={autoprefix(cartCss)}>
           {
             _.map(cart, (item, index) =>
@@ -101,7 +102,7 @@ const MiniCart = React.createClass({
   },
 
   _getCartWindowWidth() {
-    return this.props.size.width - 2 * this.state.scrollButtonWidth;
+    return this.props.size.width - 2 * this.state.scrollButtonWidth - 2 * this.state.cartSidePadding;
   },
 
   _moveItemsLeft(_add) {
@@ -128,15 +129,6 @@ const MiniCart = React.createClass({
   },
 
   _onCartItemEditClick(index) {
-    const { windowSize } = this._getWindowSize();
-
-    const itemPos = getItemPositionOnWindow(this.state.position, index);
-    if (itemPos === 0) {
-      this._moveItemsRight();
-    } else if (itemPos === windowSize - 1) {
-      this._moveItemsLeft();
-    }
-
     this.props.dispatch(editCartItem(index));
   },
 

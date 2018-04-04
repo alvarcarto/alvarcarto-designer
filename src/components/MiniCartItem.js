@@ -41,7 +41,7 @@ const MiniCartItem = React.createClass({
     const item = props.item;
     const isDecreaseDisabled = this.props.item.quantity < 2;
 
-    let className = 'MiniCartItem';
+    let className = 'MiniCartItem noselect';
     if (props.selected) {
       className += ' MiniCartItem--selected';
     }
@@ -64,42 +64,41 @@ const MiniCartItem = React.createClass({
             alt=""
           />
           <div style={{ background: mapStyle.color }} className="MiniCartItem__map-color"></div>
-          <span className="MiniCartItem__quantity-number">{item.quantity}</span>
 
-          <ul className="MiniCartItem__actions noselect">
-            {
-              this.props.hideRemoveButton
-                ? null
-                : <li>
-                    <Popconfirm
-                      placement="bottom"
-                      title="Remove from order? Changes will be lost."
-                      onConfirm={this._onRemove}
-                      okText="Remove"
-                      cancelText="Cancel"
-                    >
-                      <a>
-                        <Tooltip title="Remove item from order">
-                          <Icon type="close" />
-                        </Tooltip>
-                      </a>
-                    </Popconfirm>
-                  </li>
-            }
-            <li>
-              <IconButton
-                disabled={isDecreaseDisabled}
-                className="noselect"
-                onClick={isDecreaseDisabled ? null : this._onDecreaseQuantity}
-                type="minus"
-              />
-            </li>
-            <li><IconButton className="noselect" onClick={this._onIncreaseQuantity} type="plus" /></li>
-          </ul>
+          <span className="MiniCartItem__quantity-number">{item.quantity}x</span>
+
+
+          {
+            this.props.hideRemoveButton
+              ? null
+              : <div className="MiniCartItem__action MiniCartItem__remove noselect">
+                  <Popconfirm
+                    placement="bottom"
+                    title="Remove from order? Changes will be lost."
+                    onConfirm={this._onRemove}
+                    okText="Remove"
+                    cancelText="Cancel"
+                  >
+                    <a>
+                      <Tooltip title="Remove item from order">
+                        <IconButton type="plus" />
+                      </Tooltip>
+                    </a>
+                  </Popconfirm>
+                </div>
+          }
+
+          <IconButton
+            disabled={isDecreaseDisabled}
+            className="MiniCartItem__action MiniCartItem__decrease-quantity noselect"
+            onClick={isDecreaseDisabled ? null : this._onDecreaseQuantity}
+            type="minus"
+          />
+
+          <IconButton className="MiniCartItem__action MiniCartItem__increase-quantity noselect" onClick={this._onIncreaseQuantity} type="plus" />
         </div>
 
         <p className="MiniCartItem__title">{item.labelHeader.trim() ? item.labelHeader : <span>&nbsp;</span>}</p>
-        {/*<p className="MiniCartItem__sub-title"></p>*/}
       </div>
     );
   },
