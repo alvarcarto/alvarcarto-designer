@@ -18,6 +18,9 @@
 	transition: transform 0.3s ease;
 	display: flex;
 
+	/* Fixes layout bug in IE11 */
+	flex: 1 0 auto;
+
 	li {
 		display: flex;
 		align-items: flex-end;
