@@ -6,6 +6,8 @@
   width: 85px;
   height: 100%;
   cursor: pointer;
+  padding-bottom: 11px;
+  border-bottom: 1px solid #ddd;
 
   .MiniCartItem__poster {
     transition: border 0.3s ease;
@@ -13,6 +15,10 @@
 
   .MiniCartItem__title {
     transition: color 0.3s ease;
+  }
+
+  .MiniCartItem__action {
+    transition: opacity 0.4s ease, transform 0.4s ease;
   }
 
   &:hover {
@@ -28,6 +34,18 @@
       pointer-events: auto;
       opacity: 1;
     }
+
+    .MiniCartItem__decrease-quantity {
+      transform: translate(-50%, -50%);
+    }
+
+    .MiniCartItem__increase-quantity {
+      transform: translate(50%, -50%);
+    }
+
+    .MiniCartItem__remove {
+      transform: translate(50%, -50%);
+    }
   }
 }
 
@@ -38,6 +56,12 @@
 }
 
 .MiniCartItem--selected {
+  position: relative;
+  background: #f6f6f6;
+  border-left: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+  border-bottom: 1px solid @primary-color;
+
   .MiniCartItem__poster {
     background: white;
     border: 1px solid @primary-color;
@@ -79,7 +103,7 @@
 .MiniCartItem__title {
   font-size: @font-size-xx-small;
   max-width: 100%;
-  color: #999;
+  color: #888;
   font-weight: bold;
   text-align: center;
   white-space: nowrap;
@@ -102,9 +126,7 @@
 
 .MiniCartItem__action {
   opacity: 0;
-  display: flex;
   pointer-events: none;
-  transition: opacity 0.3s ease;
   position: absolute;
 }
 
@@ -116,7 +138,7 @@
 .MiniCartItem__decrease-quantity {
   top: 70%;
   left: -15px;
-  transform: translate(-50%, -50%);
+  transform: translate(20%, -50%);
   width: 17px;
   height: 17px;
 }
@@ -124,20 +146,17 @@
 .MiniCartItem__increase-quantity {
   top: 70%;
   right: -15px;
-  transform: translate(50%, -50%);
+  transform: translate(-20%, -50%);
   width: 17px;
   height: 17px;
 }
 
 .MiniCartItem__remove {
-  top: 0;
-  right: 0;
-  transform: translate(50%, -50%);
-  width: 16px;
-  height: 16px;
-  background: white;
-  justify-content: center;
-  align-items: center;
+  top: -1px;
+  right: -1px;
+  transform: translate(0%, 0%);
+  width: 18px;
+  height: 18px;
 
   .IconButton {
     transform: rotate(45deg);

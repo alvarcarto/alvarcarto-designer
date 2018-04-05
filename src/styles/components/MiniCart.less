@@ -16,7 +16,6 @@
 .MiniCart__cart {
 	height: 100%;
 	transition: transform 0.3s ease;
-	padding-bottom: 8px;
 	display: flex;
 
 	li {
@@ -32,9 +31,22 @@
 	align-items: center;
 	justify-content: center;
 	transition: background 0.3s ease;
+	border-bottom: 1px solid #ddd;
 
 	&:hover {
 		background: rgba(0, 0, 0, 0.04);
+	}
+}
+
+.MiniCart__scroll-left--disabled, .MiniCart__scroll-right--disabled {
+	cursor: default;
+
+	&:hover {
+		background: none;
+	}
+
+	.anticon {
+		color: #ccc;
 	}
 }
 
@@ -45,6 +57,8 @@
   align-items: center;
   width: 85px;
   cursor: pointer;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ddd;
 
   .MiniCart__poster {
   	transition: border 0.3s ease, background 0.3s ease;
@@ -84,7 +98,7 @@
 
 .MiniCart__add-poster-text, .MiniCart__add-poster-sub-text {
 	font-size: @font-size-xx-small;
-  color: #999;
+  color: #888;
   max-width: 100%;
   transition: color 0.3s ease;
   font-weight: bold;

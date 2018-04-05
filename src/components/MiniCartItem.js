@@ -2,14 +2,8 @@ import React from 'react';
 import _ from 'lodash';
 import { Icon, Tooltip, Popconfirm } from 'antd';
 import { getStyle } from '../util';
-import { createPosterThumbnailUrl, posterSizeToThumbnailPixels, getPosterLook } from '../util';
+import { posterSizeToThumbnailPixels, getPosterLook } from '../util';
 import IconButton from './IconButton';
-import ImageLoader from 'react-imageloader';
-import CONST from '../constants';
-
-function preloader() {
-  return <Icon type="loading" />;
-}
 
 const MiniCartItem = React.createClass({
   propTypes: {
@@ -73,7 +67,7 @@ const MiniCartItem = React.createClass({
               ? null
               : <div className="MiniCartItem__action MiniCartItem__remove noselect">
                   <Popconfirm
-                    placement="bottom"
+                    placement="top"
                     title="Remove from order? Changes will be lost."
                     onConfirm={this._onRemove}
                     okText="Remove"

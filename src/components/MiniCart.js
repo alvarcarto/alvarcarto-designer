@@ -22,8 +22,7 @@ const MiniCart = React.createClass({
     return {
       position: 0,
       scrollButtonWidth: 30,
-      minItemWidth: 82,
-      cartSidePadding: 5,
+      minItemWidth: 86,
     };
   },
 
@@ -42,12 +41,19 @@ const MiniCart = React.createClass({
       transform: `translate(${itemWidth * moveNRight}px)`,
     };
 
+    const scrollLeftClassName = this._isMoveItemsRightPossible()
+      ? 'MiniCart__scroll-left'
+      : 'MiniCart__scroll-left MiniCart__scroll-left--disabled';
+    const scrollRightClassName = this._isMoveItemsLeftPossible()
+      ? 'MiniCart__scroll-right'
+      : 'MiniCart__scroll-right MiniCart__scroll-right--disabled';
+
     const className = `MiniCart ${this.props.className ? this.props.className : ''}`;
     return <div className={className}>
-      <a style={{ width: scrollButtonWidth }} className="MiniCart__scroll-left" onClick={this._moveItemsRight}>
+      <a style={{ width: scrollButtonWidth }} className={scrollLeftClassName} onClick={this._moveItemsRight}>
         <Icon type="left" />
       </a>
-      <div className="MiniCart__cart-container" style={{borderLeft: `${this.state.cartSidePadding}px solid #eee`, borderRight: `${this.state.cartSidePadding}px solid #eee`}}>
+      <div className="MiniCart__cart-container">
         <ul className="MiniCart__cart" style={autoprefix(cartCss)}>
           {
             _.map(cart, (item, index) =>
@@ -77,7 +83,7 @@ const MiniCart = React.createClass({
           </li>
         </ul>
       </div>
-      <a style={{ width: scrollButtonWidth }} className="MiniCart__scroll-right" onClick={() => this._moveItemsLeft()}>
+      <a style={{ width: scrollButtonWidth }} className={scrollRightClassName} onClick={() => this._moveItemsLeft()}>
         <Icon type="right" />
       </a>
     </div>;
@@ -102,14 +108,22 @@ const MiniCart = React.createClass({
   },
 
   _getCartWindowWidth() {
-    return this.props.size.width - 2 * this.state.scrollButtonWidth - 2 * this.state.cartSidePadding;
+    return this.props.size.width - 2 * this.state.scrollButtonWidth;
   },
 
-  _moveItemsLeft(_add) {
+  _isMoveItemsRightPossible() {
+    return isMoveItemsRightPossible(this.state.position);
+  },
+
+  _isMoveItemsLeftPossible(_add) {
     const additionalItems = _add ? _add : 0;
     const itemsCount = this._getItemsCount() + additionalItems;
     const { windowSize } = this._getWindowSize();
-    if (!isMoveItemsLeftPossible(this.state.position, itemsCount, windowSize)) {
+    return isMoveItemsLeftPossible(this.state.position, itemsCount, windowSize);
+  },
+
+  _moveItemsLeft(_add) {
+    if (!this._isMoveItemsLeftPossible(_add)) {
       return;
     }
 
@@ -119,7 +133,7 @@ const MiniCart = React.createClass({
   },
 
   _moveItemsRight() {
-    if (!isMoveItemsRightPossible(this.state.position)) {
+    if (!this._isMoveItemsRightPossible()) {
       return;
     }
 
