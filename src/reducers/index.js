@@ -77,6 +77,7 @@ const initialState = {
     city: 'your city'
   },
   promotion: null,
+  miniCartPosition: 0,
 };
 
 const freshInitialState = _.cloneDeep(initialState);
@@ -199,6 +200,11 @@ function reducer(state = initialState, action) {
     case actions.SET_PROMOTION:
       return _.extend({}, state, {
         promotion: action.payload,
+      });
+
+    case actions.SET_MINI_CART_POSITION:
+      return _.extend({}, state, {
+        miniCartPosition: action.payload,
       });
 
     case actions.POST_ORDER_REQUEST:

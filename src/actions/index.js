@@ -236,6 +236,11 @@ export const setPromotion = (payload) => {
   return action;
 };
 
+export const setMiniCartPosition = (pos) => ({
+  type: actions.SET_MINI_CART_POSITION,
+  payload: pos,
+});
+
 export const postOrder = (payload) => function(dispatch) {
   dispatch({ type: actions.POST_ORDER_REQUEST, payload });
 

@@ -9,6 +9,7 @@ import {
   editCartItem,
   addCartItemQuantity,
   addCartItem,
+  setMiniCartPosition,
 } from '../actions';
 import _ from 'lodash';
 import { Icon } from 'antd';
@@ -18,7 +19,6 @@ import { posterSizeToThumbnailPixels } from '../util';
 const MiniCart = React.createClass({
   getInitialState() {
     return {
-      position: 0,
       scrollButtonWidth: 30,
       minItemWidth: 86,
     };
@@ -32,7 +32,7 @@ const MiniCart = React.createClass({
     const { itemWidth } = this._getWindowSize();
     const cartWidth = this._getCartWindowWidth();
 
-    const moveNRight = this.state.position;
+    const moveNRight = this._getPosition();
 
     const cartCss = {
       width: cartWidth,
@@ -46,13 +46,13 @@ const MiniCart = React.createClass({
       ? 'MiniCart__scroll-right'
       : 'MiniCart__scroll-right MiniCart__scroll-right--disabled';
 
-    const className = `MiniCart ${this.props.className ? this.props.className : ''}`;
+    const className = `MiniCart noselect ${this.props.className ? this.props.className : ''}`;
     return <div className={className}>
       <a style={{ width: scrollButtonWidth }} className={scrollLeftClassName} onClick={this._moveItemsRight}>
         <Icon type="left" />
       </a>
       <div className="MiniCart__cart-container">
-        <ul className="MiniCart__cart" style={autoprefix(cartCss)}>
+        <ul className="MiniCart__cart noselect" style={autoprefix(cartCss)}>
           {
             _.map(cart, (item, index) =>
               <li key={index}>
@@ -87,6 +87,10 @@ const MiniCart = React.createClass({
     </div>;
   },
 
+  _getPosition() {
+    return this.props.globalState.miniCartPosition;
+  },
+
   _getItemsCount() {
     const { cart } = this.props.globalState;
     // Add poster placeholder takes one spot
@@ -110,14 +114,14 @@ const MiniCart = React.createClass({
   },
 
   _isMoveItemsRightPossible() {
-    return isMoveItemsRightPossible(this.state.position);
+    return isMoveItemsRightPossible(this._getPosition());
   },
 
   _isMoveItemsLeftPossible(_add) {
     const additionalItems = _add ? _add : 0;
     const itemsCount = this._getItemsCount() + additionalItems;
     const { windowSize } = this._getWindowSize();
-    return isMoveItemsLeftPossible(this.state.position, itemsCount, windowSize);
+    return isMoveItemsLeftPossible(this._getPosition(), itemsCount, windowSize);
   },
 
   _moveItemsLeft(_add) {
@@ -125,9 +129,7 @@ const MiniCart = React.createClass({
       return;
     }
 
-    this.setState({
-      position: this.state.position - 1,
-    });
+    this._setPosition(this._getPosition() - 1);
   },
 
   _moveItemsRight() {
@@ -135,9 +137,11 @@ const MiniCart = React.createClass({
       return;
     }
 
-    this.setState({
-      position: this.state.position + 1,
-    });
+    this._setPosition(this._getPosition() + 1);
+  },
+
+  _setPosition(pos) {
+    this.props.dispatch(setMiniCartPosition(pos));
   },
 
   _onCartItemEditClick(index) {
