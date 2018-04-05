@@ -48,3 +48,23 @@
 .IconButton.IconButton--disabled:hover svg path {
   stroke: #ccc;
 }
+
+
+.IconButton--error {
+  color: @error-color;
+}
+
+.IconButton--error svg g {
+  stroke: @error-color;
+}
+.IconButton--error:hover svg circle {
+  fill: @error-color;
+}
+.IconButton--error svg path {
+  transition: stroke 0.15s ease;
+  stroke: @error-color;
+}
+
+.IconButton--error:hover svg path {
+  stroke: white;
+}

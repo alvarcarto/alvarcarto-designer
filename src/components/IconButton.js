@@ -28,6 +28,9 @@ const IconButton = (props) => {
   if (props.className) {
     className += ` ${props.className}`;
   }
+  if (props.theme) {
+    className += ` IconButton--${props.theme}`;
+  }
 
   return <div onClick={props.onClick} className={className}>
     {icons[props.type]}{

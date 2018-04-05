@@ -75,7 +75,7 @@ const MiniCartItem = React.createClass({
                   >
                     <a>
                       <Tooltip title="Remove item from order">
-                        <IconButton type="plus" />
+                        <IconButton theme="error" type="plus" />
                       </Tooltip>
                     </a>
                   </Popconfirm>
