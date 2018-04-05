@@ -30,17 +30,6 @@
   transform: translate3d(8px, 0, 0);
 }
 
-.PricePanel .PricePanel__badge {
-  font-family: tahoma;
-  position: absolute;
-  top: -10px;
-  right: 41px;
-  transform: translateX(50%);
-}
-.PricePanel .PricePanel__badge .ant-badge-count {
-  background: @primary-color;
-}
-
 .PricePanel .anticon {
   padding-left: 6px;
   position: relative;
@@ -72,6 +61,17 @@
   left: 12px;
 }
 
+.PricePanel .PricePanel__badge {
+    font-family: tahoma;
+    position: absolute;
+    top: -13px;
+    right: 41px;
+    transform: translateX(50%);
+  }
+.PricePanel .PricePanel__badge .ant-badge-count {
+  background: @primary-color;
+}
+
 @media @screen-lt-sm-media {
   .PricePanel {
     min-height: @sidepanel-lower-narrow-height;
@@ -93,5 +93,12 @@
   .PricePanel__price-shipping {
     font-size: 0.7rem;
     left: 8px;
+  }
+}
+
+@media @screen-gt-sm-media {
+  .PricePanel .PricePanel__badge {
+    display: none;
+    visibility: hidden;
   }
 }

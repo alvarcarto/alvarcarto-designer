@@ -80,7 +80,7 @@ const AddressForm = React.createClass({
             defaultValue={_.get(this.state.values, 'streetAddress')}
             onBlur={this._onInputBlur}
             onChange={this._onInputChange}
-            placeholder="Street address / PO Box"
+            placeholder="Street address"
           />
           <Input
             name="streetAddressExtra"

@@ -1,14 +1,10 @@
 import React from 'react';
 import _ from 'lodash';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import { Modal, Form, Icon, Checkbox, Tooltip, Button, Radio } from 'antd';
+import { Form, Icon, Checkbox, Tooltip, Button, Radio } from 'antd';
 import countries from 'i18n-iso-countries';
-import { calculateCartPrice } from 'alvarcarto-price-util';
 import EmailForm from './EmailForm';
 import AddressForm from './AddressForm';
-import PosterPreview from './PosterPreview';
-import { Carousel } from 'react-responsive-carousel';
-import ShippingMethodForm from './ShippingMethodForm';
 import GiftCardCustomizeForm from './GiftCardCustomizeForm';
 import CreditCardForm from './CreditCardForm';
 import FinalOrderSummary from './FinalOrderSummary';

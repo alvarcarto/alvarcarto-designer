@@ -55,6 +55,7 @@ const AlvarMap = React.createClass({
       this._dispatchMapView();
     }
 
+    // TODO: This is called after component is unmounted
     setTimeout(() => {
       if (!this.state.userHasClicked) {
         this.setState(() => ({ tooltipVisible: true }));

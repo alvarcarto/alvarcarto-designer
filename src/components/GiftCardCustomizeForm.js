@@ -1,6 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
-import { Form, Input, Radio } from 'antd';
+import { Form, Radio } from 'antd';
 
 const form = {
   giftCardType: (val) => null,

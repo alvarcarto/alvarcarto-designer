@@ -57,6 +57,8 @@ const CheckoutPage = React.createClass({
             {(matches) => {
               if (matches) {
                 return <CheckoutSummary globalState={this.props.globalState} />;
+              } else if (this.props.globalState.cart.length > 4) {
+                return <CheckoutSummary globalState={this.props.globalState} />;
               } else {
                 return <Affix className="CheckoutPage__summary-container" offsetTop={10}>
                   <CheckoutSummary globalState={this.props.globalState} />

@@ -1,15 +1,14 @@
+// eslint-disable-next-line
 import { iframeResizerContentWindow } from 'iframe-resizer';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import React from 'react';
 import _ from 'lodash';
 import history from '../history';
 import { connect } from 'react-redux';
-import { Row, Col, Steps, Modal } from 'antd';
+import { Modal } from 'antd';
 import { checkoutFormStateChange, postOrder } from '../actions';
 import GiftCardCheckoutForm from './GiftCardCheckoutForm';
 import Spinner from './Spinner';
-
-const { Step } = Steps;
 
 const GiftCardPage = React.createClass({
   getInitialState() {
@@ -20,7 +19,6 @@ const GiftCardPage = React.createClass({
 
   render() {
     const { globalState } = this.props;
-    const giftCardType = _.get(globalState, 'checkoutFormState.giftCardCustomizeForm.values.giftCardType');
     const cart = globalState.giftCardCart;
 
     return (
