@@ -34,10 +34,8 @@ const MiniCart = React.createClass({
 
     const moveNRight = this._getPosition();
 
-    const cartCss = {
-      width: cartWidth,
-      transform: `translate(${itemWidth * moveNRight}px)`,
-    };
+    const cartContainerCss = { width: cartWidth };
+    const cartCss = { transform: `translate(${itemWidth * moveNRight}px)` };
 
     const scrollLeftClassName = this._isMoveItemsRightPossible()
       ? 'MiniCart__scroll-left'
@@ -51,7 +49,7 @@ const MiniCart = React.createClass({
       <a style={{ width: scrollButtonWidth }} className={scrollLeftClassName} onClick={this._moveItemsRight}>
         <Icon type="left" />
       </a>
-      <div className="MiniCart__cart-container">
+      <div className="MiniCart__cart-container" style={autoprefix(cartContainerCss)}>
         <ul className="MiniCart__cart noselect" style={autoprefix(cartCss)}>
           {
             _.map(cart, (item, index) =>
