@@ -1,5 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
+
+// https://github.com/ctrlplusb/react-sizeme/issues/131#issuecomment-378911202
 import sizeMe from 'react-sizeme';
 import autoprefix from 'auto-prefixer';
 import {
@@ -8,13 +10,9 @@ import {
   addCartItemQuantity,
   addCartItem,
 } from '../actions';
-import { calculateCartPrice, getCurrencySymbol } from 'alvarcarto-price-util';
 import _ from 'lodash';
 import { Icon } from 'antd';
 import MiniCartItem from './MiniCartItem';
-import AddPromotionLink from './AddPromotionLink';
-import IconButton from './IconButton';
-import history from '../history';
 import { posterSizeToThumbnailPixels } from '../util';
 
 const MiniCart = React.createClass({
@@ -200,10 +198,6 @@ function isMoveItemsLeftPossible(position, items, windowSize) {
 
 function isMoveItemsRightPossible(position) {
   return position < 0;
-}
-
-function getItemPositionOnWindow(position, index) {
-  return position + index;
 }
 
 const SizeAwareMiniCart = sizeMe({ refreshRate: 40 })(MiniCart);

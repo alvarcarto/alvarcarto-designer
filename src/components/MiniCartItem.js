@@ -1,6 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
-import { Icon, Tooltip, Popconfirm } from 'antd';
+import { Tooltip, Popconfirm } from 'antd';
 import { getStyle } from '../util';
 import { posterSizeToThumbnailPixels, getPosterLook } from '../util';
 import IconButton from './IconButton';
