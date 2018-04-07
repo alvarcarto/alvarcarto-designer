@@ -33,6 +33,15 @@ if (mapZoom < CONST.MAP_MIN_ZOOM) {
   mapZoom = CONST.MAP_MAX_ZOOM;
 }
 
+// We can assign a unique id for each new poster in the cart. This can be used as a stable React
+// key (needed for e.g. MiniCart transition)
+const idCounter = 0;
+
+function getItemId() {
+  idCounter++;
+  return idCounter;
+}
+
 const initialState = {
   debug: DEBUG,
   apiKey: getQuery('apiKey', 'string'),
@@ -41,6 +50,7 @@ const initialState = {
   initialLoadTime: new Date(),
   cart: [
     {
+      id: getItemId(),
       quantity: 1,
       mapCenter: initialMapCenter,
       mapBounds: null,
@@ -172,6 +182,7 @@ function reducer(state = initialState, action) {
     case actions.ADD_CART_ITEM:
       newState = _.cloneDeep(state);
       const newEmptyItem = _.cloneDeep(freshInitialState.cart[0]);
+      newEmptyItem.id = getItemId();
       newState.cart.push(newEmptyItem);
       newState.editCartItem = newState.cart.length - 1;
       return newState;

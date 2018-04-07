@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { connect } from 'react-redux';
 
 // https://github.com/ctrlplusb/react-sizeme/issues/131#issuecomment-378911202
@@ -51,32 +52,39 @@ const MiniCart = React.createClass({
       </a>
       <div className="MiniCart__cart-container" style={autoprefix(cartContainerCss)}>
         <ul className="MiniCart__cart noselect" style={autoprefix(cartCss)}>
-          {
-            _.map(cart, (item, index) =>
-              <li key={index}>
-                <MiniCartItem
-                  style={{ width: itemWidth }}
-                  index={index}
-                  item={item}
-                  selected={index === editCartItem}
-                  hideRemoveButton={hideRemoveButton}
-                  onRemoveClick={this._onCartItemRemoveClick}
-                  onEditClick={this._onCartItemEditClick}
-                  onIncreaseQuantityClick={this._onCartItemIncreaseQuantityClick}
-                  onDecreaseQuantityClick={this._onCartItemDecreaseQuantityClick}
-                />
-              </li>
-            )
-          }
-          <li>
-            <div style={{ width: itemWidth }} className="MiniCart__add-poster" onClick={this._onAddPosterClick}>
-              <div className="MiniCart__poster" style={posterSizeToThumbnailPixels('50x70cm', 'portrait')}>
-                <Icon type="plus" />
+          <ReactCSSTransitionGroup
+            className="MiniCart__cart"
+            transitionName="cart-popin"
+            transitionEnterTimeout={250}
+            transitionLeaveTimeout={300}
+          >
+            {
+              _.map(cart, (item, index) =>
+                <li key={item.id}>
+                  <MiniCartItem
+                    style={{ width: itemWidth }}
+                    index={index}
+                    item={item}
+                    selected={index === editCartItem}
+                    hideRemoveButton={hideRemoveButton}
+                    onRemoveClick={this._onCartItemRemoveClick}
+                    onEditClick={this._onCartItemEditClick}
+                    onIncreaseQuantityClick={this._onCartItemIncreaseQuantityClick}
+                    onDecreaseQuantityClick={this._onCartItemDecreaseQuantityClick}
+                  />
+                </li>
+              )
+            }
+            <li key="placeholder">
+              <div style={{ width: itemWidth }} className="MiniCart__add-poster" onClick={this._onAddPosterClick}>
+                <div className="MiniCart__poster" style={posterSizeToThumbnailPixels('50x70cm', 'portrait')}>
+                  <Icon type="plus" />
+                </div>
+                <p className="MiniCart__add-poster-text">Add poster</p>
+              {/*<p className="MiniCart__add-poster-sub-text">&nbsp;</p>*/}
               </div>
-              <p className="MiniCart__add-poster-text">Add poster</p>
-            {/*<p className="MiniCart__add-poster-sub-text">&nbsp;</p>*/}
-            </div>
-          </li>
+            </li>
+          </ReactCSSTransitionGroup>
         </ul>
       </div>
       <a style={{ width: scrollButtonWidth }} className={scrollRightClassName} onClick={() => this._moveItemsLeft()}>

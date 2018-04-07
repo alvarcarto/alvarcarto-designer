@@ -90,3 +90,25 @@
     transform: translateY(-2px);
   }
 }
+
+.cart-popin-enter {
+  opacity: 0.01;
+  transform: scale(0.5);
+}
+
+.cart-popin-enter.cart-popin-enter-active {
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 250ms ease-in, transform 200ms ease-in;
+}
+
+.cart-popin-leave {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.cart-popin-leave.cart-popin-leave-active {
+  opacity: 0.01;
+  transform: scale(0.01);
+  transition: opacity 300ms ease-in, transform 200ms ease-in;
+}
