@@ -200,8 +200,11 @@ function reducer(state = initialState, action) {
         newEditCartItem = newState.editCartItem
       } else {
         // Removed item was the currently selected so
-        // default to 0
-        newEditCartItem = 0;
+        // pick the nearest one
+        const isSelectedTheLast = removeIndex === state.cart.length - 1;
+        newEditCartItem = isSelectedTheLast
+          ? newState.editCartItem - 1
+          : newState.editCartItem;
       }
 
       newState.editCartItem = newEditCartItem;
