@@ -3,6 +3,7 @@
   height: 100%;
   min-height: 200px;
   display: flex;
+  flex-basis: 0;
   align-items: center;
   justify-content: center;
   border-radius: 3px;
@@ -21,4 +22,10 @@
 
 .PosterPreview, .PosterPreview img {
   width: 100%;
+
+  /* Fixes bug where preview image grows too much height and becomes distorted
+   *
+   * https://github.com/philipwalton/flexbugs/issues/42
+   */
+  flex-shrink: 0;
 }
