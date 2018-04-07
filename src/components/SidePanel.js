@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'lodash';
 import { connect } from 'react-redux';
 import { Tooltip, Badge } from 'antd';
 import AlvarMapDesignPanel from './AlvarMapDesignPanel';
@@ -8,7 +9,7 @@ import MiniCart from './MiniCart';
 const SidePanel = React.createClass({
   render() {
     const { globalState } = this.props;
-    const itemCount = globalState.cart.length
+    const itemCount = _.reduce(globalState.cart, (memo, item) => memo + item.quantity, 0);
 
     return (
       <div className="SidePanel">
@@ -19,15 +20,11 @@ const SidePanel = React.createClass({
         />
         <div className="SidePanel__middle">
           <MiniCart dispatch={this.props.dispatch} globalState={globalState} />
-          {
-            itemCount > 1
-              ? <div className="SidePanel__badge">
-                  <Tooltip title={`You have ${itemCount} designs in your order.`}>
-                    <Badge count={itemCount} />
-                  </Tooltip>
-                </div>
-              : null
-          }
+          <div className="SidePanel__badge">
+            <Tooltip title={`You have ${itemCount} maps in your order.`}>
+              <Badge count={itemCount} />
+            </Tooltip>
+          </div>
         </div>
 
         <div className="SidePanel__lower">
