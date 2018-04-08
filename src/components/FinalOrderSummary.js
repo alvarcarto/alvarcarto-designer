@@ -1,8 +1,8 @@
 import React from 'react';
 import ImageLoader from 'react-imageloader';
 import { Icon } from 'antd';
-import { getStyle, createPosterThumbnailUrl, getCartLineName } from '../util';
-import { calculateCartPrice, calculateItemPrice, getCurrencySymbol } from 'alvarcarto-price-util';
+import { getStyle, createPosterThumbnailUrl } from '../util';
+import { calculateCartPrice, calculateItemPrice, getCurrencySymbol, getItemLabel } from 'alvarcarto-price-util';
 import _ from 'lodash';
 
 function preloader() {
@@ -16,13 +16,15 @@ const FinalOrderSummary = React.createClass({
       promotion,
       ignorePromotionExpiry: true,
     });
-    const originalPrice = calculateCartPrice(cart);
     const shouldRenderSimple = _.find(cart, item => item.type !== 'mapPoster') !== undefined;
 
     let className = 'FinalOrderSummary';
     if (shouldRenderSimple) {
       className += ' FinalOrderSummary--simple';
     }
+    const mapCart = _.filter(cart, item => !item.type || item.type === 'mapPoster');
+    const otherCart = _.filter(cart, item => item.type && item.type !== 'mapPoster');
+    const mapCartOriginalPrice = calculateCartPrice(mapCart);
 
     return (
       <div className={className}>
@@ -38,7 +40,7 @@ const FinalOrderSummary = React.createClass({
 
         <ul className="FinalOrderSummary__cart">
           {
-            _.map(cart, (item, index) =>
+            _.map(mapCart, (item, index) =>
               <li key={index}>
                 {
                   shouldRenderSimple
@@ -55,13 +57,19 @@ const FinalOrderSummary = React.createClass({
             <tbody>
               <tr>
                 <td>Subtotal</td>
-                <td>{originalPrice.label}</td>
-              </tr>
-              <tr>
-                <td>Shipping</td>
-                <td>0.00 €</td>
+                <td>{mapCartOriginalPrice.label}</td>
               </tr>
               {this._renderDiscountRow(totalPrice, promotion)}
+
+              {
+                _.map(otherCart, (item, index) =>
+                  <tr key={index}>
+                    <td>{getItemLabel(item)}</td>
+                    <td>{calculateItemPrice(item).label}</td>
+                  </tr>
+                )
+              }
+
               <tr className="FinalOrderSummary__total-row">
                 <td>Total</td>
                 <td>{totalPrice.label}</td>
@@ -131,8 +139,8 @@ const SimpleOrderItem = React.createClass({
 
     return (
       <div className="SimpleOrderItem">
-        <h3 className="SimpleOrderItem__title">{getCartLineName(item)}</h3>
-        <h4 className="SimpleOrderItem__price">{price.label}</h4>
+        <h3 className="SimpleOrderItem__title">{getItemLabel(item)}</h3>
+        <h4 className="SimpleOrderItem__price">{item.quantity}x {price.label}</h4>
       </div>
     );
   },

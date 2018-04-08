@@ -3,34 +3,92 @@ import _ from 'lodash';
 import { Radio, Row, Col } from 'antd';
 
 const ShippingMethodForm = React.createClass({
+  getInitialState() {
+    return {
+      values: {
+        shippingMethod: _.get(this.props, 'initialState.values.shippingMethod', 'free'),
+      },
+      shouldValidate: {
+        shippingMethod: false,
+      },
+    };
+  },
+
   render() {
+    const deliveryPhrase = this.props.countryCode === 'FI'
+      ? 'Delivery to your nearest post office.'
+      : 'Delivery to your front door.'
+
+    const deliveryCompany = this.props.countryCode === 'FI'
+      ? 'Matkahuolto'
+      : 'DHL'
+
     return (
       <div className="ShippingMethodForm">
-        <Row>
-          <Col span={13}>
-            <Radio.Group value="free">
+        <Radio.Group value={this.state.values.shippingMethod} onChange={this._onChange}>
+          <Row className="ShippingMethodForm__item">
+            <Col span={16}>
               <Radio value="free">Worldwide Express Mail</Radio>
-            </Radio.Group>
-            <div className="ShippingMethodForm__radio-info">
-              Incredibly fast shipping. Delivery to your nearest post office.
+              <div className="ShippingMethodForm__radio-info">
+                Regular production speed. Incredibly fast express shipping by {deliveryCompany}. {deliveryPhrase}
 
-              <div className="ShippingMethodForm__radio-info-estimates">
-                <span>Average delivery times:</span>
-                <ul>
-                  <li>Finland: 2-5 business days</li>
-                  <li>Europe: 2-5 business days</li>
-                  <li>US: 3-6 business days</li>
-                  <li>Other: 3-7 business days</li>
-                </ul>
+                <div className="ShippingMethodForm__radio-info-estimates">
+                  <span>Average delivery times:</span>
+                  <ul>
+                    <li>Finland: 3-6 business days</li>
+                    <li>Europe: 3-6 business days</li>
+                    <li>US: 4-7 business days</li>
+                    <li>Other: 5-8 business days</li>
+                  </ul>
+                </div>
               </div>
-            </div>
-          </Col>
-          <Col span={8} className="ShippingMethodForm__right-col">
-            <span className="ShippingMethodForm__item-price">0 €</span>
-          </Col>
-        </Row>
+            </Col>
+            <Col span={5} className="ShippingMethodForm__right-col">
+              <span className="ShippingMethodForm__item-price">0 €</span>
+            </Col>
+          </Row>
+          <Row className="ShippingMethodForm__item">
+            <Col span={16}>
+              <Radio value="fast">Worldwide Express Mail <span className="ShippingMethodForm__priority-label">+ Priority Production</span></Radio>
+              <div className="ShippingMethodForm__radio-info">
+                Production on the same day when ordered before 12:00 Europe/Helsinki time.
+                Incredibly fast express shipping by {deliveryCompany}. {deliveryPhrase}
+
+                <div className="ShippingMethodForm__radio-info-estimates">
+                  <span>Average delivery times:</span>
+                  <ul>
+                    <li>Finland: 1-3 business days</li>
+                    <li>Europe: 1-3 business days</li>
+                    <li>US: 2-4 business days</li>
+                    <li>Other: 2-5 business days</li>
+                  </ul>
+                </div>
+              </div>
+            </Col>
+            <Col span={5} className="ShippingMethodForm__right-col">
+              <span className="ShippingMethodForm__item-price">15 €</span>
+            </Col>
+          </Row>
+        </Radio.Group>
       </div>
     );
+  },
+
+  _onChange(e) {
+    const { value } = e.target;
+
+    this.setState((state) => ({
+      values: _.extend(state.values, {
+        shippingMethod: value
+      }),
+    }), this._emitChange);
+  },
+
+  _emitChange() {
+    this.props.onChange({
+      isValid: true,
+      values: this.state.values,
+    });
   }
 });
 

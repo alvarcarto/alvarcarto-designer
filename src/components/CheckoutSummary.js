@@ -7,7 +7,7 @@ import {
   addCartItem,
   setPromotion
 } from '../actions';
-import { calculateCartPrice, getCurrencySymbol } from 'alvarcarto-price-util';
+import { calculateCartPrice, calculateItemPrice, getCurrencySymbol, getItemLabel } from 'alvarcarto-price-util';
 import _ from 'lodash';
 import CartItem from './CartItem';
 import AddPromotionLink from './AddPromotionLink';
@@ -16,9 +16,10 @@ import history from '../history';
 
 const CheckoutSummary = React.createClass({
   render() {
-    const { cart, promotion } = this.props.globalState;
+    const { cart, additionalCart, promotion } = this.props.globalState;
     const hideRemoveButton = cart.length < 2;
-    const totalPrice = calculateCartPrice(cart, { promotion, ignorePromotionExpiry: true });
+    const combinedCart = cart.concat(additionalCart);
+    const totalPrice = calculateCartPrice(combinedCart, { promotion, ignorePromotionExpiry: true });
     const originalPrice = calculateCartPrice(cart);
 
     return (
@@ -54,11 +55,17 @@ const CheckoutSummary = React.createClass({
                 <td>Subtotal</td>
                 <td>{originalPrice.label}</td>
               </tr>
-              <tr>
-                <td>Shipping</td>
-                <td>0.00 €</td>
-              </tr>
               {this._renderDiscountRow(totalPrice, promotion)}
+
+              {
+                _.map(additionalCart, (item, index) =>
+                  <tr key={index}>
+                    <td>{getItemLabel(item)}</td>
+                    <td>{calculateItemPrice(item).label}</td>
+                  </tr>
+                )
+              }
+
               <tr className="CheckoutSummary__total-row">
                 <td>Total</td>
                 <td>{totalPrice.label}</td>

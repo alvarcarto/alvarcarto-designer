@@ -35,7 +35,7 @@ if (mapZoom < CONST.MAP_MIN_ZOOM) {
 
 // We can assign a unique id for each new poster in the cart. This can be used as a stable React
 // key (needed for e.g. MiniCart transition)
-const idCounter = 0;
+let idCounter = 0;
 
 function getItemId() {
   idCounter++;
@@ -69,8 +69,13 @@ const initialState = {
       // user wrote if they change autoUpdateCoordinates flag
       labelTextManual: null,
       autoUpdateCoordinates: true,
-    }
+    },
   ],
+  additionalCart: [{
+    type: 'shippingClass',
+    quantity: 1,
+    value: 'EXPRESS',
+  }],
   giftCardCart: [
     {
       type: 'giftCardValue',
@@ -251,6 +256,23 @@ function reducer(state = initialState, action) {
           valueItem,
           { type: 'physicalGiftCard', quantity: 1 }
         ];
+      }
+
+      if (_.get(action.payload, 'shippingMethodForm.values.shippingMethod') === 'fast') {
+        newState.additionalCart = [
+          {
+            type: 'shippingClass',
+            value: 'EXPRESS',
+            quantity: 1,
+          },
+          {
+            type: 'productionClass',
+            value: 'HIGH',
+            quantity: 1,
+          }
+        ];
+      } else {
+        newState.additionalCart = _.cloneDeep(initialState.additionalCart);
       }
 
       return newState;

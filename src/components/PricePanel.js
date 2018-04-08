@@ -7,8 +7,9 @@ import history from '../history';
 
 const PricePanel = React.createClass({
   render() {
-    const { cart, promotion } = this.props.globalState;
-    const totalPrice = calculateCartPrice(cart, { promotion, ignorePromotionExpiry: true });
+    const { cart, additionalCart, promotion } = this.props.globalState;
+    const combinedCart = cart.concat(additionalCart);
+    const totalPrice = calculateCartPrice(combinedCart, { promotion, ignorePromotionExpiry: true });
     const itemCount = cart.length;
 
     return (

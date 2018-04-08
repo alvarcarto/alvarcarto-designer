@@ -45,6 +45,7 @@ const CheckoutForm = React.createClass({
       emailForm: null,
       shippingAddressForm: null,
       billingAddressForm: null,
+      shippingMethodForm: null,
       creditCardForm: null,
     };
   },
@@ -106,7 +107,11 @@ const CheckoutForm = React.createClass({
               2. Shipping method
             </h2>
 
-            <ShippingMethodForm />
+            <ShippingMethodForm
+              initialState={this.state.shippingMethodForm}
+              countryCode={this._getShippingAddressCountryCode(this.state.shippingAddressForm)}
+              onChange={this._onShippingMethodFormChange}
+            />
           </section>
 
           { isFreeOrder ? null : this._renderPaymentDetailsSection(formItemLayout) }
@@ -263,10 +268,15 @@ const CheckoutForm = React.createClass({
   },
 
   _isFreeOrder() {
-    const { cart, promotion } = this.props;
-    const totalPrice = calculateCartPrice(cart, { promotion, ignorePromotionExpiry: true });
+    const { cart, promotion, additionalCart } = this.props;
+    const combinedCart = cart.concat(additionalCart);
+    const totalPrice = calculateCartPrice(combinedCart, { promotion, ignorePromotionExpiry: true });
     const isFreeOrder = totalPrice.value <= 0;
     return isFreeOrder;
+  },
+
+  _getShippingAddressCountryCode(shippingAddressForm) {
+    return _.get(shippingAddressForm, 'values.countryCode', null);
   },
 
   _getShippingAddressAsText(shippingAddressForm) {
@@ -372,6 +382,10 @@ const CheckoutForm = React.createClass({
 
   _onShippingAddressFormChange(form) {
     this.setState((state) => ({ shippingAddressForm: form }), this._onAnyChange);
+  },
+
+  _onShippingMethodFormChange(form) {
+    this.setState((state) => ({ shippingMethodForm: form }), this._onAnyChange);
   },
 
   _onBillingAddressFormChange(form) {

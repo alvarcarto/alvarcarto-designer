@@ -49,8 +49,8 @@ function getFirstText(cart, city) {
   if (hasShippableProducts(cart)) {
     return [
       `Your unique ${getItemsWording(cart)} will be printed and shipped to ${city}`,
-      'within a few days. In case you have an Express Shipping deal, the items will be printed',
-      `and shipped on the next business day.`,
+      'within a few days. In case you chose Priority Production, the items will be printed',
+      `and shipped on the next business day at latest.`,
     ].join(' ');
   }
 

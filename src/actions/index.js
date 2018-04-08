@@ -269,7 +269,7 @@ export const postOrder = (payload) => function(dispatch) {
         billingAddress: isFreeOrder
           ? undefined
           : payload.billingAddress,
-        cart: payload.cart,
+        cart: payload.cart.concat(payload.additionalCart),
         stripeTokenResponse: isFreeOrder
           ? undefined
           : stripeResponseToken,
@@ -297,7 +297,8 @@ export const postOrder = (payload) => function(dispatch) {
       return api.postOrder(order);
     })
     .then(response => {
-      const price = calculateCartPrice(payload.cart);
+      const combinedCart = payload.cart.concat(payload.additionalCart);
+      const price = calculateCartPrice(combinedCart);
 
       dispatch({
         type: actions.POST_ORDER_SUCCESS,
@@ -337,8 +338,9 @@ export const postOrder = (payload) => function(dispatch) {
 };
 
 function _createStripeToken(payload) {
-  const { cart, promotion } = payload;
-  const totalPrice = calculateCartPrice(cart, { promotion, ignorePromotionExpiry: true });
+  const { cart, additionalCart, promotion } = payload;
+  const combinedCart = cart.concat(additionalCart);
+  const totalPrice = calculateCartPrice(combinedCart, { promotion, ignorePromotionExpiry: true });
   const isFreeOrder = totalPrice.value <= 0;
   if (isFreeOrder) {
     return BPromise.resolve(null);

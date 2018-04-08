@@ -2,6 +2,10 @@
   font-weight: 700;
 }
 
+.ShippingMethodForm__item:not(:first-child) {
+  margin-top: 20px;
+}
+
 .ShippingMethodForm__radio-info {
   color: #999;
   margin-left: 22px;
@@ -24,4 +28,16 @@
   list-style: circle;
   margin-top: 3px;
   margin-left: 18px;
+}
+
+.ShippingMethodForm__priority-label {
+  display: block;
+  margin-left: 23px;
+}
+
+@media @screen-gt-sm-media {
+  .ShippingMethodForm__priority-label {
+    display: inline;
+    margin-left: 0;
+  }
 }

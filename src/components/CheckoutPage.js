@@ -68,6 +68,7 @@ const CheckoutPage = React.createClass({
           </MediaQuery>
           <CheckoutForm
             cart={this.props.globalState.cart}
+            additionalCart={this.props.globalState.additionalCart}
             promotion={this.props.globalState.promotion}
             initialState={this.props.globalState.checkoutFormState}
             onChange={this.state.debouncedOnFormChange}
@@ -91,6 +92,7 @@ const CheckoutPage = React.createClass({
   _onFormSubmit(form) {
     const order = _.merge({}, form, {
       cart: this.props.globalState.cart,
+      additionalCart: this.props.globalState.additionalCart,
     });
     if (this.props.globalState.promotion) {
       order.promotion = this.props.globalState.promotion;

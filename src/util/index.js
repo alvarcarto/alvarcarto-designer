@@ -63,21 +63,6 @@ function posterSizeToThumbnailPixels(size, orientation) {
   return _resolveOrientation(dimensions, orientation);
 }
 
-function getCartLineName(item) {
-  switch (item.type) {
-    case 'physicalGiftCard':
-      return 'Premium gift card';
-    case 'giftCardValue':
-      return `Gift card value`;
-    default:
-      if (item.labelsEnabled && item.labelHeader) {
-        return `Poster of ${item.labelHeader}, ${item.size}`;
-      }
-
-      return `Poster, ${item.size}`;
-  }
-}
-
 function createPosterUrlParameters(mapItem) {
   return {
     swLat: _.get(mapItem, 'mapBounds.southWest.lat'),
@@ -297,5 +282,4 @@ module.exports = {
   getQuery,
   stringEqualsIgnoreWhitespace,
   getCenterOfCoordinates,
-  getCartLineName,
 };
