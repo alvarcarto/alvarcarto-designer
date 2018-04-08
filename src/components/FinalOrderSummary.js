@@ -16,12 +16,20 @@ const FinalOrderSummary = React.createClass({
       promotion,
       ignorePromotionExpiry: true,
     });
+
+    // TODO: This logic was made to support gift cards as items. It's now broken
+    // Adding priority production feature broke this as we have separated items to map items
+    // and other. Instead we should have normal items (maps, gifts) and additional items (delivery etc)
     const shouldRenderSimple = _.find(cart, item => item.type !== 'mapPoster') !== undefined;
 
     let className = 'FinalOrderSummary';
     if (shouldRenderSimple) {
       className += ' FinalOrderSummary--simple';
     }
+
+
+    // XXX: Does not work with gift cards! We have separated items to map items and other.
+    // Instead we should have normal items (maps, gifts) and additional items (delivery etc)
     const mapCart = _.filter(cart, item => !item.type || item.type === 'mapPoster');
     const otherCart = _.filter(cart, item => item.type && item.type !== 'mapPoster');
     const mapCartOriginalPrice = calculateCartPrice(mapCart);
@@ -42,11 +50,7 @@ const FinalOrderSummary = React.createClass({
           {
             _.map(mapCart, (item, index) =>
               <li key={index}>
-                {
-                  shouldRenderSimple
-                    ? <SimpleOrderItem index={index} item={item} />
-                    : <OrderItem index={index} item={item} />
-                }
+                <OrderItem index={index} item={item} />
               </li>
             )
           }
