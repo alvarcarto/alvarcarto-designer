@@ -38,7 +38,7 @@ const CheckoutForm = React.createClass({
       // Take all keys in form object and initialize their values
       // with null and false
       values: _.extend(_.mapValues(form, () => null), {
-        emailSubscription: true,
+        emailSubscription: false,
       }),
       shouldValidate: _.mapValues(form, () => false),
       validateAll: false,
@@ -83,7 +83,7 @@ const CheckoutForm = React.createClass({
               <Tooltip
                 placement="topLeft"
                 overlayClassName={emailSubscription ? 'ant-tooltip-hidden' : ''}
-                title="We respect your decision."
+                title="We only email when there's something to say, no weekly spamming."
               >
                 <Checkbox
                   defaultChecked={emailSubscription}
