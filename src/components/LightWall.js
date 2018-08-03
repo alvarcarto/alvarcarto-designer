@@ -7,11 +7,18 @@ import AlvarMap from './AlvarMap';
 import { Icon, Switch, Button } from 'antd';
 import config from '../config';
 import { setMapView } from '../actions';
-import { posterSizeToPhysicalDimensions, posterSizeToPixels, createPosterImageUrl } from '../util';
+import {
+  posterSizeToPhysicalDimensions,
+  posterSizeToPixels,
+  createPosterImageUrl,
+  getQueryParameterByName,
+} from '../util';
 
 // Padding which should be left unfilled when scaling poster to light wall
 const POSTER_PADDING_WIDTH = 45;
 const POSTER_PADDING_HEIGHT = 45;
+
+const MULTI = getQueryParameterByName('multiMode') === 'true';
 
 const LightWall = React.createClass({
   getInitialState() {
@@ -20,6 +27,7 @@ const LightWall = React.createClass({
       debouncedOnWindowResize: _.debounce(this._onWindowResize, 100),
       container: null,
       showPreview: false,
+      showOverlay: true,
     };
   },
 
@@ -45,11 +53,13 @@ const LightWall = React.createClass({
 
     const hasChanged =
       mapItem.size !== nextMapItem.size ||
-      mapItem.orientation !== nextMapItem.orientation;
+      mapItem.orientation !== nextMapItem.orientation ||
+      globalState.cart.length !== nextGlobalState.cart.length;
+
 
     if (hasChanged) {
       this.setState({
-        zoom: this._calculateZoom(nextMapItem),
+        zoom: this._calculateZoom(nextGlobalState),
       });
     }
   },
@@ -84,36 +94,69 @@ const LightWall = React.createClass({
       top: `${padding}px`,
       left: `${padding}px`,
     };
+
+    const sumOfPosterWidths = this._calculateSumOfPostersWidths(globalState);
+
     return (
       <div ref="container" className="LightWall noselect">
         <div className="LightWall__map-container" style={autoprefix(mapContainerCss)}>
-          <div className="LightWall__wire-container">
-            <img className="LightWall__clip1" src="clip.png" alt="" style={autoprefix(wireScalerCss)} />
-            <img className="LightWall__clip2" src="clip.png" alt="" style={autoprefix(wireScalerCss)} />
-            <div className="LightWall__wire1"></div>
-            <div className="LightWall__wire2"></div>
-          </div>
+          {
+            MULTI
+              ? null
+              : <div className="LightWall__wire-container">
+                  <img className="LightWall__clip1" src="clip.png" alt="" style={autoprefix(wireScalerCss)} />
+                  <img className="LightWall__clip2" src="clip.png" alt="" style={autoprefix(wireScalerCss)} />
+                  <div className="LightWall__wire1"></div>
+                  <div className="LightWall__wire2"></div>
+                </div>
+          }
 
           <div className="LightWall__scaler" style={autoprefix(scalerCss)}>
-            <AlvarMap mapItem={mapItem} scaleZoom={scalerZoom} />
+            {
+              MULTI
+                ? _.map(globalState.cart, (m, i) => {
+                    const widthSum = this._calculateSumOfPostersWidths(globalState, i + 1);
+                    const dimensions = posterSizeToPixels(m.size, m.orientation);
+                    const totalHalf = sumOfPosterWidths / 2;
+                    const half = dimensions.width / 2;
+                    const translateX = -totalHalf + half + widthSum - dimensions.width;
+
+                    const disabled = globalState.editCartItem !== i;
+                    return <div className="LightWall__map-positioner" style={autoprefix({transform: `translateX(${translateX}px)`})}>
+                      <AlvarMap key={i} mapItem={m} disabled={disabled} scaleZoom={scalerZoom} hideOverlay={!this.state.showOverlay} hideShadows hideTips />
+                    </div>
+                  })
+                : <AlvarMap mapItem={mapItem} scaleZoom={scalerZoom} />
+            }
           </div>
 
-          <div className="LightWall__zoom-container" style={zoomContainerCss}>
-            <div className="leaflet-control-zoom leaflet-bar leaflet-control">
-              <a className="leaflet-control-zoom-in" title="Zoom in" role="button" aria-label="Zoom in" onClick={this._onZoomInClick}>+</a>
-              <a className="leaflet-control-zoom-out" title="Zoom out" role="button" aria-label="Zoom out" onClick={this._onZoomOutClick}>-</a>
-            </div>
-          </div>
+          {
+            MULTI
+              ? null
+              : <div className="LightWall__zoom-container" style={zoomContainerCss}>
+                  <div className="leaflet-control-zoom leaflet-bar leaflet-control">
+                    <a className="leaflet-control-zoom-in" title="Zoom in" role="button" aria-label="Zoom in" onClick={this._onZoomInClick}>+</a>
+                    <a className="leaflet-control-zoom-out" title="Zoom out" role="button" aria-label="Zoom out" onClick={this._onZoomOutClick}>-</a>
+                  </div>
+                </div>
+          }
+          {
+            MULTI
+              ? null
+              : <div className="LightWall__width-label">
+                  <div className="LightWall__width-label-line"></div>
+                  <p>{physicalDimensions.width} {physicalDimensions.unit}</p>
+                </div>
+          }
 
-          <div className="LightWall__width-label">
-            <div className="LightWall__width-label-line"></div>
-            <p>{physicalDimensions.width} {physicalDimensions.unit}</p>
-          </div>
-
-          <div className="LightWall__height-label">
-            <div className="LightWall__height-label-line"></div>
-            <p>{physicalDimensions.height} {physicalDimensions.unit}</p>
-          </div>
+          {
+            MULTI
+              ? null
+              : <div className="LightWall__height-label">
+                  <div className="LightWall__height-label-line"></div>
+                  <p>{physicalDimensions.height} {physicalDimensions.unit}</p>
+                </div>
+          }
 
           {
             this.state.showPreview
@@ -141,25 +184,37 @@ const LightWall = React.createClass({
           </p>
         </div>
 
-        {
-          globalState.debug
-            ? <div className="LightWall__debug-menu">
-                <Button type="primary" onClick={this._downloadImage}>Download</Button>
-                <Switch defaultChecked={false} onChange={this._onPreviewChange} />
-              </div>
-            : null
-        }
-
-        {
-          globalState.partnerMode
-            ? <div className="LightWall__download">
-                <Button type="primary" onClick={this._downloadCartAsJson}>Download</Button>
-                <a id="downloadJson" style={{ display: 'none'}}></a>
-              </div>
-            : null
-        }
+        { this._renderDebugMenu(globalState) }
       </div>
     );
+  },
+
+  _renderDebugMenu(globalState) {
+    if (!globalState.debug && !MULTI && !globalState.showCartDownload) {
+      return null
+    }
+
+    return <div className="LightWall__debug-menu">
+      {
+        globalState.debug
+          ? <div className="LightWall__debug-menu-section">
+              <Button type="primary" onClick={this._downloadImage}>Download poster PNG</Button>
+              <Button type="primary" onClick={this._downloadCartAsJson}>Download cart JSON</Button>
+              <Switch defaultChecked={false} onChange={this._onPreviewChange} />
+              <span>Render preview (apiKey required)</span>
+              <a id="downloadJson" style={{ display: 'none'}}></a>
+            </div>
+          : null
+      }
+      {
+        MULTI
+          ? <div className="LightWall__debug-menu-section">
+              <Switch checked={this.state.showOverlay} onChange={this._onShowOverlayChange} />
+              <span>Show overlay</span>
+            </div>
+          : null
+      }
+    </div>
   },
 
   _onWindowResize() {
@@ -168,22 +223,23 @@ const LightWall = React.createClass({
     });
   },
 
-  _calculateZoom(mapItem) {
+  _calculateZoom(globalState) {
     if (!this.state || !this.state.container) {
       return 1;
     }
 
-    if (!mapItem) {
-      const { globalState } = this.props;
-      mapItem = globalState.cart[globalState.editCartItem];
+    if (!globalState) {
+      globalState = this.props.globalState;
     }
 
+    const mapItem = globalState.cart[globalState.editCartItem];
     const dimensions = posterSizeToPixels(mapItem.size, mapItem.orientation);
     const containerWidth = this.state.container.offsetWidth - (POSTER_PADDING_WIDTH * 2);
     const containerHeight = this.state.container.offsetHeight - (POSTER_PADDING_HEIGHT * 2);
 
+    const width = MULTI ? this._calculateSumOfPostersWidths(globalState) : dimensions.width;
     const fitRatio = calculateAspectRatioFit(
-      dimensions.width,
+      width,
       dimensions.height,
       containerWidth,
       containerHeight
@@ -191,6 +247,16 @@ const LightWall = React.createClass({
 
     // Limit zoom always to maximum 1.0
     return Math.min(1, fitRatio);
+  },
+
+  // Calculates sum of all poster widths in pixels
+  _calculateSumOfPostersWidths(globalState, nFirstItems) {
+    const cart = nFirstItems ? _.take(globalState.cart, nFirstItems) : globalState.cart;
+
+    const totalWidth = _.reduce(cart, (memo, item) => {
+      return memo + posterSizeToPixels(item.size, item.orientation).width;
+    }, 0);
+    return totalWidth;
   },
 
   _onZoomInClick(e) {
@@ -216,6 +282,12 @@ const LightWall = React.createClass({
   _onPreviewChange(checked) {
     this.setState({
       showPreview: checked,
+    });
+  },
+
+  _onShowOverlayChange(checked) {
+    this.setState({
+      showOverlay: checked,
     });
   },
 

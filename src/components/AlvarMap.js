@@ -51,16 +51,18 @@ const AlvarMap = React.createClass({
       this._dispatchMapView();
     }
 
-    // TODO: This is called after component is unmounted
-    setTimeout(() => {
-      if (!this.state.userHasClicked) {
-        this.setState(() => ({ tooltipVisible: true }));
+    if (!this.props.hideTips) {
+      // TODO: This is called after component is unmounted
+      setTimeout(() => {
+        if (!this.state.userHasClicked) {
+          this.setState(() => ({ tooltipVisible: true }));
 
-        setTimeout(() => {
-          this.setState(() => ({ tooltipVisible: false }));
-        }, 15000);
-      }
-    }, 15000);
+          setTimeout(() => {
+            this.setState(() => ({ tooltipVisible: false }));
+          }, 15000);
+        }
+      }, 15000);
+    }
   },
 
   render() {
@@ -74,16 +76,23 @@ const AlvarMap = React.createClass({
       height: dimensions.height,
     };
 
-    const minSide = Math.min(dimensions.width, dimensions.height);
-    const borderPadding = Math.floor(CONST.EMPTY_MAP_PADDING_FACTOR * minSide);
-
     const tooltipContent = <p onClick={this._onTooltipClick} className="AlvarMap__tooltip">
       You can move the map by dragging it!
       <img className="AlvarMap__drag-icon" src={`${config.PUBLIC_URL}/assets/drag-icon.svg`} alt=""/>
     </p>;
 
+    let className = 'AlvarMap';
+    if (props.hideShadows) {
+      className += ' AlvarMap--no-shadows';
+    }
+    if (props.disabled) {
+      className += ' AlvarMap--disabled';
+    } else {
+      className += ' grabbable';
+    }
+
     return (
-      <div onClick={this._onMapClick} className="AlvarMap grabbable" style={mapCssStyle}>
+      <div onClick={this._onMapClick} className={className} style={mapCssStyle}>
         <Tooltip visible={this.state.tooltipVisible} title={tooltipContent}>
           <div className="AlvarMap__container">
             {
@@ -91,17 +100,26 @@ const AlvarMap = React.createClass({
             }
 
             {
-              mapItem.labelsEnabled
-                ? <AlvarMapOverlay mapItem={mapItem} />
-                : <div
-                    className="AlvarMap__empty-overlay"
-                    style={{ border: `${borderPadding}px solid white` }}
-                  ></div>
+              this._renderOverlay(mapItem)
             }
           </div>
         </Tooltip>
       </div>
     );
+  },
+
+  _renderOverlay(mapItem) {
+    if (this.props.hideOverlay) {
+      return null
+    } else if (mapItem.labelsEnabled) {
+      return <AlvarMapOverlay mapItem={mapItem} />
+    }
+
+    const dimensions = posterSizeToPixels(mapItem.size, mapItem.orientation);
+    const minSide = Math.min(dimensions.width, dimensions.height);
+    const borderPadding = Math.floor(CONST.EMPTY_MAP_PADDING_FACTOR * minSide);
+
+    return <div className="AlvarMap__empty-overlay" style={{ border: `${borderPadding}px solid white` }}></div>;
   },
 
   _onMapClick() {

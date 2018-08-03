@@ -45,7 +45,6 @@ function getItemId() {
 const initialState = {
   debug: DEBUG,
   apiKey: getQuery('apiKey', 'string'),
-  partnerMode: getQuery('friend', 'boolean', false),
   location: history.location,
   initialLoadTime: new Date(),
   cart: [
