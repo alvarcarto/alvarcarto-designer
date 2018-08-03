@@ -42,15 +42,36 @@ function getItemId() {
   return idCounter;
 }
 
-const cartAsStringInQuery = getQuery('cart', 'string', null);
-const cartInQuery = cartAsStringInQuery !== null ? JSON.parse(cartAsStringInQuery) : null;
+
+function getQueryCart() {
+  const cartAsStringInQuery = getQuery('cart', 'string', null);
+  if (cartAsStringInQuery === null) {
+    return null
+  }
+
+  let cartInQuery;
+  try {
+    cartInQuery = JSON.parse(cartAsStringInQuery);
+  } catch (e) {
+    window.alert(`Error parsing cart from url: ${e}`);
+  }
+
+  return _.map(cartInQuery, item => {
+    return _.merge({}, item, {
+      // Reassign ids
+      id: getItemId(),
+    });
+  })
+}
+
+const cartFromQuery = getQueryCart();
 
 const initialState = {
   debug: DEBUG,
   apiKey: getQuery('apiKey', 'string'),
   location: history.location,
   initialLoadTime: new Date(),
-  cart: cartInQuery ? cartInQuery : [
+  cart: cartFromQuery ? cartFromQuery : [
     {
       id: getItemId(),
       quantity: 1,
