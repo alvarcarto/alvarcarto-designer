@@ -95,7 +95,7 @@ const LightWall = React.createClass({
           </div>
 
           <div className="LightWall__scaler" style={autoprefix(scalerCss)}>
-            <AlvarMap scaleZoom={scalerZoom} />
+            <AlvarMap mapItem={mapItem} scaleZoom={scalerZoom} />
           </div>
 
           <div className="LightWall__zoom-container" style={zoomContainerCss}>

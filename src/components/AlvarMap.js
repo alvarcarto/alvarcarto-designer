@@ -25,11 +25,8 @@ const AlvarMap = React.createClass({
   },
 
   componentWillReceiveProps(nextProps) {
-    const { globalState } = this.props;
-    const mapItem = globalState.cart[globalState.editCartItem];
-
-    const nextGlobalState = nextProps.globalState;
-    const nextMapItem = nextGlobalState.cart[nextGlobalState.editCartItem];
+    const { mapItem } = this.props;
+    const nextMapItem = nextProps.mapItem;
 
     if (mapItem.size !== nextMapItem.size ||
         mapItem.orientation !== nextMapItem.orientation) {
@@ -47,8 +44,7 @@ const AlvarMap = React.createClass({
   },
 
   componentDidMount() {
-    const { globalState } = this.props;
-    const mapItem = globalState.cart[globalState.editCartItem];
+    const { mapItem } = this.props;
     L.DomEvent.setContainerScale(this.props.scaleZoom);
 
     if (!mapItem.mapBounds) {
@@ -69,8 +65,7 @@ const AlvarMap = React.createClass({
 
   render() {
     const { props } = this;
-    const { globalState } = props;
-    const mapItem = globalState.cart[globalState.editCartItem];
+    const { mapItem } = props;
 
     const dimensions = posterSizeToPixels(mapItem.size, mapItem.orientation);
     const style = getStyle(mapItem.mapStyle);
@@ -118,8 +113,7 @@ const AlvarMap = React.createClass({
   },
 
   _renderLeaflet(style) {
-    const { globalState } = this.props;
-    const mapItem = globalState.cart[globalState.editCartItem];
+    const { mapItem } = this.props;
 
     const props = {};
     if (IS_ANDROID) {
