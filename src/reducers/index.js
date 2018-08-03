@@ -42,12 +42,15 @@ function getItemId() {
   return idCounter;
 }
 
+const cartAsStringInQuery = getQuery('cart', 'string', null);
+const cartInQuery = cartAsStringInQuery !== null ? JSON.parse(cartAsStringInQuery) : null;
+
 const initialState = {
   debug: DEBUG,
   apiKey: getQuery('apiKey', 'string'),
   location: history.location,
   initialLoadTime: new Date(),
-  cart: [
+  cart: cartInQuery ? cartInQuery : [
     {
       id: getItemId(),
       quantity: 1,
