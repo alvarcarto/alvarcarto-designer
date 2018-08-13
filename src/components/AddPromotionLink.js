@@ -106,7 +106,7 @@ const AddPromotionLink = React.createClass({
   _onInputChange(e) {
     const inputValue = e.target.value;
     this.setState({
-      inputValue,
+      inputValue: inputValue.toUpperCase(),
       loading: true,
     });
 
