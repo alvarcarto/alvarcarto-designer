@@ -21,6 +21,10 @@ export function getCities(latLng, axiosOpts) {
   }, axiosOpts));
 }
 
+export function getPlacementImages(axiosOpts) {
+  return axios.get(`${CONST.REACT_APP_PLACEMENT_API_URL}/api/images`, axiosOpts);
+}
+
 export function assertHealth() {
   return axios.get(`${CONST.REACT_APP_ORDER_API_URL}/api/health`)
     .catch(() =>

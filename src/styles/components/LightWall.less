@@ -31,9 +31,8 @@
   height: 0;
 }
 
-.LightWall__debug-menu {
+.LightWall__debug-menu-bottom, .LightWall__debug-menu-top {
   position: absolute;
-  top: 10px;
   left: 10px;
   z-index: 10000;
 
@@ -41,6 +40,7 @@
     margin-bottom: 10px;
 
     > .ant-btn {
+      margin-top: 10px;
       margin-right: 12px;
     }
 
@@ -48,6 +48,18 @@
       margin-right: 5px;
     }
   }
+}
+
+.LightWall__debug-menu-top {
+  top: 0;
+}
+
+.LightWall__debug-menu-bottom {
+  bottom: 10px;
+}
+
+.ant-dropdown {
+  z-index: 30000;
 }
 
 .LightWall__download {

@@ -85,6 +85,11 @@ function createPosterImageUrl(mapItem) {
   return `${config.REACT_APP_RENDER_API_URL}/api/raster/render?${query}`;
 }
 
+function createPlacementImageUrl(id, mapItem) {
+  const query = qs.stringify(createPosterUrlParameters(mapItem));
+  return `${config.REACT_APP_PLACEMENT_API_URL}/api/place-map/${id}?${query}`;
+}
+
 function createPosterPreviewUrl(mapItem) {
   const query = qs.stringify(createPosterUrlParameters(mapItem));
   return [
@@ -269,6 +274,7 @@ module.exports = {
   posterSizeToPhysicalDimensions,
   posterSizeToThumbnailPixels,
   createPosterImageUrl,
+  createPlacementImageUrl,
   createPosterThumbnailUrl,
   createPosterPreviewUrl,
   coordToPrettyText,

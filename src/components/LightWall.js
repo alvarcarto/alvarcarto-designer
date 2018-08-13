@@ -4,14 +4,16 @@ import autoprefix from 'auto-prefixer';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import AlvarMap from './AlvarMap';
-import { Icon, Switch, Button } from 'antd';
+import { Icon, Switch, Button, Menu, Dropdown } from 'antd';
 import config from '../config';
+import { getPlacementImages } from '../util/api';
 import { setMapView } from '../actions';
 import {
   posterSizeToPhysicalDimensions,
   posterSizeToPixels,
   createPosterImageUrl,
   getQueryParameterByName,
+  createPlacementImageUrl,
 } from '../util';
 
 // Padding which should be left unfilled when scaling poster to light wall
@@ -28,6 +30,7 @@ const LightWall = React.createClass({
       container: null,
       showPreview: false,
       showOverlay: true,
+      placementImages: [],
     };
   },
 
@@ -38,6 +41,16 @@ const LightWall = React.createClass({
     }, () => this.setState({
       zoom: this._calculateZoom(),
     }));
+
+    if (this.props.globalState.debug) {
+      getPlacementImages()
+        .then((res) => {
+          this.setState({ placementImages: res.data })
+        })
+        .catch(err => {
+          throw err
+        })
+    }
   },
 
   componentWillUnmount() {
@@ -194,27 +207,59 @@ const LightWall = React.createClass({
       return null
     }
 
-    return <div className="LightWall__debug-menu">
-      {
-        globalState.debug
-          ? <div className="LightWall__debug-menu-section">
-              <Button type="primary" onClick={this._downloadImage}>Download poster PNG</Button>
-              <Button type="primary" onClick={this._downloadCartAsJson}>Download cart JSON</Button>
+    return [
+      <div className="LightWall__debug-menu-top">
+        {
+          globalState.debug
+            ? <div className="LightWall__debug-menu-section">
+                { this._renderPlacementMenu() }
+                <Button type="primary" onClick={this._downloadImage}>Download poster PNG</Button>
+                <Button type="primary" onClick={this._downloadCartAsJson}>Download cart JSON</Button>
+                <a id="downloadJson" style={{ display: 'none'}}></a>
+
+                <div className="LightWall__debug-menu-bottom">
+
+                </div>
+              </div>
+            : null
+        }
+        {
+          MULTI
+            ? <div className="LightWall__debug-menu-section">
+                <Switch checked={this.state.showOverlay} onChange={this._onShowOverlayChange} />
+                <span>Show overlay</span>
+              </div>
+            : null
+        }
+      </div>,
+
+      globalState.debug
+        ? <div className="LightWall__debug-menu-bottom">
+            <div className="LightWall__debug-menu-section">
               <Switch defaultChecked={false} onChange={this._onPreviewChange} />
               <span>Render preview (apiKey required)</span>
-              <a id="downloadJson" style={{ display: 'none'}}></a>
             </div>
-          : null
-      }
-      {
-        MULTI
-          ? <div className="LightWall__debug-menu-section">
-              <Switch checked={this.state.showOverlay} onChange={this._onShowOverlayChange} />
-              <span>Show overlay</span>
-            </div>
-          : null
-      }
-    </div>
+          </div>
+        : null
+    ]
+  },
+
+  _renderPlacementMenu() {
+    const menu = (
+      <Menu className="LightWall__debug-placement-menu">
+        {_.map(this.state.placementImages, (im) =>
+          <Menu.Item key={im.id}>
+            <a rel="noopener noreferrer" onClick={() => this._downloadPlacement(im.id)}>{im.label}</a>
+          </Menu.Item>
+        )}
+      </Menu>
+    );
+
+    return <Dropdown overlay={menu}>
+      <Button type="primary" style={{ marginLeft: 8 }}>
+        Download placement <Icon type="down" />
+      </Button>
+    </Dropdown>
   },
 
   _onWindowResize() {
@@ -306,6 +351,14 @@ const LightWall = React.createClass({
     const { globalState } = this.props;
     const mapItem = globalState.cart[globalState.editCartItem];
     const newUrl = `${createPosterImageUrl(mapItem)}&apiKey=${globalState.apiKey}&download=true`;
+    window.open(newUrl, '_blank');
+  },
+
+  _downloadPlacement(id) {
+    const { globalState } = this.props;
+    const mapItem = globalState.cart[globalState.editCartItem];
+    const newUrl = `${createPlacementImageUrl(id, mapItem)}&apiKey=${globalState.apiKey}&download=true`;
+    console.log('newUrl', newUrl)
     window.open(newUrl, '_blank');
   },
 });
