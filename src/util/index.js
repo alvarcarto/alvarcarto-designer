@@ -86,7 +86,8 @@ function createPosterImageUrl(mapItem) {
 }
 
 function createPlacementImageUrl(id, mapItem) {
-  const query = qs.stringify(createPosterUrlParameters(mapItem));
+  const params = createPosterUrlParameters(mapItem)
+  const query = qs.stringify(_.omit(params, ['size', 'orientation']));
   return `${config.REACT_APP_PLACEMENT_API_URL}/api/place-map/${id}?${query}`;
 }
 
