@@ -4,6 +4,7 @@ import autoprefix from 'auto-prefixer';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import AlvarMap from './AlvarMap';
+import PlacementImageGrid from './PlacementImageGrid';
 import { Icon, Switch, Button, Menu, Dropdown } from 'antd';
 import config from '../config';
 import { getPlacementImages } from '../util/api';
@@ -31,6 +32,7 @@ const LightWall = React.createClass({
       showPreview: false,
       showOverlay: true,
       placementImages: [],
+      showPlacementGrid: false,
     };
   },
 
@@ -198,6 +200,11 @@ const LightWall = React.createClass({
         </div>
 
         { this._renderDebugMenu(globalState) }
+
+        {
+          this.state.showPlacementGrid
+            ? <PlacementImageGrid images={this.state.placementImages} onImageClick={this._downloadPlacement} onClose={() => this.setState({ showPlacementGrid: false })} />
+            : null }
       </div>
     );
   },
@@ -255,11 +262,9 @@ const LightWall = React.createClass({
       </Menu>
     );
 
-    return <Dropdown overlay={menu}>
-      <Button type="primary" style={{ marginLeft: 8 }}>
-        Download placement <Icon type="down" />
-      </Button>
-    </Dropdown>
+    return <Button type="primary" style={{ marginLeft: 8 }} onClick={() => this.setState({ showPlacementGrid: true })}>
+      Download placement
+    </Button>
   },
 
   _onWindowResize() {
@@ -358,7 +363,6 @@ const LightWall = React.createClass({
     const { globalState } = this.props;
     const mapItem = globalState.cart[globalState.editCartItem];
     const newUrl = `${createPlacementImageUrl(id, mapItem)}&apiKey=${globalState.apiKey}&download=true`;
-    console.log('newUrl', newUrl)
     window.open(newUrl, '_blank');
   },
 });
