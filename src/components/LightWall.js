@@ -141,7 +141,7 @@ const LightWall = React.createClass({
                       <AlvarMap key={i} mapItem={m} disabled={disabled} scaleZoom={scalerZoom} hideOverlay={!this.state.showOverlay} hideShadows hideTips />
                     </div>
                   })
-                : <AlvarMap mapItem={mapItem} scaleZoom={scalerZoom} />
+                : <AlvarMap mapItem={mapItem} scaleZoom={scalerZoom} hideTips={globalState.debug} />
             }
           </div>
 
@@ -359,10 +359,14 @@ const LightWall = React.createClass({
     window.open(newUrl, '_blank');
   },
 
-  _downloadPlacement(id) {
+  _downloadPlacement(id, opts = {}) {
     const { globalState } = this.props;
     const mapItem = globalState.cart[globalState.editCartItem];
-    const newUrl = `${createPlacementImageUrl(id, mapItem)}&apiKey=${globalState.apiKey}&download=true`;
+    let newUrl = `${createPlacementImageUrl(id, mapItem)}&apiKey=${globalState.apiKey}&download=true`;
+    if (opts.resizeToWidth) {
+      newUrl += `&resizeToWidth=${opts.resizeToWidth}`;
+    }
+
     window.open(newUrl, '_blank');
   },
 });
