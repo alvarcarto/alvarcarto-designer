@@ -7,7 +7,7 @@ const PlacementImageGrid = (props) => <div className="PlacementImageGrid">
     <Icon type="close" />
   </a>
 
-  <div className="PlacementImageGrid__dim" />
+  <div className="PlacementImageGrid__dim" onClick={props.onClose} />
 
   <div className="PlacementImageGrid__images">
     {_.map(props.images, im =>
