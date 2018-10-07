@@ -20,7 +20,7 @@ function posterSizeToPixels(size, orientation) {
       dimensions = { width: 340, height: 510, clipScale: 1 };
       break;
     case '18x24inch':
-      dimensions = { width: 345, height: 580, clipScale: 0.9 };
+      dimensions = { width: 435, height: 580, clipScale: 0.9 };
       break;
     case '24x36inch':
       dimensions = { width: 420, height: 630, clipScale: 0.8 };
