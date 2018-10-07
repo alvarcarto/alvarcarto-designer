@@ -85,6 +85,7 @@ const AlvarMapDesignPanel = React.createClass({
 
   _renderLocationAndStylePanel(mapItem) {
     const posterLook = getPosterLook(mapItem.posterStyle);
+    const { globalState } = this.props;
 
     return <div className="AlvarMapDesignPanel__group">
       <div className="AlvarMapDesignPanel__group">
@@ -109,6 +110,7 @@ const AlvarMapDesignPanel = React.createClass({
       <div className="AlvarMapDesignPanel__group">
         <h4>Map color</h4>
         <MapStyleSelect
+          debug={globalState.debug}
           showStyles={posterLook.allowedMapStyles}
           selected={mapItem.mapStyle}
           onChange={this._onMapStyleChange}

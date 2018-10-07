@@ -10,13 +10,18 @@ const MapStyleSelect = React.createClass({
     const styles = _.isArray(this.props.showStyles)
       ? _.filter(getStyles(), s => _.includes(this.props.showStyles, s.id))
       : getStyles();
-    const filteredStyles = _.filter(styles, style => _.includes([
+
+    const styleIdsToPick = [
       'bw',
       'gray',
       'black',
       'copper',
       'petrol',
-    ], style.id));
+    ]
+    if (this.props.debug) {
+      styleIdsToPick.push('contrast-black');
+    }
+    const filteredStyles = _.filter(styles, style => _.includes(styleIdsToPick, style.id));
 
     return <MediaQuery maxWidth={CONST.SCREEN_SM}>
       {(matches) =>
