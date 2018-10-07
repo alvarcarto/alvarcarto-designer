@@ -16,6 +16,15 @@ function posterSizeToPixels(size, orientation) {
     case '70x100cm':
       dimensions = { width: 448, height: 640, clipScale: 0.8 };
       break;
+    case '12x18inch':
+      dimensions = { width: 340, height: 510, clipScale: 1 };
+      break;
+    case '18x24inch':
+      dimensions = { width: 345, height: 580, clipScale: 0.9 };
+      break;
+    case '24x36inch':
+      dimensions = { width: 420, height: 630, clipScale: 0.8 };
+      break;
     default:
       throw new Error(`Unknown size: ${size}`);
   }
@@ -36,6 +45,15 @@ function posterSizeToPhysicalDimensions(size, orientation) {
     case '30x40cm':
       dimensions = { width: 30, height: 40, unit: 'cm' };
       break;
+    case '12x18inch':
+      dimensions = { width: 12, height: 18, unit: 'inch' };
+      break;
+    case '18x24inch':
+      dimensions = { width: 18, height: 24, unit: 'inch' };
+      break;
+    case '24x36inch':
+      dimensions = { width: 24, height: 36, unit: 'inch' };
+      break;
     default:
       throw new Error(`Unknown size: ${size}`);
   }
@@ -55,6 +73,15 @@ function posterSizeToThumbnailPixels(size, orientation) {
       break;
     case '70x100cm':
       dimensions = { width: 35, height: 50 };
+      break;
+    case '12x18inch':
+      dimensions = { width: 30, height: 45 };
+      break;
+    case '18x24inch':
+      dimensions = { width: 33, height: 45 };
+      break;
+    case '24x36inch':
+      dimensions = { width: 33, height: 50 };
       break;
     default:
       throw new Error(`Unknown size: ${size}`);

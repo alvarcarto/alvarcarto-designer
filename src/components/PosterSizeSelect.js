@@ -10,26 +10,26 @@ const SIZES = [
   {
     id: '30x40cm',
     label: '30 x 40 cm',
-    poster: {
-      width: 30,
-      height: 40,
-    },
   },
   {
     id: '50x70cm',
     label: '50 x 70 cm',
-    poster: {
-      width: 50,
-      height: 70,
-    },
   },
   {
     id: '70x100cm',
     label: '70 x 100 cm',
-    poster: {
-      width: 70,
-      height: 100,
-    },
+  },
+  {
+    id: '12x18inch',
+    label: '12 x 18 inch',
+  },
+  {
+    id: '18x24inch',
+    label: '18 x 24 inch',
+  },
+  {
+    id: '24x36inch',
+    label: '24 x 36 inch',
   }
 ];
 
