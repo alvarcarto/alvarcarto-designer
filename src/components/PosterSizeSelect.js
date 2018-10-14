@@ -18,8 +18,13 @@ const PosterSizeSelect = React.createClass({
               <Radio.Group onChange={this._onTypeChange} defaultValue="cm" {...sizeProps}>
                 {
                   _.map(POSTER_SIZE_TYPES, type => {
+                    const radioButton = <Radio.Button key={type.id} value={type.id}>{type.label}</Radio.Button>;
+                    if (matches) {
+                      return radioButton;
+                    }
+
                     return <Tooltip key={type.id} title={type.description}>
-                      <Radio.Button key={type.id} value={type.id}>{type.label}</Radio.Button>
+                      {radioButton}
                     </Tooltip>
                   })
                 }
