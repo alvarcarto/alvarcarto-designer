@@ -9,13 +9,14 @@ import CONST from '../constants';
 
 const PosterSizeSelect = React.createClass({
   render() {
+    const sizeTypeValue = this._getSelectedSize().type;
     return (
       <div className="PosterSizeSelect">
         <MediaQuery maxWidth={CONST.SCREEN_SM}>
           {(matches) => {
             const sizeProps = matches ? { size: 'large '} : {};
             return <div className="PosterSizeSelect__type">
-              <Radio.Group onChange={this._onTypeChange} defaultValue="cm" {...sizeProps}>
+              <Radio.Group onChange={this._onTypeChange} value={sizeTypeValue} {...sizeProps}>
                 {
                   _.map(POSTER_SIZE_TYPES, type => {
                     const radioButton = <Radio.Button key={type.id} value={type.id}>{type.label}</Radio.Button>;
@@ -90,14 +91,13 @@ const PosterSizeSelect = React.createClass({
     </Radio.Group>;
   },
 
-  _getSelectedSizeType() {
+  _getSelectedSize() {
     const { props } = this;
     return getPosterSize(props.selected);
   },
 
   _getSizesToShow() {
-    const { props } = this;
-    const selectedType = this._getSelectedSizeType().type
+    const selectedType = this._getSelectedSize().type
     const sizes = _.filter(POSTER_SIZES, size => size.type === selectedType);
     return sizes;
   },

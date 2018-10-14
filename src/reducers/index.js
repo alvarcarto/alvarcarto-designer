@@ -219,6 +219,13 @@ function reducer(state = initialState, action) {
       newState = _.cloneDeep(state);
       const newEmptyItem = _.cloneDeep(freshInitialState.cart[0]);
       newEmptyItem.id = getItemId();
+
+      // Copy basic attributes from the currently selected map
+      newEmptyItem.size = currentItem.size;
+      newEmptyItem.orientation = currentItem.orientation;
+      newEmptyItem.mapStyle = currentItem.mapStyle;
+      newEmptyItem.posterStyle = currentItem.posterStyle;
+
       newState.cart.push(newEmptyItem);
       newState.editCartItem = newState.cart.length - 1;
       return newState;
