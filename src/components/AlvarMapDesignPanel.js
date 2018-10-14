@@ -130,7 +130,9 @@ const AlvarMapDesignPanel = React.createClass({
 
       <div className="AlvarMapDesignPanel__group">
         <h4>Size</h4>
+
         <PosterSizeSelect
+          onTypeChange={this._onSizeTypeChange}
           orientation={mapItem.orientation}
           selected={mapItem.size}
           onChange={this._onSizeChange}
@@ -225,6 +227,17 @@ const AlvarMapDesignPanel = React.createClass({
     this.props.dispatch(setPosterLayout({
       size: value,
     }));
+  },
+
+  _onSizeTypeChange(value) {
+    this.props.dispatch(setPosterLayout({
+      sizeType: value,
+    }));
+  },
+
+  _onRandomCity(e) {
+    e.preventDefault();
+
   },
 });
 

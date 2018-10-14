@@ -2,7 +2,7 @@ import _ from 'lodash';
 import qs from 'qs';
 import config from '../config';
 import geolib from 'geolib';
-import { POSTER_STYLES, MAP_STYLES } from 'alvarcarto-common';
+import { POSTER_STYLES, MAP_STYLES, resolveOrientation } from 'alvarcarto-common';
 
 function posterSizeToPixels(size, orientation) {
   let dimensions;
@@ -29,36 +29,7 @@ function posterSizeToPixels(size, orientation) {
       throw new Error(`Unknown size: ${size}`);
   }
 
-  return _resolveOrientation(dimensions, orientation);
-}
-
-function posterSizeToPhysicalDimensions(size, orientation) {
-  let dimensions;
-
-  switch (size) {
-    case '50x70cm':
-      dimensions = { width: 50, height: 70, unit: 'cm' };
-      break;
-    case '70x100cm':
-      dimensions = { width: 70, height: 100, unit: 'cm' };
-      break;
-    case '30x40cm':
-      dimensions = { width: 30, height: 40, unit: 'cm' };
-      break;
-    case '12x18inch':
-      dimensions = { width: 12, height: 18, unit: 'inch' };
-      break;
-    case '18x24inch':
-      dimensions = { width: 18, height: 24, unit: 'inch' };
-      break;
-    case '24x36inch':
-      dimensions = { width: 24, height: 36, unit: 'inch' };
-      break;
-    default:
-      throw new Error(`Unknown size: ${size}`);
-  }
-
-  return _resolveOrientation(dimensions, orientation);
+  return resolveOrientation(dimensions, orientation);
 }
 
 function posterSizeToThumbnailPixels(size, orientation) {
@@ -87,7 +58,7 @@ function posterSizeToThumbnailPixels(size, orientation) {
       throw new Error(`Unknown size: ${size}`);
   }
 
-  return _resolveOrientation(dimensions, orientation);
+  return resolveOrientation(dimensions, orientation);
 }
 
 function createPosterUrlParameters(mapItem) {
@@ -143,17 +114,6 @@ function coordToPrettyText(coord) {
   };
 
   return `${first.val}°${first.label} / ${second.val}°${second.label}`;
-}
-
-function _resolveOrientation(dimensions, orientation) {
-  if (orientation === 'landscape') {
-    return _.merge({}, dimensions, {
-      width: dimensions.height,
-      height: dimensions.width,
-    });
-  }
-
-  return dimensions;
 }
 
 function _transformStyle(styleObj) {
@@ -299,7 +259,6 @@ function getCenterOfCoordinates(coords) {
 
 module.exports = {
   posterSizeToPixels,
-  posterSizeToPhysicalDimensions,
   posterSizeToThumbnailPixels,
   createPosterImageUrl,
   createPlacementImageUrl,

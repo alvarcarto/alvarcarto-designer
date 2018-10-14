@@ -8,13 +8,23 @@
   margin-top: 2px;
 }
 
-select.PosterSizeSelect {
+.PosterSizeSelect__type {
+  margin-bottom: 12px;
+}
+
+.PosterSizeSelect select  {
   height: 34px;
 }
 
-.PosterSizeSelect.pure-css-select-style {
+.PosterSizeSelect .pure-css-select-style {
   width: 100%;
   max-width: 360px;
   height: 36px;
   font-size: 13px;
+}
+
+@media @screen-gt-sm-media {
+  .PosterSizeSelect__type {
+    margin-bottom: 20px;
+  }
 }

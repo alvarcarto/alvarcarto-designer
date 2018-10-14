@@ -3,7 +3,7 @@ import * as actions from '../action-types';
 import {
   coordToPrettyText,
   getQuery,
-  getPosterLook
+  getPosterLook,
 } from '../util';
 import dummyCheckoutState from '../util/dummy-checkout-state';
 import CONST from '../constants';
@@ -13,6 +13,7 @@ import {
   POSTER_SIZES,
   POSTER_ORIENTATIONS,
   MAP_STYLES,
+  findClosestSizeForOtherSizeType,
 } from 'alvarcarto-common';
 
 const DEBUG = getQuery('debug', 'boolean', false);
@@ -191,6 +192,13 @@ function reducer(state = initialState, action) {
         orientation: action.payload.orientation,
         size: action.payload.size,
       };
+
+      if (action.payload.sizeType) {
+        // If the size type was changed to e.g. inches, we'll also set the selected size to
+        // match the closest inch size
+        const sizeToMatch = action.payload.size || currentItem.size;
+        newAttrs.size = findClosestSizeForOtherSizeType(sizeToMatch, action.payload.sizeType).id;
+      }
 
       return extendCurrentCartItem(state, _.omitBy(newAttrs, _.isNil));
 

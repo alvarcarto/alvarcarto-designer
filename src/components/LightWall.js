@@ -9,8 +9,8 @@ import { Icon, Switch, Button, Menu, Dropdown } from 'antd';
 import config from '../config';
 import { getPlacementImages } from '../util/api';
 import { setMapView } from '../actions';
+import { getPosterPhysicalDimensions } from 'alvarcarto-common'
 import {
-  posterSizeToPhysicalDimensions,
   posterSizeToPixels,
   createPosterImageUrl,
   getQueryParameterByName,
@@ -83,7 +83,7 @@ const LightWall = React.createClass({
     const { globalState } = this.props;
     const mapItem = globalState.cart[globalState.editCartItem];
 
-    const physicalDimensions = posterSizeToPhysicalDimensions(
+    const physicalDimensions = getPosterPhysicalDimensions(
       mapItem.size,
       mapItem.orientation
     );

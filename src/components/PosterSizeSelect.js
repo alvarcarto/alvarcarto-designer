@@ -1,42 +1,34 @@
 import React from 'react';
 import _ from 'lodash';
-import { Radio } from 'antd';
+import { Radio, Tooltip } from 'antd';
 import MediaQuery from 'react-responsive';
+import { getPosterSize, POSTER_SIZES, POSTER_SIZE_TYPES } from 'alvarcarto-common';
 import { calculateUnitPrice, getCurrencySymbol } from 'alvarcarto-price-util';
 import Price from './Price';
 import CONST from '../constants';
 
-const SIZES = [
-  {
-    id: '30x40cm',
-    label: '30 x 40 cm',
-  },
-  {
-    id: '50x70cm',
-    label: '50 x 70 cm',
-  },
-  {
-    id: '70x100cm',
-    label: '70 x 100 cm',
-  },
-  {
-    id: '12x18inch',
-    label: '12 x 18 inch',
-  },
-  {
-    id: '18x24inch',
-    label: '18 x 24 inch',
-  },
-  {
-    id: '24x36inch',
-    label: '24 x 36 inch',
-  }
-];
-
 const PosterSizeSelect = React.createClass({
   render() {
     return (
-      <MediaQuery maxWidth={CONST.SCREEN_SM}>
+      <div className="PosterSizeSelect">
+        <MediaQuery maxWidth={CONST.SCREEN_SM}>
+          {(matches) => {
+            const sizeProps = matches ? { size: 'large '} : {};
+            return <div className="PosterSizeSelect__type">
+              <Radio.Group onChange={this._onTypeChange} defaultValue="cm" {...sizeProps}>
+                {
+                  _.map(POSTER_SIZE_TYPES, type => {
+                    return <Tooltip key={type.id} title={type.description}>
+                      <Radio.Button key={type.id} value={type.id}>{type.label}</Radio.Button>
+                    </Tooltip>
+                  })
+                }
+              </Radio.Group>
+            </div>
+          }}
+        </MediaQuery>
+
+        <MediaQuery maxWidth={CONST.SCREEN_SM}>
           {(matches) => {
             if (matches) {
               return this._renderSelect();
@@ -45,17 +37,19 @@ const PosterSizeSelect = React.createClass({
             }
           }}
         </MediaQuery>
+      </div>
     );
   },
 
   _renderSelect() {
-    return <div className="PosterSizeSelect pure-css-select-style theme-default">
+    const sizes = this._getSizesToShow();
+    return <div className="pure-css-select-style theme-default">
       <select
         value={this.props.selected}
         onChange={this._onChange}
       >
         {
-          _.map(SIZES, (item) => {
+          _.map(sizes, (item) => {
             const price = calculateUnitPrice(item.id);
 
             return <option
@@ -71,9 +65,10 @@ const PosterSizeSelect = React.createClass({
   },
 
   _renderRadio() {
-    return <Radio.Group className="PosterSizeSelect" value={this.props.selected} onChange={this._onChange}>
+    const sizes = this._getSizesToShow();
+    return <Radio.Group value={this.props.selected} onChange={this._onChange}>
       {
-        _.map(SIZES, item => {
+        _.map(sizes, item => {
           const price = calculateUnitPrice(item.id);
 
           return <Radio
@@ -90,9 +85,25 @@ const PosterSizeSelect = React.createClass({
     </Radio.Group>;
   },
 
+  _getSelectedSizeType() {
+    const { props } = this;
+    return getPosterSize(props.selected);
+  },
+
+  _getSizesToShow() {
+    const { props } = this;
+    const selectedType = this._getSelectedSizeType().type
+    const sizes = _.filter(POSTER_SIZES, size => size.type === selectedType);
+    return sizes;
+  },
+
   _onChange(e) {
     this.props.onChange(e.target.value);
-  }
+  },
+
+  _onTypeChange(e) {
+    this.props.onTypeChange(e.target.value);
+  },
 });
 
 export default PosterSizeSelect;
