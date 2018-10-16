@@ -1,6 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
-import { Icon, Tooltip, Button } from 'antd'
+import { Icon, Tooltip } from 'antd'
 
 const PlacementImageGrid = (props) => <div className="PlacementImageGrid">
   <a className="PlacementImageGrid__close" onClick={props.onClose}>

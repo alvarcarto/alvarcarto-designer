@@ -5,7 +5,7 @@ import _ from 'lodash';
 import { connect } from 'react-redux';
 import AlvarMap from './AlvarMap';
 import PlacementImageGrid from './PlacementImageGrid';
-import { Icon, Switch, Button, Menu, Dropdown } from 'antd';
+import { Icon, Switch, Button } from 'antd';
 import config from '../config';
 import { getPlacementImages } from '../util/api';
 import { setMapView } from '../actions';
@@ -252,16 +252,6 @@ const LightWall = React.createClass({
   },
 
   _renderPlacementMenu() {
-    const menu = (
-      <Menu className="LightWall__debug-placement-menu">
-        {_.map(this.state.placementImages, (im) =>
-          <Menu.Item key={im.id}>
-            <a rel="noopener noreferrer" onClick={() => this._downloadPlacement(im.id)}>{im.label}</a>
-          </Menu.Item>
-        )}
-      </Menu>
-    );
-
     return <Button type="primary" style={{ marginLeft: 8 }} onClick={() => this.setState({ showPlacementGrid: true })}>
       Download placement
     </Button>

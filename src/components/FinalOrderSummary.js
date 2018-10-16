@@ -135,19 +135,4 @@ const OrderItem = React.createClass({
   },
 });
 
-const SimpleOrderItem = React.createClass({
-  render() {
-    const { props } = this;
-    const item = props.item;
-    const price = calculateItemPrice(this.props.item);
-
-    return (
-      <div className="SimpleOrderItem">
-        <h3 className="SimpleOrderItem__title">{getItemLabel(item)}</h3>
-        <h4 className="SimpleOrderItem__price">{item.quantity}x {price.label}</h4>
-      </div>
-    );
-  },
-});
-
 export default FinalOrderSummary;
