@@ -1,0 +1,3666 @@
+[
+  {
+    "latLng": [
+      48.20849,
+      16.37208
+    ],
+    "name": "Vienna",
+    "country": "AT"
+  },
+  {
+    "latLng": [
+      47.06667,
+      15.45
+    ],
+    "name": "Graz",
+    "country": "AT"
+  },
+  {
+    "latLng": [
+      51.05,
+      3.71667
+    ],
+    "name": "Gent",
+    "country": "BE"
+  },
+  {
+    "latLng": [
+      50.41136,
+      4.44448
+    ],
+    "name": "Charleroi",
+    "country": "BE"
+  },
+  {
+    "latLng": [
+      50.85045,
+      4.34878
+    ],
+    "name": "Brussels",
+    "country": "BE"
+  },
+  {
+    "latLng": [
+      51.21989,
+      4.40346
+    ],
+    "name": "Antwerpen",
+    "country": "BE"
+  },
+  {
+    "latLng": [
+      43.21667,
+      27.91667
+    ],
+    "name": "Varna",
+    "country": "BG"
+  },
+  {
+    "latLng": [
+      42.69751,
+      23.32415
+    ],
+    "name": "Sofia",
+    "country": "BG"
+  },
+  {
+    "latLng": [
+      42.15,
+      24.75
+    ],
+    "name": "Plovdiv",
+    "country": "BG"
+  },
+  {
+    "latLng": [
+      43.68341,
+      -79.76633
+    ],
+    "name": "Brampton",
+    "country": "CA"
+  },
+  {
+    "latLng": [
+      49.26636,
+      -122.95263
+    ],
+    "name": "Burnaby",
+    "country": "CA"
+  },
+  {
+    "latLng": [
+      51.05011,
+      -114.08529
+    ],
+    "name": "Calgary",
+    "country": "CA"
+  },
+  {
+    "latLng": [
+      53.55014,
+      -113.46871
+    ],
+    "name": "Edmonton",
+    "country": "CA"
+  },
+  {
+    "latLng": [
+      43.65421,
+      -79.56711
+    ],
+    "name": "Etobicoke",
+    "country": "CA"
+  },
+  {
+    "latLng": [
+      45.47723,
+      -75.70164
+    ],
+    "name": "Gatineau",
+    "country": "CA"
+  },
+  {
+    "latLng": [
+      43.25011,
+      -79.84963
+    ],
+    "name": "Hamilton",
+    "country": "CA"
+  },
+  {
+    "latLng": [
+      43.42537,
+      -80.5112
+    ],
+    "name": "Kitchener",
+    "country": "CA"
+  },
+  {
+    "latLng": [
+      45.56995,
+      -73.692
+    ],
+    "name": "Laval",
+    "country": "CA"
+  },
+  {
+    "latLng": [
+      42.98339,
+      -81.23304
+    ],
+    "name": "London",
+    "country": "CA"
+  },
+  {
+    "latLng": [
+      45.53121,
+      -73.51806
+    ],
+    "name": "Longueuil",
+    "country": "CA"
+  },
+  {
+    "latLng": [
+      43.86682,
+      -79.2663
+    ],
+    "name": "Markham",
+    "country": "CA"
+  },
+  {
+    "latLng": [
+      43.5789,
+      -79.6583
+    ],
+    "name": "Mississauga",
+    "country": "CA"
+  },
+  {
+    "latLng": [
+      45.50884,
+      -73.58781
+    ],
+    "name": "Montréal",
+    "country": "CA"
+  },
+  {
+    "latLng": [
+      43.76681,
+      -79.4163
+    ],
+    "name": "North York",
+    "country": "CA"
+  },
+  {
+    "latLng": [
+      43.90012,
+      -78.84957
+    ],
+    "name": "Oshawa",
+    "country": "CA"
+  },
+  {
+    "latLng": [
+      45.41117,
+      -75.69812
+    ],
+    "name": "Ottawa",
+    "country": "CA"
+  },
+  {
+    "latLng": [
+      49.10635,
+      -122.82509
+    ],
+    "name": "Surrey",
+    "country": "CA"
+  },
+  {
+    "latLng": [
+      43.70011,
+      -79.4163
+    ],
+    "name": "Toronto",
+    "country": "CA"
+  },
+  {
+    "latLng": [
+      49.24966,
+      -123.11934
+    ],
+    "name": "Vancouver",
+    "country": "CA"
+  },
+  {
+    "latLng": [
+      43.8361,
+      -79.49827
+    ],
+    "name": "Vaughan",
+    "country": "CA"
+  },
+  {
+    "latLng": [
+      48.43294,
+      -123.3693
+    ],
+    "name": "Victoria",
+    "country": "CA"
+  },
+  {
+    "latLng": [
+      42.30008,
+      -83.01654
+    ],
+    "name": "Windsor",
+    "country": "CA"
+  },
+  {
+    "latLng": [
+      49.8844,
+      -97.14704
+    ],
+    "name": "Winnipeg",
+    "country": "CA"
+  },
+  {
+    "latLng": [
+      44.64533,
+      -63.57239
+    ],
+    "name": "Halifax",
+    "country": "CA"
+  },
+  {
+    "latLng": [
+      46.81228,
+      -71.21454
+    ],
+    "name": "Québec",
+    "country": "CA"
+  },
+  {
+    "latLng": [
+      43.77223,
+      -79.25666
+    ],
+    "name": "Scarborough",
+    "country": "CA"
+  },
+  {
+    "latLng": [
+      50.36386,
+      -119.34997
+    ],
+    "name": "Okanagan",
+    "country": "CA"
+  },
+  {
+    "latLng": [
+      35.17531,
+      33.3642
+    ],
+    "name": "Nicosia",
+    "country": "CY"
+  },
+  {
+    "latLng": [
+      50.08804,
+      14.42076
+    ],
+    "name": "Prague",
+    "country": "CZ"
+  },
+  {
+    "latLng": [
+      49.83465,
+      18.28204
+    ],
+    "name": "Ostrava",
+    "country": "CZ"
+  },
+  {
+    "latLng": [
+      49.19522,
+      16.60796
+    ],
+    "name": "Brno",
+    "country": "CZ"
+  },
+  {
+    "latLng": [
+      51.27027,
+      7.16755
+    ],
+    "name": "Wuppertal",
+    "country": "DE"
+  },
+  {
+    "latLng": [
+      50.08258,
+      8.24932
+    ],
+    "name": "Wiesbaden",
+    "country": "DE"
+  },
+  {
+    "latLng": [
+      48.78232,
+      9.17702
+    ],
+    "name": "Stuttgart",
+    "country": "DE"
+  },
+  {
+    "latLng": [
+      51.47805,
+      6.8625
+    ],
+    "name": "Oberhausen",
+    "country": "DE"
+  },
+  {
+    "latLng": [
+      49.45421,
+      11.07752
+    ],
+    "name": "Nürnberg",
+    "country": "DE"
+  },
+  {
+    "latLng": [
+      52.15,
+      11.63333
+    ],
+    "name": "Neue Neustadt",
+    "country": "DE"
+  },
+  {
+    "latLng": [
+      51.96236,
+      7.62571
+    ],
+    "name": "Münster",
+    "country": "DE"
+  },
+  {
+    "latLng": [
+      48.13743,
+      11.57549
+    ],
+    "name": "Munich",
+    "country": "DE"
+  },
+  {
+    "latLng": [
+      51.18539,
+      6.44172
+    ],
+    "name": "Mönchengladbach",
+    "country": "DE"
+  },
+  {
+    "latLng": [
+      49.4891,
+      8.46694
+    ],
+    "name": "Mannheim",
+    "country": "DE"
+  },
+  {
+    "latLng": [
+      52.12773,
+      11.62916
+    ],
+    "name": "Magdeburg",
+    "country": "DE"
+  },
+  {
+    "latLng": [
+      53.86893,
+      10.68729
+    ],
+    "name": "Lübeck",
+    "country": "DE"
+  },
+  {
+    "latLng": [
+      51.33962,
+      12.37129
+    ],
+    "name": "Leipzig",
+    "country": "DE"
+  },
+  {
+    "latLng": [
+      51.33645,
+      6.55381
+    ],
+    "name": "Krefeld",
+    "country": "DE"
+  },
+  {
+    "latLng": [
+      50.93333,
+      6.95
+    ],
+    "name": "Köln",
+    "country": "DE"
+  },
+  {
+    "latLng": [
+      54.32133,
+      10.13489
+    ],
+    "name": "Kiel",
+    "country": "DE"
+  },
+  {
+    "latLng": [
+      49.00937,
+      8.40444
+    ],
+    "name": "Karlsruhe",
+    "country": "DE"
+  },
+  {
+    "latLng": [
+      53.46057,
+      9.98388
+    ],
+    "name": "Harburg",
+    "country": "DE"
+  },
+  {
+    "latLng": [
+      52.37052,
+      9.73322
+    ],
+    "name": "Hannover",
+    "country": "DE"
+  },
+  {
+    "latLng": [
+      53.58334,
+      10.08305
+    ],
+    "name": "Wandsbek",
+    "country": "DE"
+  },
+  {
+    "latLng": [
+      53.56667,
+      10.08333
+    ],
+    "name": "Marienthal",
+    "country": "DE"
+  },
+  {
+    "latLng": [
+      53.55,
+      10.01667
+    ],
+    "name": "Hamburg-Mitte",
+    "country": "DE"
+  },
+  {
+    "latLng": [
+      53.56667,
+      9.98333
+    ],
+    "name": "Eimsbüttel",
+    "country": "DE"
+  },
+  {
+    "latLng": [
+      53.55,
+      9.93333
+    ],
+    "name": "Altona",
+    "country": "DE"
+  },
+  {
+    "latLng": [
+      53.57532,
+      10.01534
+    ],
+    "name": "Hamburg",
+    "country": "DE"
+  },
+  {
+    "latLng": [
+      51.48158,
+      11.97947
+    ],
+    "name": "Halle (Saale)",
+    "country": "DE"
+  },
+  {
+    "latLng": [
+      51.50508,
+      7.09654
+    ],
+    "name": "Gelsenkirchen",
+    "country": "DE"
+  },
+  {
+    "latLng": [
+      47.9959,
+      7.85222
+    ],
+    "name": "Freiburg",
+    "country": "DE"
+  },
+  {
+    "latLng": [
+      50.11552,
+      8.68417
+    ],
+    "name": "Frankfurt am Main",
+    "country": "DE"
+  },
+  {
+    "latLng": [
+      51.45657,
+      7.01228
+    ],
+    "name": "Essen",
+    "country": "DE"
+  },
+  {
+    "latLng": [
+      50.9787,
+      11.03283
+    ],
+    "name": "Erfurt",
+    "country": "DE"
+  },
+  {
+    "latLng": [
+      51.22172,
+      6.77616
+    ],
+    "name": "Düsseldorf",
+    "country": "DE"
+  },
+  {
+    "latLng": [
+      51.43247,
+      6.76516
+    ],
+    "name": "Duisburg",
+    "country": "DE"
+  },
+  {
+    "latLng": [
+      51.05089,
+      13.73832
+    ],
+    "name": "Dresden",
+    "country": "DE"
+  },
+  {
+    "latLng": [
+      51.51494,
+      7.466
+    ],
+    "name": "Dortmund",
+    "country": "DE"
+  },
+  {
+    "latLng": [
+      50.8357,
+      12.92922
+    ],
+    "name": "Chemnitz",
+    "country": "DE"
+  },
+  {
+    "latLng": [
+      53.07516,
+      8.80777
+    ],
+    "name": "Bremen",
+    "country": "DE"
+  },
+  {
+    "latLng": [
+      52.26594,
+      10.52673
+    ],
+    "name": "Braunschweig",
+    "country": "DE"
+  },
+  {
+    "latLng": [
+      50.73438,
+      7.09549
+    ],
+    "name": "Bonn",
+    "country": "DE"
+  },
+  {
+    "latLng": [
+      51.48165,
+      7.21648
+    ],
+    "name": "Bochum",
+    "country": "DE"
+  },
+  {
+    "latLng": [
+      52.03333,
+      8.53333
+    ],
+    "name": "Bielefeld",
+    "country": "DE"
+  },
+  {
+    "latLng": [
+      52.52437,
+      13.41053
+    ],
+    "name": "Berlin",
+    "country": "DE"
+  },
+  {
+    "latLng": [
+      48.37154,
+      10.89851
+    ],
+    "name": "Augsburg",
+    "country": "DE"
+  },
+  {
+    "latLng": [
+      50.77664,
+      6.08342
+    ],
+    "name": "Aachen",
+    "country": "DE"
+  },
+  {
+    "latLng": [
+      51.50168,
+      7.1756
+    ],
+    "name": "Bochum-Hordel",
+    "country": "DE"
+  },
+  {
+    "latLng": [
+      53.58935,
+      9.984
+    ],
+    "name": "Hamburg-Nord",
+    "country": "DE"
+  },
+  {
+    "latLng": [
+      55.67594,
+      12.56553
+    ],
+    "name": "Copenhagen",
+    "country": "DK"
+  },
+  {
+    "latLng": [
+      56.15674,
+      10.21076
+    ],
+    "name": "Århus",
+    "country": "DK"
+  },
+  {
+    "latLng": [
+      59.43696,
+      24.75353
+    ],
+    "name": "Tallinn",
+    "country": "EE"
+  },
+  {
+    "latLng": [
+      39.46975,
+      -0.37739
+    ],
+    "name": "Valencia",
+    "country": "ES"
+  },
+  {
+    "latLng": [
+      37.38283,
+      -5.97317
+    ],
+    "name": "Sevilla",
+    "country": "ES"
+  },
+  {
+    "latLng": [
+      28.46824,
+      -16.25462
+    ],
+    "name": "Santa Cruz de Tenerife",
+    "country": "ES"
+  },
+  {
+    "latLng": [
+      39.56939,
+      2.65024
+    ],
+    "name": "Palma",
+    "country": "ES"
+  },
+  {
+    "latLng": [
+      37.98704,
+      -1.13004
+    ],
+    "name": "Murcia",
+    "country": "ES"
+  },
+  {
+    "latLng": [
+      36.72016,
+      -4.42034
+    ],
+    "name": "Málaga",
+    "country": "ES"
+  },
+  {
+    "latLng": [
+      28.09973,
+      -15.41343
+    ],
+    "name": "Las Palmas de Gran Canaria",
+    "country": "ES"
+  },
+  {
+    "latLng": [
+      36.68645,
+      -6.13606
+    ],
+    "name": "Jerez de la Frontera",
+    "country": "ES"
+  },
+  {
+    "latLng": [
+      37.18817,
+      -3.60667
+    ],
+    "name": "Granada",
+    "country": "ES"
+  },
+  {
+    "latLng": [
+      38.26218,
+      -0.70107
+    ],
+    "name": "Elche",
+    "country": "ES"
+  },
+  {
+    "latLng": [
+      37.89155,
+      -4.77275
+    ],
+    "name": "Córdoba",
+    "country": "ES"
+  },
+  {
+    "latLng": [
+      37.60512,
+      -0.98623
+    ],
+    "name": "Cartagena",
+    "country": "ES"
+  },
+  {
+    "latLng": [
+      38.34517,
+      -0.48149
+    ],
+    "name": "Alicante",
+    "country": "ES"
+  },
+  {
+    "latLng": [
+      41.65606,
+      -0.87734
+    ],
+    "name": "Zaragoza",
+    "country": "ES"
+  },
+  {
+    "latLng": [
+      42.84998,
+      -2.67268
+    ],
+    "name": "Gasteiz / Vitoria",
+    "country": "ES"
+  },
+  {
+    "latLng": [
+      42.23282,
+      -8.72264
+    ],
+    "name": "Vigo",
+    "country": "ES"
+  },
+  {
+    "latLng": [
+      41.65518,
+      -4.72372
+    ],
+    "name": "Valladolid",
+    "country": "ES"
+  },
+  {
+    "latLng": [
+      41.56667,
+      2.01667
+    ],
+    "name": "Terrassa",
+    "country": "ES"
+  },
+  {
+    "latLng": [
+      41.54329,
+      2.10942
+    ],
+    "name": "Sabadell",
+    "country": "ES"
+  },
+  {
+    "latLng": [
+      40.39354,
+      -3.662
+    ],
+    "name": "Puente de Vallecas",
+    "country": "ES"
+  },
+  {
+    "latLng": [
+      43.36029,
+      -5.84476
+    ],
+    "name": "Oviedo",
+    "country": "ES"
+  },
+  {
+    "latLng": [
+      40.32234,
+      -3.86496
+    ],
+    "name": "Móstoles",
+    "country": "ES"
+  },
+  {
+    "latLng": [
+      40.4165,
+      -3.70256
+    ],
+    "name": "Madrid",
+    "country": "ES"
+  },
+  {
+    "latLng": [
+      43.37135,
+      -8.396
+    ],
+    "name": "A Coruña",
+    "country": "ES"
+  },
+  {
+    "latLng": [
+      41.35967,
+      2.10028
+    ],
+    "name": "L'Hospitalet de Llobregat",
+    "country": "ES"
+  },
+  {
+    "latLng": [
+      43.53573,
+      -5.66152
+    ],
+    "name": "Gijón",
+    "country": "ES"
+  },
+  {
+    "latLng": [
+      40.44505,
+      -3.65132
+    ],
+    "name": "Ciudad Lineal",
+    "country": "ES"
+  },
+  {
+    "latLng": [
+      43.26271,
+      -2.92528
+    ],
+    "name": "Bilbao",
+    "country": "ES"
+  },
+  {
+    "latLng": [
+      41.38879,
+      2.15899
+    ],
+    "name": "Barcelona",
+    "country": "ES"
+  },
+  {
+    "latLng": [
+      41.45004,
+      2.24741
+    ],
+    "name": "Badalona",
+    "country": "ES"
+  },
+  {
+    "latLng": [
+      40.48205,
+      -3.35996
+    ],
+    "name": "Alcalá de Henares",
+    "country": "ES"
+  },
+  {
+    "latLng": [
+      41.38896,
+      2.16179
+    ],
+    "name": "Eixample",
+    "country": "ES"
+  },
+  {
+    "latLng": [
+      41.41814,
+      2.19933
+    ],
+    "name": "Sant Martí",
+    "country": "ES"
+  },
+  {
+    "latLng": [
+      40.38897,
+      -3.74569
+    ],
+    "name": "Latina",
+    "country": "ES"
+  },
+  {
+    "latLng": [
+      40.39094,
+      -3.7242
+    ],
+    "name": "Carabanchel",
+    "country": "ES"
+  },
+  {
+    "latLng": [
+      40.4984,
+      -3.7314
+    ],
+    "name": "Fuencarral-El Pardo",
+    "country": "ES"
+  },
+  {
+    "latLng": [
+      61.49911,
+      23.78712
+    ],
+    "name": "Tampere",
+    "country": "FI"
+  },
+  {
+    "latLng": [
+      60.16952,
+      24.93545
+    ],
+    "name": "Helsinki",
+    "country": "FI"
+  },
+  {
+    "latLng": [
+      60.2052,
+      24.6522
+    ],
+    "name": "Espoo",
+    "country": "FI"
+  },
+  {
+    "latLng": [
+      43.60426,
+      1.44367
+    ],
+    "name": "Toulouse",
+    "country": "FR"
+  },
+  {
+    "latLng": [
+      48.58392,
+      7.74553
+    ],
+    "name": "Strasbourg",
+    "country": "FR"
+  },
+  {
+    "latLng": [
+      48.11198,
+      -1.67429
+    ],
+    "name": "Rennes",
+    "country": "FR"
+  },
+  {
+    "latLng": [
+      48.85341,
+      2.3488
+    ],
+    "name": "Paris",
+    "country": "FR"
+  },
+  {
+    "latLng": [
+      43.70313,
+      7.26608
+    ],
+    "name": "Nice",
+    "country": "FR"
+  },
+  {
+    "latLng": [
+      47.21725,
+      -1.55336
+    ],
+    "name": "Nantes",
+    "country": "FR"
+  },
+  {
+    "latLng": [
+      43.61092,
+      3.87723
+    ],
+    "name": "Montpellier",
+    "country": "FR"
+  },
+  {
+    "latLng": [
+      43.29695,
+      5.38107
+    ],
+    "name": "Marseille",
+    "country": "FR"
+  },
+  {
+    "latLng": [
+      45.74846,
+      4.84671
+    ],
+    "name": "Lyon",
+    "country": "FR"
+  },
+  {
+    "latLng": [
+      50.63297,
+      3.05858
+    ],
+    "name": "Lille",
+    "country": "FR"
+  },
+  {
+    "latLng": [
+      44.84044,
+      -0.5805
+    ],
+    "name": "Bordeaux",
+    "country": "FR"
+  },
+  {
+    "latLng": [
+      52.58547,
+      -2.12296
+    ],
+    "name": "Wolverhampton",
+    "country": "GB"
+  },
+  {
+    "latLng": [
+      53.00415,
+      -2.18538
+    ],
+    "name": "Stoke-on-Trent",
+    "country": "GB"
+  },
+  {
+    "latLng": [
+      51.53782,
+      0.71433
+    ],
+    "name": "Southend-on-Sea",
+    "country": "GB"
+  },
+  {
+    "latLng": [
+      50.90395,
+      -1.40428
+    ],
+    "name": "Southampton",
+    "country": "GB"
+  },
+  {
+    "latLng": [
+      53.38297,
+      -1.4659
+    ],
+    "name": "Sheffield",
+    "country": "GB"
+  },
+  {
+    "latLng": [
+      51.45625,
+      -0.97113
+    ],
+    "name": "Reading",
+    "country": "GB"
+  },
+  {
+    "latLng": [
+      53.76282,
+      -2.70452
+    ],
+    "name": "Preston",
+    "country": "GB"
+  },
+  {
+    "latLng": [
+      50.37153,
+      -4.14305
+    ],
+    "name": "Plymouth",
+    "country": "GB"
+  },
+  {
+    "latLng": [
+      52.9536,
+      -1.15047
+    ],
+    "name": "Nottingham",
+    "country": "GB"
+  },
+  {
+    "latLng": [
+      52.62783,
+      1.29834
+    ],
+    "name": "Norwich",
+    "country": "GB"
+  },
+  {
+    "latLng": [
+      52.25,
+      -0.88333
+    ],
+    "name": "Northampton",
+    "country": "GB"
+  },
+  {
+    "latLng": [
+      51.58774,
+      -2.99835
+    ],
+    "name": "Newport",
+    "country": "GB"
+  },
+  {
+    "latLng": [
+      52.04172,
+      -0.75583
+    ],
+    "name": "Milton Keynes",
+    "country": "GB"
+  },
+  {
+    "latLng": [
+      53.48095,
+      -2.23743
+    ],
+    "name": "Manchester",
+    "country": "GB"
+  },
+  {
+    "latLng": [
+      51.87967,
+      -0.41748
+    ],
+    "name": "Luton",
+    "country": "GB"
+  },
+  {
+    "latLng": [
+      51.50853,
+      -0.12574
+    ],
+    "name": "London",
+    "country": "GB"
+  },
+  {
+    "latLng": [
+      53.41058,
+      -2.97794
+    ],
+    "name": "Liverpool",
+    "country": "GB"
+  },
+  {
+    "latLng": [
+      52.6386,
+      -1.13169
+    ],
+    "name": "Leicester",
+    "country": "GB"
+  },
+  {
+    "latLng": [
+      53.79648,
+      -1.54785
+    ],
+    "name": "Leeds",
+    "country": "GB"
+  },
+  {
+    "latLng": [
+      53.7446,
+      -0.33525
+    ],
+    "name": "Kingston upon Hull",
+    "country": "GB"
+  },
+  {
+    "latLng": [
+      51.53622,
+      -0.10304
+    ],
+    "name": "Islington",
+    "country": "GB"
+  },
+  {
+    "latLng": [
+      51.48,
+      -3.18
+    ],
+    "name": "Cardiff",
+    "country": "GB"
+  },
+  {
+    "latLng": [
+      51.45523,
+      -2.59665
+    ],
+    "name": "Bristol",
+    "country": "GB"
+  },
+  {
+    "latLng": [
+      53.79391,
+      -1.75206
+    ],
+    "name": "Bradford",
+    "country": "GB"
+  },
+  {
+    "latLng": [
+      53.81667,
+      -3.05
+    ],
+    "name": "Blackpool",
+    "country": "GB"
+  },
+  {
+    "latLng": [
+      52.48142,
+      -1.89983
+    ],
+    "name": "Birmingham",
+    "country": "GB"
+  },
+  {
+    "latLng": [
+      53.39337,
+      -3.01479
+    ],
+    "name": "Birkenhead",
+    "country": "GB"
+  },
+  {
+    "latLng": [
+      51.44162,
+      0.14866
+    ],
+    "name": "Bexley",
+    "country": "GB"
+  },
+  {
+    "latLng": [
+      54.59682,
+      -5.92541
+    ],
+    "name": "Belfast",
+    "country": "GB"
+  },
+  {
+    "latLng": [
+      37.97945,
+      23.71622
+    ],
+    "name": "Athens",
+    "country": "GR"
+  },
+  {
+    "latLng": [
+      40.64361,
+      22.93086
+    ],
+    "name": "Thessaloníki",
+    "country": "GR"
+  },
+  {
+    "latLng": [
+      45.81444,
+      15.97798
+    ],
+    "name": "Zagreb",
+    "country": "HR"
+  },
+  {
+    "latLng": [
+      47.53333,
+      21.63333
+    ],
+    "name": "Debrecen",
+    "country": "HU"
+  },
+  {
+    "latLng": [
+      47.49801,
+      19.03991
+    ],
+    "name": "Budapest",
+    "country": "HU"
+  },
+  {
+    "latLng": [
+      53.33306,
+      -6.24889
+    ],
+    "name": "Dublin",
+    "country": "IE"
+  },
+  {
+    "latLng": [
+      38.13205,
+      13.33561
+    ],
+    "name": "Palermo",
+    "country": "IT"
+  },
+  {
+    "latLng": [
+      38.19394,
+      15.55256
+    ],
+    "name": "Messina",
+    "country": "IT"
+  },
+  {
+    "latLng": [
+      37.49223,
+      15.07041
+    ],
+    "name": "Catania",
+    "country": "IT"
+  },
+  {
+    "latLng": [
+      45.4299,
+      10.98444
+    ],
+    "name": "Verona",
+    "country": "IT"
+  },
+  {
+    "latLng": [
+      45.07049,
+      7.68682
+    ],
+    "name": "Turin",
+    "country": "IT"
+  },
+  {
+    "latLng": [
+      41.89193,
+      12.51133
+    ],
+    "name": "Rome",
+    "country": "IT"
+  },
+  {
+    "latLng": [
+      45.40797,
+      11.88586
+    ],
+    "name": "Padova",
+    "country": "IT"
+  },
+  {
+    "latLng": [
+      40.85216,
+      14.26811
+    ],
+    "name": "Naples",
+    "country": "IT"
+  },
+  {
+    "latLng": [
+      45.46427,
+      9.18951
+    ],
+    "name": "Milan",
+    "country": "IT"
+  },
+  {
+    "latLng": [
+      44.40478,
+      8.94439
+    ],
+    "name": "Genoa",
+    "country": "IT"
+  },
+  {
+    "latLng": [
+      43.77925,
+      11.24626
+    ],
+    "name": "Florence",
+    "country": "IT"
+  },
+  {
+    "latLng": [
+      44.49381,
+      11.33875
+    ],
+    "name": "Bologna",
+    "country": "IT"
+  },
+  {
+    "latLng": [
+      41.11148,
+      16.8554
+    ],
+    "name": "Bari",
+    "country": "IT"
+  },
+  {
+    "latLng": [
+      54.68916,
+      25.2798
+    ],
+    "name": "Vilnius",
+    "country": "LT"
+  },
+  {
+    "latLng": [
+      54.90272,
+      23.90961
+    ],
+    "name": "Kaunas",
+    "country": "LT"
+  },
+  {
+    "latLng": [
+      56.946,
+      24.10589
+    ],
+    "name": "Riga",
+    "country": "LV"
+  },
+  {
+    "latLng": [
+      52.09083,
+      5.12222
+    ],
+    "name": "Utrecht",
+    "country": "NL"
+  },
+  {
+    "latLng": [
+      52.07667,
+      4.29861
+    ],
+    "name": "The Hague",
+    "country": "NL"
+  },
+  {
+    "latLng": [
+      51.9225,
+      4.47917
+    ],
+    "name": "Rotterdam",
+    "country": "NL"
+  },
+  {
+    "latLng": [
+      51.44083,
+      5.47778
+    ],
+    "name": "Eindhoven",
+    "country": "NL"
+  },
+  {
+    "latLng": [
+      52.37403,
+      4.88969
+    ],
+    "name": "Amsterdam",
+    "country": "NL"
+  },
+  {
+    "latLng": [
+      52.22977,
+      21.01178
+    ],
+    "name": "Warsaw",
+    "country": "PL"
+  },
+  {
+    "latLng": [
+      51.40253,
+      21.14714
+    ],
+    "name": "Radom",
+    "country": "PL"
+  },
+  {
+    "latLng": [
+      52.1934,
+      21.03487
+    ],
+    "name": "Mokotów",
+    "country": "PL"
+  },
+  {
+    "latLng": [
+      51.25,
+      22.56667
+    ],
+    "name": "Lublin",
+    "country": "PL"
+  },
+  {
+    "latLng": [
+      50.87033,
+      20.62752
+    ],
+    "name": "Kielce",
+    "country": "PL"
+  },
+  {
+    "latLng": [
+      53.13333,
+      23.16433
+    ],
+    "name": "Białystok",
+    "country": "PL"
+  },
+  {
+    "latLng": [
+      51.1,
+      17.03333
+    ],
+    "name": "Wrocław",
+    "country": "PL"
+  },
+  {
+    "latLng": [
+      53.01375,
+      18.59814
+    ],
+    "name": "Toruń",
+    "country": "PL"
+  },
+  {
+    "latLng": [
+      53.42894,
+      14.55302
+    ],
+    "name": "Szczecin",
+    "country": "PL"
+  },
+  {
+    "latLng": [
+      50.28682,
+      19.10385
+    ],
+    "name": "Sosnowiec",
+    "country": "PL"
+  },
+  {
+    "latLng": [
+      52.40692,
+      16.92993
+    ],
+    "name": "Poznań",
+    "country": "PL"
+  },
+  {
+    "latLng": [
+      51.75,
+      19.46667
+    ],
+    "name": "Łódź",
+    "country": "PL"
+  },
+  {
+    "latLng": [
+      50.06143,
+      19.93658
+    ],
+    "name": "Kraków",
+    "country": "PL"
+  },
+  {
+    "latLng": [
+      50.25841,
+      19.02754
+    ],
+    "name": "Katowice",
+    "country": "PL"
+  },
+  {
+    "latLng": [
+      54.51889,
+      18.53188
+    ],
+    "name": "Gdynia",
+    "country": "PL"
+  },
+  {
+    "latLng": [
+      54.35205,
+      18.64637
+    ],
+    "name": "Gdańsk",
+    "country": "PL"
+  },
+  {
+    "latLng": [
+      50.79646,
+      19.12409
+    ],
+    "name": "Częstochowa",
+    "country": "PL"
+  },
+  {
+    "latLng": [
+      53.1235,
+      18.00762
+    ],
+    "name": "Bydgoszcz",
+    "country": "PL"
+  },
+  {
+    "latLng": [
+      38.71667,
+      -9.13333
+    ],
+    "name": "Lisbon",
+    "country": "PT"
+  },
+  {
+    "latLng": [
+      41.14961,
+      -8.61099
+    ],
+    "name": "Porto",
+    "country": "PT"
+  },
+  {
+    "latLng": [
+      45.75372,
+      21.22571
+    ],
+    "name": "Timişoara",
+    "country": "RO"
+  },
+  {
+    "latLng": [
+      44.95,
+      26.01667
+    ],
+    "name": "Ploieşti",
+    "country": "RO"
+  },
+  {
+    "latLng": [
+      47.0458,
+      21.91833
+    ],
+    "name": "Oradea",
+    "country": "RO"
+  },
+  {
+    "latLng": [
+      47.16667,
+      27.6
+    ],
+    "name": "Iaşi",
+    "country": "RO"
+  },
+  {
+    "latLng": [
+      45.45,
+      28.05
+    ],
+    "name": "Galaţi",
+    "country": "RO"
+  },
+  {
+    "latLng": [
+      44.31667,
+      23.8
+    ],
+    "name": "Craiova",
+    "country": "RO"
+  },
+  {
+    "latLng": [
+      44.18073,
+      28.63432
+    ],
+    "name": "Constanţa",
+    "country": "RO"
+  },
+  {
+    "latLng": [
+      46.76667,
+      23.6
+    ],
+    "name": "Cluj-Napoca",
+    "country": "RO"
+  },
+  {
+    "latLng": [
+      44.43225,
+      26.10626
+    ],
+    "name": "Bucharest",
+    "country": "RO"
+  },
+  {
+    "latLng": [
+      45.64861,
+      25.60613
+    ],
+    "name": "Braşov",
+    "country": "RO"
+  },
+  {
+    "latLng": [
+      45.26667,
+      27.98333
+    ],
+    "name": "Brăila",
+    "country": "RO"
+  },
+  {
+    "latLng": [
+      44.49239,
+      26.04831
+    ],
+    "name": "Sector 1",
+    "country": "RO"
+  },
+  {
+    "latLng": [
+      44.4528,
+      26.13321
+    ],
+    "name": "Sector 2",
+    "country": "RO"
+  },
+  {
+    "latLng": [
+      44.4234,
+      26.16874
+    ],
+    "name": "Sector 3",
+    "country": "RO"
+  },
+  {
+    "latLng": [
+      44.37571,
+      26.12085
+    ],
+    "name": "Sector 4",
+    "country": "RO"
+  },
+  {
+    "latLng": [
+      44.38808,
+      26.07144
+    ],
+    "name": "Sector 5",
+    "country": "RO"
+  },
+  {
+    "latLng": [
+      44.43579,
+      26.01649
+    ],
+    "name": "Sector 6",
+    "country": "RO"
+  },
+  {
+    "latLng": [
+      55.9825,
+      37.18139
+    ],
+    "name": "Zelenograd",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      56.63877,
+      47.89078
+    ],
+    "name": "Yoshkar-Ola",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      57.62987,
+      39.87368
+    ],
+    "name": "Yaroslavl",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      55.70196,
+      37.81178
+    ],
+    "name": "Vykhino-Zhulebino",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      51.67204,
+      39.1843
+    ],
+    "name": "Voronezh",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      48.78583,
+      44.77973
+    ],
+    "name": "Volzhskiy",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      59.2239,
+      39.88398
+    ],
+    "name": "Vologda",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      48.71939,
+      44.50183
+    ],
+    "name": "Volgograd",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      56.13655,
+      40.39658
+    ],
+    "name": "Vladimir",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      43.03667,
+      44.66778
+    ],
+    "name": "Vladikavkaz",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      54.32824,
+      48.38657
+    ],
+    "name": "Ulyanovsk",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      54.74306,
+      55.96779
+    ],
+    "name": "Ufa",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      56.85836,
+      35.90057
+    ],
+    "name": "Tver",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      54.19609,
+      37.61822
+    ],
+    "name": "Tula",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      53.5303,
+      49.3461
+    ],
+    "name": "Tol’yatti",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      52.73169,
+      41.44326
+    ],
+    "name": "Tambov",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      47.23617,
+      38.89688
+    ],
+    "name": "Taganrog",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      61.67642,
+      50.80994
+    ],
+    "name": "Syktyvkar",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      53.62462,
+      55.95015
+    ],
+    "name": "Sterlitamak",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      45.0428,
+      41.9734
+    ],
+    "name": "Stavropol’",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      51.29667,
+      37.84167
+    ],
+    "name": "Staryy Oskol",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      43.59917,
+      39.72569
+    ],
+    "name": "Sochi",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      54.7818,
+      32.0401
+    ],
+    "name": "Smolensk",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      47.70911,
+      40.21443
+    ],
+    "name": "Shakhty",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      51.54056,
+      46.00861
+    ],
+    "name": "Saratov",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      54.1838,
+      45.1749
+    ],
+    "name": "Saransk",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      59.93863,
+      30.31413
+    ],
+    "name": "Saint Petersburg",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      53.20007,
+      50.15
+    ],
+    "name": "Samara",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      58.0446,
+      38.84259
+    ],
+    "name": "Rybinsk",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      54.6269,
+      39.6916
+    ],
+    "name": "Ryazan’",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      47.23135,
+      39.72328
+    ],
+    "name": "Rostov-na-Donu",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      57.8136,
+      28.3496
+    ],
+    "name": "Pskov",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      61.78491,
+      34.34691
+    ],
+    "name": "Petrozavodsk",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      58.01046,
+      56.25017
+    ],
+    "name": "Perm",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      53.20066,
+      45.00464
+    ],
+    "name": "Penza",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      51.20487,
+      58.56685
+    ],
+    "name": "Orsk",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      51.7727,
+      55.0988
+    ],
+    "name": "Orenburg",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      52.96508,
+      36.07849
+    ],
+    "name": "Orël",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      44.72439,
+      37.76752
+    ],
+    "name": "Novorossiysk",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      58.52131,
+      31.27104
+    ],
+    "name": "Velikiy Novgorod",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      57.91944,
+      59.965
+    ],
+    "name": "Nizhniy Tagil",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      56.32867,
+      44.00205
+    ],
+    "name": "Nizhniy Novgorod",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      55.63657,
+      51.82447
+    ],
+    "name": "Nizhnekamsk",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      43.49806,
+      43.61889
+    ],
+    "name": "Nal’chik",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      55.72545,
+      52.41122
+    ],
+    "name": "Naberezhnyye Chelny",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      68.97917,
+      33.09251
+    ],
+    "name": "Murmansk",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      55.75222,
+      37.61556
+    ],
+    "name": "Moscow",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      55.65,
+      37.71667
+    ],
+    "name": "Mar’ino",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      42.97638,
+      47.50236
+    ],
+    "name": "Makhachkala",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      53.41861,
+      59.04722
+    ],
+    "name": "Magnitogorsk",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      52.60311,
+      39.57076
+    ],
+    "name": "Lipetsk",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      51.73733,
+      36.18735
+    ],
+    "name": "Kursk",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      45.04484,
+      38.97603
+    ],
+    "name": "Krasnodar",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      57.76647,
+      40.92686
+    ],
+    "name": "Kostroma",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      58.59665,
+      49.66007
+    ],
+    "name": "Kirov",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      55.89704,
+      37.42969
+    ],
+    "name": "Khimki",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      55.78874,
+      49.12214
+    ],
+    "name": "Kazan",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      54.5293,
+      36.27542
+    ],
+    "name": "Kaluga",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      54.70649,
+      20.51095
+    ],
+    "name": "Kaliningrad",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      56.84976,
+      53.20448
+    ],
+    "name": "Izhevsk",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      56.99719,
+      40.97139
+    ],
+    "name": "Ivanovo",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      43.31195,
+      45.68895
+    ],
+    "name": "Groznyy",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      56.24143,
+      43.45539
+    ],
+    "name": "Dzerzhinsk",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      59.13333,
+      37.9
+    ],
+    "name": "Cherepovets",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      56.13222,
+      47.25194
+    ],
+    "name": "Cheboksary",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      53.25209,
+      34.37167
+    ],
+    "name": "Bryansk",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      50.61074,
+      36.58015
+    ],
+    "name": "Belgorod",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      46.34968,
+      48.04076
+    ],
+    "name": "Astrakhan",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      64.5401,
+      40.5433
+    ],
+    "name": "Arkhangel’sk",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      56.8519,
+      60.6122
+    ],
+    "name": "Yekaterinburg",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      57.15222,
+      65.52722
+    ],
+    "name": "Tyumen",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      56.49771,
+      84.97437
+    ],
+    "name": "Tomsk",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      61.25,
+      73.41667
+    ],
+    "name": "Surgut",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      53.9059,
+      86.719
+    ],
+    "name": "Prokop’yevsk",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      54.99244,
+      73.36859
+    ],
+    "name": "Omsk",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      55.0415,
+      82.9346
+    ],
+    "name": "Novosibirsk",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      53.7557,
+      87.1099
+    ],
+    "name": "Novokuznetsk",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      60.9344,
+      76.5531
+    ],
+    "name": "Nizhnevartovsk",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      55.45,
+      65.33333
+    ],
+    "name": "Kurgan",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      56.01839,
+      92.86717
+    ],
+    "name": "Krasnoyarsk",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      55.33333,
+      86.08333
+    ],
+    "name": "Kemerovo",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      55.15402,
+      61.42915
+    ],
+    "name": "Chelyabinsk",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      52.53639,
+      85.20722
+    ],
+    "name": "Biysk",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      53.36056,
+      83.76361
+    ],
+    "name": "Barnaul",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      62.03389,
+      129.73306
+    ],
+    "name": "Yakutsk",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      43.10562,
+      131.87353
+    ],
+    "name": "Vladivostok",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      51.82721,
+      107.60627
+    ],
+    "name": "Ulan-Ude",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      50.55034,
+      137.00995
+    ],
+    "name": "Komsomolsk-on-Amur",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      48.48271,
+      135.08379
+    ],
+    "name": "Khabarovsk",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      52.29778,
+      104.29639
+    ],
+    "name": "Irkutsk",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      52.03171,
+      113.50087
+    ],
+    "name": "Chita",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      50.27961,
+      127.5405
+    ],
+    "name": "Blagoveshchensk",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      52.53667,
+      103.88639
+    ],
+    "name": "Angarsk",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      56.1325,
+      101.61417
+    ],
+    "name": "Bratsk",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      48.43776,
+      135.13329
+    ],
+    "name": "Khabarovsk Vtoroy",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      59.94091,
+      30.25377
+    ],
+    "name": "Vasyl'evsky Ostrov",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      59.99675,
+      30.3899
+    ],
+    "name": "Kalininskiy",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      59.97305,
+      30.47607
+    ],
+    "name": "Krasnogvargeisky",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      59.93111,
+      30.36072
+    ],
+    "name": "Centralniy",
+    "country": "RU"
+  },
+  {
+    "latLng": [
+      59.33258,
+      18.0649
+    ],
+    "name": "Stockholm",
+    "country": "SE"
+  },
+  {
+    "latLng": [
+      55.60587,
+      13.00073
+    ],
+    "name": "Malmö",
+    "country": "SE"
+  },
+  {
+    "latLng": [
+      57.70716,
+      11.96679
+    ],
+    "name": "Göteborg",
+    "country": "SE"
+  },
+  {
+    "latLng": [
+      46.05108,
+      14.50513
+    ],
+    "name": "Ljubljana",
+    "country": "SI"
+  },
+  {
+    "latLng": [
+      48.71395,
+      21.25808
+    ],
+    "name": "Košice",
+    "country": "SK"
+  },
+  {
+    "latLng": [
+      48.14816,
+      17.10674
+    ],
+    "name": "Bratislava",
+    "country": "SK"
+  },
+  {
+    "latLng": [
+      33.52066,
+      -86.80249
+    ],
+    "name": "Birmingham",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      32.36681,
+      -86.29997
+    ],
+    "name": "Montgomery",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      38.89511,
+      -77.03637
+    ],
+    "name": "Washington, D.C.",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      25.8576,
+      -80.27811
+    ],
+    "name": "Hialeah",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      30.33218,
+      -81.65565
+    ],
+    "name": "Jacksonville",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      25.77427,
+      -80.19366
+    ],
+    "name": "Miami",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      28.53834,
+      -81.37924
+    ],
+    "name": "Orlando",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      27.77086,
+      -82.67927
+    ],
+    "name": "St. Petersburg",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      27.94752,
+      -82.45843
+    ],
+    "name": "Tampa",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      33.749,
+      -84.38798
+    ],
+    "name": "Atlanta",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      32.46098,
+      -84.98771
+    ],
+    "name": "Columbus",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      39.76838,
+      -86.15804
+    ],
+    "name": "Indianapolis",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      37.69224,
+      -97.33754
+    ],
+    "name": "Wichita",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      38.45647,
+      -82.69238
+    ],
+    "name": "Ironville",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      37.98869,
+      -84.47772
+    ],
+    "name": "Lexington",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      38.0498,
+      -84.45855
+    ],
+    "name": "Lexington-Fayette",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      38.25424,
+      -85.75941
+    ],
+    "name": "Louisville",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      38.41258,
+      -82.70905
+    ],
+    "name": "Meads",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      30.45075,
+      -91.15455
+    ],
+    "name": "Baton Rouge",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      29.95465,
+      -90.07507
+    ],
+    "name": "New Orleans",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      39.29038,
+      -76.61219
+    ],
+    "name": "Baltimore",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      39.09973,
+      -94.57857
+    ],
+    "name": "Kansas City",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      38.62727,
+      -90.19789
+    ],
+    "name": "St. Louis",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      35.22709,
+      -80.84313
+    ],
+    "name": "Charlotte",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      35.99403,
+      -78.89862
+    ],
+    "name": "Durham",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      35.05266,
+      -78.87836
+    ],
+    "name": "Fayetteville",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      36.07264,
+      -79.79198
+    ],
+    "name": "Greensboro",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      35.7721,
+      -78.63861
+    ],
+    "name": "Raleigh",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      35.78682,
+      -78.66389
+    ],
+    "name": "West Raleigh",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      36.09986,
+      -80.24422
+    ],
+    "name": "Winston-Salem",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      39.12711,
+      -84.51439
+    ],
+    "name": "Cincinnati",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      39.96118,
+      -82.99879
+    ],
+    "name": "Columbus",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      35.46756,
+      -97.51643
+    ],
+    "name": "Oklahoma City",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      36.15398,
+      -95.99277
+    ],
+    "name": "Tulsa",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      39.95233,
+      -75.16379
+    ],
+    "name": "Philadelphia",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      35.14953,
+      -90.04898
+    ],
+    "name": "Memphis",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      36.16589,
+      -86.78444
+    ],
+    "name": "Nashville",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      35.08676,
+      -90.05676
+    ],
+    "name": "New South Memphis",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      32.73569,
+      -97.10807
+    ],
+    "name": "Arlington",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      30.26715,
+      -97.74306
+    ],
+    "name": "Austin",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      27.80058,
+      -97.39638
+    ],
+    "name": "Corpus Christi",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      32.78306,
+      -96.80667
+    ],
+    "name": "Dallas",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      32.72541,
+      -97.32085
+    ],
+    "name": "Fort Worth",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      32.91262,
+      -96.63888
+    ],
+    "name": "Garland",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      29.76328,
+      -95.36327
+    ],
+    "name": "Houston",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      41.60054,
+      -93.60911
+    ],
+    "name": "Des Moines",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      41.76058,
+      -88.32007
+    ],
+    "name": "Aurora",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      41.85003,
+      -87.65005
+    ],
+    "name": "Chicago",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      41.1306,
+      -85.12886
+    ],
+    "name": "Fort Wayne",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      42.35843,
+      -71.05977
+    ],
+    "name": "Boston",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      42.33343,
+      -71.04949
+    ],
+    "name": "South Boston",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      42.33143,
+      -83.04575
+    ],
+    "name": "Detroit",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      44.97997,
+      -93.26384
+    ],
+    "name": "Minneapolis",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      44.94441,
+      -93.09327
+    ],
+    "name": "Saint Paul",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      40.8,
+      -96.66696
+    ],
+    "name": "Lincoln",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      41.25626,
+      -95.94043
+    ],
+    "name": "Omaha",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      40.72816,
+      -74.07764
+    ],
+    "name": "Jersey City",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      40.73566,
+      -74.17237
+    ],
+    "name": "Newark",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      40.84985,
+      -73.86641
+    ],
+    "name": "The Bronx",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      40.6501,
+      -73.94958
+    ],
+    "name": "Brooklyn",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      42.88645,
+      -78.87837
+    ],
+    "name": "Buffalo",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      40.69149,
+      -73.80569
+    ],
+    "name": "Jamaica",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      40.78343,
+      -73.96625
+    ],
+    "name": "Manhattan",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      40.71427,
+      -74.00597
+    ],
+    "name": "New York City",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      40.68149,
+      -73.83652
+    ],
+    "name": "Queens",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      43.15478,
+      -77.61556
+    ],
+    "name": "Rochester",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      40.56233,
+      -74.13986
+    ],
+    "name": "Staten Island",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      40.93121,
+      -73.89875
+    ],
+    "name": "Yonkers",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      41.4995,
+      -81.69541
+    ],
+    "name": "Cleveland",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      41.66394,
+      -83.55521
+    ],
+    "name": "Toledo",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      40.44062,
+      -79.99589
+    ],
+    "name": "Pittsburgh",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      43.07305,
+      -89.40123
+    ],
+    "name": "Madison",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      43.0389,
+      -87.90647
+    ],
+    "name": "Milwaukee",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      33.30616,
+      -111.84125
+    ],
+    "name": "Chandler",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      33.35283,
+      -111.78903
+    ],
+    "name": "Gilbert",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      33.53865,
+      -112.18599
+    ],
+    "name": "Glendale",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      33.42227,
+      -111.82264
+    ],
+    "name": "Mesa",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      33.44838,
+      -112.07404
+    ],
+    "name": "Phoenix",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      33.50921,
+      -111.89903
+    ],
+    "name": "Scottsdale",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      32.22174,
+      -110.92648
+    ],
+    "name": "Tucson",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      33.83529,
+      -117.9145
+    ],
+    "name": "Anaheim",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      35.37329,
+      -119.01871
+    ],
+    "name": "Bakersfield",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      32.64005,
+      -117.0842
+    ],
+    "name": "Chula Vista",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      34.09223,
+      -117.43505
+    ],
+    "name": "Fontana",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      37.54827,
+      -121.98857
+    ],
+    "name": "Fremont",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      36.74773,
+      -119.77237
+    ],
+    "name": "Fresno",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      34.14251,
+      -118.25508
+    ],
+    "name": "Glendale",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      33.6603,
+      -117.99923
+    ],
+    "name": "Huntington Beach",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      33.76696,
+      -118.18923
+    ],
+    "name": "Long Beach",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      34.05223,
+      -118.24368
+    ],
+    "name": "Los Angeles",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      37.6391,
+      -120.99688
+    ],
+    "name": "Modesto",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      33.93752,
+      -117.23059
+    ],
+    "name": "Moreno Valley",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      34.16056,
+      -118.26452
+    ],
+    "name": "North Glendale",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      37.80437,
+      -122.2708
+    ],
+    "name": "Oakland",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      34.1975,
+      -119.17705
+    ],
+    "name": "Oxnard",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      33.95335,
+      -117.39616
+    ],
+    "name": "Riverside",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      38.58157,
+      -121.4944
+    ],
+    "name": "Sacramento",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      34.10834,
+      -117.28977
+    ],
+    "name": "San Bernardino",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      32.71533,
+      -117.15726
+    ],
+    "name": "San Diego",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      37.77493,
+      -122.41942
+    ],
+    "name": "San Francisco",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      37.33939,
+      -121.89496
+    ],
+    "name": "San Jose",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      33.74557,
+      -117.86783
+    ],
+    "name": "Santa Ana",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      37.9577,
+      -121.29078
+    ],
+    "name": "Stockton",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      39.72943,
+      -104.83192
+    ],
+    "name": "Aurora",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      38.83388,
+      -104.82136
+    ],
+    "name": "Colorado Springs",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      39.73915,
+      -104.9847
+    ],
+    "name": "Denver",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      35.08449,
+      -106.65114
+    ],
+    "name": "Albuquerque",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      36.0397,
+      -114.98194
+    ],
+    "name": "Henderson",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      36.17497,
+      -115.13722
+    ],
+    "name": "Las Vegas",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      36.19886,
+      -115.1175
+    ],
+    "name": "North Las Vegas",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      36.09719,
+      -115.14666
+    ],
+    "name": "Paradise",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      39.52963,
+      -119.8138
+    ],
+    "name": "Reno",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      31.75872,
+      -106.48693
+    ],
+    "name": "El Paso",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      33.57786,
+      -101.85517
+    ],
+    "name": "Lubbock",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      45.52345,
+      -122.67621
+    ],
+    "name": "Portland",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      47.60621,
+      -122.33207
+    ],
+    "name": "Seattle",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      47.65966,
+      -117.42908
+    ],
+    "name": "Spokane",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      47.25288,
+      -122.44429
+    ],
+    "name": "Tacoma",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      21.30694,
+      -157.85833
+    ],
+    "name": "Honolulu",
+    "country": "US"
+  },
+  {
+    "latLng": [
+      61.21806,
+      -149.90028
+    ],
+    "name": "Anchorage",
+    "country": "US"
+  }
+]

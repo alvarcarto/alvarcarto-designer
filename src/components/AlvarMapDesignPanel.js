@@ -9,6 +9,7 @@ import {
 } from '../actions';
 import { coordToPrettyText, getPosterLook } from '../util';
 import { Icon } from 'antd';
+import countries from 'i18n-iso-countries';
 import Accordion from './Accordion';
 import TabView from './TabView';
 import MediaQuery from 'react-responsive';
@@ -22,6 +23,7 @@ import MapStyleSelect from './MapStyleSelect';
 import { triggerGtmEvent } from '../util/gtm';
 import CONST from '../constants';
 import Alert from './Alert';
+import cities from '../data/cities.json';
 
 const AlvarMapDesignPanel = React.createClass({
   render() {
@@ -94,6 +96,7 @@ const AlvarMapDesignPanel = React.createClass({
           onChange={this._onGeoSearch}
         />
         <p className="AlvarMapDesignPanel__label">
+          Or try a <a onClick={this._onRandomCity}>random location</a>.
           You can also zoom and drag the map to any location.
         </p>
       </div>
@@ -238,6 +241,18 @@ const AlvarMapDesignPanel = React.createClass({
   _onRandomCity(e) {
     e.preventDefault();
 
+    const city = _.sample(cities);
+    const [lat, lng] = city.latLng;
+
+    this.props.dispatch(setMapView({
+      center: { lat, lng },
+      zoom: _.random(9, 11),
+    }));
+
+    this.props.dispatch(setMapLabels({
+      header: city.name,
+      smallHeader: countries.getName(city.country, 'en'),
+    }));
   },
 });
 
