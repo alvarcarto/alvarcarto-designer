@@ -1,7 +1,5 @@
 import React from 'react';
 import { Tooltip } from 'antd';
-import L from 'leaflet';
-window.L = L;
 import { connect } from 'react-redux';
 import { setMapView } from '../actions';
 import CONST from '../constants';
@@ -34,18 +32,10 @@ const AlvarMap = React.createClass({
         setTimeout(() => this.refs.lMap.leafletElement.invalidateSize(), 0);
       }
     }
-
-    if (this.props.scaleZoom !== nextProps.scaleZoom) {
-      // Ugly hack very very ugly, to fix:
-      // We are using our fork of Leaflet which implements this
-      // https://github.com/Leaflet/Leaflet/issues/2795
-      L.DomEvent.setContainerScale(nextProps.scaleZoom);
-    }
   },
 
   componentDidMount() {
     const { mapItem } = this.props;
-    L.DomEvent.setContainerScale(this.props.scaleZoom);
 
     if (!mapItem.mapBounds) {
       this._dispatchMapView();
