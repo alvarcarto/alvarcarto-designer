@@ -13,7 +13,6 @@ import countries from 'i18n-iso-countries';
 import Accordion from './Accordion';
 import TabView from './TabView';
 import MediaQuery from 'react-responsive';
-import geodist from 'geodist';
 import GeoSearch from './GeoSearch';
 import PosterSizeSelect from './PosterSizeSelect';
 import OrientationSelect from './OrientationSelect';
@@ -165,7 +164,6 @@ const AlvarMapDesignPanel = React.createClass({
   },
 
   _onGeoSearch(result) {
-    const zoom = boundsToZoom(result.geometry.bounds);
     const lat = result.geometry.location.lat;
     const lng = result.geometry.location.lng;
 
@@ -174,7 +172,7 @@ const AlvarMapDesignPanel = React.createClass({
         lat: lat,
         lng: lng,
       },
-      zoom: zoom,
+      zoom: 11,
     }));
 
     this.props.dispatch(setMapLabels({
@@ -246,7 +244,7 @@ const AlvarMapDesignPanel = React.createClass({
 
     this.props.dispatch(setMapView({
       center: { lat, lng },
-      zoom: _.random(9, 11),
+      zoom: 11,
     }));
 
     this.props.dispatch(setMapLabels({
@@ -255,33 +253,5 @@ const AlvarMapDesignPanel = React.createClass({
     }));
   },
 });
-
-function boundsToZoom(bounds) {
-  const point1 = bounds.northeast;
-  const point2 = bounds.southwest;
-  const dist = geodist(
-    { lat: point1.lat, lon: point1.lng },
-    { lat: point2.lat, lon: point2.lng },
-    { exact: true, unit: 'km' }
-  );
-
-  if (dist < 100) {
-    return 10;
-  } else if (dist < 200) {
-    return 8;
-  } else if (dist < 300) {
-    return 7;
-  } else if (dist < 500) {
-    return 6;
-  } else if (dist < 1000) {
-    return 5;
-  } else if (dist < 2000) {
-    return 3.5;
-  } else if (dist < 3000) {
-    return 3;
-  } else {
-    return 2;
-  }
-}
 
 export default AlvarMapDesignPanel;

@@ -1,143 +1,87 @@
-import BPromise from 'bluebird';
+
 import debouncePromise from 'debounce-promise';
 import _ from 'lodash';
 import React from 'react';
-import Select from 'react-select';
-import { Icon } from 'antd';
-import { getPlacePredictions, resolvePlaceId } from '../util/google';
+import { message } from 'antd';
+import AlgoliaPlaces from 'algolia-places-react';
+import config from '../config';
 
 const GeoSearch = React.createClass({
   getInitialState() {
     return {
-      selection: null,
       debouncedFetchOptions: debouncePromise(this._fetchOptions, 50),
     };
-  },
-
-  componentDidMount() {
-    const service = new window.google.maps.places.PlacesService(this.refs.div);
-    // We don't want a re-render from this
-    // eslint-disable-next-line
-    this.state.service = service;
   },
 
   render() {
     return (
       <div className="GeoSearch">
-        <div className="GeoSearch__container">
-          <Select.Async
-            className="AlvarMapDesignPanel__search"
-            placeholder="Enter any city or country"
-            loadOptions={this.state.debouncedFetchOptions}
-            value={_.get(this, 'state.selection.value')}
-            onChange={this._onChange}
-            onSelectResetsInput={false}
-            onBlurResetsInput={false}
-          />
-          <Icon type="search" />
-        </div>
-        <div ref="div"></div>
+        <AlgoliaPlaces
+          placeholder="Enter any city or country"
+          options={{
+            appId: config.REACT_APP_ALGOLIA_APP_ID,
+            apiKey: config.REACT_APP_ALGOLIA_API_KEY,
+            language: 'en',
+          }}
+          onChange={this._onChange}
+          onLimit={this._onLimit}
+          onError={this._onError}
+        />
       </div>
     );
   },
 
-  _onChange(item) {
-    this.setState(() => ({ selection: item }));
-
-    if (!_.isEmpty(item) &&_.isFunction(this.props.onChange)) {
-      resolvePlaceId(this.state.service, item.value)
-        .then(obj => {
-          this.props.onChange(googleObjectToResult(obj));
-        })
-        .catch(err => {
-          throw err;
-        });
+  _onChange(result) {
+    if (!result.suggestion) {
+      return;
     }
+
+    this.props.onChange(algoliaObjectToResult(result));
   },
 
-  _fetchOptions(input) {
-    if (!input) {
-      return BPromise.resolve({ options: [] });
-    }
+  _onLimit(msg) {
+    message.error('Location search quota exceeded', 3);
+    console.error('Algolia limit reached', msg);
+  },
 
-    if (_.isFunction(this.props.onInputChange)) {
-      this.props.onInputChange(input);
-    }
-
-    return getPlacePredictions({
-      input: input,
-      types: [],
-      language: 'en',
-    })
-      .then(results => ({
-        options: _.take(_.map(results, result => ({
-          value: String(result.place_id),
-          label: result.description,
-        })), 4)
-      }))
-      .catch(err => {
-        throw err;
-      });
+  _onError(msg) {
+    message.error('Error when searching a location', 3);
+    console.error('Algolia error', msg);
   }
 });
 
-function googleObjectToResult(obj) {
-  const northeast = obj.geometry.viewport.getNorthEast();
-  const southwest = obj.geometry.viewport.getSouthWest();
-
+function algoliaObjectToResult(obj) {
   return {
-    formattedAddress: obj.formatted_address,
-    city: findCityFromGoogleObject(obj),
-    country: findCountryFromGoogleObject(obj),
+    formattedAddress: obj.suggestion.value,
+    city: findCityFromAlgoliaObject(obj),
+    country: findCountryFromAlgoliaObject(obj),
     geometry: {
-      bounds: {
-        northeast: {
-          lat: northeast.lat(),
-          lng: northeast.lng(),
-        },
-        southwest: {
-          lat: southwest.lat(),
-          lng: southwest.lng(),
-        },
-      },
       location: {
-        lat: obj.geometry.location.lat(),
-        lng: obj.geometry.location.lng(),
+        lat: obj.suggestion.latlng.lat,
+        lng: obj.suggestion.latlng.lng,
       },
     },
   };
 }
 
-function findCityFromGoogleObject(obj) {
-  let found = findAddressComponent(obj, 'locality');
+function findCityFromAlgoliaObject(obj) {
+  const { suggestion } = obj;
 
-  if (!found) {
-    // If locality type is not found, try to iterate through all different
-    // administrative_area_level_x starting from the largest number, which is
-    // the most precise(smallest) area. This may end up with having e.g. state
-    // name as the City but that is OK compromise.
-    for (let i = 5; i >= 1; --i) {
-      const levelFound = findAddressComponent(obj, `administrative_area_level_${i}`);
-
-      if (levelFound) {
-        found = levelFound;
-        break;
-      }
-    }
+  if (suggestion.type === 'city') {
+    return suggestion.name;
   }
 
-  return _.get(found, 'long_name', findCountryFromGoogleObject(obj));
+  if (_.has(suggestion, 'suburb')) {
+    return suggestion.suburb;
+  } else if (_.has(suggestion, 'city')) {
+    return suggestion.city;
+  }
+
+  return suggestion.country;
 }
 
-function findCountryFromGoogleObject(obj) {
-  const found = findAddressComponent(obj, 'country');
-  return _.get(found, 'long_name', 'UNKNOWN COUNTRY');
-}
-
-function findAddressComponent(searchResult, type) {
-  return _.find(searchResult.address_components, component => {
-    return _.includes(component.types, type);
-  });
+function findCountryFromAlgoliaObject(obj) {
+  return _.get(obj, 'suggestion.country', obj.query);
 }
 
 export default GeoSearch;

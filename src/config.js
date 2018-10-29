@@ -28,6 +28,9 @@ const CONST = {
   // By default design-qa.alvarcarto.com GTM ID is used
   REACT_APP_GTM_ID: process.env.REACT_APP_GTM_ID,
 
+  REACT_APP_ALGOLIA_APP_ID: process.env.REACT_APP_ALGOLIA_APP_ID,
+  REACT_APP_ALGOLIA_API_KEY: process.env.REACT_APP_ALGOLIA_API_KEY,
+
   REACT_APP_BRANCH: process.env.REACT_APP_BRANCH || 'master',
 };
 
@@ -36,6 +39,14 @@ window.BRANCH = process.env.REACT_APP_BRANCH;
 
 if (!CONST.REACT_APP_STRIPE_PUBLISHABLE_KEY) {
   throw new Error('REACT_APP_STRIPE_PUBLISHABLE_KEY must be set.');
+}
+
+if (!CONST.REACT_APP_ALGOLIA_APP_ID) {
+  throw new Error('REACT_APP_ALGOLIA_APP_ID must be set.');
+}
+
+if (!CONST.REACT_APP_ALGOLIA_API_KEY) {
+  throw new Error('REACT_APP_ALGOLIA_API_KEY must be set.');
 }
 
 if (!CONST.REACT_APP_GTM_ID) {

@@ -2,36 +2,31 @@
   font-size: @font-size-xx-small;
 }
 
-.GeoSearch__container {
-  position: relative;
+.GeoSearch .ap-input {
+  border-radius: 5px;
 }
 
-.GeoSearch__container .anticon {
-  position: absolute;
-  right: 10px;
-  top: 11px;
-  font-size: 0.9rem;
-  color: #999;
+.GeoSearch .ap-footer {
+  opacity: 0.5;
+  font-size: 10px;
 }
 
-.GeoSearch__container .Select-clear-zone {
-  top: 1px;
+.GeoSearch .ap-name, .GeoSearch .ap-address {
+  font-size: @font-size-xx-small;
 }
 
-.GeoSearch__container .Select-arrow-zone {
+.GeoSearch .ap-footer svg {
+  height: 11px;
+  margin: 0 2px;
+}
+
+.GeoSearch .ap-suggestion {
+  display: none;
   visibility: hidden;
 }
 
-.GeoSearch__container .Select-loading-zone {
-  right: 2px;
-  top: -1px;
-}
-
-.GeoSearch__container .Select-loading {
-  width: 14px;
-  height: 14px;
-}
-
-.GeoSearch .Select-input > input {
-  padding: 10px 0 12px;
+/* Show only first 3 results to have enough space for auto completion */
+.GeoSearch .ap-suggestion:nth-child(1), .GeoSearch .ap-suggestion:nth-child(2), .GeoSearch .ap-suggestion:nth-child(3) {
+  display: block;
+  visibility: visible;
 }

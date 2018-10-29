@@ -12,7 +12,7 @@ Map designer and order UI for Alvar Carto.
 * Router is totally custom
 * Promises for async
 * Maps are rendered with Leaflet, tiles are self-hosted
-* Google Maps API used for geocoding requests
+* Algolia Places API used for geocoding requests
 * Error tracking with Sentry
 * Analytics with GA and Hotjar
 
