@@ -15,22 +15,29 @@ const ShippingMethodForm = React.createClass({
   },
 
   render() {
-    const deliveryPhrase = this.props.countryCode === 'FI'
-      ? 'Delivery to your nearest post office.'
-      : 'Delivery to your front door.'
-
-    const deliveryCompany = this.props.countryCode === 'FI'
-      ? 'Matkahuolto'
-      : 'DHL'
+    let deliveryPhrase = '';
+    let deliveryCompany = 'DHL (outside Finland) or Matkahuolto (in Finland)';
+    if (this.props.countryCode && this.props.countryCode === 'FI') {
+      deliveryPhrase = 'Delivery to your nearest Matkahuolto service point.';
+      deliveryCompany = 'Matkahuolto';
+    } else if (this.props.countryCode) {
+      deliveryPhrase = 'Delivery to your front door.';
+      deliveryCompany = 'DHL';
+    }
 
     return (
       <div className="ShippingMethodForm">
         <Radio.Group value={this.state.values.shippingMethod} onChange={this._onChange}>
           <Row className="ShippingMethodForm__item">
+            <span className="ShippingMethodForm__delivery-warning">
+              Please note that during the holiday seasons our delivery times are slightly longer.
+            </span>
+
             <Col span={16}>
               <Radio value="free">Worldwide Express Mail</Radio>
               <div className="ShippingMethodForm__radio-info">
-                Regular production speed. Incredibly fast express shipping by {deliveryCompany}. {deliveryPhrase}
+                Regular production speed. Incredibly fast express shipping by {deliveryCompany}. {deliveryPhrase}{' '}
+                Includes parcel tracking.
 
                 <div className="ShippingMethodForm__radio-info-estimates">
                   <span>Average delivery times:</span>
@@ -52,7 +59,8 @@ const ShippingMethodForm = React.createClass({
               <Radio value="fast">Worldwide Express Mail <span className="ShippingMethodForm__priority-label">+ Priority Production</span></Radio>
               <div className="ShippingMethodForm__radio-info">
                 Production on the same day when ordered before 12:00 Europe/Helsinki time.
-                Incredibly fast express shipping by {deliveryCompany}. {deliveryPhrase}
+                Incredibly fast express shipping by {deliveryCompany}. {deliveryPhrase}{' '}
+                Includes parcel tracking.
 
                 <div className="ShippingMethodForm__radio-info-estimates">
                   <span>Average delivery times:</span>
@@ -62,6 +70,7 @@ const ShippingMethodForm = React.createClass({
                     <li>US: 2-4 business days</li>
                     <li>Other: 2-5 business days</li>
                   </ul>
+
                 </div>
               </div>
             </Col>
