@@ -215,7 +215,7 @@ const LightWall = React.createClass({
     }
 
     return [
-      <div className="LightWall__debug-menu-top">
+      <div key="menu-top" className="LightWall__debug-menu-top">
         {
           globalState.debug
             ? <div className="LightWall__debug-menu-section">
@@ -241,7 +241,7 @@ const LightWall = React.createClass({
       </div>,
 
       globalState.debug
-        ? <div className="LightWall__debug-menu-bottom">
+        ? <div key="menu-bottom" className="LightWall__debug-menu-bottom">
             <div className="LightWall__debug-menu-section">
               <Switch defaultChecked={false} onChange={this._onPreviewChange} />
               <span>Render preview (apiKey required)</span>
