@@ -10,7 +10,7 @@
 }
 
 .Accordion__section--selected > .Accordion__content {
-  padding: 10px 30px 20px 60px;
+  padding: 15px 30px 20px 64px;
   height: auto;
 }
 
@@ -21,9 +21,9 @@
 
 .Accordion__start-header {
   position: absolute;
-  left: 60px;
+  left: 64px;
   top: -3px;
-  font-size: 0.7rem;
+  font-size: @font-size-small;
   color: @primary-color;
   font-weight: 400;
 }
@@ -42,8 +42,8 @@
   .condensed();
   cursor: pointer;
   font-weight: 400;
-  padding: 15px 60px;
-  font-size: 1.1rem;
+  padding: 10px 64px;
+  font-size: @font-size-large;
   text-transform: uppercase;
   color: #555;
   position: relative;
@@ -55,7 +55,7 @@
   top: 1px;
   font-weight: 400;
   color: #555;
-  font-size: 1.1rem;
+  font-size: @font-size-large;
   position: relative;
   transition: color 0.3s ease;
 }
@@ -86,19 +86,19 @@
 .Accordion__header > .Accordion__header-number {
   z-index: 20;
   position: absolute;
-  height: 22px;
-  width: 22px;
-  border-radius: 15px;
+  height: 24px;
+  width: 24px;
+  border-radius: 24px;
   background: #fafafa;
   border: 1px solid @primary-color;
   color: @primary-color;
-  line-height: 23px;
+  line-height: 25px;
   text-indent: 0px;
-  left: 16px;
+  left: 15px;
   top: 50%;
-  margin-top: -11px;
+  margin-top: -13px;
   text-align: center;
-  font-size: 0.7rem;
+  font-size: 0.9rem;
 }
 
 .Accordion__section:nth-of-type(1) .Accordion__header-number {

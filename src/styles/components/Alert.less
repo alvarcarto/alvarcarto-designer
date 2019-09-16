@@ -1,8 +1,45 @@
 .Alert {
-  font-size: 12px;
   border: 1px solid #ddd;
   border-left: 2px solid @primary-color;
   border-radius: 3px;
   color: #555;
-  padding: 13px 15px 13px 10px;
+  padding: 15px 45px 15px 15px;
+
+  p {
+    margin-left: 34px;
+    color: #777;
+  }
+
+  .anticon {
+    font-size: 1.6rem;
+    float: left;
+    color: #888;
+    position: relative;
+    top: 3px;
+  }
+}
+
+.Alert--warning {
+  border-left-color: @warning-color;
+
+  .anticon {
+    color: @warning-color;
+  }
+}
+
+
+.Alert--success {
+  border-left-color: @success-color;
+
+  .anticon {
+    color: @success-color;
+  }
+}
+
+.Alert--error {
+  border-left-color: @error-color;
+
+  .anticon {
+    color: @error-color;
+  }
 }

@@ -3,8 +3,8 @@ import React from 'react';
 import { setMapLabels } from '../actions';
 import { Form, Input, Switch, Checkbox } from 'antd';
 
-const formColLabel = { span: 6, md: { span: 6 }, lg: { span: 6 } };
-const formColInput = { span: 18, md: { span: 18 }, lg: { span: 18 } };
+const formColLabel = { span: 7, md: { span: 7 }, lg: { span: 7 } };
+const formColInput = { span: 17, md: { span: 17 }, lg: { span: 17 } };
 
 const PosterLabelInputs = React.createClass({
   render() {
