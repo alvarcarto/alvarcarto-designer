@@ -2,9 +2,18 @@ import _ from 'lodash';
 import qs from 'qs';
 import config from '../config';
 import geolib from 'geolib';
-import { POSTER_STYLES, MAP_STYLES, resolveOrientation } from 'alvarcarto-common';
+import { POSTER_STYLES, MAP_STYLES as MAP_STYLES_COMMON, resolveOrientation } from 'alvarcarto-common';
 
-function posterSizeToPixels(size, orientation) {
+const MAP_STYLES = MAP_STYLES_COMMON.concat([{
+  id: 'contrast-black-london',
+  // Awful red to make it clear the default is being used
+  color: '#FF0000',
+  labelColor: '#000000',
+  type: 'raster',
+  name: 'London(for internal use)',
+}]);
+
+export function posterSizeToPixels(size, orientation) {
   let dimensions;
   switch (size) {
     case '30x40cm':

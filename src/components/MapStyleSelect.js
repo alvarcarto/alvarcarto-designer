@@ -20,6 +20,7 @@ const MapStyleSelect = React.createClass({
     ]
     if (this.props.debug) {
       styleIdsToPick.push('contrast-black');
+      styleIdsToPick.push('contrast-black-london');
     }
     const filteredStyles = _.filter(styles, style => _.includes(styleIdsToPick, style.id));
 
