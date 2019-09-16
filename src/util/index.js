@@ -32,7 +32,7 @@ function posterSizeToPixels(size, orientation) {
   return resolveOrientation(dimensions, orientation);
 }
 
-function posterSizeToThumbnailPixels(size, orientation) {
+export function posterSizeToThumbnailPixels(size, orientation) {
   let dimensions;
 
   switch (size) {
@@ -61,7 +61,7 @@ function posterSizeToThumbnailPixels(size, orientation) {
   return resolveOrientation(dimensions, orientation);
 }
 
-function createPosterUrlParameters(mapItem) {
+export function createPosterUrlParameters(mapItem) {
   return {
     swLat: _.get(mapItem, 'mapBounds.southWest.lat'),
     swLng: _.get(mapItem, 'mapBounds.southWest.lng'),
@@ -78,18 +78,18 @@ function createPosterUrlParameters(mapItem) {
   };
 }
 
-function createPosterImageUrl(mapItem) {
+export function createPosterImageUrl(mapItem) {
   const query = qs.stringify(createPosterUrlParameters(mapItem));
   return `${config.REACT_APP_RENDER_API_URL}/api/raster/render?${query}`;
 }
 
-function createPlacementImageUrl(id, mapItem) {
+export function createPlacementImageUrl(id, mapItem) {
   const params = createPosterUrlParameters(mapItem)
   const query = qs.stringify(_.omit(params, ['size', 'orientation']));
   return `${config.REACT_APP_PLACEMENT_API_URL}/api/place-map/${id}?${query}`;
 }
 
-function createPosterPreviewUrl(mapItem) {
+export function createPosterPreviewUrl(mapItem) {
   const query = qs.stringify(createPosterUrlParameters(mapItem));
   return [
     `${config.REACT_APP_RENDER_API_URL}/api/raster/placeit?${query}`,
@@ -97,12 +97,12 @@ function createPosterPreviewUrl(mapItem) {
   ].join('');
 }
 
-function createPosterThumbnailUrl(mapItem) {
+export function createPosterThumbnailUrl(mapItem) {
   const query = qs.stringify(createPosterUrlParameters(mapItem));
   return `${config.REACT_APP_RENDER_API_URL}/api/raster/render?${query}&resizeToHeight=140`;
 }
 
-function coordToPrettyText(coord) {
+export function coordToPrettyText(coord) {
   const first = {
     val: Math.abs(coord.lat).toFixed(3),
     label: coord.lat > 0 ? 'N' : 'S',
@@ -122,7 +122,7 @@ function _transformStyle(styleObj) {
   });
 }
 
-function getStyle(styleId) {
+export function getStyle(styleId) {
   const found = _.find(MAP_STYLES, { id: styleId });
   if (found) {
     return _transformStyle(found);
@@ -131,7 +131,7 @@ function getStyle(styleId) {
   return null;
 }
 
-function getStyles() {
+export function getStyles() {
   return _.map(MAP_STYLES, _transformStyle);
 }
 
@@ -141,7 +141,7 @@ function _transformPosterStyle(styleObj) {
   });
 }
 
-function getPosterLook(id) {
+export function getPosterLook(id) {
   const found = _.find(POSTER_STYLES, { id: id });
   if (found) {
     return _transformPosterStyle(found);
@@ -150,11 +150,11 @@ function getPosterLook(id) {
   return null;
 }
 
-function getPosterLooks() {
+export function getPosterLooks() {
   return _.map(POSTER_STYLES, _transformPosterStyle);
 }
 
-function getStorageSafe(key) {
+export function getStorageSafe(key) {
   let result;
   try {
     result = localStorage.getItem(key);
@@ -165,7 +165,7 @@ function getStorageSafe(key) {
   return result;
 }
 
-function setStorageSafe(key, val) {
+export function setStorageSafe(key, val) {
   let success = false;
   try {
     localStorage.setItem(key, val);
@@ -177,12 +177,12 @@ function setStorageSafe(key, val) {
   return success;
 }
 
-function getQueryParameterByName(name) {
+export function getQueryParameterByName(name) {
   const match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
   return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
 }
 
-function getQuery(name, type, defaultVal, allowList) {
+export function getQuery(name, type, defaultVal, allowList) {
   const found = getQueryParameterByName(name);
   if (_.isNull(found) || _.isUndefined(found)) {
     return defaultVal;
@@ -202,14 +202,14 @@ function getQuery(name, type, defaultVal, allowList) {
   }
 }
 
-function parseStringQuery(found, defaultVal, allowList) {
+export function parseStringQuery(found, defaultVal, allowList) {
   if (!isAllowed(allowList, found)) {
     return defaultVal;
   }
   return found;
 }
 
-function parseFloatQuery(found, defaultVal) {
+export function parseFloatQuery(found, defaultVal) {
   const val = Number(found);
   if (!_.isFinite(val)) {
     return defaultVal;
@@ -217,7 +217,7 @@ function parseFloatQuery(found, defaultVal) {
   return val;
 }
 
-function parseIntegerQuery(found, defaultVal) {
+export function parseIntegerQuery(found, defaultVal) {
   const val = parseInt(found, 10);
   if (!_.isFinite(val)) {
     return defaultVal;
@@ -225,11 +225,11 @@ function parseIntegerQuery(found, defaultVal) {
   return val;
 }
 
-function parseBooleanQuery(found) {
+export function parseBooleanQuery(found) {
   return found === 'true';
 }
 
-function isAllowed(allowList, val) {
+export function isAllowed(allowList, val) {
   if (!allowList) {
     return true;
   }
@@ -237,7 +237,7 @@ function isAllowed(allowList, val) {
   return _.includes(allowList, val);
 }
 
-function stringEqualsIgnoreWhitespace(str1, str2) {
+export function stringEqualsIgnoreWhitespace(str1, str2) {
   if (!_.isString(str1) || !_.isString(str2)) {
     return false;
   }
@@ -247,7 +247,7 @@ function stringEqualsIgnoreWhitespace(str1, str2) {
   return str1Trimmed.toLowerCase() === str2Trimmed.toLowerCase();
 }
 
-function getCenterOfCoordinates(coords) {
+export function getCenterOfCoordinates(coords) {
   const newCoords = _.map(coords, coord => ({
     latitude: coord.lat,
     longitude: coord.lng,
@@ -256,23 +256,3 @@ function getCenterOfCoordinates(coords) {
 
   return { lat: Number(center.latitude), lng: Number(center.longitude) };
 }
-
-module.exports = {
-  posterSizeToPixels,
-  posterSizeToThumbnailPixels,
-  createPosterImageUrl,
-  createPlacementImageUrl,
-  createPosterThumbnailUrl,
-  createPosterPreviewUrl,
-  coordToPrettyText,
-  getStyle,
-  getStyles,
-  getPosterLook,
-  getPosterLooks,
-  getStorageSafe,
-  setStorageSafe,
-  getQueryParameterByName,
-  getQuery,
-  stringEqualsIgnoreWhitespace,
-  getCenterOfCoordinates,
-};

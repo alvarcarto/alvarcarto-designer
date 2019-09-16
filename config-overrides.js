@@ -3,17 +3,10 @@ const path = require('path')
 const {
   override,
   fixBabelImports,
-  addWebpackAlias,
-  addBabelPlugin
+  addWebpackAlias
 } = require('customize-cra')
 
 module.exports = override(
-  addBabelPlugin([
-    '@quickbaseoss/babel-plugin-styled-components-css-namespace',
-    {
-      cssNamespace: '&&&'
-    }
-  ]),
   addWebpackAlias({
     '@ant-design/icons/lib/dist$': path.resolve(__dirname, './src/icons.ts')
   }),

@@ -21,16 +21,16 @@ function getPoster(mapItem, axiosOpts) {
   return axios.get(`${config.REACT_APP_RENDER_API_URL}/posters/${name}`, axiosOpts);
 }
 
-const AlvarMapOverlay = React.createClass({
+class AlvarMapOverlay extends React.Component {
   getInitialState() {
     return {
       cancelSource: null,
     };
-  },
+  }
 
   componentDidMount() {
     this._fetchSvg(this.props.mapItem);
-  },
+  }
 
   componentWillReceiveProps(nextProps) {
     const oldItem = this.props.mapItem;
@@ -46,11 +46,11 @@ const AlvarMapOverlay = React.createClass({
     }
 
     this._updateLabels(nextItem);
-  },
+  }
 
   render() {
     return <div ref="container" className="AlvarMapOverlay"></div>;
-  },
+  }
 
   _fetchSvg(mapItem) {
     const container = ReactDOM.findDOMNode(this.refs.container);
@@ -85,20 +85,20 @@ const AlvarMapOverlay = React.createClass({
         container.className += ' AlvarMapOverlay--error';
         this._resetCancelSource();
       });
-  },
+  }
 
   _showLoader(container) {
     container.className += ' AlvarMapOverlay--loading';
-  },
+  }
 
   _hideLoader(container) {
     container.className = 'AlvarMapOverlay';
-  },
+  }
 
   _resetCancelSource() {
     // eslint-disable-next-line react/no-direct-mutation-state
     this.state.cancelSource = null;
-  },
+  }
 
   _updateLabels(mapItem) {
     const el = ReactDOM.findDOMNode(this.refs.container);
@@ -145,7 +145,7 @@ const AlvarMapOverlay = React.createClass({
       updateText(textEl, labelText, { color: labelColor });
     }
   }
-})
+}
 
 function updateText(textNode, value, opts = {}) {
   const tspanEl = _getFirstTspanElement(textNode);
@@ -248,4 +248,4 @@ function getBBoxForSvgElement(svgElem) {
   return svgElem.getBBox();
 }
 
-module.exports = AlvarMapOverlay;
+export default AlvarMapOverlay;

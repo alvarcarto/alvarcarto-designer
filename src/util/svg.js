@@ -2,7 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 import CONST from '../constants';
 
-module.exports.PortraitIcon = (props) => <svg className="PortraitIcon"
+export const PortraitIcon = (props) => <svg className="PortraitIcon"
   version="1.1"
   xmlns="http://www.w3.org/2000/svg"
   x="0px"
@@ -23,7 +23,7 @@ module.exports.PortraitIcon = (props) => <svg className="PortraitIcon"
   />
 </svg>;
 
-module.exports.LandscapeIcon = (props) => <svg className="LandscapeIcon"
+export const LandscapeIcon = (props) => <svg className="LandscapeIcon"
   version="1.1"
   xmlns="http://www.w3.org/2000/svg"
   x="0px"
@@ -44,7 +44,7 @@ module.exports.LandscapeIcon = (props) => <svg className="LandscapeIcon"
   />
 </svg>;
 
-module.exports.TickIcon = (props) => <svg className="TickIcon"
+export const TickIcon = (props) => <svg className="TickIcon"
   version="1.1"
   xmlns="http://www.w3.org/2000/svg"
   x="0px"
@@ -58,7 +58,7 @@ module.exports.TickIcon = (props) => <svg className="TickIcon"
   </g>
 </svg>;
 
-module.exports.PosterIcon = (_props) => {
+export const PosterIcon = (_props) => {
   const props = _.merge({
     fill: 'rgba(0, 0, 0, 0)',
     stroke: 'black',
@@ -85,7 +85,7 @@ module.exports.PosterIcon = (_props) => {
   </svg>;
 }
 
-module.exports.TruckIcon = (props) => <svg
+export const TruckIcon = (props) => <svg
   className="TruckIcon"
   version="1.1"
   xmlns="http://www.w3.org/2000/svg"
