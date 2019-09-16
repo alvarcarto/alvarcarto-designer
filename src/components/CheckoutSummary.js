@@ -43,7 +43,7 @@ const CheckoutSummary = React.createClass({
             )
           }
           <li className="CheckoutSummary__actions noselect">
-            <IconButton onClick={this._onAddPoster} type="plus">Add poster</IconButton>
+            <IconButton onClick={this._onAddPoster} type="plus">Add map</IconButton>
             {this._getPromotionLink()}
           </li>
         </ul>

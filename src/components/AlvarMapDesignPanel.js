@@ -101,7 +101,7 @@ const AlvarMapDesignPanel = React.createClass({
       </div>
 
       <div className="AlvarMapDesignPanel__group AlvarMapDesignPanel__poster-style">
-        <h4>Poster look</h4>
+        <h4>Print style</h4>
         <PosterStyleSelect
           defaultValue={mapItem.posterStyle}
           selected={mapItem.posterStyle}

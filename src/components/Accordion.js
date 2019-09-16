@@ -19,7 +19,7 @@ const Accordion = React.createClass({
         <div className="Accordion__start">
           <div className="Accordion__start-circle"></div>
           <h6 className="Accordion__start-header">
-            Create your unique poster
+            Create your unique print
           </h6>
         </div>
 
