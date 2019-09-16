@@ -30,9 +30,8 @@ const App = React.createClass({
 
     if (!config.DEVELOPMENT) {
       window.onbeforeunload = this._beforeLeavePage;
+      this._alertIfBackendDown();
     }
-
-    this._alertIfBackendDown();
   },
 
   render() {
