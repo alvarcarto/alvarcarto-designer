@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { LocaleProvider } from 'antd';
+import { ConfigProvider } from 'antd';
 import enUS from 'antd/lib/locale-provider/en_US';
 import App from './App';
 import configureStore from './store/configure';
@@ -12,9 +12,9 @@ const store = configureStore();
 
 ReactDOM.render(
   <Provider store={store}>
-    <LocaleProvider locale={enUS}>
+    <ConfigProvider locale={enUS}>
       <App />
-    </LocaleProvider>
+    </ConfigProvider>
   </Provider>,
   document.getElementById('root')
 );
