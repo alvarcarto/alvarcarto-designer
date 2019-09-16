@@ -15,7 +15,6 @@ class CountrySelect extends React.Component {
     return (
       <ResponsiveSelect
         {...this.props}
-        size="large"
         className="CountrySelect__search"
         showSearch
         placeholder="Enter a country"

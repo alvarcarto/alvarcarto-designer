@@ -11,14 +11,18 @@ function getPromotionSlow(code, axiosOpts) {
 }
 
 class AddPromotionLink extends React.Component {
-  state = {
-    loading: false,
-    promotion: null,
-    cancelSource: null,
-    visible: false,
-  };
+  constructor(props) {
+    super(props)
 
-  componentWillMount() {
+    this.state = {
+      loading: false,
+      promotion: null,
+      cancelSource: null,
+      visible: false,
+    };
+  }
+
+  componentDidMount() {
     this._debouncedCheckInput = _.debounce(this._checkInput, 400);
   }
 

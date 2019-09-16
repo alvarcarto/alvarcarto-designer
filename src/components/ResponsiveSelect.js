@@ -62,7 +62,6 @@ class ResponsiveSelect extends React.Component {
 
     return <Select
       {...props}
-      size="large"
       defaultValue={props.defaultValue}
       value={selectVal}
       placeholder={props.placeholder}
