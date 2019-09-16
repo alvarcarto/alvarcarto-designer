@@ -24,7 +24,7 @@ import CONST from '../constants';
 import Alert from './Alert';
 import cities from '../data/cities.json';
 
-const AlvarMapDesignPanel = React.createClass({
+class AlvarMapDesignPanel extends React.Component {
   render() {
     const { globalState } = this.props;
     const mapItem = globalState.cart[globalState.editCartItem];
@@ -49,9 +49,9 @@ const AlvarMapDesignPanel = React.createClass({
         */}
       </div>
     );
-  },
+  }
 
-  _renderNarrowView(mapItem) {
+  _renderNarrowView = (mapItem) => {
     return <div className="AlvarMapDesignPanel__narrow">
       <div className="AlvarMapDesignPanel__narrow-spacer"></div>
       <TabView initialSelected={null}>
@@ -66,9 +66,9 @@ const AlvarMapDesignPanel = React.createClass({
         </TabView.Panel>
       </TabView>
     </div>;
-  },
+  };
 
-  _renderWideView(mapItem) {
+  _renderWideView = (mapItem) => {
     return <div className="AlvarMapDesignPanel__wide">
       <Accordion initialSelected={0}>
         <Accordion.Section className="AlvarMapDesignPanel__location-section" header="Location &amp; Style">
@@ -82,9 +82,9 @@ const AlvarMapDesignPanel = React.createClass({
         </Accordion.Section>
       </Accordion>
     </div>;
-  },
+  };
 
-  _renderLocationAndStylePanel(mapItem) {
+  _renderLocationAndStylePanel = (mapItem) => {
     const posterLook = getPosterLook(mapItem.posterStyle);
     const { globalState } = this.props;
 
@@ -119,9 +119,9 @@ const AlvarMapDesignPanel = React.createClass({
         />
       </div>
     </div>;
-  },
+  };
 
-  _renderSizePanel(mapItem) {
+  _renderSizePanel = (mapItem) => {
     return <div className="AlvarMapDesignPanel__group">
       <div className="AlvarMapDesignPanel__info">
         <Alert iconType="picture">
@@ -145,9 +145,9 @@ const AlvarMapDesignPanel = React.createClass({
         <OrientationSelect selected={mapItem.orientation} onChange={this._onOrientationChange} />
       </div>
     </div>;
-  },
+  };
 
-  _renderLabelsPanel(mapItem) {
+  _renderLabelsPanel = (mapItem) => {
     const posterLook = getPosterLook(mapItem.posterStyle);
 
     return <div className="AlvarMapDesignPanel__group">
@@ -160,9 +160,9 @@ const AlvarMapDesignPanel = React.createClass({
         text: mapItem.labelText,
       }} />
     </div>;
-  },
+  };
 
-  _onGeoSearch(result) {
+  _onGeoSearch = (result) => {
     const lat = result.geometry.location.lat;
     const lng = result.geometry.location.lng;
 
@@ -187,16 +187,16 @@ const AlvarMapDesignPanel = React.createClass({
         userActionParameter: result.formattedAddress,
       },
     });
-  },
+  };
 
-  _onGeoSearchInputChange(input) {
+  _onGeoSearchInputChange = (input) => {
     triggerGtmEvent({
       event: 'designPlaceSearch',
       searchText: input,
     });
-  },
+  };
 
-  _onCityButtonClick(item) {
+  _onCityButtonClick = (item) => {
     this.props.dispatch(setMapView({
       center: { lat: item.lat, lng: item.lng },
       zoom: item.zoom
@@ -207,35 +207,35 @@ const AlvarMapDesignPanel = React.createClass({
       smallHeader: item.smallHeader,
       text: coordToPrettyText({ lat: item.lat, lng: item.lng }),
     }));
-  },
+  };
 
-  _onMapStyleChange(value) {
+  _onMapStyleChange = (value) => {
     this.props.dispatch(setMapStyle(value));
-  },
+  };
 
-  _onPosterStyleChange(value) {
+  _onPosterStyleChange = (value) => {
     this.props.dispatch(setPosterStyle(value));
-  },
+  };
 
-  _onOrientationChange(value) {
+  _onOrientationChange = (value) => {
     this.props.dispatch(setPosterLayout({
       orientation: value,
     }));
-  },
+  };
 
-  _onSizeChange(value) {
+  _onSizeChange = (value) => {
     this.props.dispatch(setPosterLayout({
       size: value,
     }));
-  },
+  };
 
-  _onSizeTypeChange(value) {
+  _onSizeTypeChange = (value) => {
     this.props.dispatch(setPosterLayout({
       sizeType: value,
     }));
-  },
+  };
 
-  _onRandomCity(e) {
+  _onRandomCity = (e) => {
     e.preventDefault();
 
     const city = _.sample(cities);
@@ -250,7 +250,7 @@ const AlvarMapDesignPanel = React.createClass({
       header: city.name,
       smallHeader: countries.getName(city.country, 'en'),
     }));
-  },
-});
+  };
+}
 
 export default AlvarMapDesignPanel;

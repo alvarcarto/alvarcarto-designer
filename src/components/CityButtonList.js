@@ -8,7 +8,7 @@ const cityButtons = [
   { id: 4, header: 'Mariehamn', smallHeader: 'Åland Islands', zoom: 11, lat: 60.089695, lng: 19.933891 },
 ];
 
-const CityButtonList = React.createClass({
+class CityButtonList extends React.Component {
   render() {
     const buttons = cityButtons.map(item =>
       <CityButton key={item.id} item={item} onClick={this.props.onButtonClick} />
@@ -20,9 +20,9 @@ const CityButtonList = React.createClass({
       </div>
     );
   }
-});
+}
 
-const CityButton = React.createClass({
+class CityButton extends React.Component {
   render() {
     return <Button
       className="CityButton"
@@ -31,11 +31,11 @@ const CityButton = React.createClass({
     >
       {this.props.item.header}
     </Button>;
-  },
-
-  _onClick() {
-    this.props.onClick(this.props.item);
   }
-});
+
+  _onClick = () => {
+    this.props.onClick(this.props.item);
+  };
+}
 
 export default CityButtonList;

@@ -6,12 +6,10 @@ import { message } from 'antd';
 import AlgoliaPlaces from 'algolia-places-react';
 import config from '../config';
 
-const GeoSearch = React.createClass({
-  getInitialState() {
-    return {
-      debouncedFetchOptions: debouncePromise(this._fetchOptions, 50),
-    };
-  },
+class GeoSearch extends React.Component {
+  state = {
+    debouncedFetchOptions: debouncePromise(this._fetchOptions, 50),
+  };
 
   render() {
     return (
@@ -29,26 +27,26 @@ const GeoSearch = React.createClass({
         />
       </div>
     );
-  },
+  }
 
-  _onChange(result) {
+  _onChange = (result) => {
     if (!result.suggestion) {
       return;
     }
 
     this.props.onChange(algoliaObjectToResult(result));
-  },
+  };
 
-  _onLimit(msg) {
+  _onLimit = (msg) => {
     message.error('Location search quota exceeded', 3);
     console.error('Algolia limit reached', msg);
-  },
+  };
 
-  _onError(msg) {
+  _onError = (msg) => {
     message.error('Error when searching a location', 3);
     console.error('Algolia error', msg);
-  }
-});
+  };
+}
 
 function algoliaObjectToResult(obj) {
   return {

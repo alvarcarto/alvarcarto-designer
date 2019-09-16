@@ -1,15 +1,11 @@
 import React from 'react';
 
-const Accordion = React.createClass({
-  getDefaultProps() {
-    return { alwaysOpen: true };
-  },
+class Accordion extends React.Component {
+  static defaultProps = { alwaysOpen: true };
 
-  getInitialState() {
-    return {
-      selected: this.props.initialSelected
-    };
-  },
+  state = {
+    selected: this.props.initialSelected
+  };
 
   render() {
     const children = this.props.children.map(this._createSection);
@@ -26,9 +22,9 @@ const Accordion = React.createClass({
         {children}
       </div>
     );
-  },
+  }
 
-  _createSection(child, index) {
+  _createSection = (child, index) => {
     return React.cloneElement(child, {
       key: index,
       index: index,
@@ -36,19 +32,19 @@ const Accordion = React.createClass({
       selected: index === this.state.selected,
       onSelect: this._onSelect
     });
-  },
+  };
 
-  _onSelect(index) {
+  _onSelect = (index) => {
     const alreadySelected = this.state.selected === index;
     if (!alreadySelected || this.props.alwaysOpen) {
       this.setState({ selected: index });
     } else {
       this.setState({ selected: null });
     }
-  }
-});
+  };
+}
 
-Accordion.Section = React.createClass({
+Accordion.Section = class extends React.Component {
   render() {
     let className = 'Accordion__section';
     if (this.props.selected) {
@@ -79,11 +75,11 @@ Accordion.Section = React.createClass({
         </div>
       </div>
     );
-  },
-
-  _onSelect() {
-    this.props.onSelect(this.props.index);
   }
-});
+
+  _onSelect = () => {
+    this.props.onSelect(this.props.index);
+  };
+};
 
 export default Accordion;

@@ -13,12 +13,10 @@ import Footer from './Footer';
 import CheckoutSummary from './CheckoutSummary';
 import Spinner from './Spinner';
 
-const CheckoutPage = React.createClass({
-  getInitialState() {
-    return {
-      debouncedOnFormChange: _.debounce(this._onFormChange, 600),
-    };
-  },
+class CheckoutPage extends React.Component {
+  state = {
+    debouncedOnFormChange: _.debounce(this._onFormChange, 600),
+  };
 
   render() {
     return (
@@ -79,17 +77,17 @@ const CheckoutPage = React.createClass({
         <Footer />
       </div>
     );
-  },
+  }
 
-  _onBackClick() {
+  _onBackClick = () => {
     history.push('/');
-  },
+  };
 
-  _onFormChange(state) {
+  _onFormChange = (state) => {
     this.props.dispatch(checkoutFormStateChange(state));
-  },
+  };
 
-  _onFormSubmit(form) {
+  _onFormSubmit = (form) => {
     const order = _.merge({}, form, {
       cart: this.props.globalState.cart,
       additionalCart: this.props.globalState.additionalCart,
@@ -195,7 +193,7 @@ const CheckoutPage = React.createClass({
           throw err;
         }
       });
-  }
-});
+  };
+}
 
 export default connect(state => ({ globalState: state }))(CheckoutPage);

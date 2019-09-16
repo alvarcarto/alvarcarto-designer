@@ -5,7 +5,7 @@ import MediaQuery from 'react-responsive';
 import { getStyles } from '../util';
 import CONST from '../constants';
 
-const MapStyleSelect = React.createClass({
+class MapStyleSelect extends React.Component {
   render() {
     const styles = _.isArray(this.props.showStyles)
       ? _.filter(getStyles(), s => _.includes(this.props.showStyles, s.id))
@@ -40,14 +40,14 @@ const MapStyleSelect = React.createClass({
         </div>
       }
     </MediaQuery>;
-  },
-
-  _onClickItem(styleId) {
-    this.props.onChange(styleId);
   }
-});
 
-const MapStyleItem = React.createClass({
+  _onClickItem = (styleId) => {
+    this.props.onChange(styleId);
+  };
+}
+
+class MapStyleItem extends React.Component {
   render() {
     let className = 'MapStyleSelectItem';
     if (this.props.selected) {
@@ -65,11 +65,11 @@ const MapStyleItem = React.createClass({
     }
 
     return <div className={className} style={style} onClick={this._onClick}></div>;
-  },
-
-  _onClick() {
-    this.props.onClick(this.props.style.id);
   }
-});
+
+  _onClick = () => {
+    this.props.onClick(this.props.style.id);
+  };
+}
 
 export default MapStyleSelect;

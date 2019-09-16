@@ -33,32 +33,30 @@ const CARD_TYPE_TO_LABEL = {
   unknown: 'Unknown',
 };
 
-const CreditCardForm = React.createClass({
-  getInitialState() {
-    return {
-      values: {
-        nameOnCard: null,
-      },
-      shouldValidate: {
-        nameOnCard: this.props.validate,
-        cardNumber: this.props.validate,
-        cardExpiry: this.props.validate,
-        cardCvc: this.props.validate,
-      },
-      elementsErrors: {
-        nameOnCard: null,
-        cardNumber: new Error('Credit card number is required.'),
-        cardExpiry: new Error('Expiry date is required.'),
-        cardCvc: new Error('CVC is required.'),
-      },
-      elements: {
-        cardNumber: null,
-        cardExpiry: null,
-        cardCvc: null,
-      },
-      cardType: 'unknown',
-    };
-  },
+class CreditCardForm extends React.Component {
+  state = {
+    values: {
+      nameOnCard: null,
+    },
+    shouldValidate: {
+      nameOnCard: this.props.validate,
+      cardNumber: this.props.validate,
+      cardExpiry: this.props.validate,
+      cardCvc: this.props.validate,
+    },
+    elementsErrors: {
+      nameOnCard: null,
+      cardNumber: new Error('Credit card number is required.'),
+      cardExpiry: new Error('Expiry date is required.'),
+      cardCvc: new Error('CVC is required.'),
+    },
+    elements: {
+      cardNumber: null,
+      cardExpiry: null,
+      cardCvc: null,
+    },
+    cardType: 'unknown',
+  };
 
   componentDidMount() {
     const elements = stripeInstance.elements();
@@ -88,13 +86,13 @@ const CreditCardForm = React.createClass({
       cardExpiry,
       cardCvc,
     }});
-  },
+  }
 
   componentWillUnmount() {
     this.state.elements.cardNumber.off('change', this._onCardNumberChange);
     this.state.elements.cardExpiry.off('change', this._onCardNumberChange);
     this.state.elements.cardCvc.off('change', this._onCardNumberChange);
-  },
+  }
 
   render() {
     const formItemLayout = {
@@ -172,9 +170,9 @@ const CreditCardForm = React.createClass({
         </Row>
       </div>
     );
-  },
+  }
 
-  _getFormErrors(validateAll) {
+  _getFormErrors = (validateAll) => {
     const formErrors = {};
     _.forEach(this.state.elementsErrors, (err, key) => {
       const shouldValidate = validateAll ? true : this.state.shouldValidate[key];
@@ -199,9 +197,9 @@ const CreditCardForm = React.createClass({
     }
 
     return formErrors;
-  },
+  };
 
-  _onNameChange(event) {
+  _onNameChange = (event) => {
     const { value } = event.target;
 
     this.setState((state) => ({
@@ -209,17 +207,17 @@ const CreditCardForm = React.createClass({
         nameOnCard: value
       }),
     }));
-  },
+  };
 
-  _onNameBlur(event) {
+  _onNameBlur = (event) => {
     this.setState((state) => ({
       shouldValidate: _.extend(state.shouldValidate, {
         nameOnCard: true
       }),
     }));
-  },
+  };
 
-  _onCardNumberChange(event) {
+  _onCardNumberChange = (event) => {
     const cardType = event.brand;
     const cardLabel = CARD_TYPE_TO_LABEL[cardType];
     if (event.complete && !_.includes(ACCEPTED_CARD_TYPES, cardType)) {
@@ -234,17 +232,17 @@ const CreditCardForm = React.createClass({
     this.setState({
       cardType: event.brand,
     });
-  },
+  };
 
-  _onCardExpiryChange(event) {
+  _onCardExpiryChange = (event) => {
     this._onElementsChange('cardExpiry', event);
-  },
+  };
 
-  _onCardCvcChange(event) {
+  _onCardCvcChange = (event) => {
     this._onElementsChange('cardCvc', event);
-  },
+  };
 
-  _onElementsChange(name, event) {
+  _onElementsChange = (name, event) => {
     const state = this.state;
 
     if (!event.error) {
@@ -266,14 +264,14 @@ const CreditCardForm = React.createClass({
         [name]: true,
       }),
     }, this._emitOnChange);
-  },
+  };
 
-  _hasFormErrors() {
+  _hasFormErrors = () => {
     const errs = this._getFormErrors(true);
     return _.keys(errs).length > 0;
-  },
+  };
 
-  _emitOnChange() {
+  _emitOnChange = () => {
     const isValid = !this._hasFormErrors();
 
     this.props.onChange({
@@ -281,7 +279,7 @@ const CreditCardForm = React.createClass({
       element: this.state.elements.cardNumber,
       values: this.state.values,
     });
-  },
-});
+  };
+}
 
 export default CreditCardForm;

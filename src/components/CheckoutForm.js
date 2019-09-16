@@ -21,20 +21,23 @@ const form = {
   }
 };
 
-const CheckoutForm = React.createClass({
-  propTypes: {
+class CheckoutForm extends React.Component {
+  static propTypes = {
     onSubmit: React.PropTypes.func.isRequired,
-  },
+  };
 
-  getInitialState() {
-    if (this.props.initialState) {
-      return _.merge({}, this.props.initialState, {
+  constructor(props) {
+    super(props);
+    if (props.initialState) {
+      this.state = _.merge({}, props.initialState, {
         // Revalidate all when loading initial state
         validateAll: true,
       });
+
+      return;
     }
 
-    return {
+    this.state = {
       // Take all keys in form object and initialize their values
       // with null and false
       values: _.extend(_.mapValues(form, () => null), {
@@ -48,7 +51,7 @@ const CheckoutForm = React.createClass({
       shippingMethodForm: null,
       creditCardForm: null,
     };
-  },
+  }
 
   render() {
     const formItemLayout = {
@@ -191,9 +194,9 @@ const CheckoutForm = React.createClass({
         </Form>
       </div>
     );
-  },
+  }
 
-  _renderPaymentDetailsSection(formItemLayout) {
+  _renderPaymentDetailsSection = (formItemLayout) => {
     const { differentBillingAddress } = this.state.values;
 
     return <section className="CheckoutForm__section">
@@ -265,21 +268,21 @@ const CheckoutForm = React.createClass({
         <a onClick={this._onMoreSecurityClick} href="#">Security details</a>
       </div>
     </section>
-  },
+  };
 
-  _isFreeOrder() {
+  _isFreeOrder = () => {
     const { cart, promotion, additionalCart } = this.props;
     const combinedCart = cart.concat(additionalCart);
     const totalPrice = calculateCartPrice(combinedCart, { promotion, ignorePromotionExpiry: true });
     const isFreeOrder = totalPrice.value <= 0;
     return isFreeOrder;
-  },
+  };
 
-  _getShippingAddressCountryCode(shippingAddressForm) {
+  _getShippingAddressCountryCode = (shippingAddressForm) => {
     return _.get(shippingAddressForm, 'values.countryCode', null);
-  },
+  };
 
-  _getShippingAddressAsText(shippingAddressForm) {
+  _getShippingAddressAsText = (shippingAddressForm) => {
     if (!shippingAddressForm || !shippingAddressForm.isValid || !shippingAddressForm.values) {
       return 'Fill in your shipping details';
     }
@@ -295,9 +298,9 @@ const CheckoutForm = React.createClass({
       {cityLabel}<br/>
       {countryLabel}
     </span>;
-  },
+  };
 
-  _getFormErrors(validateAll) {
+  _getFormErrors = (validateAll) => {
     const formErrors = {};
     _.forEach(this.state.values, (val, key) => {
       const shouldValidate = validateAll ? true : this.state.shouldValidate[key];
@@ -315,14 +318,14 @@ const CheckoutForm = React.createClass({
     });
 
     return formErrors;
-  },
+  };
 
-  _hasFormErrors() {
+  _hasFormErrors = () => {
     const errs = this._getFormErrors(true);
     return _.keys(errs).length > 0;
-  },
+  };
 
-  _canSubmit() {
+  _canSubmit = () => {
     if (this._hasFormErrors()) {
       return false;
     }
@@ -344,9 +347,9 @@ const CheckoutForm = React.createClass({
     }
 
     return requiredFormsAreValid && isBillingAddressOk;
-  },
+  };
 
-  _onDifferentBillingAddressChange(e) {
+  _onDifferentBillingAddressChange = (e) => {
     const { value } = e.target;
 
     this.setState((state) => ({
@@ -354,9 +357,9 @@ const CheckoutForm = React.createClass({
         differentBillingAddress: value === 'different',
       }),
     }), this._onAnyChange);
-  },
+  };
 
-  _onCheckboxChange(e) {
+  _onCheckboxChange = (e) => {
     const { name, checked } = e.target;
 
     this.setState((state) => ({
@@ -364,9 +367,9 @@ const CheckoutForm = React.createClass({
         [name]: checked
       }),
     }), this._onAnyChange);
-  },
+  };
 
-  _onCheckboxBlur(e) {
+  _onCheckboxBlur = (e) => {
     const { name } = e.target;
 
     this.setState((state) => ({
@@ -374,29 +377,29 @@ const CheckoutForm = React.createClass({
         [name]: true
       }),
     }));
-  },
+  };
 
-  _onEmailFormChange(form) {
+  _onEmailFormChange = (form) => {
     this.setState((state) => ({ emailForm: form }), this._onAnyChange);
-  },
+  };
 
-  _onShippingAddressFormChange(form) {
+  _onShippingAddressFormChange = (form) => {
     this.setState((state) => ({ shippingAddressForm: form }), this._onAnyChange);
-  },
+  };
 
-  _onShippingMethodFormChange(form) {
+  _onShippingMethodFormChange = (form) => {
     this.setState((state) => ({ shippingMethodForm: form }), this._onAnyChange);
-  },
+  };
 
-  _onBillingAddressFormChange(form) {
+  _onBillingAddressFormChange = (form) => {
     this.setState((state) => ({ billingAddressForm: form }), this._onAnyChange);
-  },
+  };
 
-  _onCreditCardFormChange(form) {
+  _onCreditCardFormChange = (form) => {
     this.setState((state) => ({ creditCardForm: form }), this._onAnyChange);
-  },
+  };
 
-  _onMoreSecurityClick(e) {
+  _onMoreSecurityClick = (e) => {
     e.preventDefault();
 
     Modal.info({
@@ -419,9 +422,9 @@ const CheckoutForm = React.createClass({
         </div>
       ),
     });
-  },
+  };
 
-  _onSubmit(e) {
+  _onSubmit = (e) => {
     e.preventDefault();
 
     if (!this._canSubmit()) {
@@ -451,16 +454,16 @@ const CheckoutForm = React.createClass({
     };
 
     this.props.onSubmit(orderForm);
-  },
+  };
 
-  _onAnyChange() {
+  _onAnyChange = () => {
     if (this.props.onChange) {
       const stateCopy = _.cloneDeep(this.state);
       // Make sure user has to accept terms before confirming order
       _.set(stateCopy, 'values.termsAccepted', false);
       this.props.onChange(stateCopy);
     }
-  }
-});
+  };
+}
 
 export default CheckoutForm;

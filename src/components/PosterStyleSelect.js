@@ -6,7 +6,7 @@ import { getPosterLooks } from '../util';
 import { TickIcon } from '../util/svg';
 import CONST from '../constants';
 
-const PosterStyleSelect = React.createClass({
+class PosterStyleSelect extends React.Component {
   render() {
     const styles = _.reject(getPosterLooks(), style => _.includes([
       'summer',
@@ -31,14 +31,14 @@ const PosterStyleSelect = React.createClass({
         </div>
       }
     </MediaQuery>;
-  },
-
-  _onClickItem(styleId) {
-    this.props.onChange(styleId);
   }
-});
 
-const PosterStyleItem = React.createClass({
+  _onClickItem = (styleId) => {
+    this.props.onChange(styleId);
+  };
+}
+
+class PosterStyleItem extends React.Component {
   render() {
     let className = 'PosterStyleSelectItem';
     if (this.props.selected) {
@@ -56,9 +56,9 @@ const PosterStyleItem = React.createClass({
     return <div className={className} onClick={this._onClick}>
       {this._renderContent()}
     </div>;
-  },
+  }
 
-  _renderContent() {
+  _renderContent = () => {
     return <div className="PosterStyleSelectItem__circle noselect">
       <img
         className="PosterStyleSelectItem__circle-image"
@@ -69,11 +69,11 @@ const PosterStyleItem = React.createClass({
         <TickIcon style={{ stroke: 'white' }}/>
       </div>
     </div>;
-  },
+  };
 
-  _onClick() {
+  _onClick = () => {
     this.props.onClick(this.props.style.id);
-  }
-});
+  };
+}
 
 export default PosterStyleSelect;

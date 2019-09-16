@@ -5,8 +5,8 @@ import { getStyle } from '../util';
 import { posterSizeToThumbnailPixels, getPosterLook } from '../util';
 import IconButton from './IconButton';
 
-const MiniCartItem = React.createClass({
-  propTypes: {
+class MiniCartItem extends React.Component {
+  static propTypes = {
     selected: React.PropTypes.bool.isRequired,
     index: React.PropTypes.number.isRequired,
     item: React.PropTypes.shape({
@@ -28,7 +28,7 @@ const MiniCartItem = React.createClass({
     onEditClick: React.PropTypes.func.isRequired,
     onIncreaseQuantityClick: React.PropTypes.func.isRequired,
     onDecreaseQuantityClick: React.PropTypes.func.isRequired,
-  },
+  };
 
   render() {
     const { props } = this;
@@ -95,23 +95,23 @@ const MiniCartItem = React.createClass({
         <p className="MiniCartItem__title">{item.labelHeader.trim() ? item.labelHeader : <span>&nbsp;</span>}</p>
       </div>
     );
-  },
-
-  _onEdit() {
-    this.props.onEditClick(this.props.index);
-  },
-
-  _onRemove() {
-    this.props.onRemoveClick(this.props.index);
-  },
-
-  _onIncreaseQuantity() {
-    this.props.onIncreaseQuantityClick(this.props.index);
-  },
-
-  _onDecreaseQuantity() {
-    this.props.onDecreaseQuantityClick(this.props.index);
   }
-});
+
+  _onEdit = () => {
+    this.props.onEditClick(this.props.index);
+  };
+
+  _onRemove = () => {
+    this.props.onRemoveClick(this.props.index);
+  };
+
+  _onIncreaseQuantity = () => {
+    this.props.onIncreaseQuantityClick(this.props.index);
+  };
+
+  _onDecreaseQuantity = () => {
+    this.props.onDecreaseQuantityClick(this.props.index);
+  };
+}
 
 export default MiniCartItem;

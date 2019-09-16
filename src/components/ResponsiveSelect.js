@@ -4,12 +4,10 @@ import { Select } from 'antd';
 import MediaQuery from 'react-responsive';
 import CONST from '../constants';
 
-const ResponsiveSelect = React.createClass({
-  getInitialState() {
-    return {
-      value: this.props.defaultValue || 'placeholder',
-    };
-  },
+class ResponsiveSelect extends React.Component {
+  state = {
+    value: this.props.defaultValue || 'placeholder',
+  };
 
   render() {
     return <MediaQuery maxWidth={CONST.SCREEN_SM}>
@@ -21,9 +19,9 @@ const ResponsiveSelect = React.createClass({
         }
       }}
     </MediaQuery>;
-  },
+  }
 
-  _renderSelect() {
+  _renderSelect = () => {
     const props = this.props;
     const fullOpts = [{
       key: 'placeholder',
@@ -50,9 +48,9 @@ const ResponsiveSelect = React.createClass({
         }
       </select>
     </div>;
-  },
+  };
 
-  _renderAntdSelect() {
+  _renderAntdSelect = () => {
     const props = this.props;
     const selectVal = this.state.value && this.state.value !== 'placeholder'
       ? this.state.value
@@ -75,17 +73,17 @@ const ResponsiveSelect = React.createClass({
         )
       }
     </Select>;
-  },
+  };
 
-  _onAntdSelectChange(value) {
+  _onAntdSelectChange = (value) => {
     this._setValue(value);
-  },
+  };
 
-  _onSelectChange(event) {
+  _onSelectChange = (event) => {
     this._setValue(event.target.value);
-  },
+  };
 
-  _setValue(value) {
+  _setValue = (value) => {
     this.setState(() => ({
       value,
     }));
@@ -93,8 +91,8 @@ const ResponsiveSelect = React.createClass({
     if (value !== 'placeholder') {
       this.props.onChange(value);
     }
-  }
-});
+  };
+}
 
 
 export default ResponsiveSelect;

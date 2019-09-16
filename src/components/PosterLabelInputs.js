@@ -6,7 +6,7 @@ import { Form, Input, Switch, Checkbox } from 'antd';
 const formColLabel = { span: 7, md: { span: 7 }, lg: { span: 7 } };
 const formColInput = { span: 17, md: { span: 17 }, lg: { span: 17 } };
 
-const PosterLabelInputs = React.createClass({
+class PosterLabelInputs extends React.Component {
   render() {
     const { labels } = this.props;
     const { autoUpdateCoordinates } = labels;
@@ -73,15 +73,15 @@ const PosterLabelInputs = React.createClass({
         </Form>
       </div>
     );
-  },
+  }
 
-  _onSwitchChange(value) {
+  _onSwitchChange = (value) => {
     this.props.dispatch(setMapLabels({
       enabled: value,
     }));
-  },
+  };
 
-  _onHeaderChange(event) {
+  _onHeaderChange = (event) => {
     // XXX: This is a small hack, but it allows the user to leave labels
     // empty if they don't want them. One space will print as invisible.
     // It was easier to fix in frontend like this compared to whole stack
@@ -89,27 +89,27 @@ const PosterLabelInputs = React.createClass({
     this.props.dispatch(setMapLabels({
       header: val ? val : ' ',
     }));
-  },
+  };
 
-  _onSmallHeaderChange(event) {
+  _onSmallHeaderChange = (event) => {
     const val = event.target.value;
     this.props.dispatch(setMapLabels({
       smallHeader: val ? val : ' ',
     }));
-  },
+  };
 
-  _onTextChange(event) {
+  _onTextChange = (event) => {
     const val = event.target.value;
     this.props.dispatch(setMapLabels({
       text: val ? val : ' ',
     }));
-  },
+  };
 
-  _onAutoUpdateCoordinatesChange(event) {
+  _onAutoUpdateCoordinatesChange = (event) => {
     this.props.dispatch(setMapLabels({
       autoUpdateCoordinates: event.target.checked,
     }));
-  }
-});
+  };
+}
 
 export default PosterLabelInputs;

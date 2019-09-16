@@ -14,13 +14,11 @@ import {
 const userAgent = navigator.userAgent.toLowerCase();
 const IS_ANDROID = userAgent.indexOf('android') > -1;
 
-const AlvarMap = React.createClass({
-  getInitialState() {
-    return {
-      userHasClicked: false,
-      tooltipVisible: false,
-    };
-  },
+class AlvarMap extends React.Component {
+  state = {
+    userHasClicked: false,
+    tooltipVisible: false,
+  };
 
   componentWillReceiveProps(nextProps) {
     const { mapItem } = this.props;
@@ -32,7 +30,7 @@ const AlvarMap = React.createClass({
         setTimeout(() => this.refs.lMap.leafletElement.invalidateSize(), 0);
       }
     }
-  },
+  }
 
   componentDidMount() {
     const { mapItem } = this.props;
@@ -53,7 +51,7 @@ const AlvarMap = React.createClass({
         }
       }, 15000);
     }
-  },
+  }
 
   render() {
     const { props } = this;
@@ -96,9 +94,9 @@ const AlvarMap = React.createClass({
         </Tooltip>
       </div>
     );
-  },
+  }
 
-  _renderOverlay(mapItem) {
+  _renderOverlay = (mapItem) => {
     if (this.props.hideOverlay) {
       return null
     } else if (mapItem.labelsEnabled) {
@@ -110,17 +108,17 @@ const AlvarMap = React.createClass({
     const borderPadding = Math.floor(CONST.EMPTY_MAP_PADDING_FACTOR * minSide);
 
     return <div className="AlvarMap__empty-overlay" style={{ border: `${borderPadding}px solid white` }}></div>;
-  },
+  };
 
-  _onMapClick() {
+  _onMapClick = () => {
     this.setState(() => ({ userHasClicked: true }));
-  },
+  };
 
-  _onTooltipClick() {
+  _onTooltipClick = () => {
     this.setState(() => ({ tooltipVisible: false }));
-  },
+  };
 
-  _renderLeaflet(style) {
+  _renderLeaflet = (style) => {
     const { mapItem } = this.props;
 
     const props = {};
@@ -144,9 +142,9 @@ const AlvarMap = React.createClass({
     >
       <LTileLayer zoomOffset={1} tileSize={128} url={style.url} />
     </LeafletMap>;
-  },
+  };
 
-  _dispatchMapView() {
+  _dispatchMapView = () => {
     const map = this.refs.lMap.leafletElement;
     const latLng = map.getCenter();
 
@@ -155,9 +153,9 @@ const AlvarMap = React.createClass({
       bounds: this._getMapBounds(),
       zoom: map.getZoom(),
     }));
-  },
+  };
 
-  _getMapBounds() {
+  _getMapBounds = () => {
     const map = this.refs.lMap.leafletElement;
     const bounds = map.getBounds();
     const southWest = bounds.getSouthWest();
@@ -166,7 +164,7 @@ const AlvarMap = React.createClass({
       southWest: { lat: southWest.lat, lng: southWest.lng },
       northEast: { lat: northEast.lat, lng: northEast.lng },
     };
-  }
-});
+  };
+}
 
 export default connect(state => ({ globalState: state }))(AlvarMap);

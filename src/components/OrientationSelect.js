@@ -15,7 +15,7 @@ const ORIENTATIONS = [
   }
 ];
 
-const OrientationSelect = React.createClass({
+class OrientationSelect extends React.Component {
   render() {
     return (
       <div className="OrientationSelect">
@@ -33,14 +33,14 @@ const OrientationSelect = React.createClass({
         }
       </div>
     );
-  },
-
-  _onClickItem(orientationId) {
-    this.props.onChange(orientationId);
   }
-});
 
-const OrientationItem = React.createClass({
+  _onClickItem = (orientationId) => {
+    this.props.onChange(orientationId);
+  };
+}
+
+class OrientationItem extends React.Component {
   render() {
     let className = 'OrientationItem';
     const style = { stroke: '#999' };
@@ -63,11 +63,11 @@ const OrientationItem = React.createClass({
         </div>
       </div>
     );
-  },
-
-  _onClick() {
-    this.props.onClick(this.props.id);
   }
-});
+
+  _onClick = () => {
+    this.props.onClick(this.props.id);
+  };
+}
 
 export default OrientationSelect;

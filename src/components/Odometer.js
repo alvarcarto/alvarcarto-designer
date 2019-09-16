@@ -7,10 +7,8 @@ window.odometerOptions = {
   duration: 1000,
 };
 
-const Odometer = React.createClass({
-  getInitialState() {
-    return { odometer: null };
-  },
+class Odometer extends React.Component {
+  state = { odometer: null };
 
   componentDidMount() {
     // eslint-disable-next-line react/no-direct-mutation-state
@@ -22,17 +20,17 @@ const Odometer = React.createClass({
     setTimeout(() => {
       this.state.odometer.update(this.props.value);
     }, 50);
-  },
+  }
 
   componentDidUpdate() {
     if (this.state.odometer) {
       this.state.odometer.update(this.props.value);
     }
-  },
+  }
 
   render() {
     return <div className="Odometer" ref="container"></div>;
   }
-})
+}
 
-module.exports = Odometer;
+export default Odometer;

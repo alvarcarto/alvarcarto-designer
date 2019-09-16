@@ -2,7 +2,7 @@ import React from 'react';
 import SidePanel from './SidePanel';
 import LightWall from './LightWall';
 
-const EditorPage = React.createClass({
+class EditorPage extends React.Component {
   render() {
     return (
       <div className="EditorPage">
@@ -11,6 +11,6 @@ const EditorPage = React.createClass({
       </div>
     );
   }
-});
+}
 
 export default EditorPage;

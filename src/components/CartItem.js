@@ -12,8 +12,8 @@ function preloader() {
   return <Icon type="loading" />;
 }
 
-const CartItem = React.createClass({
-  propTypes: {
+class CartItem extends React.Component {
+  static propTypes = {
     index: React.PropTypes.number.isRequired,
     item: React.PropTypes.shape({
       quantity: React.PropTypes.number.isRequired,
@@ -33,7 +33,7 @@ const CartItem = React.createClass({
     onEditClick: React.PropTypes.func.isRequired,
     onIncreaseQuantityClick: React.PropTypes.func.isRequired,
     onDecreaseQuantityClick: React.PropTypes.func.isRequired,
-  },
+  };
 
   render() {
     const { props } = this;
@@ -102,23 +102,23 @@ const CartItem = React.createClass({
         </div>
       </div>
     );
-  },
-
-  _onEdit() {
-    this.props.onEditClick(this.props.index);
-  },
-
-  _onRemove() {
-    this.props.onRemoveClick(this.props.index);
-  },
-
-  _onIncreaseQuantity() {
-    this.props.onIncreaseQuantityClick(this.props.index);
-  },
-
-  _onDecreaseQuantity() {
-    this.props.onDecreaseQuantityClick(this.props.index);
   }
-});
+
+  _onEdit = () => {
+    this.props.onEditClick(this.props.index);
+  };
+
+  _onRemove = () => {
+    this.props.onRemoveClick(this.props.index);
+  };
+
+  _onIncreaseQuantity = () => {
+    this.props.onIncreaseQuantityClick(this.props.index);
+  };
+
+  _onDecreaseQuantity = () => {
+    this.props.onDecreaseQuantityClick(this.props.index);
+  };
+}
 
 export default CartItem;

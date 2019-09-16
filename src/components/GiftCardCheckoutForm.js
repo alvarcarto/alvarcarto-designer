@@ -19,20 +19,23 @@ const form = {
   }
 };
 
-const GiftCardCheckoutForm = React.createClass({
-  propTypes: {
+class GiftCardCheckoutForm extends React.Component {
+  static propTypes = {
     onSubmit: React.PropTypes.func.isRequired,
-  },
+  };
 
-  getInitialState() {
-    if (this.props.initialState) {
-      return _.merge({}, this.props.initialState, {
+  constructor(props) {
+    super(props);
+    if (props.initialState) {
+      this.state = _.merge({}, props.initialState, {
         // Revalidate all when loading initial state
         validateAll: true,
       });
+
+      return;
     }
 
-    return {
+    this.state = {
       // Take all keys in form object and initialize their values
       // with null and false
       values: _.extend(_.mapValues(form, () => null), {
@@ -52,7 +55,7 @@ const GiftCardCheckoutForm = React.createClass({
       billingAddressForm: null,
       creditCardForm: null,
     };
-  },
+  }
 
   render() {
     const formItemLayout = {
@@ -178,9 +181,9 @@ const GiftCardCheckoutForm = React.createClass({
         </Form>
       </div>
     );
-  },
+  }
 
-  _renderPaymentDetailsSection(formItemLayout) {
+  _renderPaymentDetailsSection = (formItemLayout) => {
     const { differentBillingAddress } = this.state.values;
 
     return <section className="GiftCardCheckoutForm__section">
@@ -258,9 +261,9 @@ const GiftCardCheckoutForm = React.createClass({
         </li>
       </ul>
     </section>
-  },
+  };
 
-  _getShippingAddressAsText(shippingAddressForm) {
+  _getShippingAddressAsText = (shippingAddressForm) => {
     if (!shippingAddressForm || !shippingAddressForm.isValid || !shippingAddressForm.values) {
       return 'Fill in your shipping details';
     }
@@ -276,13 +279,13 @@ const GiftCardCheckoutForm = React.createClass({
       {cityLabel}<br/>
       {countryLabel}
     </span>;
-  },
+  };
 
-  _getGiftCardType() {
+  _getGiftCardType = () => {
     return _.get(this.state, 'giftCardCustomizeForm.values.giftCardType');
-  },
+  };
 
-  _getFormErrors(validateAll) {
+  _getFormErrors = (validateAll) => {
     const formErrors = {};
     _.forEach(this.state.values, (val, key) => {
       const shouldValidate = validateAll ? true : this.state.shouldValidate[key];
@@ -300,14 +303,14 @@ const GiftCardCheckoutForm = React.createClass({
     });
 
     return formErrors;
-  },
+  };
 
-  _hasFormErrors() {
+  _hasFormErrors = () => {
     const errs = this._getFormErrors(true);
     return _.keys(errs).length > 0;
-  },
+  };
 
-  _canSubmit() {
+  _canSubmit = () => {
     if (this._hasFormErrors()) {
       return false;
     }
@@ -322,9 +325,9 @@ const GiftCardCheckoutForm = React.createClass({
       : true;
 
     return requiredFormsAreValid && isBillingAddressOk;
-  },
+  };
 
-  _onDifferentBillingAddressChange(e) {
+  _onDifferentBillingAddressChange = (e) => {
     const { value } = e.target;
 
     this.setState((state) => ({
@@ -332,9 +335,9 @@ const GiftCardCheckoutForm = React.createClass({
         differentBillingAddress: value === 'different',
       }),
     }), this._onAnyChange);
-  },
+  };
 
-  _onCheckboxChange(e) {
+  _onCheckboxChange = (e) => {
     const { name, checked } = e.target;
 
     this.setState((state) => ({
@@ -342,9 +345,9 @@ const GiftCardCheckoutForm = React.createClass({
         [name]: checked
       }),
     }), this._onAnyChange);
-  },
+  };
 
-  _onCheckboxBlur(e) {
+  _onCheckboxBlur = (e) => {
     const { name } = e.target;
 
     this.setState((state) => ({
@@ -352,9 +355,9 @@ const GiftCardCheckoutForm = React.createClass({
         [name]: true
       }),
     }));
-  },
+  };
 
-  _onGiftCardCardFormChange(form) {
+  _onGiftCardCardFormChange = (form) => {
     const newState = { giftCardCustomizeForm: form };
     if (form.values.giftCardType === 'digital') {
       // As a side-effect when user selects digital gift card,
@@ -362,25 +365,25 @@ const GiftCardCheckoutForm = React.createClass({
       newState.values = { differentBillingAddress: true };
     }
     this.setState((state) => newState, this._onAnyChange);
-  },
+  };
 
-  _onEmailFormChange(form) {
+  _onEmailFormChange = (form) => {
     this.setState((state) => ({ emailForm: form }), this._onAnyChange);
-  },
+  };
 
-  _onShippingAddressFormChange(form) {
+  _onShippingAddressFormChange = (form) => {
     this.setState((state) => ({ shippingAddressForm: form }), this._onAnyChange);
-  },
+  };
 
-  _onBillingAddressFormChange(form) {
+  _onBillingAddressFormChange = (form) => {
     this.setState((state) => ({ billingAddressForm: form }), this._onAnyChange);
-  },
+  };
 
-  _onCreditCardFormChange(form) {
+  _onCreditCardFormChange = (form) => {
     this.setState((state) => ({ creditCardForm: form }), this._onAnyChange);
-  },
+  };
 
-  _onSubmit(e) {
+  _onSubmit = (e) => {
     e.preventDefault();
 
     if (!this._canSubmit()) {
@@ -410,16 +413,16 @@ const GiftCardCheckoutForm = React.createClass({
     };
 
     this.props.onSubmit(orderForm);
-  },
+  };
 
-  _onAnyChange() {
+  _onAnyChange = () => {
     if (this.props.onChange) {
       const stateCopy = _.cloneDeep(this.state);
       // Make sure user has to accept terms before confirming order
       _.set(stateCopy, 'values.termsAccepted', false);
       this.props.onChange(stateCopy);
     }
-  }
-});
+  };
+}
 
 export default GiftCardCheckoutForm;

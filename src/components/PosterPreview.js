@@ -7,7 +7,7 @@ function preloader() {
   return <Icon type="loading" />;
 }
 
-const PosterPreview = React.createClass({
+class PosterPreview extends React.Component {
   render() {
     return (
       <ImageLoader
@@ -19,7 +19,7 @@ const PosterPreview = React.createClass({
         <span className="PosterPreview__fail-text">Preview error</span>
       </ImageLoader>
     );
-  },
-});
+  }
+}
 
 export default PosterPreview;

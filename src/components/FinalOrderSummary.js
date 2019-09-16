@@ -9,7 +9,7 @@ function preloader() {
   return <Icon type="loading" />;
 }
 
-const FinalOrderSummary = React.createClass({
+class FinalOrderSummary extends React.Component {
   render() {
     const { cart, promotion } = this.props;
     const totalPrice = calculateCartPrice(cart, {
@@ -83,9 +83,9 @@ const FinalOrderSummary = React.createClass({
         </div>
       </div>
     );
-  },
+  }
 
-  _renderDiscountRow(totalPrice, promotion) {
+  _renderDiscountRow = (totalPrice, promotion) => {
     if (!totalPrice.discount) {
       return null;
     }
@@ -98,10 +98,10 @@ const FinalOrderSummary = React.createClass({
       <td>{promotion.label}</td>
       <td>{discountPriceLabel}</td>
     </tr>;
-  },
-});
+  };
+}
 
-const OrderItem = React.createClass({
+class OrderItem extends React.Component {
   render() {
     const { props } = this;
     const item = props.item;
@@ -132,7 +132,7 @@ const OrderItem = React.createClass({
         </div>
       </div>
     );
-  },
-});
+  }
+}
 
 export default FinalOrderSummary;

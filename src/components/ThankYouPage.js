@@ -69,15 +69,13 @@ function getSecondText(cart) {
   return pieces.join(' ');
 }
 
-const ThankYouPage = React.createClass({
-  getInitialState() {
-    return {
-      error: null,
-      order: null,
-      loading: true,
-      steps: this.props.initialAnimation ? STEPS_FIRST : STEPS_SECOND,
-    };
-  },
+class ThankYouPage extends React.Component {
+  state = {
+    error: null,
+    order: null,
+    loading: true,
+    steps: this.props.initialAnimation ? STEPS_FIRST : STEPS_SECOND,
+  };
 
   componentDidMount() {
     getOrder(this.props.orderId)
@@ -123,7 +121,7 @@ const ThankYouPage = React.createClass({
           throw err;
         });
       })
-  },
+  }
 
   render() {
     return (
@@ -148,9 +146,9 @@ const ThankYouPage = React.createClass({
         </div>
       </div>
     );
-  },
+  }
 
-  _renderHeader() {
+  _renderHeader = () => {
     if (this.state.loading) {
       return <Spinner dark />;
     } else if (this.state.error) {
@@ -158,9 +156,9 @@ const ThankYouPage = React.createClass({
     }
 
     return 'Thank you!';
-  },
+  };
 
-  _renderContent() {
+  _renderContent = () => {
     if (this.state.error) {
       return <div>
         <p>
@@ -182,9 +180,9 @@ const ThankYouPage = React.createClass({
     }
 
     return this._renderOrderContent();
-  },
+  };
 
-  _renderOrderContent() {
+  _renderOrderContent = () => {
     const { cart, promotion } = this.state.order;
     const { stepIndex, firstText, firstIcon } = this.state.steps;
     const city = _.get(this.state.order, 'shippingAddress.city');
@@ -227,9 +225,9 @@ const ThankYouPage = React.createClass({
 
       <Footer />
     </div>;
-  },
+  };
 
-  _onBackToStartClick() {
+  _onBackToStartClick = () => {
     if (this.props.startOverPath) {
       window.location = this.props.startOverPath;
       return;
@@ -237,7 +235,7 @@ const ThankYouPage = React.createClass({
 
     // We are doing a page reload on purpose. It will clear state
     window.location = '/';
-  }
-});
+  };
+}
 
 export default ThankYouPage;

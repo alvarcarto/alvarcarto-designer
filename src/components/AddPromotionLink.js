@@ -10,19 +10,17 @@ function getPromotionSlow(code, axiosOpts) {
   return BPromise.delay(400).then(() => getPromotion(code, axiosOpts));
 }
 
-const AddPromotionLink = React.createClass({
-  getInitialState() {
-    return {
-      loading: false,
-      promotion: null,
-      cancelSource: null,
-      visible: false,
-    };
-  },
+class AddPromotionLink extends React.Component {
+  state = {
+    loading: false,
+    promotion: null,
+    cancelSource: null,
+    visible: false,
+  };
 
   componentWillMount() {
     this._debouncedCheckInput = _.debounce(this._checkInput, 400);
-  },
+  }
 
   render() {
     return (
@@ -53,9 +51,9 @@ const AddPromotionLink = React.createClass({
         </Modal>
       </a>
     );
-  },
+  }
 
-  _getContent() {
+  _getContent = () => {
     let status;
     if (this.state.loading) {
       status = 'validating';
@@ -85,25 +83,25 @@ const AddPromotionLink = React.createClass({
         </Form.Item>
       </Form>
     </div>;
-  },
+  };
 
-  _showModal() {
+  _showModal = () => {
     this.setState({ visible: true });
-  },
+  };
 
-  _onCancel() {
+  _onCancel = () => {
     this.setState({ visible: false });
-  },
+  };
 
-  _onApply() {
+  _onApply = () => {
     if (_.isFunction(this.props.onPromotionApply)) {
       this.props.onPromotionApply(this.state.promotion);
     }
 
     this.setState({ visible: false });
-  },
+  };
 
-  _onInputChange(e) {
+  _onInputChange = (e) => {
     const inputValue = e.target.value;
     this.setState({
       inputValue: inputValue.toUpperCase(),
@@ -116,9 +114,9 @@ const AddPromotionLink = React.createClass({
     }
 
     this._debouncedCheckInput();
-  },
+  };
 
-  _checkInput() {
+  _checkInput = () => {
     const { inputValue } = this.state;
     if (!inputValue) {
       return;
@@ -155,18 +153,18 @@ const AddPromotionLink = React.createClass({
         });
         this._resetCancelSource();
       });
-  },
+  };
 
-  _cancelRequest() {
+  _cancelRequest = () => {
     if (this.state.cancelSource) {
       // If cancelSource exists, previous request is on-going
       this.state.cancelSource.cancel();
     }
-  },
+  };
 
-  _resetCancelSource() {
+  _resetCancelSource = () => {
     this.setState({ cancelSource: null });
-  }
-});
+  };
+}
 
 export default AddPromotionLink;

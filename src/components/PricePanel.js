@@ -5,7 +5,7 @@ import { Icon, Badge, Tooltip } from 'antd';
 import { calculateCartPrice, getCurrencySymbol } from 'alvarcarto-price-util';
 import history from '../history';
 
-const PricePanel = React.createClass({
+class PricePanel extends React.Component {
   render() {
     const { cart, additionalCart, promotion } = this.props.globalState;
     const combinedCart = cart.concat(additionalCart);
@@ -38,11 +38,11 @@ const PricePanel = React.createClass({
         </div>
       </div>
     );
-  },
-
-  _onCheckoutClick() {
-    history.push('/checkout');
   }
-});
+
+  _onCheckoutClick = () => {
+    history.push('/checkout');
+  };
+}
 
 export default PricePanel;

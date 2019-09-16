@@ -15,7 +15,7 @@ import { initialState } from './reducers';
 import { assertHealth } from './util/api';
 import history from './history';
 
-const App = React.createClass({
+class App extends React.Component {
   componentDidMount() {
     const shouldShow = shouldShowUnsupported();
     if (shouldShow && !Modernizr.flexbox) {
@@ -32,7 +32,7 @@ const App = React.createClass({
       window.onbeforeunload = this._beforeLeavePage;
       this._alertIfBackendDown();
     }
-  },
+  }
 
   render() {
     const { globalState } = this.props;
@@ -73,9 +73,9 @@ const App = React.createClass({
         </div>
       </div>
     );
-  },
+  }
 
-  _beforeLeavePage() {
+  _beforeLeavePage = () => {
     const importantFields = [
       'location',
       'cart',
@@ -101,9 +101,9 @@ const App = React.createClass({
     if (enoughTimeSpent && !userHasOrderedPoster && userHasMadeChanges) {
       return 'Do you want to leave this site?';
     }
-  },
+  };
 
-  _showUnsupportedWarning() {
+  _showUnsupportedWarning = () => {
     Modal.warning({
       title: 'Unsupported browser',
       okText: 'OK',
@@ -129,14 +129,14 @@ const App = React.createClass({
         </Checkbox>
       </div>,
     });
-  },
+  };
 
-  _alertIfBackendDown() {
+  _alertIfBackendDown = () => {
     assertHealth()
       .catch(err => this._showBackendDown());
-  },
+  };
 
-  _showBackendDown() {
+  _showBackendDown = () => {
     Modal.error({
       title: 'Unable to connect order system',
       okText: 'OK',
@@ -160,13 +160,13 @@ const App = React.createClass({
         </p>
       </div>,
     });
-  },
+  };
 
-  _onDismissUnsupportedChange(event) {
+  _onDismissUnsupportedChange = (event) => {
     const { checked } = event.target;
     saveDismissUnsupported(checked ? 'true' : 'false');
-  }
-});
+  };
+}
 
 function shouldShowUnsupported() {
   return getStorageSafe('alvar_dismiss_unsupported') !== 'true';

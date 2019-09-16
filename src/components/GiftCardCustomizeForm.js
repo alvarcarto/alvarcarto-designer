@@ -6,20 +6,21 @@ const form = {
   giftCardType: (val) => null,
 };
 
-const GiftCardCustomizeForm = React.createClass({
-  getInitialState() {
+class GiftCardCustomizeForm extends React.Component {
+  constructor(props) {
+    super(props);
     let state = {
       // Take all keys in form object and initialize their values
       // with null and false
       values: _.mapValues(form, () => null),
     };
 
-    if (this.props.initialState) {
-      state.values = this.props.initialState.values;
+    if (props.initialState) {
+      state.values = props.initialState.values;
     }
 
-    return state;
-  },
+    this.state = state;
+  }
 
   render() {
     const formItemLayout = {
@@ -45,9 +46,9 @@ const GiftCardCustomizeForm = React.createClass({
         </Form.Item>
       </div>
     );
-  },
+  }
 
-  _onInputChange(e) {
+  _onInputChange = (e) => {
     const { name, value } = e.target;
 
     this.setState((state) => ({
@@ -55,14 +56,14 @@ const GiftCardCustomizeForm = React.createClass({
         [name]: value
       }),
     }), this._emitOnChange);
-  },
+  };
 
-  _emitOnChange() {
+  _emitOnChange = () => {
     this.props.onChange({
       isValid: true,  // This can't have validation errors
       values: this.state.values,
     });
-  },
-});
+  };
+}
 
 export default GiftCardCustomizeForm;

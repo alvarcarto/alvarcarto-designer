@@ -23,18 +23,16 @@ const POSTER_PADDING_HEIGHT = 45;
 
 const MULTI = getQueryParameterByName('multiMode') === 'true';
 
-const LightWall = React.createClass({
-  getInitialState() {
-    return {
-      zoom: this._calculateZoom(),
-      debouncedOnWindowResize: _.debounce(this._onWindowResize, 100),
-      container: null,
-      showPreview: false,
-      showOverlay: true,
-      placementImages: [],
-      showPlacementGrid: false,
-    };
-  },
+class LightWall extends React.Component {
+  state = {
+    zoom: this._calculateZoom(),
+    debouncedOnWindowResize: _.debounce(this._onWindowResize, 100),
+    container: null,
+    showPreview: false,
+    showOverlay: true,
+    placementImages: [],
+    showPlacementGrid: false,
+  };
 
   componentDidMount() {
     window.addEventListener('resize', this.state.debouncedOnWindowResize);
@@ -53,11 +51,11 @@ const LightWall = React.createClass({
           throw err
         })
     }
-  },
+  }
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.state.debouncedOnWindowResize);
-  },
+  }
 
   componentWillReceiveProps(nextProps) {
     const { globalState } = this.props;
@@ -77,7 +75,7 @@ const LightWall = React.createClass({
         zoom: this._calculateZoom(nextGlobalState),
       });
     }
-  },
+  }
 
   render() {
     const { globalState } = this.props;
@@ -207,9 +205,9 @@ const LightWall = React.createClass({
             : null }
       </div>
     );
-  },
+  }
 
-  _renderDebugMenu(globalState) {
+  _renderDebugMenu = (globalState) => {
     if (!globalState.debug && !MULTI && !globalState.showCartDownload) {
       return null
     }
@@ -249,21 +247,21 @@ const LightWall = React.createClass({
           </div>
         : null
     ]
-  },
+  };
 
-  _renderPlacementMenu() {
+  _renderPlacementMenu = () => {
     return <Button type="primary" style={{ marginLeft: 8 }} onClick={() => this.setState({ showPlacementGrid: true })}>
       Download placement
     </Button>
-  },
+  };
 
-  _onWindowResize() {
+  _onWindowResize = () => {
     this.setState({
       zoom: this._calculateZoom(),
     });
-  },
+  };
 
-  _calculateZoom(globalState) {
+  _calculateZoom = (globalState) => {
     if (!this.state || !this.state.container) {
       return 1;
     }
@@ -287,19 +285,19 @@ const LightWall = React.createClass({
 
     // Limit zoom always to maximum 1.0
     return Math.min(1, fitRatio);
-  },
+  };
 
   // Calculates sum of all poster widths in pixels
-  _calculateSumOfPostersWidths(globalState, nFirstItems) {
+  _calculateSumOfPostersWidths = (globalState, nFirstItems) => {
     const cart = nFirstItems ? _.take(globalState.cart, nFirstItems) : globalState.cart;
 
     const totalWidth = _.reduce(cart, (memo, item) => {
       return memo + posterSizeToPixels(item.size, item.orientation).width;
     }, 0);
     return totalWidth;
-  },
+  };
 
-  _onZoomInClick(e) {
+  _onZoomInClick = (e) => {
     e.preventDefault();
 
     const { globalState } = this.props;
@@ -307,9 +305,9 @@ const LightWall = React.createClass({
     this.props.dispatch(setMapView({
       zoom: mapItem.mapZoom + 0.25,
     }));
-  },
+  };
 
-  _onZoomOutClick(e) {
+  _onZoomOutClick = (e) => {
     e.preventDefault();
 
     const { globalState } = this.props;
@@ -317,21 +315,21 @@ const LightWall = React.createClass({
     this.props.dispatch(setMapView({
       zoom: mapItem.mapZoom - 0.25,
     }));
-  },
+  };
 
-  _onPreviewChange(checked) {
+  _onPreviewChange = (checked) => {
     this.setState({
       showPreview: checked,
     });
-  },
+  };
 
-  _onShowOverlayChange(checked) {
+  _onShowOverlayChange = (checked) => {
     this.setState({
       showOverlay: checked,
     });
-  },
+  };
 
-  _downloadCartAsJson() {
+  _downloadCartAsJson = () => {
     const obj = this.props.globalState.cart;
     const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(obj, null, 2));
     const dlAnchorElem = document.getElementById('downloadJson');
@@ -340,16 +338,16 @@ const LightWall = React.createClass({
     const timestamp = (new Date()).toISOString();
     dlAnchorElem.setAttribute('download', `alvar-${timestamp}.json`);
     dlAnchorElem.click();
-  },
+  };
 
-  _downloadImage() {
+  _downloadImage = () => {
     const { globalState } = this.props;
     const mapItem = globalState.cart[globalState.editCartItem];
     const newUrl = `${createPosterImageUrl(mapItem)}&apiKey=${globalState.apiKey}&download=true`;
     window.open(newUrl, '_blank');
-  },
+  };
 
-  _downloadPlacement(id, opts = {}) {
+  _downloadPlacement = (id, opts = {}) => {
     const { globalState } = this.props;
     const mapItem = globalState.cart[globalState.editCartItem];
     let newUrl = `${createPlacementImageUrl(id, mapItem)}&apiKey=${globalState.apiKey}&download=true`;
@@ -358,8 +356,8 @@ const LightWall = React.createClass({
     }
 
     window.open(newUrl, '_blank');
-  },
-});
+  };
+}
 
 /**
  * Conserve aspect ratio of the orignal region. Useful when shrinking/enlarging

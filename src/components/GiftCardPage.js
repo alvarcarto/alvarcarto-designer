@@ -10,12 +10,10 @@ import { checkoutFormStateChange, postOrder } from '../actions';
 import GiftCardCheckoutForm from './GiftCardCheckoutForm';
 import Spinner from './Spinner';
 
-const GiftCardPage = React.createClass({
-  getInitialState() {
-    return {
-      debouncedOnFormChange: _.debounce(this._onFormChange, 600),
-    };
-  },
+class GiftCardPage extends React.Component {
+  state = {
+    debouncedOnFormChange: _.debounce(this._onFormChange, 600),
+  };
 
   render() {
     const { globalState } = this.props;
@@ -46,13 +44,13 @@ const GiftCardPage = React.createClass({
         />
       </div>
     );
-  },
+  }
 
-  _onFormChange(state) {
+  _onFormChange = (state) => {
     this.props.dispatch(checkoutFormStateChange(state));
-  },
+  };
 
-  _onFormSubmit(form) {
+  _onFormSubmit = (form) => {
     const order = _.merge({}, form, {
       cart: this.props.globalState.giftCardCart,
     });
@@ -160,7 +158,7 @@ const GiftCardPage = React.createClass({
           throw err;
         }
       });
-  }
-});
+  };
+}
 
 export default connect(state => ({ globalState: state }))(GiftCardPage);

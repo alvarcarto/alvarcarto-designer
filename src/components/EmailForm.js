@@ -14,21 +14,20 @@ const form = {
   },
 };
 
-const EmailForm = React.createClass({
-  getInitialState() {
-    let state = {
+class EmailForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
       // Take all keys in form object and initialize their values
       // with null and false
       values: _.mapValues(form, () => null),
       shouldValidate: _.mapValues(form, () => false),
     };
 
-    if (this.props.initialState) {
-      state.values = this.props.initialState.values;
+    if (props.initialState) {
+      this.state.values = props.initialState.values;
     }
-
-    return state;
-  },
+  }
 
   render() {
     const formItemLayout = {
@@ -57,9 +56,9 @@ const EmailForm = React.createClass({
         </Form.Item>
       </div>
     );
-  },
+  }
 
-  _getFormErrors(validateAll) {
+  _getFormErrors = (validateAll) => {
     const formErrors = {};
     _.forEach(this.state.values, (val, key) => {
       const shouldValidate = validateAll ? true : this.state.shouldValidate[key];
@@ -77,14 +76,14 @@ const EmailForm = React.createClass({
     });
 
     return formErrors;
-  },
+  };
 
-  _hasFormErrors() {
+  _hasFormErrors = () => {
     const errs = this._getFormErrors(true);
     return _.keys(errs).length > 0;
-  },
+  };
 
-  _onInputChange(e) {
+  _onInputChange = (e) => {
     const { name, value } = e.target;
 
     this.setState((state) => ({
@@ -92,18 +91,18 @@ const EmailForm = React.createClass({
         [name]: value
       }),
     }), this._emitOnChange);
-  },
+  };
 
-  _emitOnChange() {
+  _emitOnChange = () => {
     const isValid = !this._hasFormErrors();
 
     this.props.onChange({
       isValid,
       values: this.state.values,
     });
-  },
+  };
 
-  _onInputBlur(e) {
+  _onInputBlur = (e) => {
     const { name } = e.target;
 
     this.setState((state) => ({
@@ -111,7 +110,7 @@ const EmailForm = React.createClass({
         [name]: true
       }),
     }));
-  }
-});
+  };
+}
 
 export default EmailForm;

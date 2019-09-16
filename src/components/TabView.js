@@ -2,16 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Icon } from 'antd';
 
-const TabView = React.createClass({
-  getDefaultProps() {
-    return { alwaysOpen: false };
-  },
+class TabView extends React.Component {
+  static defaultProps = { alwaysOpen: false };
 
-  getInitialState() {
-    return {
-      selected: this.props.initialSelected,
-    };
-  },
+  state = {
+    selected: this.props.initialSelected,
+  };
 
   render() {
     const panelButtons = this.props.children.map(this._createPanelButton);
@@ -28,31 +24,31 @@ const TabView = React.createClass({
         </div>
       </div>
     );
-  },
+  }
 
-  _onSelect(index) {
+  _onSelect = (index) => {
     const alreadySelected = this.state.selected === index;
     if (!alreadySelected || this.props.alwaysOpen) {
       this.setState({ selected: index });
     } else {
       this.setState({ selected: null });
     }
-  },
+  };
 
-  _onClose(index) {
+  _onClose = (index) => {
     this.setState({ selected: null });
-  },
+  };
 
-  _createPanel(child, index) {
+  _createPanel = (child, index) => {
     return React.cloneElement(child, {
       key: index,
       index: index,
       selected: index === this.state.selected,
       onClose: this._onClose,
     });
-  },
+  };
 
-  _createPanelButton(child, index) {
+  _createPanelButton = (child, index) => {
     return <PanelSelectButton
       key={index}
       index={index}
@@ -60,25 +56,23 @@ const TabView = React.createClass({
       selected={index === this.state.selected}
       onSelect={this._onSelect}
     />;
-  },
-});
+  };
+}
 
-TabView.Panel = React.createClass({
-  getInitialState() {
-    return {
-      contentHeight: 0,
-    };
-  },
+TabView.Panel = class extends React.Component {
+  state = {
+    contentHeight: 0,
+  };
 
   componentDidMount() {
     this._setHeightState();
-  },
+  }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.selected) {
       this._setHeightState();
     }
-  },
+  }
 
   render() {
     let className = 'TabView__panel';
@@ -105,19 +99,19 @@ TabView.Panel = React.createClass({
         </div>
       </div>
     );
-  },
+  }
 
-  _setHeightState() {
+  _setHeightState = () => {
     const contentDivEl = ReactDOM.findDOMNode(this.contentDiv);
     this.setState({ contentHeight: contentDivEl.clientHeight });
-  },
+  };
 
-  _onClose() {
+  _onClose = () => {
     this.props.onClose(this.props.index);
-  }
-});
+  };
+};
 
-const PanelSelectButton = React.createClass({
+class PanelSelectButton extends React.Component {
   render() {
     let className = 'TabView__panel-select-button';
     if (this.props.selected) {
@@ -134,11 +128,11 @@ const PanelSelectButton = React.createClass({
         </a>
       </div>
     );
-  },
-
-  _onSelect() {
-    this.props.onSelect(this.props.index);
   }
-});
+
+  _onSelect = () => {
+    this.props.onSelect(this.props.index);
+  };
+}
 
 export default TabView;

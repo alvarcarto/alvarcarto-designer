@@ -6,7 +6,7 @@ import AlvarMapDesignPanel from './AlvarMapDesignPanel';
 import PricePanel from './PricePanel';
 import MiniCart from './MiniCart';
 
-const SidePanel = React.createClass({
+class SidePanel extends React.Component {
   render() {
     const { globalState } = this.props;
     const itemCount = _.reduce(globalState.cart, (memo, item) => memo + item.quantity, 0);
@@ -33,6 +33,6 @@ const SidePanel = React.createClass({
       </div>
     );
   }
-});
+}
 
 export default connect(state => ({ globalState: state }))(SidePanel);

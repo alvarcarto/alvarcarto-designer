@@ -14,7 +14,7 @@ import AddPromotionLink from './AddPromotionLink';
 import IconButton from './IconButton';
 import history from '../history';
 
-const CheckoutSummary = React.createClass({
+class CheckoutSummary extends React.Component {
   render() {
     const { cart, additionalCart, promotion } = this.props.globalState;
     const hideRemoveButton = cart.length < 2;
@@ -75,9 +75,9 @@ const CheckoutSummary = React.createClass({
         </div>
       </div>
     );
-  },
+  }
 
-  _renderDiscountRow(totalPrice, promotion) {
+  _renderDiscountRow = (totalPrice, promotion) => {
     if (!totalPrice.discount) {
       return null;
     }
@@ -90,46 +90,46 @@ const CheckoutSummary = React.createClass({
       <td>{promotion.label}</td>
       <td>{discountPriceLabel}</td>
     </tr>;
-  },
+  };
 
-  _getPromotionLink() {
+  _getPromotionLink = () => {
     const { promotion } = this.props.globalState;
     if (promotion) {
       return <a onClick={this._onDeletePromotion}>Remove promotion</a>;
     }
 
     return <AddPromotionLink onPromotionApply={this._onApplyPromotion} />;
-  },
+  };
 
-  _onDeletePromotion() {
+  _onDeletePromotion = () => {
     this.props.dispatch(setPromotion(null));
-  },
+  };
 
-  _onApplyPromotion(promotion) {
+  _onApplyPromotion = (promotion) => {
     this.props.dispatch(setPromotion(promotion));
-  },
+  };
 
-  _onCartItemEditClick(index) {
+  _onCartItemEditClick = (index) => {
     history.push('/');
     this.props.dispatch(editCartItem(index));
-  },
+  };
 
-  _onCartItemRemoveClick(index) {
+  _onCartItemRemoveClick = (index) => {
     this.props.dispatch(removeCartItem(index));
-  },
+  };
 
-  _onCartItemIncreaseQuantityClick(index) {
+  _onCartItemIncreaseQuantityClick = (index) => {
     this.props.dispatch(addCartItemQuantity({ index, add: 1 }));
-  },
+  };
 
-  _onCartItemDecreaseQuantityClick(index) {
+  _onCartItemDecreaseQuantityClick = (index) => {
     this.props.dispatch(addCartItemQuantity({ index, add: -1 }));
-  },
+  };
 
-  _onAddPoster() {
+  _onAddPoster = () => {
     history.push('/');
     this.props.dispatch(addCartItem());
-  }
-});
+  };
+}
 
 export default connect(state => ({ globalState: state }))(CheckoutSummary);

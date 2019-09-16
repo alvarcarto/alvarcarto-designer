@@ -3,17 +3,15 @@ import _ from 'lodash';
 import Alert from './Alert'
 import { Radio, Row, Col, Icon } from 'antd';
 
-const ShippingMethodForm = React.createClass({
-  getInitialState() {
-    return {
-      values: {
-        shippingMethod: _.get(this.props, 'initialState.values.shippingMethod', 'free'),
-      },
-      shouldValidate: {
-        shippingMethod: false,
-      },
-    };
-  },
+class ShippingMethodForm extends React.Component {
+  state = {
+    values: {
+      shippingMethod: _.get(this.props, 'initialState.values.shippingMethod', 'free'),
+    },
+    shouldValidate: {
+      shippingMethod: false,
+    },
+  };
 
   render() {
     let deliveryPhrase = '';
@@ -82,9 +80,9 @@ const ShippingMethodForm = React.createClass({
         </Radio.Group>
       </div>
     );
-  },
+  }
 
-  _onChange(e) {
+  _onChange = (e) => {
     const { value } = e.target;
 
     this.setState((state) => ({
@@ -92,14 +90,14 @@ const ShippingMethodForm = React.createClass({
         shippingMethod: value
       }),
     }), this._emitChange);
-  },
+  };
 
-  _emitChange() {
+  _emitChange = () => {
     this.props.onChange({
       isValid: true,
       values: this.state.values,
     });
-  }
-});
+  };
+}
 
 export default ShippingMethodForm;

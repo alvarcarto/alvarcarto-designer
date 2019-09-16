@@ -10,7 +10,7 @@ const sortedCountries = _.sortBy(_.map(countries.getNames('en'), (name, code) =>
 const selectFilterFunc = (input, option) =>
   _.startsWith(option.props.name.toLowerCase(), input.toLowerCase());
 
-const CountrySelect = React.createClass({
+class CountrySelect extends React.Component {
   render() {
     return (
       <ResponsiveSelect
@@ -30,6 +30,6 @@ const CountrySelect = React.createClass({
       />
     );
   }
-});
+}
 
 export default CountrySelect;

@@ -34,8 +34,9 @@ const form = {
   contactPhone: () => null,
 };
 
-const AddressForm = React.createClass({
-  getInitialState() {
+class AddressForm extends React.Component {
+  constructor(props) {
+    super(props);
     let state = {
       // Take all keys in form object and initialize their values
       // with null and false
@@ -43,12 +44,12 @@ const AddressForm = React.createClass({
       shouldValidate: _.mapValues(form, () => false),
     };
 
-    if (this.props.initialState) {
-      state.values = this.props.initialState.values;
+    if (props.initialState) {
+      state.values = props.initialState.values;
     }
 
-    return state;
-  },
+    this.state = state;
+  }
 
   render() {
     const formItemLayout = {
@@ -148,9 +149,9 @@ const AddressForm = React.createClass({
         }
       </div>
     );
-  },
+  }
 
-  _getFormErrors(validateAll) {
+  _getFormErrors = (validateAll) => {
     const formErrors = {};
     _.forEach(this.state.values, (val, key) => {
       const shouldValidate = validateAll ? true : this.state.shouldValidate[key];
@@ -168,14 +169,14 @@ const AddressForm = React.createClass({
     });
 
     return formErrors;
-  },
+  };
 
-  _hasFormErrors() {
+  _hasFormErrors = () => {
     const errs = this._getFormErrors(true);
     return _.keys(errs).length > 0;
-  },
+  };
 
-  _onInputChange(e) {
+  _onInputChange = (e) => {
     const { name, value } = e.target;
 
     this.setState((state) => ({
@@ -183,9 +184,9 @@ const AddressForm = React.createClass({
         [name]: value
       }),
     }), this._emitOnChange);
-  },
+  };
 
-  _onInputBlur(e) {
+  _onInputBlur = (e) => {
     const { name } = e.target;
 
     this.setState((state) => ({
@@ -193,32 +194,32 @@ const AddressForm = React.createClass({
         [name]: true
       }),
     }));
-  },
+  };
 
-  _onCountryChange(value) {
+  _onCountryChange = (value) => {
     this.setState((state) => ({
       values: _.extend(state.values, {
         countryCode: value
       }),
     }), this._emitOnChange);
-  },
+  };
 
-  _onCountryBlur() {
+  _onCountryBlur = () => {
     this.setState((state) => ({
       shouldValidate: _.extend(state.shouldValidate, {
         countryCode: true,
       }),
     }));
-  },
+  };
 
-  _emitOnChange() {
+  _emitOnChange = () => {
     const isValid = !this._hasFormErrors();
 
     this.props.onChange({
       isValid,
       values: _.omitBy(this.state.values, (val, key) => val === null || val === ''),
     });
-  }
-});
+  };
+}
 
 export default AddressForm;

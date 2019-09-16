@@ -17,13 +17,11 @@ import { Icon } from 'antd';
 import MiniCartItem from './MiniCartItem';
 import { posterSizeToThumbnailPixels } from '../util';
 
-const MiniCart = React.createClass({
-  getInitialState() {
-    return {
-      scrollButtonWidth: 30,
-      minItemWidth: 86,
-    };
-  },
+class MiniCart extends React.Component {
+  state = {
+    scrollButtonWidth: 30,
+    minItemWidth: 86,
+  };
 
   render() {
     const { cart, editCartItem } = this.props.globalState;
@@ -90,19 +88,19 @@ const MiniCart = React.createClass({
         <Icon type="right" />
       </a>
     </div>;
-  },
+  }
 
-  _getPosition() {
+  _getPosition = () => {
     return this.props.globalState.miniCartPosition;
-  },
+  };
 
-  _getItemsCount() {
+  _getItemsCount = () => {
     const { cart } = this.props.globalState;
     // Add poster placeholder takes one spot
     return cart.length + 1;
-  },
+  };
 
-  _getWindowSize() {
+  _getWindowSize = () => {
     const width = this._getCartWindowWidth();
     const divider = width / this.state.minItemWidth;
     const windowSize = Math.floor(divider);
@@ -112,65 +110,65 @@ const MiniCart = React.createClass({
       itemWidth: singleWidth,
       windowSize,
     };
-  },
+  };
 
-  _getCartWindowWidth() {
+  _getCartWindowWidth = () => {
     return this.props.size.width - 2 * this.state.scrollButtonWidth;
-  },
+  };
 
-  _isMoveItemsRightPossible() {
+  _isMoveItemsRightPossible = () => {
     return isMoveItemsRightPossible(this._getPosition());
-  },
+  };
 
-  _isMoveItemsLeftPossible(_add) {
+  _isMoveItemsLeftPossible = (_add) => {
     const additionalItems = _add ? _add : 0;
     const itemsCount = this._getItemsCount() + additionalItems;
     const { windowSize } = this._getWindowSize();
     return isMoveItemsLeftPossible(this._getPosition(), itemsCount, windowSize);
-  },
+  };
 
-  _moveItemsLeft(_add) {
+  _moveItemsLeft = (_add) => {
     if (!this._isMoveItemsLeftPossible(_add)) {
       return;
     }
 
     this._setPosition(this._getPosition() - 1);
-  },
+  };
 
-  _moveItemsRight() {
+  _moveItemsRight = () => {
     if (!this._isMoveItemsRightPossible()) {
       return;
     }
 
     this._setPosition(this._getPosition() + 1);
-  },
+  };
 
-  _setPosition(pos) {
+  _setPosition = (pos) => {
     this.props.dispatch(setMiniCartPosition(pos));
-  },
+  };
 
-  _onCartItemEditClick(index) {
+  _onCartItemEditClick = (index) => {
     this.props.dispatch(editCartItem(index));
-  },
+  };
 
-  _onAddPosterClick() {
+  _onAddPosterClick = () => {
     this._moveItemsLeft(1);
 
     this.props.dispatch(addCartItem());
-  },
+  };
 
-  _onCartItemRemoveClick(index) {
+  _onCartItemRemoveClick = (index) => {
     this.props.dispatch(removeCartItem(index));
-  },
+  };
 
-  _onCartItemIncreaseQuantityClick(index) {
+  _onCartItemIncreaseQuantityClick = (index) => {
     this.props.dispatch(addCartItemQuantity({ index, add: 1 }));
-  },
+  };
 
-  _onCartItemDecreaseQuantityClick(index) {
+  _onCartItemDecreaseQuantityClick = (index) => {
     this.props.dispatch(addCartItemQuantity({ index, add: -1 }));
-  },
-});
+  };
+}
 
 
 // Numbers describe items, underscores are slots in the "window".
