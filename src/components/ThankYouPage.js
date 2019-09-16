@@ -170,10 +170,10 @@ const ThankYouPage = React.createClass({
         <h3 className="ThankYouPage__help-links">Links</h3>
         <ul>
           <li>
-            <a href="/">Design a poster</a>
+            <a href="/">Design a map print</a>
           </li>
           <li>
-            <a href="https://alvarcarto.com/help">Help</a>
+            <a href="https://alvarcarto.com/help">Help page</a>
           </li>
         </ul>
 
