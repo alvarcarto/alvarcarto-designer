@@ -4,7 +4,7 @@ import config from '../config';
 import geolib from 'geolib';
 import { POSTER_STYLES, MAP_STYLES, resolveOrientation } from 'alvarcarto-common';
 
-function posterSizeToPixels(size, orientation) {
+export function posterSizeToPixels(size, orientation) {
   let dimensions;
   switch (size) {
     case '30x40cm':

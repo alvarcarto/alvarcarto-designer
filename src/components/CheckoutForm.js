@@ -156,7 +156,7 @@ class CheckoutForm extends React.Component {
                     <p>
                       Please ensure that your information is filled out correctly.
                       When clicking Complete order, your account will be charged via
-                      a secure <a target="_blank" href="https://stripe.com">Stripe</a> payment.
+                      a secure <a target="_blank" rel="noopener noreferrer" href="https://stripe.com">Stripe</a> payment.
                     </p>
                   </div>
             }
@@ -174,7 +174,7 @@ class CheckoutForm extends React.Component {
                 onChange={this._onCheckboxChange}
                 onBlur={this._onCheckboxBlur}
               >
-                I accept the <a target="_blank" href="http://alvarcarto.com/tos">terms of service</a>
+                I accept the <a target="_blank" rel="noopener noreferrer" href="http://alvarcarto.com/tos">terms of service</a>
               </Checkbox>
             </Form.Item>
 
@@ -409,9 +409,9 @@ class CheckoutForm extends React.Component {
       content: (
         <div>
           <p>
-            Alvar Carto is using <a target="_blank" href="https://stripe.com">Stripe </a>
+            Alvar Carto is using <a target="_blank" rel="noopener noreferrer" href="https://stripe.com">Stripe </a>
             to securely handle your payments.
-            Stripe <a target="_blank" href="https://stripe.com/docs/security/stripe"> is certified </a>
+            Stripe <a target="_blank" rel="noopener noreferrer" href="https://stripe.com/docs/security/stripe"> is certified </a>
             to PCI Service Provider Level 1, which is the
             most stringent level of certification available.
           </p>

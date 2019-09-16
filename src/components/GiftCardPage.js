@@ -94,7 +94,7 @@ class GiftCardPage extends React.Component {
               </p>
               <p>
                 We're sorry for the inconvenience. If the problem persists,
-                please contact our support at <a target="_blank" href="mailto:help@alvarcarto.com"> help@alvarcarto.com</a>.
+                please contact our support at <a target="_blank" rel="noopener noreferrer" href="mailto:help@alvarcarto.com"> help@alvarcarto.com</a>.
               </p>
             </div>
           });
@@ -114,7 +114,7 @@ class GiftCardPage extends React.Component {
               </p>
               <p>
                 We're sorry for the inconvenience. If the problem persists,
-                please contact our support at <a target="_blank" href="mailto:help@alvarcarto.com"> help@alvarcarto.com</a>.
+                please contact our support at <a target="_blank" rel="noopener noreferrer" href="mailto:help@alvarcarto.com"> help@alvarcarto.com</a>.
               </p>
             </div>
           });
@@ -129,7 +129,7 @@ class GiftCardPage extends React.Component {
               </p>
               <p>
                 We're sorry for the inconvenience. If you were charged,
-                please contact our support at <a target="_blank" href="mailto:help@alvarcarto.com"> help@alvarcarto.com</a>.
+                please contact our support at <a target="_blank" rel="noopener noreferrer" href="mailto:help@alvarcarto.com"> help@alvarcarto.com</a>.
               </p>
               <p>
                 Don't worry, we promise to fix the situation.
@@ -147,7 +147,7 @@ class GiftCardPage extends React.Component {
               </p>
               <p>
                 We're sorry for the inconvenience. If you were charged,
-                please contact our support at <a target="_blank" href="mailto:help@alvarcarto.com"> help@alvarcarto.com</a>.
+                please contact our support at <a target="_blank" rel="noopener noreferrer" href="mailto:help@alvarcarto.com"> help@alvarcarto.com</a>.
               </p>
               <p>
                 Don't worry, we promise to fix the situation.

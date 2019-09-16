@@ -156,7 +156,7 @@ class App extends React.Component {
         <p>
           We're sorry for the inconvenience. If the problem persists,
           please contact our support at
-          <a target="_blank" href="mailto:help@alvarcarto.com"> help@alvarcarto.com</a>.
+          <a target="_blank" rel="noopener noreferrer" href="mailto:help@alvarcarto.com"> help@alvarcarto.com</a>.
         </p>
       </div>,
     });

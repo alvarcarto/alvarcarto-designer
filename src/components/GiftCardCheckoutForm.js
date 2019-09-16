@@ -143,7 +143,7 @@ class GiftCardCheckoutForm extends React.Component {
               <p>
                 Please ensure that your information is filled out correctly.
                 When clicking Complete order, your account will be charged via
-                a secure <a target="_blank" href="https://stripe.com">Stripe</a> payment.
+                a secure <a target="_blank" rel="noopener noreferrer" href="https://stripe.com">Stripe</a> payment.
               </p>
             </div>
 
@@ -160,7 +160,7 @@ class GiftCardCheckoutForm extends React.Component {
                 onChange={this._onCheckboxChange}
                 onBlur={this._onCheckboxBlur}
               >
-                I accept the <a target="_blank" href="http://alvarcarto.com/tos">terms of service</a>
+                I accept the <a target="_blank" rel="noopener noreferrer" href="http://alvarcarto.com/tos">terms of service</a>
               </Checkbox>
             </Form.Item>
 

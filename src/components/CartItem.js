@@ -17,7 +17,7 @@ class CartItem extends React.Component {
     index: React.PropTypes.number.isRequired,
     item: React.PropTypes.shape({
       quantity: React.PropTypes.number.isRequired,
-      mapBounds:  React.PropTypes.object.isOptional,
+      mapBounds:  React.PropTypes.object,
       mapCenter:  React.PropTypes.object.isRequired,
       mapZoom: React.PropTypes.number.isRequired,
       mapStyle: React.PropTypes.string.isRequired,
