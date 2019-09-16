@@ -64,10 +64,10 @@ class AlvarMap extends React.Component {
       height: dimensions.height,
     };
 
-    const tooltipContent = <p onClick={this._onTooltipClick} className="AlvarMap__tooltip">
+    const tooltipContent = <span onClick={this._onTooltipClick} className="AlvarMap__tooltip">
       You can move the map by dragging it!
       <img className="AlvarMap__drag-icon" src={`${config.PUBLIC_URL}/assets/drag-icon.svg`} alt=""/>
-    </p>;
+    </span>;
 
     let className = 'AlvarMap';
     if (props.hideShadows) {

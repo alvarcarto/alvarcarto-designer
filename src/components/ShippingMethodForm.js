@@ -4,14 +4,18 @@ import Alert from './Alert'
 import { Radio, Row, Col, Icon } from 'antd';
 
 class ShippingMethodForm extends React.Component {
-  state = {
-    values: {
-      shippingMethod: _.get(this.props, 'initialState.values.shippingMethod', 'free'),
-    },
-    shouldValidate: {
-      shippingMethod: false,
-    },
-  };
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      values: {
+        shippingMethod: _.get(props, 'initialState.values.shippingMethod', 'free'),
+      },
+      shouldValidate: {
+        shippingMethod: false,
+      },
+    };
+  }
 
   render() {
     let deliveryPhrase = '';

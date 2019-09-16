@@ -70,12 +70,16 @@ function getSecondText(cart) {
 }
 
 class ThankYouPage extends React.Component {
-  state = {
-    error: null,
-    order: null,
-    loading: true,
-    steps: this.props.initialAnimation ? STEPS_FIRST : STEPS_SECOND,
-  };
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      error: null,
+      order: null,
+      loading: true,
+      steps: props.initialAnimation ? STEPS_FIRST : STEPS_SECOND,
+    };
+  }
 
   componentDidMount() {
     getOrder(this.props.orderId)

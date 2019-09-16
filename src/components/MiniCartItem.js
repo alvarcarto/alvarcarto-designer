@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import _ from 'lodash';
 import { Tooltip, Popconfirm } from 'antd';
@@ -7,27 +8,27 @@ import IconButton from './IconButton';
 
 class MiniCartItem extends React.Component {
   static propTypes = {
-    selected: React.PropTypes.bool.isRequired,
-    index: React.PropTypes.number.isRequired,
-    item: React.PropTypes.shape({
-      posterStyle: React.PropTypes.string.isRequired,
-      quantity: React.PropTypes.number.isRequired,
-      mapBounds:  React.PropTypes.object,
-      mapCenter:  React.PropTypes.object.isRequired,
-      mapZoom: React.PropTypes.number.isRequired,
-      mapStyle: React.PropTypes.string.isRequired,
-      mapPitch: React.PropTypes.number.isRequired,
-      mapBearing: React.PropTypes.number.isRequired,
-      orientation: React.PropTypes.string.isRequired,
-      size: React.PropTypes.string.isRequired,
-      labelHeader: React.PropTypes.string.isRequired,
-      labelSmallHeader: React.PropTypes.string.isRequired,
-      labelText: React.PropTypes.string.isRequired,
+    selected: PropTypes.bool.isRequired,
+    index: PropTypes.number.isRequired,
+    item: PropTypes.shape({
+      posterStyle: PropTypes.string.isRequired,
+      quantity: PropTypes.number.isRequired,
+      mapBounds:  PropTypes.object,
+      mapCenter:  PropTypes.object.isRequired,
+      mapZoom: PropTypes.number.isRequired,
+      mapStyle: PropTypes.string.isRequired,
+      mapPitch: PropTypes.number.isRequired,
+      mapBearing: PropTypes.number.isRequired,
+      orientation: PropTypes.string.isRequired,
+      size: PropTypes.string.isRequired,
+      labelHeader: PropTypes.string.isRequired,
+      labelSmallHeader: PropTypes.string.isRequired,
+      labelText: PropTypes.string.isRequired,
     }),
-    onRemoveClick: React.PropTypes.func.isRequired,
-    onEditClick: React.PropTypes.func.isRequired,
-    onIncreaseQuantityClick: React.PropTypes.func.isRequired,
-    onDecreaseQuantityClick: React.PropTypes.func.isRequired,
+    onRemoveClick: PropTypes.func.isRequired,
+    onEditClick: PropTypes.func.isRequired,
+    onIncreaseQuantityClick: PropTypes.func.isRequired,
+    onDecreaseQuantityClick: PropTypes.func.isRequired,
   };
 
   render() {
@@ -92,7 +93,7 @@ class MiniCartItem extends React.Component {
           <IconButton className="MiniCartItem__action MiniCartItem__increase-quantity noselect" onClick={this._onIncreaseQuantity} type="plus" />
         </div>
 
-        <p className="MiniCartItem__title">{item.labelHeader.trim() ? item.labelHeader : <span>&nbsp;</span>}</p>
+        <span className="MiniCartItem__title">{item.labelHeader.trim() ? item.labelHeader : <span>&nbsp;</span>}</span>
       </div>
     );
   }

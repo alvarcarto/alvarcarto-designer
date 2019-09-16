@@ -14,9 +14,13 @@ import CheckoutSummary from './CheckoutSummary';
 import Spinner from './Spinner';
 
 class CheckoutPage extends React.Component {
-  state = {
-    debouncedOnFormChange: _.debounce(this._onFormChange, 600),
-  };
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      debouncedOnFormChange: _.debounce(this._onFormChange, 600),
+    };
+  }
 
   render() {
     return (

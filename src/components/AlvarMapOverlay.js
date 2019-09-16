@@ -22,8 +22,10 @@ function getPoster(mapItem, axiosOpts) {
 }
 
 class AlvarMapOverlay extends React.Component {
-  getInitialState() {
-    return {
+  constructor(props) {
+    super(props);
+
+    this.state = {
       cancelSource: null,
     };
   }

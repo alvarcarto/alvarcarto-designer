@@ -24,15 +24,19 @@ const POSTER_PADDING_HEIGHT = 45;
 const MULTI = getQueryParameterByName('multiMode') === 'true';
 
 class LightWall extends React.Component {
-  state = {
-    zoom: this._calculateZoom(),
-    debouncedOnWindowResize: _.debounce(this._onWindowResize, 100),
-    container: null,
-    showPreview: false,
-    showOverlay: true,
-    placementImages: [],
-    showPlacementGrid: false,
-  };
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      zoom: this._calculateZoom(),
+      debouncedOnWindowResize: _.debounce(this._onWindowResize, 100),
+      container: null,
+      showPreview: false,
+      showOverlay: true,
+      placementImages: [],
+      showPlacementGrid: false,
+    };
+  }
 
   componentDidMount() {
     window.addEventListener('resize', this.state.debouncedOnWindowResize);

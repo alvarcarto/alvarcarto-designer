@@ -5,9 +5,13 @@ import { Icon } from 'antd';
 class TabView extends React.Component {
   static defaultProps = { alwaysOpen: false };
 
-  state = {
-    selected: this.props.initialSelected,
-  };
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      selected: props.initialSelected,
+    };
+  }
 
   render() {
     const panelButtons = this.props.children.map(this._createPanelButton);

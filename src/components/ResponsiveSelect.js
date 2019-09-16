@@ -5,9 +5,13 @@ import MediaQuery from 'react-responsive';
 import CONST from '../constants';
 
 class ResponsiveSelect extends React.Component {
-  state = {
-    value: this.props.defaultValue || 'placeholder',
-  };
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      value: props.defaultValue || 'placeholder',
+    };
+  }
 
   render() {
     return <MediaQuery maxWidth={CONST.SCREEN_SM}>

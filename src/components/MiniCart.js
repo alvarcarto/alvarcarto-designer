@@ -78,7 +78,7 @@ class MiniCart extends React.Component {
                 <div className="MiniCart__poster" style={posterSizeToThumbnailPixels('50x70cm', 'portrait')}>
                   <Icon type="plus" />
                 </div>
-                <p className="MiniCart__add-poster-text">Add map</p>
+                <span className="MiniCart__add-poster-text">Add map</span>
               </div>
             </li>
           </ReactCSSTransitionGroup>

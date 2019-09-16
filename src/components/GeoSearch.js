@@ -7,10 +7,6 @@ import AlgoliaPlaces from 'algolia-places-react';
 import config from '../config';
 
 class GeoSearch extends React.Component {
-  state = {
-    debouncedFetchOptions: debouncePromise(this._fetchOptions, 50),
-  };
-
   render() {
     return (
       <div className="GeoSearch">

@@ -11,9 +11,13 @@ import GiftCardCheckoutForm from './GiftCardCheckoutForm';
 import Spinner from './Spinner';
 
 class GiftCardPage extends React.Component {
-  state = {
-    debouncedOnFormChange: _.debounce(this._onFormChange, 600),
-  };
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      debouncedOnFormChange: _.debounce(this._onFormChange, 600),
+    };
+  }
 
   render() {
     const { globalState } = this.props;

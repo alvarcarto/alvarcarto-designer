@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import _ from 'lodash';
 import { Icon, Tooltip, Popconfirm } from 'antd';
@@ -14,25 +15,25 @@ function preloader() {
 
 class CartItem extends React.Component {
   static propTypes = {
-    index: React.PropTypes.number.isRequired,
-    item: React.PropTypes.shape({
-      quantity: React.PropTypes.number.isRequired,
-      mapBounds:  React.PropTypes.object,
-      mapCenter:  React.PropTypes.object.isRequired,
-      mapZoom: React.PropTypes.number.isRequired,
-      mapStyle: React.PropTypes.string.isRequired,
-      mapPitch: React.PropTypes.number.isRequired,
-      mapBearing: React.PropTypes.number.isRequired,
-      orientation: React.PropTypes.string.isRequired,
-      size: React.PropTypes.string.isRequired,
-      labelHeader: React.PropTypes.string.isRequired,
-      labelSmallHeader: React.PropTypes.string.isRequired,
-      labelText: React.PropTypes.string.isRequired,
+    index: PropTypes.number.isRequired,
+    item: PropTypes.shape({
+      quantity: PropTypes.number.isRequired,
+      mapBounds:  PropTypes.object,
+      mapCenter:  PropTypes.object.isRequired,
+      mapZoom: PropTypes.number.isRequired,
+      mapStyle: PropTypes.string.isRequired,
+      mapPitch: PropTypes.number.isRequired,
+      mapBearing: PropTypes.number.isRequired,
+      orientation: PropTypes.string.isRequired,
+      size: PropTypes.string.isRequired,
+      labelHeader: PropTypes.string.isRequired,
+      labelSmallHeader: PropTypes.string.isRequired,
+      labelText: PropTypes.string.isRequired,
     }),
-    onRemoveClick: React.PropTypes.func.isRequired,
-    onEditClick: React.PropTypes.func.isRequired,
-    onIncreaseQuantityClick: React.PropTypes.func.isRequired,
-    onDecreaseQuantityClick: React.PropTypes.func.isRequired,
+    onRemoveClick: PropTypes.func.isRequired,
+    onEditClick: PropTypes.func.isRequired,
+    onIncreaseQuantityClick: PropTypes.func.isRequired,
+    onDecreaseQuantityClick: PropTypes.func.isRequired,
   };
 
   render() {
