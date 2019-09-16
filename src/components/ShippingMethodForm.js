@@ -1,6 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
-import { Radio, Row, Col } from 'antd';
+import Alert from './Alert'
+import { Radio, Row, Col, Icon } from 'antd';
 
 const ShippingMethodForm = React.createClass({
   getInitialState() {
@@ -29,9 +30,9 @@ const ShippingMethodForm = React.createClass({
       <div className="ShippingMethodForm">
         <Radio.Group value={this.state.values.shippingMethod} onChange={this._onChange}>
           <Row className="ShippingMethodForm__item">
-            <span className="ShippingMethodForm__delivery-warning">
+            <Alert type="warning" className="ShippingMethodForm__delivery-warning">
               Please note that during the holiday seasons our delivery times are slightly longer.
-            </span>
+            </Alert>
 
             <Col span={16}>
               <Radio value="free">Worldwide Express Mail</Radio>

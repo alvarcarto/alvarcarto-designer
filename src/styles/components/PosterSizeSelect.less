@@ -3,7 +3,7 @@
 }
 
 .PosterSizeSelect .ant-radio-button-wrapper {
-  width: 105px;
+  width: 115px;
   text-align: center;
 }
 .PosterSizeSelect .ant-radio-button-wrapper-checked {
@@ -13,7 +13,7 @@
 .PosterSizeSelect__price {
   display: block;
   margin-left: 22px;
-  margin-top: 2px;
+  margin-top: 0px;
 }
 
 .PosterSizeSelect__type {
@@ -28,11 +28,18 @@
   width: 100%;
   max-width: 360px;
   height: 36px;
-  font-size: 13px;
+}
+
+.PosterSizeSelect .pure-css-select-style, .PosterSizeSelect .ant-radio-wrapper {
+  font-size: @font-size-medium;
+}
+
+.PosterSizeSelect .ant-radio-wrapper {
+  margin-right: 14px;
 }
 
 @media @screen-gt-sm-media {
   .PosterSizeSelect__type {
-    margin-bottom: 20px;
+    margin-bottom: 16px;
   }
 }

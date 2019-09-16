@@ -101,7 +101,7 @@ const AlvarMapDesignPanel = React.createClass({
       </div>
 
       <div className="AlvarMapDesignPanel__group AlvarMapDesignPanel__poster-style">
-        <h4>Poster look</h4>
+        <h4>Print style</h4>
         <PosterStyleSelect
           defaultValue={mapItem.posterStyle}
           selected={mapItem.posterStyle}
@@ -124,9 +124,8 @@ const AlvarMapDesignPanel = React.createClass({
   _renderSizePanel(mapItem) {
     return <div className="AlvarMapDesignPanel__group">
       <div className="AlvarMapDesignPanel__info">
-        <Alert>
-          <Icon type="picture" />
-          <p>Our posters fit to standard frames which you can find anywhere.</p>
+        <Alert iconType="picture">
+          Our posters fit to standard frames which you can find in nearby stores.
         </Alert>
       </div>
 

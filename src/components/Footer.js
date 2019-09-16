@@ -13,7 +13,7 @@ const Footer = () => <footer className="Footer">
     <Col {...colLayout}>
       <ul>
         <li>
-           <a target="_blank" href="https://alvarcarto.com/help/#shipping_and_returns">Shipping &amp; Returns</a>
+           <a target="_blank" href="https://alvarcarto.com/help/#shipping_and_returns">Shipping &amp; returns</a>
         </li>
         <li>
            <a target="_blank" href="https://alvarcarto.com/help">Frequently asked questions</a>
@@ -24,12 +24,12 @@ const Footer = () => <footer className="Footer">
       </ul>
     </Col>
     <Col {...colLayout}>
-      <p>
-        Any questions? Send us mail to
+      <p className="Footer__text">
+        Any questions? Send us an email to
         <a target="_blank" href="mailto:help@alvarcarto.com"> help@alvarcarto.com</a>.
       </p>
-      <p>We are located at Rantakatu 3, 90100 Oulu, Finland.</p>
-      <p>Alvar Carto Oy (VAT ID: FI28852264)</p>
+      <p className="Footer__text">Rantakatu 3, 90100 Oulu, Finland</p>
+      <p className="Footer__text">Alvar Carto Oy (VAT ID: FI28852264)</p>
     </Col>
   </Row>
 </footer>;

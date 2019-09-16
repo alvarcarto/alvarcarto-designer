@@ -80,8 +80,7 @@ const MiniCart = React.createClass({
                 <div className="MiniCart__poster" style={posterSizeToThumbnailPixels('50x70cm', 'portrait')}>
                   <Icon type="plus" />
                 </div>
-                <p className="MiniCart__add-poster-text">Add poster</p>
-              {/*<p className="MiniCart__add-poster-sub-text">&nbsp;</p>*/}
+                <p className="MiniCart__add-poster-text">Add map</p>
               </div>
             </li>
           </ReactCSSTransitionGroup>

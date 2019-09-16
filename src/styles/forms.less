@@ -4,7 +4,6 @@ input[type=text], input[type=email] {
   appearance: none;
 }
 
-
 .input--short {
   width: 60%;
 }
@@ -37,11 +36,21 @@ input[type=text], input[type=email] {
 }
 
 .ant-form-extra {
-  font-size: 0.7rem;
+  font-size: @font-size-small;
 }
 
 .ant-input-preSuffix-wrapper .ant-input-suffix {
-  font-size: 0.9rem;
+  font-size: @font-size-small;
   line-height: 1;
   color: #888;
+}
+
+.ant-checkbox {
+  position: relative;
+  top: -1px;
+}
+
+.ant-radio {
+  position: relative;
+  top: -1px;
 }
