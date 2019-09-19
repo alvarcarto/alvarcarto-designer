@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import _ from 'lodash';
 import { Icon, Tooltip, Popconfirm } from 'antd';
 import { getStyle } from '../util';
 import { calculateItemPrice } from 'alvarcarto-price-util';
@@ -8,6 +7,7 @@ import { createPosterThumbnailUrl } from '../util';
 import IconButton from './IconButton';
 import ImageLoader from 'react-imageloader';
 import CONST from '../constants';
+import ButtonLink from './ButtonLink';
 
 function preloader() {
   return <Icon type="loading" />;
@@ -74,11 +74,11 @@ class CartItem extends React.Component {
           </div>
           <ul className="CartItem__actions noselect">
             <li>
-              <a onClick={this._onEdit}>
+              <ButtonLink onClick={this._onEdit}>
                 <Tooltip title="Edit poster">
                   <Icon style={{ color: CONST.PRIMARY_COLOR }} type="edit" />
                 </Tooltip>
-              </a>
+              </ButtonLink>
             </li>
             {
               this.props.hideRemoveButton
@@ -91,11 +91,11 @@ class CartItem extends React.Component {
                       okText="Remove"
                       cancelText="Cancel"
                     >
-                      <a>
+                      <ButtonLink>
                         <Tooltip title="Remove item from order">
                           <Icon type="close" />
                         </Tooltip>
-                      </a>
+                      </ButtonLink>
                     </Popconfirm>
                   </li>
             }

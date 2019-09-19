@@ -20,7 +20,7 @@ class AlvarMap extends React.Component {
     tooltipVisible: false,
   };
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const { mapItem } = this.props;
     const nextMapItem = nextProps.mapItem;
 

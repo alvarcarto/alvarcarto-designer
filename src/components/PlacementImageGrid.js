@@ -1,11 +1,12 @@
 import React from 'react';
 import _ from 'lodash';
 import { Icon, Tooltip } from 'antd'
+import UnstyledButton from './UnstyledButton';
 
 const PlacementImageGrid = (props) => <div className="PlacementImageGrid">
-  <a className="PlacementImageGrid__close" onClick={props.onClose}>
+  <UnstyledButton className="PlacementImageGrid__close" onClick={props.onClose}>
     <Icon type="close" />
-  </a>
+  </UnstyledButton>
 
   <div className="PlacementImageGrid__dim" onClick={props.onClose} />
 
@@ -15,8 +16,8 @@ const PlacementImageGrid = (props) => <div className="PlacementImageGrid">
         <div className="PlacementImageGrid__image-container">
           <img src={im.smallPhotoUrl} alt="" />
           <div className="PlacementImageGrid__image-menu">
-            <a onClick={() => props.onImageClick(im.id)}>Full size</a>
-            <a onClick={() => props.onImageClick(im.id, { resizeToWidth: 1200 })}>Medium size</a>
+            <UnstyledButton onClick={() => props.onImageClick(im.id)}>Full size</UnstyledButton>
+            <UnstyledButton onClick={() => props.onImageClick(im.id, { resizeToWidth: 1200 })}>Medium size</UnstyledButton>
           </div>
         </div>
       </Tooltip>

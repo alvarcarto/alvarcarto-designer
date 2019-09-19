@@ -11,6 +11,7 @@ import PosterPreview from './PosterPreview';
 import { Carousel } from 'react-responsive-carousel';
 import ShippingMethodForm from './ShippingMethodForm';
 import CreditCardForm from './CreditCardForm';
+import ButtonLink from './ButtonLink';
 
 const form = {
   differentBillingAddress: () => null,
@@ -266,7 +267,7 @@ class CheckoutForm extends React.Component {
       </ul>
 
       <div className="CheckoutForm__sec-info">
-        <a onClick={this._onMoreSecurityClick} href="#">Security details</a>
+        <ButtonLink onClick={this._onMoreSecurityClick} href="#">Security details</ButtonLink>
       </div>
     </section>
   };
@@ -417,8 +418,8 @@ class CheckoutForm extends React.Component {
             most stringent level of certification available.
           </p>
           <p>
-            Full credit card information is only sent to Stripe servers.
-            We only see the last 4 digits and the expiration date of your credit card.
+            Full credit card information is sent to Stripe servers.
+            We can only see the last 4 digits and the expiration date of your credit card.
           </p>
         </div>
       ),

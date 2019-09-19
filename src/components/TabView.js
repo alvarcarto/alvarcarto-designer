@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Icon } from 'antd';
+import UnstyledButton from './UnstyledButton';
 
 class TabView extends React.Component {
   static defaultProps = { alwaysOpen: false };
@@ -72,7 +73,7 @@ TabView.Panel = class extends React.Component {
     this._setHeightState();
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.selected) {
       this._setHeightState();
     }
@@ -92,9 +93,9 @@ TabView.Panel = class extends React.Component {
     return (
       <div className={className} style={style} ref={(div) => this.div = div}>
         <div className="TabView__panel-close-container">
-          <a onClick={this._onClose}>
+          <UnstyledButton onClick={this._onClose}>
             <Icon className="bounce" type="down" />
-          </a>
+          </UnstyledButton>
         </div>
         <div className="TabView__panel-content">
           <div ref={(div) => this.contentDiv = div}>
@@ -127,9 +128,9 @@ class PanelSelectButton extends React.Component {
 
     return (
       <div className={className}>
-        <a onClick={this._onSelect}>
+        <UnstyledButton onClick={this._onSelect}>
           {this.props.header}
-        </a>
+        </UnstyledButton>
       </div>
     );
   }

@@ -8,7 +8,6 @@ import {
   setMapLabels
 } from '../actions';
 import { coordToPrettyText, getPosterLook } from '../util';
-import { Icon } from 'antd';
 import countries from 'i18n-iso-countries';
 import Accordion from './Accordion';
 import TabView from './TabView';
@@ -18,6 +17,7 @@ import PosterSizeSelect from './PosterSizeSelect';
 import OrientationSelect from './OrientationSelect';
 import PosterLabelInputs from './PosterLabelInputs';
 import PosterStyleSelect from './PosterStyleSelect';
+import ButtonLink from './ButtonLink';
 import MapStyleSelect from './MapStyleSelect';
 import { triggerGtmEvent } from '../util/gtm';
 import CONST from '../constants';
@@ -95,7 +95,7 @@ class AlvarMapDesignPanel extends React.Component {
           onChange={this._onGeoSearch}
         />
         <p className="AlvarMapDesignPanel__label">
-          Or try a <a onClick={this._onRandomCity}>random location</a>.
+          Or try a <ButtonLink onClick={this._onRandomCity}>random location</ButtonLink>.
           You can also zoom and drag the map to any location.
         </p>
       </div>

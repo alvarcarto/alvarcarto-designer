@@ -16,6 +16,7 @@ import _ from 'lodash';
 import { Icon } from 'antd';
 import MiniCartItem from './MiniCartItem';
 import { posterSizeToThumbnailPixels } from '../util';
+import ButtonLink from './ButtonLink';
 
 class MiniCart extends React.Component {
   state = {
@@ -45,9 +46,9 @@ class MiniCart extends React.Component {
 
     const className = `MiniCart noselect ${this.props.className ? this.props.className : ''}`;
     return <div className={className}>
-      <a style={{ width: scrollButtonWidth }} className={scrollLeftClassName} onClick={this._moveItemsRight}>
+      <ButtonLink style={{ width: scrollButtonWidth }} className={scrollLeftClassName} onClick={this._moveItemsRight}>
         <Icon type="left" />
-      </a>
+      </ButtonLink>
       <div className="MiniCart__cart-container" style={autoprefix(cartContainerCss)}>
         <ul className="MiniCart__cart noselect" style={autoprefix(cartCss)}>
           <ReactCSSTransitionGroup
@@ -84,9 +85,9 @@ class MiniCart extends React.Component {
           </ReactCSSTransitionGroup>
         </ul>
       </div>
-      <a style={{ width: scrollButtonWidth }} className={scrollRightClassName} onClick={() => this._moveItemsLeft()}>
+      <ButtonLink style={{ width: scrollButtonWidth }} className={scrollRightClassName} onClick={() => this._moveItemsLeft()}>
         <Icon type="right" />
-      </a>
+      </ButtonLink>
     </div>;
   }
 

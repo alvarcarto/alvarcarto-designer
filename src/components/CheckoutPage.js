@@ -12,6 +12,7 @@ import CheckoutForm from './CheckoutForm';
 import Footer from './Footer';
 import CheckoutSummary from './CheckoutSummary';
 import Spinner from './Spinner';
+import ButtonLink from './ButtonLink';
 
 class CheckoutPage extends React.Component {
   constructor(props) {
@@ -40,10 +41,10 @@ class CheckoutPage extends React.Component {
           }
         </ReactCSSTransitionGroup>
 
-        <a onClick={this._onBackClick} className="CheckoutPage__back-link noselect">
+        <ButtonLink onClick={this._onBackClick} className="CheckoutPage__back-link noselect">
           <Icon type="left" />
           Back to design
-        </a>
+        </ButtonLink>
 
         <div className="CheckoutPage__logo">
           <a href="https://alvarcarto.com">

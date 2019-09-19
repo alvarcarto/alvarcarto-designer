@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import _ from 'lodash';
 import { Tooltip, Popconfirm } from 'antd';
 import { getStyle } from '../util';
 import { posterSizeToThumbnailPixels, getPosterLook } from '../util';
@@ -62,7 +61,6 @@ class MiniCartItem extends React.Component {
 
           <span className="MiniCartItem__quantity-number">{item.quantity}x</span>
 
-
           {
             this.props.hideRemoveButton
               ? null
@@ -74,11 +72,11 @@ class MiniCartItem extends React.Component {
                     okText="Remove"
                     cancelText="Cancel"
                   >
-                    <a>
+                    <div>
                       <Tooltip title="Remove item from order">
                         <IconButton theme="error" type="plus" />
                       </Tooltip>
-                    </a>
+                    </div>
                   </Popconfirm>
                 </div>
           }

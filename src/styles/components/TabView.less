@@ -23,16 +23,8 @@
   border-left: 1px solid #ccc;
 }
 
-.TabView__panel-select-button a {
+.TabView__panel-select-button {
   color: #999;
-}
-
-.TabView__panel-select-button--selected a {
-  background: @primary-color;
-  color: white;
-}
-
-.TabView__panel-select a {
   line-height: @sidepanel-upper-narrow-height;
   padding: 0;
   margin: 0;
@@ -44,6 +36,16 @@
   border: none;
   outline: none;
   -webkit-appearance: none;
+
+  > * {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.TabView__panel-select-button--selected {
+  background: @primary-color;
+  color: white;
 }
 
 .TabView__panels {
@@ -59,7 +61,7 @@
   position: relative;
 }
 
-.TabView__panel-close-container > a {
+.TabView__panel-close-container > * {
   margin-top: 10px;
   background: white;
   border-top-left-radius: 4px;
@@ -76,7 +78,7 @@
   font-weight: bold;
 }
 
-.TabView__panel-close-container > a .anticon {
+.TabView__panel-close-container > * .anticon {
   position: relative;
   top: 2px;
 }

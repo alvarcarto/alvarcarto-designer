@@ -1,4 +1,5 @@
 import React from 'react';
+import ButtonLink from './ButtonLink'
 
 const icons = {
   plus: <svg width="21px" height="21px" viewBox="0 0 21 21" version="1.1">
@@ -32,13 +33,13 @@ const IconButton = (props) => {
     className += ` IconButton--${props.theme}`;
   }
 
-  return <div onClick={props.onClick} className={className}>
+  return <ButtonLink onClick={props.onClick} className={className}>
     {icons[props.type]}{
       props.children
         ? <span className="IconButton__text">{props.children}</span>
         : null
     }
-  </div>;
+  </ButtonLink>;
 }
 
 export default IconButton;

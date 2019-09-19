@@ -10,7 +10,7 @@
 }
 
 .Accordion__section--selected > .Accordion__content {
-  padding: 20px 30px 20px 64px;
+  padding: 10px 30px 20px 64px;
   height: auto;
 }
 
@@ -52,6 +52,7 @@
 }
 
 .Accordion__header > h2 {
+  margin: 0;
   top: 1px;
   font-weight: 400;
   color: #555;
@@ -64,9 +65,7 @@
   color: @primary-color;
 }
 
-.Accordion__section .Accordion__header::after {
-  content: "\E61F";
-  font-family: "anticon" !important;
+.Accordion__section .Accordion__header-icon {
   color: #bbb;
   display: block;
   position: absolute;
@@ -75,11 +74,11 @@
   transition: color 0.3s ease;
 }
 
-.Accordion__section--selected .Accordion__header::after {
+.Accordion__section--selected .Accordion__header-icon {
   transform: rotate(90deg);
   color: @primary-color;
 }
-.Accordion__header:hover:after {
+.Accordion__header:hover .Accordion__header-icon {
   color: @primary-color;
 }
 

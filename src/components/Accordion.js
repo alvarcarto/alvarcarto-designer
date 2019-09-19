@@ -1,4 +1,5 @@
 import React from 'react';
+import { Icon } from 'antd'
 
 class Accordion extends React.Component {
   static defaultProps = { alwaysOpen: true };
@@ -68,6 +69,8 @@ Accordion.Section = class extends React.Component {
           <h2>
             {this.props.header}
           </h2>
+
+          <Icon className="Accordion__header-icon" type="right" />
         </div>
 
         <div className="Accordion__content">

@@ -1,5 +1,3 @@
-/* global dataLayer */
-
 import { createBrowserHistory } from 'history';
 import { triggerGtmEvent } from './util/gtm';
 import config from './config';

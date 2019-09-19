@@ -16,6 +16,7 @@ import {
   getQueryParameterByName,
   createPlacementImageUrl,
 } from '../util';
+import UnstyledButton from './UnstyledButton';
 
 // Padding which should be left unfilled when scaling poster to light wall
 const POSTER_PADDING_WIDTH = 45;
@@ -57,11 +58,11 @@ class LightWall extends React.Component {
     }
   }
 
-  componentWillUnmount() {
+  UNSAFE_componentWillUnmount() {
     window.removeEventListener('resize', this.state.debouncedOnWindowResize);
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const { globalState } = this.props;
     const mapItem = globalState.cart[globalState.editCartItem];
 
@@ -152,8 +153,8 @@ class LightWall extends React.Component {
               ? null
               : <div className="LightWall__zoom-container" style={zoomContainerCss}>
                   <div className="leaflet-control-zoom leaflet-bar leaflet-control">
-                    <a className="leaflet-control-zoom-in" title="Zoom in" role="button" aria-label="Zoom in" onClick={this._onZoomInClick}>+</a>
-                    <a className="leaflet-control-zoom-out" title="Zoom out" role="button" aria-label="Zoom out" onClick={this._onZoomOutClick}>-</a>
+                    <UnstyledButton className="leaflet-control-zoom-in" title="Zoom in" role="button" aria-label="Zoom in" onClick={this._onZoomInClick}>+</UnstyledButton>
+                    <UnstyledButton className="leaflet-control-zoom-out" title="Zoom out" role="button" aria-label="Zoom out" onClick={this._onZoomOutClick}>-</UnstyledButton>
                   </div>
                 </div>
           }
@@ -162,7 +163,7 @@ class LightWall extends React.Component {
               ? null
               : <div className="LightWall__width-label">
                   <div className="LightWall__width-label-line"></div>
-                  <p>{physicalDimensions.width} {physicalDimensions.unit}</p>
+                  <span>{physicalDimensions.width} {physicalDimensions.unit}</span>
                 </div>
           }
 
@@ -171,7 +172,7 @@ class LightWall extends React.Component {
               ? null
               : <div className="LightWall__height-label">
                   <div className="LightWall__height-label-line"></div>
-                  <p>{physicalDimensions.height} {physicalDimensions.unit}</p>
+                  <span>{physicalDimensions.height} {physicalDimensions.unit}</span>
                 </div>
           }
 
@@ -197,7 +198,7 @@ class LightWall extends React.Component {
 
         <div className="LightWall__credits">
           <p>
-            <Icon type="heart" /> Map data by <a href="http://www.openstreetmap.org/">OpenStreetMaps contributors</a>︎
+            <Icon type="heart" theme="filled" /> Map data by <a href="http://www.openstreetmap.org/">OpenStreetMaps contributors</a>︎
           </p>
         </div>
 
@@ -224,7 +225,13 @@ class LightWall extends React.Component {
                 { this._renderPlacementMenu() }
                 <Button type="primary" onClick={this._downloadImage}>Download poster PNG</Button>
                 <Button type="primary" onClick={this._downloadCartAsJson}>Download cart JSON</Button>
-                <a id="downloadJson" style={{ display: 'none'}}></a>
+                { /* Used to generate a JSON download. Needed for browser safety restrictions. */ }
+                <a // eslint-disable-line
+                  href=""
+                  id="downloadJson"
+                  style={{ display: 'none'}}>
+                  Hidden
+                </a>
 
                 <div className="LightWall__debug-menu-bottom">
 

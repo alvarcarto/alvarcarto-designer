@@ -4,6 +4,7 @@ import React from 'react';
 import axios from 'axios';
 import { Modal, Button, Input, Icon, Form } from 'antd';
 import { getPromotion } from '../util/api';
+import ButtonLink from './ButtonLink'
 const { CancelToken } = axios;
 
 function getPromotionSlow(code, axiosOpts) {
@@ -28,7 +29,7 @@ class AddPromotionLink extends React.Component {
 
   render() {
     return (
-      <a className="AddPromotionLink" onClick={this._showModal}>
+      <ButtonLink className="AddPromotionLink" onClick={this._showModal}>
         Add promotion
 
         <Modal
@@ -53,7 +54,7 @@ class AddPromotionLink extends React.Component {
         >
           {this._getContent()}
         </Modal>
-      </a>
+      </ButtonLink>
     );
   }
 

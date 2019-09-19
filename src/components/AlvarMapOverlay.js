@@ -34,7 +34,7 @@ class AlvarMapOverlay extends React.Component {
     this._fetchSvg(this.props.mapItem);
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const oldItem = this.props.mapItem;
     const nextItem = nextProps.mapItem;
     const hasChanged =

@@ -87,11 +87,18 @@
   z-index: 2000;
 }
 
-.LightWall .LightWall__zoom-container .leaflet-control-zoom > a {
+.LightWall .LightWall__zoom-container .leaflet-control-zoom {
+  float: none;
+  background: white;
+}
+
+.LightWall .LightWall__zoom-container .leaflet-control-zoom .UnstyledButton {
   width: 23px;
   height: 23px;
   line-height: 23px;
   font-size: 16px;
+  display: block;
+  cursor: pointer;
 }
 
 .LightWall__wire-container {
@@ -166,8 +173,8 @@
   position: absolute;
 }
 
-.LightWall__width-label > p,
-.LightWall__height-label > p {
+.LightWall__width-label > span,
+.LightWall__height-label > span {
   position: absolute;
   color: #aaa;
 }
@@ -185,7 +192,7 @@
   top: 4px;
   border-bottom: 2px solid rgba(0,0,0,0.2);
 }
-.LightWall__width-label > p {
+.LightWall__width-label > span {
   bottom: -20px;
   right: 15px;
 }
@@ -203,7 +210,7 @@
   left: 4px;
   border-right: 2px solid rgba(0,0,0,0.2);
 }
-.LightWall__height-label > p {
+.LightWall__height-label > span {
   bottom: 30px;
   left: 30px;
   transform: rotate(90deg);

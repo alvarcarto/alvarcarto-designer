@@ -1,9 +1,9 @@
 import Odometer from './Odometer';
 import React from 'react';
-import _ from 'lodash';
 import { Icon, Badge, Tooltip } from 'antd';
 import { calculateCartPrice, getCurrencySymbol } from 'alvarcarto-price-util';
 import history from '../history';
+import ButtonLink from './ButtonLink';
 
 class PricePanel extends React.Component {
   render() {
@@ -31,10 +31,10 @@ class PricePanel extends React.Component {
             <span className="PricePanel__price-shipping">+ Free shipping</span>
           </h5>
 
-          <a onClick={this._onCheckoutClick} className="PricePanel__checkout-link">
+          <ButtonLink onClick={this._onCheckoutClick} className="PricePanel__checkout-link">
             Checkout
             <Icon type="right" />
-          </a>
+          </ButtonLink>
         </div>
       </div>
     );

@@ -1,7 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 import Alert from './Alert'
-import { Radio, Row, Col, Icon } from 'antd';
+import { Radio, Row, Col } from 'antd';
 
 class ShippingMethodForm extends React.Component {
   constructor(props) {

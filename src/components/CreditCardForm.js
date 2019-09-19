@@ -10,7 +10,6 @@ const ELEMENTS_STYLE = {
     color: '#303238',
     fontSize: '14px',
     fontFamily: 'Courier, sans-serif',
-    lineHeight: '14px',
     fontSmoothing: 'antialiased',
     '::placeholder': {
       color: '#ccc',
@@ -88,7 +87,7 @@ class CreditCardForm extends React.Component {
     }});
   }
 
-  componentWillUnmount() {
+  UNSAFE_componentWillUnmount() {
     this.state.elements.cardNumber.off('change', this._onCardNumberChange);
     this.state.elements.cardExpiry.off('change', this._onCardNumberChange);
     this.state.elements.cardCvc.off('change', this._onCardNumberChange);
@@ -120,8 +119,10 @@ class CreditCardForm extends React.Component {
         </Form.Item>
 
         <Form.Item {...formErrors['cardNumber']} {...formItemLayout} required label="Card number">
-          <div ref="cc-number" className="CreditCardForm__number"></div>
-          <Icon className="CreditCardForm__number-icon" type="lock" />
+          <div className="CreditCardForm__number-wrapper">
+            <div ref="cc-number" className="CreditCardForm__number"></div>
+            <Icon className="CreditCardForm__number-icon" type="lock" />
+          </div>
         </Form.Item>
 
         <Form.Item

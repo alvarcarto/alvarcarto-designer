@@ -12,6 +12,7 @@ import _ from 'lodash';
 import CartItem from './CartItem';
 import AddPromotionLink from './AddPromotionLink';
 import IconButton from './IconButton';
+import UnstyledButton from './UnstyledButton';
 import history from '../history';
 
 class CheckoutSummary extends React.Component {
@@ -95,7 +96,7 @@ class CheckoutSummary extends React.Component {
   _getPromotionLink = () => {
     const { promotion } = this.props.globalState;
     if (promotion) {
-      return <a onClick={this._onDeletePromotion}>Remove promotion</a>;
+      return <UnstyledButton onClick={this._onDeletePromotion}>Remove promotion</UnstyledButton>;
     }
 
     return <AddPromotionLink onPromotionApply={this._onApplyPromotion} />;
