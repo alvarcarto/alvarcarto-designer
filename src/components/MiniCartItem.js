@@ -100,15 +100,18 @@ class MiniCartItem extends React.Component {
     this.props.onEditClick(this.props.index);
   };
 
-  _onRemove = () => {
+  _onRemove = (e) => {
+    e.stopPropagation();
     this.props.onRemoveClick(this.props.index);
   };
 
-  _onIncreaseQuantity = () => {
+  _onIncreaseQuantity = (e) => {
+    e.stopPropagation();
     this.props.onIncreaseQuantityClick(this.props.index);
   };
 
-  _onDecreaseQuantity = () => {
+  _onDecreaseQuantity = (e) => {
+    e.stopPropagation();
     this.props.onDecreaseQuantityClick(this.props.index);
   };
 }

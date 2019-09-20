@@ -40,13 +40,6 @@ class AlvarMapDesignPanel extends React.Component {
             }
           }}
         </MediaQuery>
-
-        {/*
-        <div className="AlvarMapDesignPanel__recommend">
-          <h3>Try one of our picks</h3>
-          <CityButtonList onButtonClick={this._onCityButtonClick} />
-        </div>
-        */}
       </div>
     );
   }
