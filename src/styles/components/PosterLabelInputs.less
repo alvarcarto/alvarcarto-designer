@@ -1,8 +1,3 @@
-.PosterLabelInputs .ant-switch {
-  position: relative;
-  margin: 0;
-}
-
 .PosterLabelInputs__text {
   margin-top: 20px;
 
@@ -13,5 +8,13 @@
 
   .ant-checkbox-wrapper {
     margin-bottom: 8px;
+  }
+}
+
+@media @screen-gt-sm-media {
+  /* This should be properly fixed by making the poster label inputs with flexbox */
+  .PosterLabelInputs .ant-switch {
+    position: relative;
+    top: 10px;
   }
 }
