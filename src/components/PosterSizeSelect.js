@@ -12,15 +12,14 @@ class PosterSizeSelect extends React.Component {
     const sizeTypeValue = this._getSelectedSize().type;
     return (
       <div className="PosterSizeSelect">
-        <MediaQuery maxWidth={CONST.SCREEN_SM}>
+        <MediaQuery minWidth={CONST.SCREEN_MD}>
           {(matches) => {
-            const sizeProps = matches ? { size: 'large '} : {};
             return <div className="PosterSizeSelect__type">
-              <Radio.Group onChange={this._onTypeChange} value={sizeTypeValue} {...sizeProps}>
+              <Radio.Group onChange={this._onTypeChange} value={sizeTypeValue}>
                 {
                   _.map(POSTER_SIZE_TYPES, type => {
                     const radioButton = <Radio.Button key={type.id} value={type.id}>{type.label}</Radio.Button>;
-                    if (matches) {
+                    if (!matches) {
                       return radioButton;
                     }
 
@@ -34,12 +33,12 @@ class PosterSizeSelect extends React.Component {
           }}
         </MediaQuery>
 
-        <MediaQuery maxWidth={CONST.SCREEN_SM}>
+        <MediaQuery minWidth={CONST.SCREEN_MD}>
           {(matches) => {
             if (matches) {
-              return this._renderSelect();
-            } else {
               return this._renderRadio();
+            } else {
+              return this._renderSelect();
             }
           }}
         </MediaQuery>

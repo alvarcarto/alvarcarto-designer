@@ -195,9 +195,9 @@ class ThankYouPage extends React.Component {
       : 'Digital assets arrive.';
 
     return <div>
-      <MediaQuery maxWidth={CONST.SCREEN_SM}>
+      <MediaQuery minWidth={CONST.SCREEN_MD}>
         {(matches) =>
-          <Steps direction={matches ? 'vertical' : 'horizontal'} current={stepIndex}>
+          <Steps direction={matches ? 'horizontal' : 'vertical'} current={stepIndex}>
             <Steps.Step
               title="Design &amp; order"
               description={firstText}

@@ -1,6 +1,6 @@
 .EditorPage {
   display: flex;
-  flex-direction: row;
+  flex-direction: column-reverse;
   height: 100%;
   width: 100%;
   /* This is risky, but was tested in various browsers */
@@ -22,24 +22,18 @@
   flex-shrink: 0;
 }
 
-@media @screen-lt-sm-media {
-  .EditorPage {
-    flex-direction: column-reverse;
-  }
-
-  .EditorPage .SidePanel {
-    height: (@sidepanel-upper-narrow-height + @sidepanel-lower-narrow-height);
-  }
+.EditorPage .SidePanel {
+  height: (@sidepanel-upper-narrow-height + @sidepanel-lower-narrow-height);
 }
 
-@media @screen-gt-sm-media {
+@media @screen-gt-md-media {
+  .EditorPage {
+    flex-direction: row;
+  }
+
   .EditorPage .SidePanel {
     flex: 1 1 0%;
-  }
-}
-
-@media @screen-gt-sm-media and (max-width: 1150px) {
-  .EditorPage .SidePanel {
     min-width: 380px;
+    height: auto;
   }
 }

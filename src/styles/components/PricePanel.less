@@ -1,5 +1,5 @@
 .PricePanel {
-  min-height: 80px;
+  min-height: @sidepanel-lower-narrow-height;
   position: relative;
   background: #f6f6f6;
   color: @primary-color;
@@ -50,16 +50,16 @@
   font-size: @font-size-large;
   position: relative;
   top: -2px;
-  left: 4px;
+  left: 2px;
 }
 
 .PricePanel__price-shipping {
-  font-size: @font-size-medium;
+  font-size: @font-size-small;
   position: relative;
   color: #999;
   width: 100px;
   top: -4px;
-  left: 12px;
+  left: 6px;
 }
 
 .PricePanel .PricePanel__badge {
@@ -73,9 +73,14 @@
   background: @primary-color;
 }
 
-@media @screen-lt-sm-media {
+@media @screen-gt-md-media {
   .PricePanel {
-    min-height: @sidepanel-lower-narrow-height;
+    min-height: @sidepanel-lower-wide-height;
+  }
+
+  .PricePanel .PricePanel__badge {
+    display: none;
+    visibility: hidden;
   }
 
   .PricePanel__price-currency {
@@ -83,13 +88,7 @@
   }
 
   .PricePanel__price-shipping {
-    left: 8px;
-  }
-}
-
-@media @screen-gt-sm-media {
-  .PricePanel .PricePanel__badge {
-    display: none;
-    visibility: hidden;
+    font-size: @font-size-medium;
+    left: 12px;
   }
 }

@@ -39,25 +39,26 @@
   background: @primary-color;
 }
 
-@media @screen-lt-sm-media {
-  .SidePanel__lower {
-    border-top: 1px solid @primary-color;
-  }
-
-  .SidePanel__upper {
-    height: @sidepanel-upper-narrow-height;
-  }
+.SidePanel__lower {
+  border-top: 1px solid @primary-color;
 }
 
-@media @screen-gt-sm-media {
+.SidePanel__upper {
+  height: @sidepanel-upper-narrow-height;
+}
+
+
+@media @screen-gt-md-media {
   .SidePanel__lower {
     height: 80px;
+    border-top: none;
   }
 
   .SidePanel__upper {
     flex: 1;
     flex-shrink: 2;
     overflow: auto;
+    height: auto;
   }
 
   .SidePanel__middle {

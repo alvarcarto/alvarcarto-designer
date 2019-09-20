@@ -80,7 +80,7 @@
 .CheckoutForm .CheckoutForm__badge-list {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: flex-start;
   margin: 40px 0;
 }
 
@@ -89,7 +89,7 @@
 }
 
 .CheckoutForm .CheckoutForm__badge {
-  margin-right: 60px;
+  margin: 0 10px 0 0;
   text-align: center;
   text-transform: uppercase;
   width: 80px;
@@ -146,7 +146,7 @@
   }
 }
 
-@media @screen-gt-sm-media {
+@media @screen-gt-xl-media {
   .CheckoutForm .CheckoutForm__complete-button,
   .CheckoutForm .CheckoutForm__badge-list,
   .CheckoutForm .CheckoutForm__info,
@@ -166,22 +166,12 @@
   }
 }
 
-@media @screen-lt-sm-media {
+@media @screen-gt-xs-media {
   .CheckoutForm .CheckoutForm__badge-list {
-    justify-content: flex-start;
+    justify-content: center;
   }
 
   .CheckoutForm .CheckoutForm__badge {
     margin-right: 30px;
-  }
-}
-
-@media @screen-lt-xs-media {
-  .CheckoutForm .CheckoutForm__badge-list {
-    justify-content: space-between;
-  }
-
-  .CheckoutForm .CheckoutForm__badge {
-    margin-right: 0;
   }
 }

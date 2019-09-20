@@ -28,7 +28,7 @@
 
 .CheckoutPage__row {
   display: flex;
-  flex-direction: row-reverse;
+  flex-direction: column;
 }
 
 .CheckoutPage .ant-affix {
@@ -41,12 +41,14 @@
   min-width: 240px;
 }
 
-.CheckoutPage .CheckoutPage__summary-container {
-  flex: 35;
+.CheckoutPage .CheckoutForm {
+  padding: 0 20px 0 0;
 }
 
-.CheckoutPage .CheckoutForm {
-  flex: 65;
+.CheckoutPage .CheckoutForm,
+.CheckoutPage .CheckoutPage__summary-container {
+  /* Fix problem with IE11 layout */
+  flex: auto;
 }
 
 .CheckoutPage__logo img {
@@ -76,13 +78,16 @@
   padding-right: 40px;
 }
 
-@media @screen-lt-sm-media {
+@media @screen-gt-md-media {
   .CheckoutPage__row {
-    flex-direction: column;
+    flex-direction: row-reverse;
   }
 
-  .CheckoutPage .CheckoutForm, .CheckoutPage .CheckoutPage__summary-container {
-    /* Fix problem with IE11 layout */
-    flex: auto;
+  .CheckoutPage .CheckoutPage__summary-container {
+    flex: 35;
+  }
+
+  .CheckoutPage .CheckoutForm {
+    flex: 65;
   }
 }

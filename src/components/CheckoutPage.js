@@ -56,9 +56,9 @@ class CheckoutPage extends React.Component {
         </div>
 
         <div className="CheckoutPage__row">
-          <MediaQuery maxWidth={CONST.SCREEN_SM}>
+          <MediaQuery minWidth={CONST.SCREEN_MD}>
             {(matches) => {
-              if (matches) {
+              if (!matches) {
                 return <CheckoutSummary globalState={this.props.globalState} />;
               } else if (this.props.globalState.cart.length > 4) {
                 return <CheckoutSummary globalState={this.props.globalState} />;

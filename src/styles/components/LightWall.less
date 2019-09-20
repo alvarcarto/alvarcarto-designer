@@ -147,12 +147,19 @@
 }
 
 .LightWall__credits {
+  position: absolute;
+  bottom: 3px;
+  transform-origin: 0 0;
+  transform: rotate(-90deg);
+  left: 5px;
+
   height: 15px;
   font-size: 10px;
-  position: absolute;
-  bottom: 5px;
-  right: 13px;
-  color: #888;
+  color: #aaa;
+
+  a {
+    color: #aaa;
+  }
 }
 
 .LightWall__credits-heart {
@@ -160,10 +167,6 @@
   top: 2px;
   right: 2px;
   font-size: 12px;
-}
-
-.LightWall__credits a {
-  color: #888;
 }
 
 .LightWall__width-label,
@@ -220,15 +223,11 @@
   white-space: nowrap;
 }
 
-@media @screen-lt-sm-media {
-  .LightWall__credits, .LightWall__credits a {
-    color: #aaa;
-  }
-
+@media @screen-gt-md-media {
   .LightWall__credits {
-    bottom: 3px;
-    transform-origin: 0 0;
-    transform: rotate(-90deg);
-    left: 5px;
+    bottom: 5px;
+    right: 13px;
+    left: auto;
+    transform: none;
   }
 }

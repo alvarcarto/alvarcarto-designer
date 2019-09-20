@@ -62,11 +62,13 @@
 
 .AlvarMapDesignPanel .OrientationSelect,
 .AlvarMapDesignPanel .PosterSizeSelect {
-  margin-top: 8px;
+  margin-top: 0;
 }
 
 .AlvarMapDesignPanel__info {
   margin-bottom: 16px;
+  display: none;
+  visibility: hidden;
 }
 
 .AlvarMapDesignPanel__info .Alert {
@@ -94,29 +96,14 @@
   padding: 5px 0 0 3px;
 }
 
-@media @screen-lt-sm-media {
-  .AlvarMapDesignPanel__info {
-    display: none;
-    visibility: hidden;
-  }
-
-  .AlvarMapDesignPanel .OrientationSelect,
-  .AlvarMapDesignPanel .PosterSizeSelect,
-  .AlvarMapDesignPanel .GeoSearch {
-    margin-top: 0;
-  }
-
-  .AlvarMapDesignPanel__orientation-select {
-    margin-top: 16px;
-  }
-
-  .AlvarMapDesignPanel__orientation-select .ant-form-item-label {
-    margin-top: 8px;
-  }
-
-  .AlvarMapDesignPanel__orientation-select .OrientationSelect {
-    position: relative;
-    left: -3px
-  }
+.AlvarMapDesignPanel__orientation-select .OrientationSelect {
+  position: relative;
+  left: -3px
 }
 
+@media @screen-gt-md-media {
+  .AlvarMapDesignPanel__info {
+    display: block;
+    visibility: visible;
+  }
+}

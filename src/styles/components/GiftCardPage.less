@@ -29,19 +29,3 @@
 .GiftCardPage h1 {
   margin-bottom: 30px;
 }
-
-.GiftCardPage__row {
-  display: flex;
-  flex-direction: row-reverse;
-}
-
-@media @screen-lt-sm-media {
-  .GiftCardPage__row {
-    flex-direction: column;
-  }
-
-  .GiftCardPage .GiftCardForm, .GiftCardPage .GiftCardPage__summary-container {
-    /* Fix problem with IE11 layout */
-    flex: auto;
-  }
-}

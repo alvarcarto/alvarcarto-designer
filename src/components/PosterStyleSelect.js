@@ -14,13 +14,13 @@ class PosterStyleSelect extends React.Component {
       'round',
     ], style.id));
 
-    return <MediaQuery maxWidth={CONST.SCREEN_SM}>
+    return <MediaQuery minWidth={CONST.SCREEN_MD}>
       {(matches) =>
         <div className="PosterStyleSelect">
           {
             _.map(styles, style => {
               return <PosterStyleItem
-                tooltip={!matches}
+                tooltip={matches}
                 onClick={this._onClickItem}
                 key={style.id}
                 style={style}

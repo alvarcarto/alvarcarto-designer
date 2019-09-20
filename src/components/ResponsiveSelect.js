@@ -14,12 +14,12 @@ class ResponsiveSelect extends React.Component {
   }
 
   render() {
-    return <MediaQuery maxWidth={CONST.SCREEN_SM}>
+    return <MediaQuery minWidth={CONST.SCREEN_MD}>
       {(matches) => {
         if (matches) {
-          return this._renderSelect();
-        } else {
           return this._renderAntdSelect();
+        } else {
+          return this._renderSelect();
         }
       }}
     </MediaQuery>;

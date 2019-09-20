@@ -31,12 +31,12 @@ class AlvarMapDesignPanel extends React.Component {
 
     return (
       <div className={`AlvarMapDesignPanel ${this.props.className}`}>
-        <MediaQuery maxWidth={CONST.SCREEN_SM}>
+        <MediaQuery minWidth={CONST.SCREEN_MD}>
           {(matches) => {
             if (matches) {
-              return this._renderNarrowView(mapItem);
-            } else {
               return this._renderWideView(mapItem);
+            } else {
+              return this._renderNarrowView(mapItem);
             }
           }}
         </MediaQuery>

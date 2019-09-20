@@ -23,13 +23,13 @@ class MapStyleSelect extends React.Component {
     }
     const filteredStyles = _.filter(styles, style => _.includes(styleIdsToPick, style.id));
 
-    return <MediaQuery maxWidth={CONST.SCREEN_SM}>
+    return <MediaQuery minWidth={CONST.SCREEN_MD}>
       {(matches) =>
         <div className="MapStyleSelect">
           {
             _.map(filteredStyles, style => {
               return <MapStyleItem
-                tooltip={!matches}
+                tooltip={matches}
                 onClick={this._onClickItem}
                 key={style.id}
                 style={style}
