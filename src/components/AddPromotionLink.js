@@ -94,7 +94,8 @@ class AddPromotionLink extends React.Component {
     this.setState({ visible: true });
   };
 
-  _onCancel = () => {
+  _onCancel = (e) => {
+    e.stopPropagation();
     this.setState({ visible: false });
   };
 

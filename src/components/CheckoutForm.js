@@ -406,8 +406,8 @@ class CheckoutForm extends React.Component {
 
     Modal.info({
       title: 'Your payments are secured',
-      iconType: 'lock',
-      onCancel: () => null,  // To prevent expection
+      icon: <Icon type="lock" theme="filled" />,
+      maskClosable: true,
       content: (
         <div>
           <p>
