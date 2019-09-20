@@ -15,12 +15,13 @@ import {
   createPosterImageUrl,
   getQueryParameterByName,
   createPlacementImageUrl,
+  calculateAspectRatioFit,
 } from '../util';
 import UnstyledButton from './UnstyledButton';
 
 // Padding which should be left unfilled when scaling poster to light wall
-const POSTER_PADDING_WIDTH = 45;
-const POSTER_PADDING_HEIGHT = 45;
+const MIN_POSTER_PADDING_WIDTH = 45;
+const MIN_POSTER_PADDING_HEIGHT = 45;
 
 const MULTI = getQueryParameterByName('multiMode') === 'true';
 
@@ -92,7 +93,8 @@ class LightWall extends React.Component {
     );
     const scalerZoom = Math.max(this.state.zoom, 0.15);
 
-    const dimensions = posterSizeToPixels(mapItem.size, mapItem.orientation);
+    const containerArea = this._getContainerArea()
+    const dimensions = posterSizeToPixels(mapItem.size, mapItem.orientation, containerArea);
     const mapContainerCss = {
       // http://stackoverflow.com/questions/10858523/css-transform-with-element-resizing
       width: dimensions.width * scalerZoom,
@@ -141,10 +143,10 @@ class LightWall extends React.Component {
 
                     const disabled = globalState.editCartItem !== i;
                     return <div className="LightWall__map-positioner" style={autoprefix({transform: `translateX(${translateX}px)`})}>
-                      <AlvarMap key={i} mapItem={m} disabled={disabled} scaleZoom={scalerZoom} hideOverlay={!this.state.showOverlay} hideShadows hideTips />
+                      <AlvarMap dimensions={dimensions} key={i} mapItem={m} disabled={disabled} scaleZoom={scalerZoom} hideOverlay={!this.state.showOverlay} hideShadows hideTips />
                     </div>
                   })
-                : <AlvarMap mapItem={mapItem} scaleZoom={scalerZoom} hideTips={globalState.debug} />
+                : <AlvarMap dimensions={dimensions} mapItem={mapItem} scaleZoom={scalerZoom} hideTips={globalState.debug} />
             }
           </div>
 
@@ -281,21 +283,34 @@ class LightWall extends React.Component {
       globalState = this.props.globalState;
     }
 
+    const containerArea = this._getContainerArea()
     const mapItem = globalState.cart[globalState.editCartItem];
-    const dimensions = posterSizeToPixels(mapItem.size, mapItem.orientation);
-    const containerWidth = this.state.container.offsetWidth - (POSTER_PADDING_WIDTH * 2);
-    const containerHeight = this.state.container.offsetHeight - (POSTER_PADDING_HEIGHT * 2);
+    const dimensions = posterSizeToPixels(mapItem.size, mapItem.orientation, containerArea);
 
     const width = MULTI ? this._calculateSumOfPostersWidths(globalState) : dimensions.width;
     const fitRatio = calculateAspectRatioFit(
       width,
       dimensions.height,
-      containerWidth,
-      containerHeight
+      containerArea.width,
+      containerArea.height,
     );
 
     // Limit zoom always to maximum 1.0
     return Math.min(1, fitRatio);
+  };
+
+  _getContainerArea = () => {
+    const containerOffsets = {
+      width: _.get(this.state, 'container.offsetWidth', 500),
+      height: _.get(this.state, 'container.offsetHeight', 500),
+    }
+
+    const paddingWidth = Math.max(containerOffsets.width * 0.1, MIN_POSTER_PADDING_WIDTH)
+    const paddingHeight = Math.max(containerOffsets.height * 0.1, MIN_POSTER_PADDING_HEIGHT)
+    return {
+      width: containerOffsets.width - (paddingWidth * 2),
+      height: containerOffsets.height - (paddingHeight * 2)
+    }
   };
 
   // Calculates sum of all poster widths in pixels
@@ -368,20 +383,6 @@ class LightWall extends React.Component {
 
     window.open(newUrl, '_blank');
   };
-}
-
-/**
- * Conserve aspect ratio of the orignal region. Useful when shrinking/enlarging
- * images to fit into a certain area.
- *
- * @param {Number} srcWidth Source area width
- * @param {Number} srcHeight Source area height
- * @param {Number} maxWidth Fittable area maximum available width
- * @param {Number} maxHeight Fittable area maximum available height
- * @return {Number} ratio to multiple src dimensions to get perfect fit
- */
-function calculateAspectRatioFit(srcWidth, srcHeight, maxWidth, maxHeight) {
-  return Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
 }
 
 export default connect(state => ({ globalState: state }))(LightWall);

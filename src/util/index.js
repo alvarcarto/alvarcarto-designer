@@ -4,32 +4,51 @@ import config from '../config';
 import geolib from 'geolib';
 import { POSTER_STYLES, MAP_STYLES, resolveOrientation } from 'alvarcarto-common';
 
-export function posterSizeToPixels(size, orientation) {
-  let dimensions;
-  switch (size) {
-    case '30x40cm':
-      dimensions = { width: 375, height: 500, clipScale: 1 };
-      break;
-    case '50x70cm':
-      dimensions = { width: 420, height: 588, clipScale: 0.9 };
-      break;
-    case '70x100cm':
-      dimensions = { width: 448, height: 640, clipScale: 0.8 };
-      break;
-    case '12x18inch':
-      dimensions = { width: 340, height: 510, clipScale: 1 };
-      break;
-    case '18x24inch':
-      dimensions = { width: 435, height: 580, clipScale: 0.9 };
-      break;
-    case '24x36inch':
-      dimensions = { width: 420, height: 630, clipScale: 0.8 };
-      break;
-    default:
-      throw new Error(`Unknown size: ${size}`);
+const dimensionsToPixels = {
+  '30x40cm': { width: 300 * 1.5, height: 400 * 1.5, clipScale: 1 },
+  '50x70cm': { width: 500 * 1.2, height: 700 * 1.2, clipScale: 0.9 },
+  '70x100cm': { width: 700, height: 1000, clipScale: 0.8 },
+  '12x18inch': { width: Math.round(12 * 2.54 * 10 * 1.5), height: Math.round(18 * 2.54 * 10 * 1.5), clipScale: 1 },
+  '18x24inch': { width: Math.round(18 * 2.54 * 10 * 1.2), height: Math.round(24 * 2.54 * 10 * 1.2), clipScale: 0.9 },
+  '24x36inch': { width: Math.round(24 * 2.54 * 10), height: Math.round(36 * 2.54 * 10), clipScale: 0.8 },
+}
+
+export function posterSizeToPixels(size, orientation, fitToArea) {
+  if (!_.has(dimensionsToPixels, size)) {
+    throw new Error(`Unknown size: ${size}`);
   }
 
-  return resolveOrientation(dimensions, orientation);
+  if (!fitToArea) {
+    const pixelInfo = dimensionsToPixels[size];
+    return resolveOrientation(pixelInfo, orientation);
+  }
+
+  // Find the poster which would need most scaling down which means the largest poster size
+  // This poster will be the max size and others are then scaled down from that
+  const arr = _.map(dimensionsToPixels, (val, key) => ({ val, key }))
+  const largestPixelInfo = _.minBy(arr, ({ val }) => {
+    const ratio = calculateAspectRatioFit(val.width, val.height, fitToArea.width, fitToArea.height)
+    return ratio
+  }).val
+
+  const largestRatio = calculateAspectRatioFit(
+    largestPixelInfo.width,
+    largestPixelInfo.height,
+    fitToArea.width,
+    fitToArea.height
+  )
+  const largestWidth = largestPixelInfo.width * largestRatio
+  const largestHeight = largestPixelInfo.height * largestRatio
+
+  const requestedPixelInfo = dimensionsToPixels[size];
+
+  const scaledPixelInfo = {
+    width: Math.round(requestedPixelInfo.width / largestPixelInfo.width * largestWidth),
+    height: Math.round(requestedPixelInfo.height / largestPixelInfo.height * largestHeight),
+    clipScale: requestedPixelInfo.clipScale,
+  }
+
+  return resolveOrientation(scaledPixelInfo, orientation);
 }
 
 export function posterSizeToThumbnailPixels(size, orientation) {
@@ -255,4 +274,18 @@ export function getCenterOfCoordinates(coords) {
   const center = geolib.getCenter(newCoords);
 
   return { lat: Number(center.latitude), lng: Number(center.longitude) };
+}
+
+/**
+ * Conserve aspect ratio of the orignal region. Useful when shrinking/enlarging
+ * images to fit into a certain area.
+ *
+ * @param {Number} srcWidth Source area width
+ * @param {Number} srcHeight Source area height
+ * @param {Number} maxWidth Fittable area maximum available width
+ * @param {Number} maxHeight Fittable area maximum available height
+ * @return {Number} ratio to multiple src dimensions to get perfect fit
+ */
+export function calculateAspectRatioFit(srcWidth, srcHeight, maxWidth, maxHeight) {
+  return Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
 }

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { setMapView } from '../actions';
 import CONST from '../constants';
 import config from '../config';
-import { posterSizeToPixels, getStyle } from '../util';
+import { getStyle } from '../util';
 import AlvarMapOverlay from './AlvarMapOverlay';
 import {
   Map as LeafletMap,
@@ -25,7 +25,10 @@ class AlvarMap extends React.Component {
     const nextMapItem = nextProps.mapItem;
 
     if (mapItem.size !== nextMapItem.size ||
-        mapItem.orientation !== nextMapItem.orientation) {
+        mapItem.orientation !== nextMapItem.orientation ||
+        this.props.dimensions.width !== nextProps.dimensions.width ||
+        this.props.dimensions.height !== nextProps.dimensions.height
+    ) {
       if (this.refs.lMap) {
         setTimeout(() => this.refs.lMap.leafletElement.invalidateSize(), 0);
       }
@@ -57,11 +60,10 @@ class AlvarMap extends React.Component {
     const { props } = this;
     const { mapItem } = props;
 
-    const dimensions = posterSizeToPixels(mapItem.size, mapItem.orientation);
     const style = getStyle(mapItem.mapStyle);
     const mapCssStyle = {
-      width: dimensions.width,
-      height: dimensions.height,
+      width: props.dimensions.width,
+      height: props.dimensions.height,
     };
 
     const tooltipContent = <span onClick={this._onTooltipClick} className="AlvarMap__tooltip">
@@ -103,8 +105,7 @@ class AlvarMap extends React.Component {
       return <AlvarMapOverlay mapItem={mapItem} />
     }
 
-    const dimensions = posterSizeToPixels(mapItem.size, mapItem.orientation);
-    const minSide = Math.min(dimensions.width, dimensions.height);
+    const minSide = Math.min(this.props.dimensions.width, this.props.dimensions.height);
     const borderPadding = Math.floor(CONST.EMPTY_MAP_PADDING_FACTOR * minSide);
 
     return <div className="AlvarMap__empty-overlay" style={{ border: `${borderPadding}px solid white` }}></div>;
