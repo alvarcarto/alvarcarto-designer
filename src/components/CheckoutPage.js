@@ -7,7 +7,6 @@ import _ from 'lodash';
 import { Icon, Affix, Modal } from 'antd';
 import { postOrder, checkoutFormStateChange } from '../actions';
 import config from '../config';
-import * as stripeUtil from '../util/stripe';
 import CONST from '../constants';
 import CheckoutForm from './CheckoutForm';
 import Footer from './Footer';
