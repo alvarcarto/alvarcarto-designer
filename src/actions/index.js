@@ -333,7 +333,6 @@ function handleCardPayment(checkoutPayload, receivedData, totalPrice) {
     ? checkoutPayload.billingAddress
     : checkoutPayload.shippingAddress;
 
-  console.log(receivedData.stripePaymentIntent.client_secret, checkoutPayload)
   return stripeUtil.handleCardPayment(
     receivedData.stripePaymentIntent.client_secret,
     checkoutPayload.stripeElement,

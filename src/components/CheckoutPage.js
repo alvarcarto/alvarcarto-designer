@@ -104,7 +104,7 @@ class CheckoutPage extends React.Component {
     this.props.dispatch(postOrder(order))
       .then((res) => {
         const data = res.data;
-        const orderId = _.get(data, 'order.orderId');
+        const orderId = _.get(data, 'orderId');
         if (!orderId) {
           throw new Error(`API did not respond with order id. Data: ${data}`);
         }

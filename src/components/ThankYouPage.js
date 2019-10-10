@@ -12,7 +12,7 @@ import Footer from './Footer';
 const STEP_WAITING = {
   stepIndex: 0,
   firstIcon: 'loading',
-  firstText: 'Finalizing the order..'
+  firstText: 'Finalizing the payment..'
 };
 const STEP_RECEIVED = {
   stepIndex: 1,
@@ -108,6 +108,7 @@ class ThankYouPage extends React.Component {
         const state = {
           loading: false,
         };
+        this.clearFetchLoop();
 
         if (_.get(err, 'response.status') === 404) {
           state.error = {
@@ -189,7 +190,7 @@ class ThankYouPage extends React.Component {
     } else if (this.state.error) {
       return this.state.error.message;
     } else if (this.state.waitingForPayment) {
-      return 'Finalizing order';
+      return 'Finalizing payment';
     }
 
     return 'Thank you!';
