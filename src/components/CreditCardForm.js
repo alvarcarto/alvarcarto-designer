@@ -222,8 +222,8 @@ class CreditCardForm extends React.Component {
     const cardType = event.brand;
     const cardLabel = CARD_TYPE_TO_LABEL[cardType];
     if (event.complete && !_.includes(ACCEPTED_CARD_TYPES, cardType)) {
-      let message = `Unfortunately we don't accept "${cardLabel}" cards.`;
-      message += ' Visa, Mastercard and American Express are supported.';
+      let message = `Unfortunately we can't accept "${cardLabel}" cards.`;
+      message += ' Visa, Mastercard and American Express are supported by Stripe in Europe.';
       const err = new Error(message);
       event.error = err;
     }

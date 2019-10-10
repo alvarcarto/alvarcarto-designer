@@ -6,7 +6,7 @@ const DUMMY_DATA = {
   "emailForm": {
     "isValid": true,
     "values": {
-      "email": "john.doe@gmail.com"
+      "email": "no-reply@alvarcarto.com"
     }
   },
   "shippingAddressForm": {

@@ -9,12 +9,12 @@ import Spinner from './Spinner';
 import FinalOrderSummary from './FinalOrderSummary';
 import Footer from './Footer';
 
-const STEPS_FIRST = {
+const STEP_WAITING = {
   stepIndex: 0,
   firstIcon: 'loading',
-  firstText: 'Finalizing the order ..'
+  firstText: 'Finalizing the payment..'
 };
-const STEPS_SECOND = {
+const STEP_RECEIVED = {
   stepIndex: 1,
   firstIcon: null,
   firstText: 'We received your order.',
@@ -45,7 +45,10 @@ function getItemsWording(cart) {
   return words.join(' and ');
 }
 
-function getFirstText(cart, city) {
+function getFirstText(order) {
+  const { cart } = order;
+  const city = _.get(order, 'shippingAddress.city');
+
   if (hasShippableProducts(cart)) {
     return [
       `Your unique ${getItemsWording(cart)} will be printed and shipped to ${city}`,
@@ -59,7 +62,8 @@ function getFirstText(cart, city) {
   ].join(' ');
 }
 
-function getSecondText(cart) {
+function getSecondText(order) {
+  const { cart } = order;
   const pieces = ['Receipt of the purchase will be sent to your email.'];
 
   if (hasShippableProducts(cart)) {
@@ -77,27 +81,34 @@ class ThankYouPage extends React.Component {
       error: null,
       order: null,
       loading: true,
-      steps: props.initialAnimation ? STEPS_FIRST : STEPS_SECOND,
+      waitingForPayment: false,
     };
   }
 
-  componentDidMount() {
+  fetchOrder = () => {
     getOrder(this.props.orderId)
       .then(res => {
+        const order = res.data;
         this.setState({
           order: res.data,
           error: null,
           loading: false,
-        });
+          waitingForPayment: !order.paid,
+        })
 
-        setTimeout(() => this.setState({
-          steps: STEPS_SECOND,
-        }), 3000);
+        if (order.paid) {
+          setTimeout(() => this.setState({
+            waitingForPayment: false,
+          }), 3000);
+
+          this.clearFetchLoop();
+        }
       })
       .catch(err => {
         const state = {
           loading: false,
         };
+        this.clearFetchLoop();
 
         if (_.get(err, 'response.status') === 404) {
           state.error = {
@@ -122,14 +133,35 @@ class ThankYouPage extends React.Component {
         }
 
         this.setState(state, () => {
-          throw err;
+          console.error(err);
         });
       })
   }
 
+  clearFetchLoop() {
+    if (this.interval) {
+      clearInterval(this.interval);
+    }
+  }
+
+  componentDidMount() {
+    this.fetchOrder()
+
+    this.interval = setInterval(this.fetchOrder, 5000);
+  }
+
+  componentWillUnmount() {
+    this.clearFetchLoop()
+  }
+
   render() {
+    let className = 'ThankYouPage'
+    if (!_.get(this.state, 'order.paid', false)) {
+      className += ' ThankYouPage--payment-waiting'
+    }
+
     return (
-      <div className="ThankYouPage">
+      <div className={className}>
         <div className="ThankYouPage__content">
           <h1>{this._renderHeader()}</h1>
 
@@ -157,6 +189,8 @@ class ThankYouPage extends React.Component {
       return <Spinner dark />;
     } else if (this.state.error) {
       return this.state.error.message;
+    } else if (this.state.waitingForPayment) {
+      return 'Finalizing payment';
     }
 
     return 'Thank you!';
@@ -187,10 +221,12 @@ class ThankYouPage extends React.Component {
   };
 
   _renderOrderContent = () => {
-    const { cart, promotion } = this.state.order;
-    const { stepIndex, firstText, firstIcon } = this.state.steps;
-    const city = _.get(this.state.order, 'shippingAddress.city');
-    const description = this.state.order.shippingAddress
+    const { order } = this.state
+    const { cart, promotion } = order;
+    const step = this.state.waitingForPayment ? STEP_WAITING : STEP_RECEIVED;
+    const { stepIndex, firstText, firstIcon } = step;
+    const city = _.get(order, 'shippingAddress.city');
+    const description = order.shippingAddress
       ? `Package arrives to ${city}.`
       : 'Digital assets arrive.';
 
@@ -209,8 +245,11 @@ class ThankYouPage extends React.Component {
         }
       </MediaQuery>
 
-      <p>{getFirstText(cart, city)}</p>
-      <p>{getSecondText(cart, city)}</p>
+      <div className="ThankYouPage__order-info">
+        <p>{getFirstText(order)}</p>
+        <p>{getSecondText(order)}</p>
+      </div>
+
 
       <div className="ThankYouPage__order-container">
         <FinalOrderSummary promotion={promotion} cart={cart} orderId={this.props.orderId} />

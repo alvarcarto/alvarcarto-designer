@@ -103,7 +103,7 @@ class CheckoutPage extends React.Component {
 
     this.props.dispatch(postOrder(order))
       .then((res) => {
-        const data = _.get(res, 'data');
+        const data = res.data;
         const orderId = _.get(data, 'orderId');
         if (!orderId) {
           throw new Error(`API did not respond with order id. Data: ${data}`);
@@ -113,26 +113,26 @@ class CheckoutPage extends React.Component {
       })
       .catch(err => {
         const isPaymentError = _.get(err, 'response.status') === 402 ||
-                               _.get(err, 'type') === 'card_error';
+                               _.get(err, 'type') === 'card_error' ||
+                               _.startsWith(err.code, 'payment_intent');
 
         if (isPaymentError) {
-          const detailedError = _.get(err, 'type') === 'card_error'
+          const detailedError = err.isClientStripeError
             ? _.get(err, 'message', 'Unexpected error')
             : _.get(err, 'response.data.messages.0', 'Unexpected error');
 
           Modal.error({
-            title: 'Payment error',
+            title: 'Payment could not be completed',
             onCancel: () => null,  // To prevent expection
             content: <div>
               <p>
-                Order could not be completed, because processing the
-                payment failed with reason: <i>{detailedError}</i>
+                Order could not be completed, because the following error was received:
               </p>
+
+              <p><i>{detailedError}</i></p>
               <p>
-                <b>Your card was not charged yet.</b> You can try to complete
-                the purchase again.
-              </p>
-              <p>
+                Your card was not charged yet. You can try to complete
+                the purchase again or use a different card.
                 We're sorry for the inconvenience. If the problem persists,
                 please contact our support at <a target="_blank" rel="noopener noreferrer" href="mailto:help@alvarcarto.com"> help@alvarcarto.com</a>.
               </p>
@@ -145,7 +145,7 @@ class CheckoutPage extends React.Component {
             onCancel: () => null,  // To prevent expection
             content: <div>
               <p>
-                Order could not be completed, because order form contained
+                Order could not be completed, because the order form contained
                 invalid fields. Error message: <i>{detailedError}</i>.
               </p>
               <p>
@@ -158,24 +158,6 @@ class CheckoutPage extends React.Component {
               </p>
             </div>
           });
-        } else if (_.get(err, 'response.status') > 400) {
-          Modal.error({
-            title: 'Unexpected error',
-            onCancel: () => null,  // To prevent expection
-            content: <div>
-              <p>
-                Order could not be completed, because of an unexpected error.
-                Our engineers will fix the problem as soon as possible.
-              </p>
-              <p>
-                We're sorry for the inconvenience. If you were charged,
-                please contact our support at <a target="_blank" rel="noopener noreferrer" href="mailto:help@alvarcarto.com"> help@alvarcarto.com</a>.
-              </p>
-              <p>
-                Don't worry, we promise to fix the situation.
-              </p>
-            </div>
-          });
         } else {
           Modal.error({
             title: 'Unexpected error',
@@ -183,14 +165,10 @@ class CheckoutPage extends React.Component {
             content: <div>
               <p>
                 Order could not be completed, because of an unexpected error.
-                Our engineers will fix the problem as soon as possible.
               </p>
               <p>
                 We're sorry for the inconvenience. If you were charged,
                 please contact our support at <a target="_blank" rel="noopener noreferrer" href="mailto:help@alvarcarto.com"> help@alvarcarto.com</a>.
-              </p>
-              <p>
-                Don't worry, we promise to fix the situation.
               </p>
             </div>
           });

@@ -241,126 +241,118 @@ export const setMiniCartPosition = (pos) => ({
   payload: pos,
 });
 
-export const postOrder = (payload) => function(dispatch) {
+export const postOrder = (payload) => async function(dispatch) {
   dispatch({ type: actions.POST_ORDER_REQUEST, payload });
 
-    return _createStripeToken(payload).then((stripeResponseToken) => {
-      // WARNING: ONLY USE CREDIT CARD DETAILS FROM STRIPE RESPONSE
-      // Do NOT send the full credit card number, CVC or any
-      // more detailed credit card info to our API.
-      // Last 4 digits etc which are in stripe response are ok.
-      // https://support.stripe.com/questions/what-information-can-i-safely-store-about-my-users-payment-information
-      //  "The only sensitive data that you want to avoid handling is your customers'
-      //  credit card number and CVC; other than that, you’re welcome to store
-      //  any other information on your local machines.
-      //  As a good rule, you can store anything returned by our API. In particular,
-      //  you would not have any issues storing the last four digits of your
-      //  customer’s card number or the expiration date for easy reference."
-      const isFreeOrder = _.isNull(stripeResponseToken);
-      const differentBillingAddress = isFreeOrder
-        ? false
-        : Boolean(payload.differentBillingAddress);
+  try {
+    const combinedCart = payload.cart.concat(payload.additionalCart);
+    const totalPrice = calculateCartPrice(combinedCart, { promotion: payload.promotion });
+    const isFreeOrder = totalPrice <= 0;
 
-      const order = {
-        email: payload.email,
-        differentBillingAddress,
-        emailSubscription: Boolean(payload.emailSubscription),
-        shippingAddress: payload.shippingAddress,
-        billingAddress: isFreeOrder
-          ? undefined
-          : payload.billingAddress,
-        cart: payload.cart.concat(payload.additionalCart),
-        stripeTokenResponse: isFreeOrder
-          ? undefined
-          : stripeResponseToken,
-        promotionCode: _.get(payload, 'promotion.promotionCode'),
-      };
+    const differentBillingAddress = isFreeOrder
+      ? false
+      : Boolean(payload.differentBillingAddress);
 
-      const shippingAddressName = _.get(payload, 'shippingAddress.personName');
-      const creditCardPersonName = _.get(payload, 'creditCardPersonName');
+    const order = {
+      email: payload.email,
+      differentBillingAddress,
+      emailSubscription: Boolean(payload.emailSubscription),
+      shippingAddress: payload.shippingAddress,
+      billingAddress: isFreeOrder
+        ? undefined
+        : payload.billingAddress,
+      cart: payload.cart.concat(payload.additionalCart),
+      promotionCode: _.get(payload, 'promotion.promotionCode'),
+    };
 
-      if (!isFreeOrder && differentBillingAddress) {
-        // Using different billing address, add name on card to that address
-        order.billingAddress = _.merge({}, payload.billingAddress, {
-          personName: creditCardPersonName,
-        });
-        order.differentBillingAddress = true;
-      } else if (!isFreeOrder && !stringEqualsIgnoreWhitespace(creditCardPersonName, shippingAddressName)) {
-        // Person chose to use shipping address also as billing address, but
-        // they gave a different name for credit card
-        order.billingAddress = _.merge({}, payload.shippingAddress, {
-          personName: creditCardPersonName,
-        });
-        order.differentBillingAddress = true;
-      }
+    const shippingAddressName = _.get(payload, 'shippingAddress.personName');
+    const creditCardPersonName = _.get(payload, 'creditCardPersonName');
 
-      return api.postOrder(order);
-    })
-    .then(response => {
-      const combinedCart = payload.cart.concat(payload.additionalCart);
-      const price = calculateCartPrice(combinedCart);
+    if (!isFreeOrder && differentBillingAddress) {
+      // Using different billing address, add name on card to that address
+      order.billingAddress = _.merge({}, payload.billingAddress, {
+        personName: creditCardPersonName,
+      });
+      order.differentBillingAddress = true;
+    } else if (!isFreeOrder && !stringEqualsIgnoreWhitespace(creditCardPersonName, shippingAddressName)) {
+      // Person chose to use shipping address also as billing address, but
+      // they gave a different name for credit card
+      order.billingAddress = _.merge({}, payload.shippingAddress, {
+        personName: creditCardPersonName,
+      });
+      order.differentBillingAddress = true;
+    }
 
-      dispatch({
-        type: actions.POST_ORDER_SUCCESS,
-        payload: response,
-        meta: {
-          analytics: {
-            type: 'designPurchase',
-            payload: {
-              userActionParameter: price.humanValue,
-              cartItemsAmount: payload.cart.length,
-              cartTotalPrice: price.humanValue,
-              priceCurrency: price.currency,
-            },
+    const response = await api.postOrder(order);
+    await handleCardPayment(payload, response.data, totalPrice)
+
+    dispatch({
+      type: actions.POST_ORDER_SUCCESS,
+      payload: response,
+      meta: {
+        analytics: {
+          type: 'designPurchase',
+          payload: {
+            userActionParameter: totalPrice.humanValue,
+            cartItemsAmount: payload.cart.length,
+            cartTotalPrice: totalPrice.humanValue,
+            priceCurrency: totalPrice.currency,
           },
         },
-      });
-
-      return response;
-    })
-    .catch(err => {
-      dispatch({
-        type: actions.POST_ORDER_FAILURE,
-        payload: err,
-        error: true,
-        meta: {
-          analytics: {
-            type: 'designPurchaseError',
-            payload: {
-              userActionParameter: err.message,
-            },
-          },
-        },
-      });
-
-      throw err;
+      },
     });
+
+    return response;
+  } catch (err) {
+    dispatch({
+      type: actions.POST_ORDER_FAILURE,
+      payload: err,
+      error: true,
+      meta: {
+        analytics: {
+          type: 'designPurchaseError',
+          payload: {
+            userActionParameter: err.message,
+          },
+        },
+      },
+    });
+
+    throw err;
+  }
 };
 
-function _createStripeToken(payload) {
-  const { cart, additionalCart, promotion } = payload;
-  const combinedCart = cart.concat(additionalCart);
-  const totalPrice = calculateCartPrice(combinedCart, { promotion, ignorePromotionExpiry: true });
+function handleCardPayment(checkoutPayload, receivedData, totalPrice) {
   const isFreeOrder = totalPrice.value <= 0;
   if (isFreeOrder) {
     return BPromise.resolve(null);
   }
 
-  const differentBillingAddress = Boolean(payload.differentBillingAddress);
+  const differentBillingAddress = Boolean(checkoutPayload.differentBillingAddress);
   const addressObj = differentBillingAddress
-    ? payload.billingAddress
-    : payload.shippingAddress;
+    ? checkoutPayload.billingAddress
+    : checkoutPayload.shippingAddress;
 
-  return stripeUtil.createToken(payload.stripeElement, {
-    // Optional by Stripe
-    name: _.get(payload, 'creditCardPersonName'),
-    address_zip: _.get(addressObj, 'postalCode'),
-    address_line1: _.get(addressObj, 'streetAddress'),
-    address_line2: _.get(addressObj, 'streetAddressExtra'),
-    address_city: _.get(addressObj, 'city'),
-    address_state: _.get(addressObj, 'state'),
-    address_country: _.get(addressObj, 'countryCode'),
-  });
+  return stripeUtil.handleCardPayment(
+    receivedData.stripePaymentIntent.client_secret,
+    checkoutPayload.stripeElement,
+    {
+      payment_method_data: {
+        billing_details: {
+          // Optional by Stripe
+          name: _.get(checkoutPayload, 'creditCardPersonName'),
+          address: {
+            postal_code: _.get(addressObj, 'postalCode'),
+            line1: _.get(addressObj, 'streetAddress'),
+            line2: _.get(addressObj, 'streetAddressExtra'),
+            city: _.get(addressObj, 'city'),
+            state: _.get(addressObj, 'state'),
+            country: _.get(addressObj, 'countryCode'),
+          }
+        }
+      }
+    }
+  )
 }
 
 export const checkoutFormStateChange = (payload) => {
