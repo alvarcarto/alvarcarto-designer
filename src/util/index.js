@@ -105,7 +105,7 @@ export function createPosterImageUrl(mapItem) {
 export function createPlacementImageUrl(id, mapItem) {
   const params = createPosterUrlParameters(mapItem)
   const query = qs.stringify(_.omit(params, ['size', 'orientation']));
-  return `${config.REACT_APP_PLACEMENT_API_URL}/api/place-map/${id}?${query}`;
+  return `${config.REACT_APP_PLACEMENT_API_URL}/api/place-map/${id}?${query}&resizeToWidth=800`;
 }
 
 export function createPosterPreviewUrl(mapItem) {

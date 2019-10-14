@@ -1,7 +1,7 @@
 import React from 'react';
 import { Icon } from 'antd';
 import ImageLoader from 'react-imageloader';
-import { createPosterPreviewUrl } from '../util';
+import { createPlacementImageUrl } from '../util';
 
 function preloader() {
   return <Icon type="loading" />;
@@ -12,7 +12,7 @@ class PosterPreview extends React.Component {
     return (
       <ImageLoader
         className="PosterPreview"
-        src={createPosterPreviewUrl(this.props.mapItem)}
+        src={createPlacementImageUrl('no-flowers-in-blue-black-frame', this.props.mapItem)}
         preloader={preloader}
       >
         <Icon type="frown-o" />

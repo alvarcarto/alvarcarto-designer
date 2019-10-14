@@ -13,15 +13,15 @@ const CONST = {
   NODE_ENV: process.env.NODE_ENV,
   DEVELOPMENT: process.env.NODE_ENV === 'development',
 
-  REACT_APP_STRIPE_PUBLISHABLE_KEY: process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY || 'pk_test_PKlD56JoqROJNxZa8JoV5ILr',
+  REACT_APP_STRIPE_PUBLISHABLE_KEY: process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY || 'pk_test_PKlD56JoqROJNxZa8JoV5ILr',
 
-  REACT_APP_ORDER_API_URL: process.env.REACT_APP_ORDER_API_URL || 'http://localhost:3001',
+  REACT_APP_ORDER_API_URL: process.env.REACT_APP_ORDER_API_URL || 'http://localhost:3001',
 
   // In production the below APIs are served on the same endpoint,
   // but in development it's convenient to have them separate
-  REACT_APP_TILE_API_URL: process.env.REACT_APP_TILE_API_URL || 'https://tile-api.alvarcarto.com/tiles',
-  REACT_APP_RENDER_API_URL: process.env.REACT_APP_RENDER_API_URL || 'https://tile-api.alvarcarto.com/render',
-  REACT_APP_PLACEMENT_API_URL: process.env.REACT_APP_PLACEMENT_API_URL || 'https://tile-api.alvarcarto.com/placement',
+  REACT_APP_TILE_API_URL: process.env.REACT_APP_TILE_API_URL || 'https://tile-api.alvarcarto.com/tiles',
+  REACT_APP_RENDER_API_URL: process.env.REACT_APP_RENDER_API_URL || 'https://tile-api.alvarcarto.com/render',
+  REACT_APP_PLACEMENT_API_URL: process.env.REACT_APP_PLACEMENT_API_URL || 'https://tile-api.alvarcarto.com/placement',
   REACT_APP_RENDER_API_KEY: process.env.REACT_APP_RENDER_API_KEY,
   REACT_APP_ANALYTICS_ENV: process.env.REACT_APP_ANALYTICS_ENV || 'development',
 
