@@ -84,7 +84,7 @@ class CheckoutForm extends React.Component {
               onChange={this._onEmailFormChange}
             />
 
-            <Form.Item {...formItemLayout} label="&nbsp;">
+            <Form.Item {...formItemLayout} className="CheckoutForm__subscribe" label="&nbsp;">
               <Tooltip
                 placement="topLeft"
                 overlayClassName={emailSubscription ? 'ant-tooltip-hidden' : ''}
