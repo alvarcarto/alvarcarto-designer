@@ -91,8 +91,8 @@ const initialState = {
       labelText: getQuery('labelText', 'string', coordToPrettyText(initialMapCenter)),
       // Used to save user entered text only. This can be used to recover what
       // user wrote if they change autoUpdateCoordinates flag
-      labelTextManual: null,
-      autoUpdateCoordinates: true,
+      labelTextManual: getQuery('labelText', 'string', null),
+      autoUpdateCoordinates: getQuery('updateCoords', 'boolean', true),
     },
   ],
   additionalCart: [{
