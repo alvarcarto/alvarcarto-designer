@@ -361,8 +361,12 @@ class LightWall extends React.Component {
     const dlAnchorElem = document.getElementById('downloadJson');
     dlAnchorElem.setAttribute('href', dataStr);
 
+    const prefix = obj.length > 1
+      ? 'multiple-items'
+      : `${obj[0].labelHeader}`;
+
     const timestamp = (new Date()).toISOString();
-    dlAnchorElem.setAttribute('download', `alvar-${timestamp}.json`);
+    dlAnchorElem.setAttribute('download', `${prefix.toLowerCase()}-${timestamp}.json`);
     dlAnchorElem.click();
   };
 
