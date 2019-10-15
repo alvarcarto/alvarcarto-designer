@@ -58,7 +58,7 @@ class App extends React.Component {
     return (
       <div className="App">
         {/* Preload fonts */}
-        <div style={{height: 0, width: 0, visibility: 'hidden', opacity: 0}}>
+        <div style={{position: 'fixed', zIndex: -1000, top: -10000, height: 0, width: 0, padding: 0, margin: 0, visibility: 'hidden', opacity: 0}}>
           <p style={{fontFamily: 'JosefinSans-Bold'}}>T</p>
           <p style={{fontFamily: 'JosefinSans'}}>T</p>
           <p style={{fontFamily: 'JosefinSans-Light'}}>T</p>
