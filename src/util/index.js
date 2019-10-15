@@ -1,8 +1,9 @@
 import _ from 'lodash';
 import qs from 'qs';
-import config from '../config';
 import geolib from 'geolib';
 import { POSTER_STYLES, MAP_STYLES, resolveOrientation } from 'alvarcarto-common';
+import CONST from '../constants';
+import config from '../config';
 
 const dimensionsToPixels = {
   '30x40cm': { width: 300 * 1.5, height: 400 * 1.5, clipScale: 1 },
@@ -22,6 +23,21 @@ export function posterSizeToPixels(size, orientation, fitToArea) {
     const pixelInfo = dimensionsToPixels[size];
     return resolveOrientation(pixelInfo, orientation);
   }
+  const requestedPixelInfo = dimensionsToPixels[size];
+
+  if (!fitToArea.width <= CONST.SCREEN_MD) {
+    const mobileRatio = calculateAspectRatioFit(
+      requestedPixelInfo.width,
+      requestedPixelInfo.height,
+      fitToArea.width,
+      fitToArea.height
+    )
+    return resolveOrientation({
+      width: Math.round(requestedPixelInfo.width * mobileRatio),
+      height: Math.round(requestedPixelInfo.height * mobileRatio),
+      clipScale: requestedPixelInfo.clipScale,
+    }, orientation);
+  }
 
   // Find the poster which would need most scaling down which means the largest poster size
   // This poster will be the max size and others are then scaled down from that
@@ -39,8 +55,6 @@ export function posterSizeToPixels(size, orientation, fitToArea) {
   )
   const largestWidth = largestPixelInfo.width * largestRatio
   const largestHeight = largestPixelInfo.height * largestRatio
-
-  const requestedPixelInfo = dimensionsToPixels[size];
 
   const scaledPixelInfo = {
     width: Math.round(requestedPixelInfo.width / largestPixelInfo.width * largestWidth),

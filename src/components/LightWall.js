@@ -20,8 +20,8 @@ import {
 import UnstyledButton from './UnstyledButton';
 
 // Padding which should be left unfilled when scaling poster to light wall
-const MIN_POSTER_PADDING_WIDTH = 45;
-const MIN_POSTER_PADDING_HEIGHT = 45;
+const MIN_POSTER_PADDING_WIDTH = 50;
+const MIN_POSTER_PADDING_HEIGHT = 50;
 
 const MULTI = getQueryParameterByName('multiMode') === 'true';
 
