@@ -104,6 +104,8 @@
 .LightWall__wire-container {
   position: relative;
   z-index: 999999;
+  display: none;
+  visibility: hidden;
 }
 
 .LightWall__clip1, .LightWall__clip2 {
@@ -229,5 +231,12 @@
     bottom: 5px;
     left: 13px;
     transform: none;
+  }
+}
+
+@media @screen-gt-md-media {
+  .LightWall__wire-container {
+    display: block;
+    visibility: visible;
   }
 }
