@@ -379,12 +379,10 @@ class LightWall extends React.Component {
 
   _downloadPlacement = (id, opts = {}) => {
     const { globalState } = this.props;
-    const mapItem = globalState.cart[globalState.editCartItem];
-    let newUrl = `${createPlacementImageUrl(id, mapItem)}&apiKey=${globalState.apiKey}&download=true`;
-    if (opts.resizeToWidth) {
-      newUrl += `&resizeToWidth=${opts.resizeToWidth}`;
-    }
-
+    const mapItem = _.merge({}, globalState.cart[globalState.editCartItem], {
+      resizeToWidth: opts.resizeToWidth
+    });
+    const newUrl = `${createPlacementImageUrl(id, mapItem)}&apiKey=${globalState.apiKey}&download=true`;
     window.open(newUrl, '_blank');
   };
 }

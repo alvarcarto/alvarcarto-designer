@@ -108,6 +108,7 @@ export function createPosterUrlParameters(mapItem) {
     labelHeader: mapItem.labelHeader,
     labelSmallHeader: mapItem.labelSmallHeader,
     labelText: mapItem.labelText,
+    resizeToWidth: _.get(mapItem, 'resizeToWidth', 800),
   };
 }
 
@@ -117,9 +118,10 @@ export function createPosterImageUrl(mapItem) {
 }
 
 export function createPlacementImageUrl(id, mapItem) {
+
   const params = createPosterUrlParameters(mapItem)
   const query = qs.stringify(_.omit(params, ['size', 'orientation']));
-  return `${config.REACT_APP_PLACEMENT_API_URL}/api/place-map/${id}?${query}&resizeToWidth=800`;
+  return `${config.REACT_APP_PLACEMENT_API_URL}/api/place-map/${id}?${query}`;
 }
 
 export function createPosterPreviewUrl(mapItem) {
