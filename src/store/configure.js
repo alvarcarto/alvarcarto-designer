@@ -16,7 +16,7 @@ function setCartUrl(state) {
     cart: JSON.stringify(state.cart),
   });
 
-  window.history.pushState(null, null, `?${queryString.stringify(newQuery)}`);
+  window.history.replaceState(null, null, `?${queryString.stringify(newQuery)}`);
 }
 const debouncedSetCartUrl = _.debounce(setCartUrl, 10);
 
@@ -40,7 +40,7 @@ function setUrl(state) {
     updateCoords: state.cart[currentIndex].autoUpdateCoordinates,
   });
 
-  window.history.pushState(null, null, `?${queryString.stringify(newQuery)}`);
+  window.history.replaceState(null, null, `?${queryString.stringify(newQuery)}`);
 }
 
 const debouncedSetUrl = _.debounce(setUrl, 10);
@@ -66,7 +66,7 @@ const configureStore = preloadedState => {
       const state = store.getState();
       if (UPDATE_CART) {
         debouncedSetCartUrl(state);
-      } else {
+      } else if (state.location.pathname === '/') {
         debouncedSetUrl(state);
       }
     }, 0);
