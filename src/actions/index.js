@@ -295,6 +295,7 @@ export const postOrder = (payload) => async function(dispatch) {
           payload: {
             userActionParameter: totalPrice.humanValue,
             cartItemsAmount: payload.cart.length,
+            orderId: response.data.orderId,
             cartTotalPrice: totalPrice.humanValue,
             priceCurrency: totalPrice.currency,
           },
