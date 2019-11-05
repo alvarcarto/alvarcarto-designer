@@ -113,12 +113,11 @@ export function createPosterUrlParameters(mapItem) {
 }
 
 export function createPosterImageUrl(mapItem) {
-  const query = qs.stringify(createPosterUrlParameters(mapItem));
+  const query = qs.stringify(_.omit(createPosterUrlParameters(mapItem), ['resizeToWidth']));
   return `${config.REACT_APP_RENDER_API_URL}/api/raster/render?${query}`;
 }
 
 export function createPlacementImageUrl(id, mapItem) {
-
   const params = createPosterUrlParameters(mapItem)
   const query = qs.stringify(_.omit(params, ['size', 'orientation']));
   return `${config.REACT_APP_PLACEMENT_API_URL}/api/place-map/${id}?${query}`;
