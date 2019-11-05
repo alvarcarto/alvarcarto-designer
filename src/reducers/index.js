@@ -79,7 +79,7 @@ const initialState = {
       mapCenter: initialMapCenter,
       mapBounds: null,
       mapZoom,
-      mapStyle: getQuery('mapStyle', 'string', 'bw', _.map(MAP_STYLES, 'id')),
+      mapStyle: getQuery('mapStyle', 'string', 'bw'),
       posterStyle: getQuery('posterStyle', 'string', 'sharp', _.map(POSTER_STYLES, 'id')),
       mapPitch: 0,
       mapBearing: 0,
