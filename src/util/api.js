@@ -28,7 +28,7 @@ export function getPlacementImages(axiosOpts) {
 export function getGeoInformation(axiosOpts) {
   return axios.get(`${CONST.REACT_APP_GEO_API_URL}/json/`, axiosOpts)
     .then(({ data }) => {
-      let { city } = data;
+      let { city, country_name, latitude, longitude } = data;
       if (!city && data.time_zone) {
         const parts = data.time_zone.split('/');
         if (parts.length === 2) {
@@ -36,7 +36,8 @@ export function getGeoInformation(axiosOpts) {
         }
       }
 
-      if (!city) {
+      // When impartial data is received, return null
+      if (!city || !country_name || !latitude || !longitude) {
         return null
       }
 
