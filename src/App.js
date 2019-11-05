@@ -5,7 +5,7 @@ import _ from 'lodash';
 import { Checkbox, Modal } from 'antd';
 import config from './config';
 import { connect } from 'react-redux';
-import { setLocation } from './actions';
+import { setLocation, setInitialCart } from './actions';
 import { getStorageSafe, setStorageSafe } from './util';
 import EditorPage from './components/EditorPage';
 import CheckoutPage from './components/CheckoutPage';
@@ -22,7 +22,7 @@ class App extends React.Component {
       this._showUnsupportedWarning();
     }
 
-    // Listen for changes to the current location.
+    // Listen for changes to the current url location.
     history.listen((location, action) => {
       window.scrollTo(0, 0);
       this.props.dispatch(setLocation(location));
@@ -32,6 +32,8 @@ class App extends React.Component {
       window.onbeforeunload = this._beforeLeavePage;
       this._alertIfBackendDown();
     }
+
+    this.props.dispatch(setInitialCart());
   }
 
   render() {

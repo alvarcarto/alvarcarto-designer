@@ -71,6 +71,7 @@ class LightWall extends React.Component {
     const nextMapItem = nextGlobalState.cart[nextGlobalState.editCartItem];
 
     const hasChanged =
+      globalState.cart.length === 0 ||
       mapItem.size !== nextMapItem.size ||
       mapItem.orientation !== nextMapItem.orientation ||
       globalState.cart.length !== nextGlobalState.cart.length;
@@ -85,6 +86,10 @@ class LightWall extends React.Component {
 
   render() {
     const { globalState } = this.props;
+    if (globalState.cart.length === 0) {
+      return <div ref="container" className="LightWall noselect"></div>
+    }
+
     const mapItem = globalState.cart[globalState.editCartItem];
 
     const physicalDimensions = getPosterPhysicalDimensions(
@@ -275,7 +280,8 @@ class LightWall extends React.Component {
   };
 
   _calculateZoom = (globalState) => {
-    if (!this.state || !this.state.container) {
+    const cartLength = _.get(globalState, 'cart.length', 0)
+    if (!this.state || !this.state.container || cartLength === 0) {
       return 1;
     }
 

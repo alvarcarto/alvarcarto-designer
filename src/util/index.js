@@ -113,12 +113,11 @@ export function createPosterUrlParameters(mapItem) {
 }
 
 export function createPosterImageUrl(mapItem) {
-  const query = qs.stringify(createPosterUrlParameters(mapItem));
+  const query = qs.stringify(_.omit(createPosterUrlParameters(mapItem), ['resizeToWidth']));
   return `${config.REACT_APP_RENDER_API_URL}/api/raster/render?${query}`;
 }
 
 export function createPlacementImageUrl(id, mapItem) {
-
   const params = createPosterUrlParameters(mapItem)
   const query = qs.stringify(_.omit(params, ['size', 'orientation']));
   return `${config.REACT_APP_PLACEMENT_API_URL}/api/place-map/${id}?${query}`;
@@ -161,6 +160,16 @@ export function getStyle(styleId) {
   const found = _.find(MAP_STYLES, { id: styleId });
   if (found) {
     return _transformStyle(found);
+  }
+
+  if (getQueryParameterByName('debug') === 'true') {
+    return _transformStyle({
+      id: styleId,
+      color: '#000000',
+      labelColor: '#000000',
+      type: 'raster',
+      name: 'Unknown',
+    });
   }
 
   return null;

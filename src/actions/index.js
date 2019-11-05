@@ -4,7 +4,12 @@ import { calculateCartPrice } from 'alvarcarto-price-util';
 import * as actions from '../action-types';
 import * as stripeUtil from '../util/stripe';
 import * as api from '../util/api';
-import { stringEqualsIgnoreWhitespace } from '../util';
+import { stringEqualsIgnoreWhitespace, getQuery } from '../util';
+import {
+  getQueryCart,
+  getInitialCartItem,
+  getCartItemFromLocation,
+} from '../util/cart-state';
 
 export const setLocation = (location) => {
   const action = {
@@ -240,6 +245,40 @@ export const setMiniCartPosition = (pos) => ({
   type: actions.SET_MINI_CART_POSITION,
   payload: pos,
 });
+
+export const setCart = (cart) => ({
+  type: actions.SET_CART,
+  payload: cart,
+});
+
+export const setInitialCart = () => async function(dispatch) {
+  const cartFromQuery = getQueryCart();
+  if (cartFromQuery) {
+    dispatch({ type: actions.SET_CART, payload: cartFromQuery });
+    return;
+  }
+
+  // We use lat to detect if the query parameters contain a location already
+  const cartItem = getInitialCartItem();
+  if (getQuery('lat', 'float') && getQuery('lng', 'float')) {
+    dispatch({ type: actions.SET_CART, payload: [cartItem] });
+    return;
+  }
+
+  api.getGeoInformation({ timeout: 600 })
+    .then((data) => {
+      if (!data) {
+        dispatch({ type: actions.SET_CART, payload: [cartItem] });
+        return;
+      }
+
+      const locationCartItem = getCartItemFromLocation(data);
+      dispatch({ type: actions.SET_CART, payload: [locationCartItem] });
+    })
+    .catch(() => {
+      dispatch({ type: actions.SET_CART, payload: [cartItem] });
+    })
+};
 
 export const postOrder = (payload) => async function(dispatch) {
   dispatch({ type: actions.POST_ORDER_REQUEST, payload });
