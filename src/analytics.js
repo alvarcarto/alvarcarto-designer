@@ -3,7 +3,7 @@ import BPromise from 'bluebird';
 import { createProductId } from 'alvarcarto-common';
 import { triggerGtmEvent } from './util/gtm';
 import { getCities } from './util/api';
-import { DEFAULT_MAP_CENTER } from './reducers';
+import { DEFAULT_MAP_CENTER } from './util/cart-state';
 
 const startTimeMs = (new Date()).getTime();
 

@@ -25,6 +25,25 @@ export function getPlacementImages(axiosOpts) {
   return axios.get(`${CONST.REACT_APP_PLACEMENT_API_URL}/api/images`, axiosOpts);
 }
 
+export function getGeoInformation(axiosOpts) {
+  return axios.get(`${CONST.REACT_APP_GEO_API_URL}/json/`, axiosOpts)
+    .then(({ data }) => {
+      let { city } = data;
+      if (!city && data.time_zone) {
+        const parts = data.time_zone.split('/');
+        if (parts.length === 2) {
+          city = parts[1];
+        }
+      }
+
+      if (!city) {
+        return null
+      }
+
+      return _.merge({}, data, { city });
+    });
+}
+
 export function assertHealth() {
   return axios.get(`${CONST.REACT_APP_ORDER_API_URL}/api/health`)
     .catch(() =>

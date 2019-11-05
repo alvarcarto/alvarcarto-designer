@@ -4,6 +4,7 @@ export const SET_POSTER_LAYOUT = 'SET_POSTER_LAYOUT';
 export const SET_MAP_STYLE = 'SET_MAP_STYLE';
 export const SET_POSTER_STYLE = 'SET_POSTER_STYLE';
 export const SET_MAP_LABELS = 'SET_MAP_LABELS';
+export const SET_CART = 'SET_CART';
 
 export const ADD_CART_ITEM = 'ADD_CART_ITEM';
 export const REMOVE_CART_ITEM = 'REMOVE_CART_ITEM';

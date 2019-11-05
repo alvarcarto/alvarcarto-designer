@@ -13,7 +13,6 @@ class MiniCartItem extends React.Component {
       posterStyle: PropTypes.string.isRequired,
       quantity: PropTypes.number.isRequired,
       mapBounds:  PropTypes.object,
-      mapCenter:  PropTypes.object.isRequired,
       mapZoom: PropTypes.number.isRequired,
       mapStyle: PropTypes.string.isRequired,
       mapPitch: PropTypes.number.isRequired,

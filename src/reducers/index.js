@@ -5,96 +5,19 @@ import {
   getQuery,
   getPosterLook,
 } from '../util';
+import { getItemId } from '../util/cart-state';
 import dummyCheckoutState from '../util/dummy-checkout-state';
-import CONST from '../constants';
 import history from '../history';
-import {
-  POSTER_STYLES,
-  POSTER_SIZES,
-  POSTER_ORIENTATIONS,
-  MAP_STYLES,
-  findClosestSizeForOtherSizeType,
-} from 'alvarcarto-common';
+import { findClosestSizeForOtherSizeType } from 'alvarcarto-common';
 
 const DEBUG = getQuery('debug', 'boolean', false);
-const BARCELONA_CENTER = {
-  lat: 41.382374,
-  lng: 2.166612,
-};
-export { BARCELONA_CENTER as DEFAULT_MAP_CENTER };
-
-const initialMapCenter = {
-  lat: getQuery('lat', 'float', BARCELONA_CENTER.lat),
-  lng: getQuery('lng', 'float', BARCELONA_CENTER.lng),
-};
-let mapZoom = getQuery('zoom', 'float', 10.5);
-if (mapZoom < CONST.MAP_MIN_ZOOM) {
-  mapZoom = CONST.MAP_MIN_ZOOM;
-} else if (mapZoom > CONST.MAP_MAX_ZOOM) {
-  mapZoom = CONST.MAP_MAX_ZOOM;
-}
-
-// We can assign a unique id for each new poster in the cart. This can be used as a stable React
-// key (needed for e.g. MiniCart transition)
-let idCounter = 0;
-
-function getItemId() {
-  idCounter++;
-  return idCounter;
-}
-
-
-function getQueryCart() {
-  const cartAsStringInQuery = getQuery('cart', 'string', null);
-  if (cartAsStringInQuery === null) {
-    return null
-  }
-
-  let cartInQuery;
-  try {
-    cartInQuery = JSON.parse(cartAsStringInQuery);
-  } catch (e) {
-    window.alert(`Error parsing cart from url: ${e}`);
-  }
-
-  return _.map(cartInQuery, item => {
-    return _.merge({}, item, {
-      // Reassign ids
-      id: getItemId(),
-    });
-  })
-}
-
-const cartFromQuery = getQueryCart();
 
 const initialState = {
   debug: DEBUG,
   apiKey: getQuery('apiKey', 'string'),
   location: history.location,
   initialLoadTime: new Date(),
-  cart: cartFromQuery ? cartFromQuery : [
-    {
-      id: getItemId(),
-      quantity: 1,
-      mapCenter: initialMapCenter,
-      mapBounds: null,
-      mapZoom,
-      mapStyle: getQuery('mapStyle', 'string', 'bw'),
-      posterStyle: getQuery('posterStyle', 'string', 'sharp', _.map(POSTER_STYLES, 'id')),
-      mapPitch: 0,
-      mapBearing: 0,
-      orientation: getQuery('orientation', 'string', 'portrait', _.map(POSTER_ORIENTATIONS, 'id')),
-      size: getQuery('size', 'string', '50x70cm', _.map(POSTER_SIZES, 'id')),
-      labelsEnabled: getQuery('labels', 'boolean', true),
-      labelHeader: getQuery('labelHeader', 'string', 'Barcelona'),
-      labelSmallHeader: getQuery('labelSmallHeader', 'string', 'Catalonia'),
-      labelText: getQuery('labelText', 'string', coordToPrettyText(initialMapCenter)),
-      // Used to save user entered text only. This can be used to recover what
-      // user wrote if they change autoUpdateCoordinates flag
-      labelTextManual: getQuery('labelText', 'string', null),
-      autoUpdateCoordinates: getQuery('updateCoords', 'boolean', true),
-    },
-  ],
+  cart: [],
   additionalCart: [{
     type: 'shippingClass',
     quantity: 1,
@@ -129,6 +52,9 @@ function reducer(state = initialState, action) {
   switch (action.type) {
     case actions.SET_LOCATION:
       return _.extend({}, state, { location: action.payload });
+
+    case actions.SET_CART:
+      return _.extend({}, state, { cart: action.payload });
 
     case actions.SET_MAP_VIEW:
       newAttrs = {
