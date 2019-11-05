@@ -162,6 +162,16 @@ export function getStyle(styleId) {
     return _transformStyle(found);
   }
 
+  if (getQueryParameterByName('debug') === 'true') {
+    return _transformStyle({
+      id: styleId,
+      color: '#000000',
+      labelColor: '#000000',
+      type: 'raster',
+      name: 'Unknown',
+    });
+  }
+
   return null;
 }
 
