@@ -5,7 +5,7 @@ import {
   getQuery,
   getPosterLook,
 } from '../util';
-import { getItemId } from '../util/cart-state';
+import { getItemId, getInitialCartItem } from '../util/cart-state';
 import dummyCheckoutState from '../util/dummy-checkout-state';
 import history from '../history';
 import { findClosestSizeForOtherSizeType } from 'alvarcarto-common';
@@ -143,7 +143,7 @@ function reducer(state = initialState, action) {
 
     case actions.ADD_CART_ITEM:
       newState = _.cloneDeep(state);
-      const newEmptyItem = _.cloneDeep(freshInitialState.cart[0]);
+      const newEmptyItem = _.cloneDeep(getInitialCartItem());
       newEmptyItem.id = getItemId();
 
       // Copy basic attributes from the currently selected map
