@@ -332,10 +332,10 @@ export const postOrder = (payload) => async function(dispatch) {
         analytics: {
           type: 'designPurchase',
           payload: {
-            userActionParameter: totalPrice.humanValue,
+            userActionParameter: Number(totalPrice.humanValue),
             cartItemsAmount: payload.cart.length,
             orderId: response.data.orderId,
-            cartTotalPrice: totalPrice.humanValue,
+            cartTotalPrice: Number(totalPrice.humanValue),
             priceCurrency: totalPrice.currency,
           },
         },
