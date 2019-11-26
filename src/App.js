@@ -33,13 +33,7 @@ class App extends React.Component {
       this._alertIfBackendDown();
     }
 
-    notification.open({
-      message: 'Black Weekend is soon!',
-      description: 'Get -20% off from all our products during the weekend.',
-      duration: 10,
-      icon: <Icon type="fire" theme="filled" />
-    });
-
+    this._showMessage()
     this.props.dispatch(setCurrentPromotion());
     this.props.dispatch(setInitialCart());
   }
@@ -83,6 +77,19 @@ class App extends React.Component {
         </div>
       </div>
     );
+  }
+
+  _showMessage = () => {
+    const { globalState } = this.props;
+    const pathname = globalState.location.pathname;
+    if (pathname === '/') {
+      notification.open({
+        message: 'Black Weekend is soon!',
+        description: 'Get -20% off from all our products during the weekend.',
+        duration: 10,
+        icon: <Icon type="fire" theme="filled" />
+      });
+    }
   }
 
   _beforeLeavePage = () => {
