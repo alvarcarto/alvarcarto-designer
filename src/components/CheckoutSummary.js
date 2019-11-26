@@ -7,7 +7,7 @@ import {
   addCartItem,
   setPromotion
 } from '../actions';
-import { calculateCartPrice, calculateItemPrice, getCurrencySymbol, getItemLabel } from 'alvarcarto-price-util';
+import { calculateCartPrice, calculateItemPrice, getProduct } from 'alvarcarto-price-util';
 import _ from 'lodash';
 import CartItem from './CartItem';
 import AddPromotionLink from './AddPromotionLink';
@@ -17,11 +17,15 @@ import history from '../history';
 
 class CheckoutSummary extends React.Component {
   render() {
-    const { cart, additionalCart, promotion } = this.props.globalState;
+    const { cart, additionalCart, promotion, currency } = this.props.globalState;
     const hideRemoveButton = cart.length < 2;
     const combinedCart = cart.concat(additionalCart);
-    const totalPrice = calculateCartPrice(combinedCart, { promotion, ignorePromotionExpiry: true });
-    const originalPrice = calculateCartPrice(cart);
+    const totalPrice = calculateCartPrice(combinedCart, {
+      currency,
+      promotion,
+      ignorePromotionExpiry: true
+    });
+    const originalPrice = calculateCartPrice(cart, { currency });
 
     return (
       <div className="CheckoutSummary">
@@ -61,8 +65,8 @@ class CheckoutSummary extends React.Component {
               {
                 _.map(additionalCart, (item, index) =>
                   <tr key={index}>
-                    <td>{getItemLabel(item)}</td>
-                    <td>{calculateItemPrice(item).label}</td>
+                    <td>{getProduct(item.sku).name}</td>
+                    <td>{calculateItemPrice(item, { currency }).label}</td>
                   </tr>
                 )
               }
@@ -83,13 +87,9 @@ class CheckoutSummary extends React.Component {
       return null;
     }
 
-    const discountCurrencySymbol = getCurrencySymbol(totalPrice.discount.currency);
-    const discountHumanValue = (-totalPrice.discount.value / 100).toFixed(2);
-    const discountPriceLabel = `${discountHumanValue} ${discountCurrencySymbol}`;
-
     return <tr>
       <td>{promotion.label}</td>
-      <td>{discountPriceLabel}</td>
+      <td>-{totalPrice.discount.label}</td>
     </tr>;
   };
 

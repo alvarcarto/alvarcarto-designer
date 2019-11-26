@@ -11,7 +11,7 @@ function preloader() {
 
 class FinalOrderSummary extends React.Component {
   render() {
-    const { cart, promotion } = this.props;
+    const { cart, promotion, currency } = this.props;
     const totalPrice = calculateCartPrice(cart, {
       promotion,
       ignorePromotionExpiry: true,

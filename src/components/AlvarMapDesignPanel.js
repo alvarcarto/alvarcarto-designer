@@ -8,6 +8,7 @@ import {
   setMapLabels
 } from '../actions';
 import { coordToPrettyText, getPosterLook } from '../util';
+import { getCurrentMapItem } from '../util/cart-state';
 import countries from 'i18n-iso-countries';
 import Accordion from './Accordion';
 import TabView from './TabView';
@@ -27,7 +28,7 @@ import cities from '../data/cities.json';
 class AlvarMapDesignPanel extends React.Component {
   render() {
     const { globalState } = this.props;
-    const mapItem = globalState.cart[globalState.editCartItem];
+    const mapItem = getCurrentMapItem(globalState);
 
     return (
       <div className={`AlvarMapDesignPanel ${this.props.className}`}>

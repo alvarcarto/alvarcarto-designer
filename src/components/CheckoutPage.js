@@ -94,6 +94,7 @@ class CheckoutPage extends React.Component {
 
   _onFormSubmit = (form) => {
     const order = _.merge({}, form, {
+      currency: this.props.globalState.currency,
       cart: this.props.globalState.cart,
       additionalCart: this.props.globalState.additionalCart,
     });

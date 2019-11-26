@@ -8,6 +8,7 @@ import IconButton from './IconButton';
 import ImageLoader from 'react-imageloader';
 import CONST from '../constants';
 import ButtonLink from './ButtonLink';
+import { cartItemToMapItem } from '../util/cart-state';
 
 function preloader() {
   return <Icon type="loading" />;
@@ -17,19 +18,22 @@ class CartItem extends React.Component {
   static propTypes = {
     index: PropTypes.number.isRequired,
     item: PropTypes.shape({
+      sku: PropTypes.string.isRequired,
       quantity: PropTypes.number.isRequired,
-      mapBounds:  PropTypes.object,
-      mapCenter:  PropTypes.object.isRequired,
-      mapZoom: PropTypes.number.isRequired,
-      mapStyle: PropTypes.string.isRequired,
-      mapPitch: PropTypes.number.isRequired,
-      mapBearing: PropTypes.number.isRequired,
-      orientation: PropTypes.string.isRequired,
-      size: PropTypes.string.isRequired,
-      labelHeader: PropTypes.string.isRequired,
-      labelSmallHeader: PropTypes.string.isRequired,
-      labelText: PropTypes.string.isRequired,
+      customisation: {
+        mapBounds:  PropTypes.object,
+        mapCenter:  PropTypes.object.isRequired,
+        mapZoom: PropTypes.number.isRequired,
+        mapStyle: PropTypes.string.isRequired,
+        mapPitch: PropTypes.number.isRequired,
+        mapBearing: PropTypes.number.isRequired,
+        orientation: PropTypes.string.isRequired,
+        labelHeader: PropTypes.string.isRequired,
+        labelSmallHeader: PropTypes.string.isRequired,
+        labelText: PropTypes.string.isRequired,
+      },
     }),
+    currency: PropTypes.string.isRequired,
     onRemoveClick: PropTypes.func.isRequired,
     onEditClick: PropTypes.func.isRequired,
     onIncreaseQuantityClick: PropTypes.func.isRequired,
@@ -38,13 +42,13 @@ class CartItem extends React.Component {
 
   render() {
     const { props } = this;
-    const item = props.item;
-
-    const price = calculateItemPrice(this.props.item);
-    const styleName = getStyle(item.mapStyle).name;
-    const isDecreaseDisabled = this.props.item.quantity < 2;
+    const { item } = props;
+    const mapItem = cartItemToMapItem(item);
+    const price = calculateItemPrice(item, { currency: props.currency });
+    const styleName = getStyle(mapItem.mapStyle).name;
+    const isDecreaseDisabled = item.quantity < 2;
     let cartImageClassName = 'CartItem__image';
-    if (item.orientation === 'landscape') {
+    if (mapItem.orientation === 'landscape') {
       cartImageClassName += ' CartItem__image--landscape';
     }
 
@@ -52,15 +56,15 @@ class CartItem extends React.Component {
       <div className="CartItem">
         <ImageLoader
           className={cartImageClassName}
-          src={createPosterThumbnailUrl(item)}
+          src={createPosterThumbnailUrl(mapItem)}
           preloader={preloader}
         >
           <Icon type="frown-o" />
         </ImageLoader>
 
         <div className="CartItem__content">
-          <h3 className="CartItem__title">{item.labelHeader}</h3>
-          <h4 className="CartItem__type">{styleName}, {item.size}</h4>
+          <h3 className="CartItem__title">{mapItem.labelHeader}</h3>
+          <h4 className="CartItem__type">{styleName}, {mapItem.size}</h4>
           <h4 className="CartItem__price">{price.label}</h4>
           <div className="CartItem__quantity">
             <IconButton

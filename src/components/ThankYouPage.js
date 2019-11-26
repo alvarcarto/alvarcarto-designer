@@ -222,7 +222,7 @@ class ThankYouPage extends React.Component {
 
   _renderOrderContent = () => {
     const { order } = this.state
-    const { cart, promotion } = order;
+    const { cart, promotion, currency } = order;
     const step = this.state.waitingForPayment ? STEP_WAITING : STEP_RECEIVED;
     const { stepIndex, firstText, firstIcon } = step;
     const city = _.get(order, 'shippingAddress.city');
@@ -252,7 +252,7 @@ class ThankYouPage extends React.Component {
 
 
       <div className="ThankYouPage__order-container">
-        <FinalOrderSummary promotion={promotion} cart={cart} orderId={this.props.orderId} />
+        <FinalOrderSummary currency={currency} promotion={promotion} cart={cart} orderId={this.props.orderId} />
       </div>
 
       <div className="ThankYouPage__ok-container">

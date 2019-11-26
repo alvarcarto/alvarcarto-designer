@@ -10,7 +10,7 @@ const CONST = {
   SCREEN_XL: 1200,
   SCREEN_XXL: 1600,
 
-  MAP_MIN_ZOOM: 8,
+  MAP_MIN_ZOOM: 0,
   MAP_MAX_ZOOM: 19,
 };
 

@@ -3,7 +3,7 @@ import BPromise from 'bluebird';
 import { createProductId } from 'alvarcarto-common';
 import { triggerGtmEvent } from './util/gtm';
 import { getCities } from './util/api';
-import { DEFAULT_MAP_CENTER } from './util/cart-state';
+import { DEFAULT_MAP_CENTER, cartItemToMapItem } from './util/cart-state';
 
 const startTimeMs = (new Date()).getTime();
 
@@ -93,7 +93,8 @@ function getCurrentCartItem(state) {
   return state.cart[index];
 }
 
-function getProductId(item, cityId) {
+function getProductId(cartItem, cityId) {
+  const item = cartItemToMapItem(cartItem);
   return createProductId({
     mapStyle: item.mapStyle,
     posterStyle: item.posterStyle,
@@ -118,7 +119,8 @@ function getCartProductIds(state, arrOfCities) {
 }
 
 handlers.designViewContent = (type, payload, state) => {
-  const mapItem = getCurrentCartItem(state);
+  const item = getCurrentCartItem(state);
+  const mapItem = cartItemToMapItem(item);
   const { mapCenter } = mapItem;
 
   const startDate = state.initialLoadTime;
@@ -150,7 +152,8 @@ handlers.designViewContent = (type, payload, state) => {
 
 handlers.designInitiateCheckout = (type, payload, state) => {
   return BPromise.map(state.cart, item => {
-    return getCities(item.mapCenter)
+    const mapItem = cartItemToMapItem(item);
+    return getCities(mapItem.mapCenter)
       .then(res => res.data);
   })
     .then(arrOfCities => {
@@ -164,7 +167,8 @@ handlers.designInitiateCheckout = (type, payload, state) => {
 
 handlers.designPurchase = (type, payload, state) => {
   return BPromise.map(state.cart, item => {
-    return getCities(item.mapCenter)
+    const mapItem = cartItemToMapItem(item);
+    return getCities(mapItem.mapCenter)
       .then(res => res.data);
   })
     .then(arrOfCities => {
@@ -178,7 +182,8 @@ handlers.designPurchase = (type, payload, state) => {
 
 handlers.designAddPaymentInfo = (type, payload, state) => {
   return BPromise.map(state.cart, item => {
-    return getCities(item.mapCenter)
+    const mapItem = cartItemToMapItem(item);
+    return getCities(mapItem.mapCenter)
       .then(res => res.data);
   })
     .then(arrOfCities => {
@@ -230,10 +235,11 @@ handlers.designIncreaseCartItemQuantity = (type, payload, state) => {
 
 handlers.designSetMapView = (type, payload, state) => {
   const item = getCurrentCartItem(state);
+  const mapItem = cartItemToMapItem(item);
   const param = [
-    `LAT:${item.mapCenter.lat.toFixed(4)}`,
-    `LNG:${item.mapCenter.lng.toFixed(4)}`,
-    `Z:${item.mapZoom}`,
+    `LAT:${mapItem.mapCenter.lat.toFixed(4)}`,
+    `LNG:${mapItem.mapCenter.lng.toFixed(4)}`,
+    `Z:${mapItem.mapZoom}`,
   ].join(' ');
 
   triggerGtmEvent({

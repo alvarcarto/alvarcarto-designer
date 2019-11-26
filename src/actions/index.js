@@ -312,8 +312,11 @@ export const postOrder = (payload) => async function(dispatch) {
 
   try {
     const combinedCart = payload.cart.concat(payload.additionalCart);
-    const totalPrice = calculateCartPrice(combinedCart, { promotion: payload.promotion });
-    const isFreeOrder = totalPrice <= 0;
+    const totalPrice = calculateCartPrice(combinedCart, {
+      currency: payload.currency,
+      promotion: payload.promotion
+    });
+    const isFreeOrder = totalPrice.value <= 0;
 
     const differentBillingAddress = isFreeOrder
       ? false
@@ -321,13 +324,14 @@ export const postOrder = (payload) => async function(dispatch) {
 
     const order = {
       email: payload.email,
+      currency: payload.currency,
       differentBillingAddress,
       emailSubscription: Boolean(payload.emailSubscription),
       shippingAddress: payload.shippingAddress,
       billingAddress: isFreeOrder
         ? undefined
         : payload.billingAddress,
-      cart: payload.cart.concat(payload.additionalCart),
+      cart: combinedCart,
       promotionCode: _.get(payload, 'promotion.promotionCode'),
     };
 

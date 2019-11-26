@@ -22,6 +22,7 @@ class GiftCardPage extends React.Component {
   render() {
     const { globalState } = this.props;
     const cart = globalState.giftCardCart;
+    const { currency } = globalState;
 
     return (
       <div className="GiftCardPage">
@@ -43,6 +44,7 @@ class GiftCardPage extends React.Component {
 
         <GiftCardCheckoutForm
           cart={cart}
+          currency={currency}
           onChange={this.state.debouncedOnFormChange}
           onSubmit={this._onFormSubmit}
         />
@@ -57,6 +59,7 @@ class GiftCardPage extends React.Component {
   _onFormSubmit = (form) => {
     const order = _.merge({}, form, {
       cart: this.props.globalState.giftCardCart,
+      currency: this.props.globalState.currency,
     });
     if (this.props.globalState.promotion) {
       order.promotion = this.props.globalState.promotion;

@@ -2,9 +2,10 @@ import Odometer from './Odometer';
 import React from 'react';
 import _ from 'lodash';
 import { Icon, Badge, Tooltip } from 'antd';
-import { calculateCartPrice, getCurrencySymbol } from 'alvarcarto-price-util';
+import { calculateCartPrice } from 'alvarcarto-price-util';
 import history from '../history';
 import ButtonLink from './ButtonLink';
+import { currencyToSymbol } from '../util';
 
 function cutZeroDecimals(humanValue) {
   return _.trimEnd(humanValue, '0.');
@@ -12,10 +13,14 @@ function cutZeroDecimals(humanValue) {
 
 class PricePanel extends React.Component {
   render() {
-    const { cart, additionalCart, promotion } = this.props.globalState;
+    const { cart, additionalCart, promotion, currency } = this.props.globalState;
     const combinedCart = cart.concat(additionalCart);
     const originalPrice = calculateCartPrice(combinedCart);
-    const totalPrice = calculateCartPrice(combinedCart, { promotion, ignorePromotionExpiry: true });
+    const totalPrice = calculateCartPrice(combinedCart, {
+      currency,
+      promotion,
+      ignorePromotionExpiry: true,
+    });
     const itemCount = cart.length;
 
     return (
@@ -43,7 +48,7 @@ class PricePanel extends React.Component {
 
             <h5 className="PricePanel__price">
               <Odometer value={totalPrice.humanValue} />
-              <span className="PricePanel__price-currency">{getCurrencySymbol(totalPrice.currency)}</span>
+              <span className="PricePanel__price-currency">{currencyToSymbol(totalPrice.currency)}</span>
               { promotion ? null : <span className="PricePanel__price-shipping">+ Free shipping</span> }
             </h5>
           </div>
