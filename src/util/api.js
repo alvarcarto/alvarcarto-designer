@@ -15,6 +15,10 @@ export function getPromotion(code, axiosOpts) {
   return axios.get(`${CONST.REACT_APP_ORDER_API_URL}/api/promotions/${code}`, axiosOpts);
 }
 
+export function getCurrentPromotion(axiosOpts) {
+  return axios.get(`${CONST.REACT_APP_ORDER_API_URL}/api/currentPromotion`, axiosOpts);
+}
+
 export function getCities(latLng, axiosOpts) {
   return axios.get(`${CONST.REACT_APP_ORDER_API_URL}/api/cities`, _.merge({
     params: latLng,

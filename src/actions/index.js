@@ -280,6 +280,17 @@ export const setInitialCart = () => async function(dispatch) {
     })
 };
 
+export const setCurrentPromotion = () => async function(dispatch) {
+  try {
+    const res = await api.getCurrentPromotion();
+    if (res && res.status === 200) {
+      dispatch(setPromotion(res.data));
+    }
+  } catch (e) {
+    // Ignore
+  }
+};
+
 export const postOrder = (payload) => async function(dispatch) {
   dispatch({ type: actions.POST_ORDER_REQUEST, payload });
 

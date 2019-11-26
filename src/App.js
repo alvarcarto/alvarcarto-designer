@@ -2,10 +2,10 @@
 
 import React from 'react';
 import _ from 'lodash';
-import { Checkbox, Modal } from 'antd';
+import { Checkbox, Modal, notification, Icon } from 'antd';
 import config from './config';
 import { connect } from 'react-redux';
-import { setLocation, setInitialCart } from './actions';
+import { setLocation, setInitialCart, setCurrentPromotion } from './actions';
 import { getStorageSafe, setStorageSafe } from './util';
 import EditorPage from './components/EditorPage';
 import CheckoutPage from './components/CheckoutPage';
@@ -33,6 +33,14 @@ class App extends React.Component {
       this._alertIfBackendDown();
     }
 
+    notification.open({
+      message: 'Black Weekend is soon!',
+      description: 'Get -20% off from all our products during the weekend.',
+      duration: 10,
+      icon: <Icon type="fire" theme="filled" />
+    });
+
+    this.props.dispatch(setCurrentPromotion());
     this.props.dispatch(setInitialCart());
   }
 
