@@ -1,14 +1,20 @@
 import Odometer from './Odometer';
 import React from 'react';
+import _ from 'lodash';
 import { Icon, Badge, Tooltip } from 'antd';
 import { calculateCartPrice, getCurrencySymbol } from 'alvarcarto-price-util';
 import history from '../history';
 import ButtonLink from './ButtonLink';
 
+function cutZeroDecimals(humanValue) {
+  return _.trimEnd(humanValue, '0.');
+}
+
 class PricePanel extends React.Component {
   render() {
     const { cart, additionalCart, promotion } = this.props.globalState;
     const combinedCart = cart.concat(additionalCart);
+    const originalPrice = calculateCartPrice(combinedCart);
     const totalPrice = calculateCartPrice(combinedCart, { promotion, ignorePromotionExpiry: true });
     const itemCount = cart.length;
 
@@ -25,11 +31,22 @@ class PricePanel extends React.Component {
               : null
           }
 
-          <h5 className="PricePanel__price">
-            <Odometer value={totalPrice.humanValue} />
-            <span className="PricePanel__price-currency">{getCurrencySymbol(totalPrice.currency)}</span>
-            <span className="PricePanel__price-shipping">+ Free shipping</span>
-          </h5>
+          <div className="PricePanel__values">
+            {
+              promotion
+                ? <h5 className="PricePanel__original-price">
+                  <span className="PricePanel__original-price-value">{cutZeroDecimals(originalPrice.humanValue)}</span>
+                  <span className="PricePanel__price-currency PricePanel__original-price-currency">{getCurrencySymbol(totalPrice.currency)}</span>
+                </h5>
+                : null
+            }
+
+            <h5 className="PricePanel__price">
+              <Odometer value={totalPrice.humanValue} />
+              <span className="PricePanel__price-currency">{getCurrencySymbol(totalPrice.currency)}</span>
+              { promotion ? null : <span className="PricePanel__price-shipping">+ Free shipping</span> }
+            </h5>
+          </div>
 
           <ButtonLink onClick={this._onCheckoutClick} className="PricePanel__checkout-link">
             Checkout
