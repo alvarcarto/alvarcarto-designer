@@ -84,7 +84,7 @@ class App extends React.Component {
     const pathname = globalState.location.pathname;
     if (pathname === '/') {
       notification.open({
-        message: 'Black Weekend is soon here!',
+        message: 'Black Weekend is here!',
         description: 'Get -20% off from all our products during the weekend.',
         duration: 10,
         icon: <Icon type="fire" theme="filled" />
