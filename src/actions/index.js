@@ -195,6 +195,11 @@ export const editCartItem = (index) => ({
   },
 });
 
+export const setNotificationMessage = (message) => ({
+  type: actions.SET_NOTIFICATION_MESSAGE,
+  payload: message,
+});
+
 export const addCartItemQuantity = (payload) => {
   const action = {
     type: actions.ADD_CART_ITEM_QUANTITY,
@@ -285,6 +290,17 @@ export const setCurrentPromotion = () => async function(dispatch) {
     const res = await api.getCurrentPromotion();
     if (res && res.status === 200) {
       dispatch(setPromotion(res.data));
+    }
+  } catch (e) {
+    // Ignore
+  }
+};
+
+export const setCurrentMessage = () => async function(dispatch) {
+  try {
+    const res = await api.getCurrentMessage();
+    if (res && res.status === 200) {
+      dispatch(setNotificationMessage(res.data));
     }
   } catch (e) {
     // Ignore

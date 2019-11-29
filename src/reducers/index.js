@@ -40,6 +40,7 @@ const initialState = {
   },
   promotion: null,
   miniCartPosition: 0,
+  notificationMessage: null,
 };
 
 const freshInitialState = _.cloneDeep(initialState);
@@ -99,6 +100,9 @@ function reducer(state = initialState, action) {
 
     case actions.SET_MAP_STYLE:
       return extendCurrentCartItem(state, { mapStyle: action.payload });
+
+    case actions.SET_NOTIFICATION_MESSAGE:
+      return _.extend({}, state, { notificationMessage: action.payload });
 
     case actions.SET_POSTER_STYLE:
       let posterStyle = action.payload;

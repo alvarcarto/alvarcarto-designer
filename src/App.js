@@ -5,7 +5,7 @@ import _ from 'lodash';
 import { Checkbox, Modal, notification, Icon } from 'antd';
 import config from './config';
 import { connect } from 'react-redux';
-import { setLocation, setInitialCart, setCurrentPromotion } from './actions';
+import { setLocation, setInitialCart, setCurrentPromotion, setCurrentMessage } from './actions';
 import { getStorageSafe, setStorageSafe } from './util';
 import EditorPage from './components/EditorPage';
 import CheckoutPage from './components/CheckoutPage';
@@ -15,7 +15,38 @@ import { initialState } from './reducers';
 import { assertHealth } from './util/api';
 import history from './history';
 
+function showNotificationMessage(message) {
+  notification.open({
+    message: message.title,
+    description: message.message,
+    duration: 10,
+    icon: <Icon type={message.icon} theme="filled" />
+  });
+}
+
 class App extends React.Component {
+  constructor() {
+    super();
+
+    this.state = {
+      notificationMessage: null,
+    };
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    const { notificationMessage, location } = nextProps.globalState;
+    const isCorrectPage = location.pathname === '/';
+    if (isCorrectPage && notificationMessage && !prevState.notificationMessage) {
+      showNotificationMessage(notificationMessage);
+
+      return {
+        notificationMessage,
+      };
+    }
+
+    return null;
+  }
+
   componentDidMount() {
     const shouldShow = shouldShowUnsupported();
     if (shouldShow && !Modernizr.flexbox) {
@@ -33,7 +64,7 @@ class App extends React.Component {
       this._alertIfBackendDown();
     }
 
-    this._showMessage()
+    this.props.dispatch(setCurrentMessage());
     this.props.dispatch(setCurrentPromotion());
     this.props.dispatch(setInitialCart());
   }
@@ -77,19 +108,6 @@ class App extends React.Component {
         </div>
       </div>
     );
-  }
-
-  _showMessage = () => {
-    const { globalState } = this.props;
-    const pathname = globalState.location.pathname;
-    if (pathname === '/') {
-      notification.open({
-        message: 'Black Weekend is here!',
-        description: 'Get -20% off from all our products during the weekend.',
-        duration: 10,
-        icon: <Icon type="fire" theme="filled" />
-      });
-    }
   }
 
   _beforeLeavePage = () => {
