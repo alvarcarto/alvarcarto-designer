@@ -48,7 +48,7 @@ function getMapDefaults() {
     id: getItemId(),
     mapBounds: null,
     quantity: 1,
-    mapStyle: getQuery('mapStyle', 'string', 'black', _.map(MAP_STYLES, 'id')),
+    mapStyle: getQuery('mapStyle', 'string', 'bw', _.map(MAP_STYLES, 'id')),
     posterStyle: getQuery('posterStyle', 'string', 'sharp', _.map(POSTER_STYLES, 'id')),
     mapPitch: 0,
     mapBearing: 0,
