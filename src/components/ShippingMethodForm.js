@@ -20,7 +20,8 @@ class ShippingMethodForm extends React.Component {
   render() {
     let deliveryPhrase = '';
     let deliveryCompany = 'DHL (outside Finland) or Matkahuolto (in Finland)';
-    if (this.props.countryCode && this.props.countryCode === 'FI') {
+    const isMatkahuolto = this.props.countryCode && _.includes(['FI', 'AX'], this.props.countryCode);
+    if (isMatkahuolto) {
       deliveryPhrase = 'Delivery to your nearest Matkahuolto service point.';
       deliveryCompany = 'Matkahuolto';
     } else if (this.props.countryCode) {
