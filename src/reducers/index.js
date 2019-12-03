@@ -18,7 +18,7 @@ const initialState = {
   apiKey: getQuery('apiKey', 'string'),
   location: history.location,
   initialLoadTime: new Date(),
-  currency: 'USD',
+  currency: 'EUR',
   cart: [],
   additionalCart: [{
     sku: 'shipping-express',

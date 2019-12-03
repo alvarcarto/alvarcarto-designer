@@ -9,7 +9,6 @@ import { Icon, Switch, Button } from 'antd';
 import config from '../config';
 import { getPlacementImages } from '../util/api';
 import { setMapView, setCurrency } from '../actions';
-import { getSupportedCurrencies } from 'alvarcarto-price-util';
 import { getPosterPhysicalDimensions } from 'alvarcarto-common'
 import {
   posterSizeToPixels,
