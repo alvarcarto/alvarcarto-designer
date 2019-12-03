@@ -3,9 +3,9 @@ import _ from 'lodash';
 import { Radio, Tooltip } from 'antd';
 import MediaQuery from 'react-responsive';
 import { getPosterSize, POSTER_SIZES, POSTER_SIZE_TYPES } from 'alvarcarto-common';
-import { calculateUnitPrice, getCurrencySymbol } from 'alvarcarto-price-util';
-import Price from './Price';
+import { calculateItemPrice } from 'alvarcarto-price-util';
 import CONST from '../constants';
+import { sizeToPosterSku } from '../util';
 
 class PosterSizeSelect extends React.Component {
   render() {
@@ -55,13 +55,13 @@ class PosterSizeSelect extends React.Component {
       >
         {
           _.map(sizes, (item) => {
-            const price = calculateUnitPrice(item.id);
+            const price = this._getPriceForSize(item.id);
 
             return <option
               value={item.id}
               key={item.id}
             >
-              {item.label} ({price.humanValue}{getCurrencySymbol(price.currency)})
+              {item.label} ({price.label})
             </option>;
           })
         }
@@ -74,21 +74,28 @@ class PosterSizeSelect extends React.Component {
     return <Radio.Group value={this.props.selected} onChange={this._onChange}>
       {
         _.map(sizes, item => {
-          const price = calculateUnitPrice(item.id);
+          const price = this._getPriceForSize(item.id);
 
           return <Radio
             key={item.id}
             value={item.id}
           >
             {item.label}
-            <span className="PosterSizeSelect__price">
-              <Price value={price.humanValue} currency={price.currency} />
-            </span>
+            <span className="PosterSizeSelect__price">{price.label}</span>
           </Radio>;
         })
       }
     </Radio.Group>;
   };
+
+  _getPriceForSize = (size) => {
+    const price = calculateItemPrice({
+      sku: sizeToPosterSku(size),
+      quantity: 1
+    }, { currency: this.props.currency });
+
+    return price;
+  }
 
   _getSelectedSize = () => {
     const { props } = this;

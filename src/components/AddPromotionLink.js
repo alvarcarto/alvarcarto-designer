@@ -8,6 +8,7 @@ import ButtonLink from './ButtonLink'
 const { CancelToken } = axios;
 
 function getPromotionSlow(code, axiosOpts) {
+  // Delay to feel more natural to the user (time to show loader)
   return BPromise.delay(400).then(() => getPromotion(code, axiosOpts));
 }
 
@@ -59,12 +60,13 @@ class AddPromotionLink extends React.Component {
   }
 
   _getContent = () => {
+    const { promotion } = this.state;
     let status;
     if (this.state.loading) {
       status = 'validating';
-    } else if (_.isNull(this.state.promotion)) {
+    } else if (_.isNull(promotion)) {
       status = '';
-    } else if (_.isPlainObject(this.state.promotion)) {
+    } else if (_.isPlainObject(promotion)) {
       status = 'success';
     } else {
       status = 'error';
@@ -138,10 +140,21 @@ class AddPromotionLink extends React.Component {
       cancelToken: source.token,
     })
       .then(res => {
-        this.setState({
-          promotion: res.data,
-          loading: false,
-        });
+        const promotion = res.data;
+        const isValid = promotion.type === 'PERCENTAGE' ||
+          promotion.currency === this.props.currency;
+
+        if (isValid) {
+          this.setState({
+            promotion: res.data,
+            loading: false,
+          });
+        } else {
+          this.setState({
+            promotion: new Error(`Mismatch between selected and promotion's currencies`),
+            loading: false,
+          });
+        }
         this._resetCancelSource();
       })
       .catch(err => {

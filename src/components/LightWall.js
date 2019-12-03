@@ -8,7 +8,8 @@ import PlacementImageGrid from './PlacementImageGrid';
 import { Icon, Switch, Button } from 'antd';
 import config from '../config';
 import { getPlacementImages } from '../util/api';
-import { setMapView } from '../actions';
+import { setMapView, setCurrency } from '../actions';
+import { getSupportedCurrencies } from 'alvarcarto-price-util';
 import { getPosterPhysicalDimensions } from 'alvarcarto-common'
 import {
   posterSizeToPixels,
@@ -18,6 +19,8 @@ import {
   calculateAspectRatioFit,
 } from '../util';
 import UnstyledButton from './UnstyledButton';
+import { cartItemToMapItem } from '../util/cart-state';
+import CurrencySelect from './CurrencySelect';
 
 // Padding which should be left unfilled when scaling poster to light wall
 const MIN_POSTER_PADDING_WIDTH = 50;
@@ -65,17 +68,23 @@ class LightWall extends React.Component {
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     const { globalState } = this.props;
-    const mapItem = globalState.cart[globalState.editCartItem];
-
     const nextGlobalState = nextProps.globalState;
-    const nextMapItem = nextGlobalState.cart[nextGlobalState.editCartItem];
+    const item = globalState.cart[globalState.editCartItem];
 
-    const hasChanged =
-      globalState.cart.length === 0 ||
-      mapItem.size !== nextMapItem.size ||
-      mapItem.orientation !== nextMapItem.orientation ||
-      globalState.cart.length !== nextGlobalState.cart.length;
+    let hasChanged = false;
+    if (!item) {
+      hasChanged = true;
+    } else {
+      const mapItem = cartItemToMapItem(item);
+      const nextItem = nextGlobalState.cart[nextGlobalState.editCartItem];
+      const nextMapItem = cartItemToMapItem(nextItem);
 
+      hasChanged =
+        globalState.cart.length === 0 ||
+        mapItem.size !== nextMapItem.size ||
+        mapItem.orientation !== nextMapItem.orientation ||
+        globalState.cart.length !== nextGlobalState.cart.length;
+    }
 
     if (hasChanged) {
       this.setState({
@@ -90,7 +99,8 @@ class LightWall extends React.Component {
       return <div ref="container" className="LightWall noselect"></div>
     }
 
-    const mapItem = globalState.cart[globalState.editCartItem];
+    const item = globalState.cart[globalState.editCartItem];
+    const mapItem = cartItemToMapItem(item);
 
     const physicalDimensions = getPosterPhysicalDimensions(
       mapItem.size,
@@ -141,14 +151,15 @@ class LightWall extends React.Component {
               MULTI
                 ? _.map(globalState.cart, (m, i) => {
                     const widthSum = this._calculateSumOfPostersWidths(globalState, i + 1);
-                    const dimensions = posterSizeToPixels(m.size, m.orientation);
+                    const mapItem = cartItemToMapItem(m);
+                    const dimensions = posterSizeToPixels(mapItem.size, mapItem.orientation);
                     const totalHalf = sumOfPosterWidths / 2;
                     const half = dimensions.width / 2;
                     const translateX = -totalHalf + half + widthSum - dimensions.width;
 
                     const disabled = globalState.editCartItem !== i;
                     return <div className="LightWall__map-positioner" style={autoprefix({transform: `translateX(${translateX}px)`})}>
-                      <AlvarMap dimensions={dimensions} key={i} mapItem={m} disabled={disabled} scaleZoom={scalerZoom} hideOverlay={!this.state.showOverlay} hideShadows hideTips />
+                      <AlvarMap dimensions={dimensions} key={i} mapItem={mapItem} disabled={disabled} scaleZoom={scalerZoom} hideOverlay={!this.state.showOverlay} hideShadows hideTips />
                     </div>
                   })
                 : <AlvarMap dimensions={dimensions} mapItem={mapItem} scaleZoom={scalerZoom} hideTips={globalState.debug} />
@@ -192,6 +203,10 @@ class LightWall extends React.Component {
                 />
               : null
           }
+        </div>
+
+        <div className="LightWall__currency">
+          <CurrencySelect value={globalState.currency} onChange={this._onCurrencyChange} />
         </div>
 
         <div className="LightWall__logo">
@@ -290,7 +305,8 @@ class LightWall extends React.Component {
     }
 
     const containerArea = this._getContainerArea()
-    const mapItem = globalState.cart[globalState.editCartItem];
+    const item = globalState.cart[globalState.editCartItem];
+    const mapItem = cartItemToMapItem(item);
     const dimensions = posterSizeToPixels(mapItem.size, mapItem.orientation, containerArea);
 
     const width = MULTI ? this._calculateSumOfPostersWidths(globalState) : dimensions.width;
@@ -324,7 +340,7 @@ class LightWall extends React.Component {
     const cart = nFirstItems ? _.take(globalState.cart, nFirstItems) : globalState.cart;
 
     const totalWidth = _.reduce(cart, (memo, item) => {
-      return memo + posterSizeToPixels(item.size, item.orientation).width;
+      return memo + posterSizeToPixels(item.customisation.size, item.customisation.orientation).width;
     }, 0);
     return totalWidth;
   };
@@ -333,9 +349,9 @@ class LightWall extends React.Component {
     e.preventDefault();
 
     const { globalState } = this.props;
-    const mapItem = globalState.cart[globalState.editCartItem];
+    const item = globalState.cart[globalState.editCartItem];
     this.props.dispatch(setMapView({
-      zoom: mapItem.mapZoom + 0.25,
+      zoom: item.customisation.mapZoom + 0.25,
     }));
   };
 
@@ -343,9 +359,9 @@ class LightWall extends React.Component {
     e.preventDefault();
 
     const { globalState } = this.props;
-    const mapItem = globalState.cart[globalState.editCartItem];
+    const item = globalState.cart[globalState.editCartItem];
     this.props.dispatch(setMapView({
-      zoom: mapItem.mapZoom - 0.25,
+      zoom: item.customisation.mapZoom - 0.25,
     }));
   };
 
@@ -361,6 +377,10 @@ class LightWall extends React.Component {
     });
   };
 
+  _onCurrencyChange = (newValue) => {
+    this.props.dispatch(setCurrency(newValue));
+  }
+
   _downloadCartAsJson = () => {
     const obj = this.props.globalState.cart;
     const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(obj, null, 2));
@@ -369,7 +389,7 @@ class LightWall extends React.Component {
 
     const prefix = obj.length > 1
       ? 'multiple-items'
-      : `${obj[0].labelHeader}`;
+      : `${obj[0].customisation.labelHeader}`;
 
     const timestamp = (new Date()).toISOString();
     dlAnchorElem.setAttribute('download', `${prefix.toLowerCase()}-${timestamp}.json`);
@@ -378,17 +398,20 @@ class LightWall extends React.Component {
 
   _downloadImage = () => {
     const { globalState } = this.props;
-    const mapItem = globalState.cart[globalState.editCartItem];
+    const item = globalState.cart[globalState.editCartItem];
+    const mapItem = cartItemToMapItem(item);
     const newUrl = `${createPosterImageUrl(mapItem)}&apiKey=${globalState.apiKey}&download=true`;
     window.open(newUrl, '_blank');
   };
 
   _downloadPlacement = (id, opts = {}) => {
     const { globalState } = this.props;
-    const mapItem = _.merge({}, globalState.cart[globalState.editCartItem], {
+    const mapItem = cartItemToMapItem(globalState.cart[globalState.editCartItem]);
+    const queryParams = _.merge({}, mapItem, {
       resizeToWidth: opts.resizeToWidth
     });
-    const newUrl = `${createPlacementImageUrl(id, mapItem)}&apiKey=${globalState.apiKey}&download=true`;
+
+    const newUrl = `${createPlacementImageUrl(id, queryParams)}&apiKey=${globalState.apiKey}&download=true`;
     window.open(newUrl, '_blank');
   };
 }

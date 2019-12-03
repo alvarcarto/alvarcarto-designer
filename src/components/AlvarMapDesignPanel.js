@@ -8,6 +8,7 @@ import {
   setMapLabels
 } from '../actions';
 import { coordToPrettyText, getPosterLook } from '../util';
+import { cartItemToMapItem } from '../util/cart-state';
 import countries from 'i18n-iso-countries';
 import Accordion from './Accordion';
 import TabView from './TabView';
@@ -27,16 +28,16 @@ import cities from '../data/cities.json';
 class AlvarMapDesignPanel extends React.Component {
   render() {
     const { globalState } = this.props;
-    const mapItem = globalState.cart[globalState.editCartItem];
 
+    const item = globalState.cart[globalState.editCartItem];
     return (
       <div className={`AlvarMapDesignPanel ${this.props.className}`}>
         <MediaQuery minWidth={CONST.SCREEN_MD}>
           {(matches) => {
             if (matches) {
-              return this._renderWideView(mapItem);
+              return this._renderWideView(item);
             } else {
-              return this._renderNarrowView(mapItem);
+              return this._renderNarrowView(item);
             }
           }}
         </MediaQuery>
@@ -44,40 +45,41 @@ class AlvarMapDesignPanel extends React.Component {
     );
   }
 
-  _renderNarrowView = (mapItem) => {
+  _renderNarrowView = (item) => {
     return <div className="AlvarMapDesignPanel__narrow">
       <div className="AlvarMapDesignPanel__narrow-spacer"></div>
       <TabView initialSelected={null}>
         <TabView.Panel className="AlvarMapDesignPanel__location-section" header="1. Style">
-          {this._renderLocationAndStylePanel(mapItem)}
+          {this._renderLocationAndStylePanel(item)}
         </TabView.Panel>
         <TabView.Panel className="AlvarMapDesignPanel__size-section" header="2. Size">
-          {this._renderSizePanel(mapItem)}
+          {this._renderSizePanel(item)}
         </TabView.Panel>
         <TabView.Panel header="3. Labels">
-          {this._renderLabelsPanel(mapItem)}
+          {this._renderLabelsPanel(item)}
         </TabView.Panel>
       </TabView>
     </div>;
   };
 
-  _renderWideView = (mapItem) => {
+  _renderWideView = (item) => {
     return <div className="AlvarMapDesignPanel__wide">
       <Accordion initialSelected={0}>
         <Accordion.Section className="AlvarMapDesignPanel__location-section" header="Location &amp; Style">
-          {this._renderLocationAndStylePanel(mapItem)}
+          {this._renderLocationAndStylePanel(item)}
         </Accordion.Section>
         <Accordion.Section className="AlvarMapDesignPanel__size-section" header="Size &amp; Layout">
-          {this._renderSizePanel(mapItem)}
+          {this._renderSizePanel(item)}
         </Accordion.Section>
         <Accordion.Section header="Labels">
-          {this._renderLabelsPanel(mapItem)}
+          {this._renderLabelsPanel(item)}
         </Accordion.Section>
       </Accordion>
     </div>;
   };
 
-  _renderLocationAndStylePanel = (mapItem) => {
+  _renderLocationAndStylePanel = (item) => {
+    const mapItem = cartItemToMapItem(item);
     const posterLook = getPosterLook(mapItem.posterStyle);
     const { globalState } = this.props;
 
@@ -114,7 +116,8 @@ class AlvarMapDesignPanel extends React.Component {
     </div>;
   };
 
-  _renderSizePanel = (mapItem) => {
+  _renderSizePanel = (item) => {
+    const mapItem = cartItemToMapItem(item);
     return <div className="AlvarMapDesignPanel__group">
       <div className="AlvarMapDesignPanel__info">
         <Alert iconType="picture">
@@ -130,6 +133,7 @@ class AlvarMapDesignPanel extends React.Component {
           orientation={mapItem.orientation}
           selected={mapItem.size}
           onChange={this._onSizeChange}
+          currency={this.props.globalState.currency}
         />
       </div>
 
@@ -140,7 +144,8 @@ class AlvarMapDesignPanel extends React.Component {
     </div>;
   };
 
-  _renderLabelsPanel = (mapItem) => {
+  _renderLabelsPanel = (item) => {
+    const mapItem = cartItemToMapItem(item);
     const posterLook = getPosterLook(mapItem.posterStyle);
 
     return <div className="AlvarMapDesignPanel__group">
@@ -149,7 +154,7 @@ class AlvarMapDesignPanel extends React.Component {
         showLabels: posterLook.labels,
         header: mapItem.labelHeader,
         smallHeader: mapItem.labelSmallHeader,
-        autoUpdateCoordinates: mapItem.autoUpdateCoordinates,
+        autoUpdateCoordinates: item.autoUpdateCoordinates,
         text: mapItem.labelText,
       }} />
     </div>;

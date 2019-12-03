@@ -1,0 +1,37 @@
+.CurrencySelect {
+  text-align: right;
+  cursor: pointer;
+  position: relative;
+  font-weight: bold;
+  border: none;
+  color: @primary-color;
+}
+
+.CurrencySelect .anticon {
+  position: absolute;
+  right: 3px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.9rem;
+  pointer-events: none;
+  cursor: pointer;
+}
+
+.CurrencySelect select {
+  cursor: pointer;
+  text-align: right;
+  width: 85px;
+  padding: 5px 12px;
+  font-weight: bold;
+  border: none;
+  background: none;
+  /* for Firefox */
+  -moz-appearance: none;
+  /* for Chrome */
+  -webkit-appearance: none;
+}
+
+/* For IE10 */
+.CurrencySelect select::-ms-expand {
+  display: none;
+}

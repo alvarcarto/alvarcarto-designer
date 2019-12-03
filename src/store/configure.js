@@ -6,6 +6,7 @@ import analytics from '../middleware/redux-analytics';
 import { handleAnalyticsEvent } from '../analytics';
 import { getQuery } from '../util';
 import rootReducer from '../reducers';
+import { cartItemToMapItem } from '../util/cart-state';
 
 const REDUX_LOG = getQuery('reduxLog', 'boolean', false);
 const UPDATE_CART = getQuery('updateCart', 'boolean', false);
@@ -25,19 +26,26 @@ const debouncedSetCartUrl = _.debounce(setCartUrl, 10);
 function setUrl(state) {
   const currentIndex = state.editCartItem;
   const currentQuery = queryString.parse(window.location.search)
+  const item = state.cart[currentIndex];
+  if (!item) {
+    return;
+  }
+
+  const mapItem = cartItemToMapItem(item);
+
   const newQuery = _.extend({}, currentQuery, {
-    lat: state.cart[currentIndex].mapCenter.lat.toFixed(4),
-    lng: state.cart[currentIndex].mapCenter.lng.toFixed(4),
-    zoom: state.cart[currentIndex].mapZoom,
-    size: state.cart[currentIndex].size,
-    orientation: state.cart[currentIndex].orientation,
-    mapStyle: state.cart[currentIndex].mapStyle,
-    posterStyle: state.cart[currentIndex].posterStyle,
-    labelsEnabled: state.cart[currentIndex].labelsEnabled,
-    labelHeader: state.cart[currentIndex].labelHeader,
-    labelSmallHeader: state.cart[currentIndex].labelSmallHeader,
-    labelText: state.cart[currentIndex].labelText,
-    updateCoords: state.cart[currentIndex].autoUpdateCoordinates,
+    lat: mapItem.mapCenter.lat.toFixed(4),
+    lng: mapItem.mapCenter.lng.toFixed(4),
+    zoom: mapItem.mapZoom,
+    size: mapItem.size,
+    orientation: mapItem.orientation,
+    mapStyle: mapItem.mapStyle,
+    posterStyle: mapItem.posterStyle,
+    labelsEnabled: mapItem.labelsEnabled,
+    labelHeader: mapItem.labelHeader,
+    labelSmallHeader: mapItem.labelSmallHeader,
+    labelText: mapItem.labelText,
+    updateCoords: item.autoUpdateCoordinates,
   });
 
   window.history.replaceState(null, null, `?${queryString.stringify(newQuery)}`);

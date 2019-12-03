@@ -2,12 +2,14 @@ import _ from 'lodash';
 import React from 'react';
 import MediaQuery from 'react-responsive';
 import { Icon, Steps, Button } from 'antd';
+import { getProduct } from 'alvarcarto-price-util';
 import { getOrder } from '../util/api';
 import config from '../config';
 import CONST from '../constants';
 import Spinner from './Spinner';
 import FinalOrderSummary from './FinalOrderSummary';
 import Footer from './Footer';
+import { isMapSku } from '../util';
 
 const STEP_WAITING = {
   stepIndex: 0,
@@ -22,15 +24,15 @@ const STEP_RECEIVED = {
 
 
 function hasShippableProducts(cart) {
-  return _.some(cart, item => item.type !== 'giftCardValue');
+  return _.some(cart, item => getProduct(item.sku).shippable);
 }
 
 function hasMapPosters(cart) {
-  return _.some(cart, item => !item.type || item.type === 'mapPoster');
+  return _.some(cart, item => isMapSku(item.sku));
 }
 
 function hasPhysicalGiftCards(cart) {
-  return _.some(cart, item => item.type === 'physicalGiftCard');
+  return _.some(cart, item => item.sku === 'physical-gift-card');
 }
 
 function getItemsWording(cart) {
@@ -222,7 +224,7 @@ class ThankYouPage extends React.Component {
 
   _renderOrderContent = () => {
     const { order } = this.state
-    const { cart, promotion } = order;
+    const { cart, promotion, currency } = order;
     const step = this.state.waitingForPayment ? STEP_WAITING : STEP_RECEIVED;
     const { stepIndex, firstText, firstIcon } = step;
     const city = _.get(order, 'shippingAddress.city');
@@ -252,7 +254,7 @@ class ThankYouPage extends React.Component {
 
 
       <div className="ThankYouPage__order-container">
-        <FinalOrderSummary promotion={promotion} cart={cart} orderId={this.props.orderId} />
+        <FinalOrderSummary currency={currency} promotion={promotion} cart={cart} orderId={this.props.orderId} />
       </div>
 
       <div className="ThankYouPage__ok-container">

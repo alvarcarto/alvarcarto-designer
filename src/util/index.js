@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import qs from 'qs';
 import geolib from 'geolib';
+import currencyFormatter from 'currency-formatter';
 import { POSTER_STYLES, MAP_STYLES, resolveOrientation } from 'alvarcarto-common';
 import CONST from '../constants';
 import config from '../config';
@@ -92,6 +93,26 @@ export function posterSizeToThumbnailPixels(size, orientation) {
   }
 
   return resolveOrientation(dimensions, orientation);
+}
+
+export function sizeToPosterSku(size) {
+  return `custom-map-print-${size}`;
+}
+
+export function isMapSku(sku) {
+  return _.startsWith(sku, 'custom-map');
+}
+
+export function filterMapPosterCart(cart) {
+  return _.filter(cart, item => _.startsWith(item.sku, 'custom-map'));
+}
+
+export function filterOtherItemsCart(cart) {
+  return _.filter(cart, item => !_.startsWith(item.sku, 'custom-map'));
+}
+
+export function currencyToSymbol(currency) {
+  return currencyFormatter.findCurrency(currency.toUpperCase()).symbol;
 }
 
 export function createPosterUrlParameters(mapItem) {

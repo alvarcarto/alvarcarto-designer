@@ -4,8 +4,9 @@ import {
   coordToPrettyText,
   getQuery,
   getPosterLook,
+  sizeToPosterSku,
 } from '../util';
-import { getItemId, getInitialCartItem } from '../util/cart-state';
+import { getItemId, getInitialCartItem, cartItemToMapItem } from '../util/cart-state';
 import dummyCheckoutState from '../util/dummy-checkout-state';
 import history from '../history';
 import { findClosestSizeForOtherSizeType } from 'alvarcarto-common';
@@ -17,17 +18,19 @@ const initialState = {
   apiKey: getQuery('apiKey', 'string'),
   location: history.location,
   initialLoadTime: new Date(),
+  currency: 'USD',
   cart: [],
   additionalCart: [{
-    type: 'shippingClass',
-    quantity: 1,
-    value: 'EXPRESS',
+    sku: 'shipping-express',
+    quantity: 1
   }],
   giftCardCart: [
     {
-      type: 'giftCardValue',
+      sku: 'gift-card-value',
       quantity: 1,
-      value: getQuery('value', 'integer', 4900),
+      customisation: {
+        netValue: getQuery('value', 'integer', 4900),
+      }
     },
   ],
   checkoutFormState: DEBUG ? dummyCheckoutState : null,
@@ -59,29 +62,33 @@ function reducer(state = initialState, action) {
 
     case actions.SET_MAP_VIEW:
       newAttrs = {
-        mapCenter: action.payload.center,
-        mapBounds: action.payload.bounds,
-        mapZoom: action.payload.zoom,
-        mapPitch: action.payload.pitch,
-        mapBearing: action.payload.bearing,
+        customisation: {
+          mapCenter: action.payload.center,
+          mapBounds: action.payload.bounds,
+          mapZoom: action.payload.zoom,
+          mapPitch: action.payload.pitch,
+          mapBearing: action.payload.bearing,
+        },
       };
 
-      if (currentItem.autoUpdateCoordinates && newAttrs.mapCenter) {
-        newAttrs.labelText = coordToPrettyText(newAttrs.mapCenter);
+      if (currentItem.autoUpdateCoordinates && newAttrs.customisation.mapCenter) {
+        newAttrs.customisation.labelText = coordToPrettyText(newAttrs.customisation.mapCenter);
       }
 
-      return extendCurrentCartItem(state, _.omitBy(newAttrs, _.isNil));
+      return mergeCurrentCartItem(state, _.omitBy(newAttrs, _.isNil));
 
     case actions.SET_MAP_LABELS:
       newAttrs = {
-        labelsEnabled: action.payload.enabled,
-        labelHeader: action.payload.header,
-        labelSmallHeader: action.payload.smallHeader,
-        labelText: action.payload.text,
+        customisation: {
+          labelsEnabled: action.payload.enabled,
+          labelHeader: action.payload.header,
+          labelSmallHeader: action.payload.smallHeader,
+          labelText: action.payload.text,
+        },
         autoUpdateCoordinates: action.payload.autoUpdateCoordinates,
       };
 
-      if (_.isString(newAttrs.labelText) && !currentItem.autoUpdateCoordinates) {
+      if (_.isString(newAttrs.customisation.labelText) && !currentItem.autoUpdateCoordinates) {
         newAttrs.labelTextManual = newAttrs.labelText;
       }
 
@@ -90,16 +97,16 @@ function reducer(state = initialState, action) {
                                       newAttrs.autoUpdateCoordinates;
 
         if (willEnableAutoUpdate) {
-          newAttrs.labelText = coordToPrettyText(currentItem.mapCenter);
+          newAttrs.customisation.labelText = coordToPrettyText(currentItem.customisation.mapCenter);
         } else {
-          newAttrs.labelText = currentItem.labelTextManual;
+          newAttrs.customisation.labelText = currentItem.labelTextManual;
         }
       }
 
-      return extendCurrentCartItem(state, _.omitBy(newAttrs, _.isNil));
+      return mergeCurrentCartItem(state, _.omitBy(newAttrs, _.isNil));
 
     case actions.SET_MAP_STYLE:
-      return extendCurrentCartItem(state, { mapStyle: action.payload });
+      return mergeCurrentCartItem(state, { customisation: { mapStyle: action.payload } });
 
     case actions.SET_NOTIFICATION_MESSAGE:
       return _.extend({}, state, { notificationMessage: action.payload });
@@ -108,29 +115,37 @@ function reducer(state = initialState, action) {
       let posterStyle = action.payload;
       const posterLook = getPosterLook(posterStyle);
 
-      if (_.isArray(posterLook.allowedMapStyles) && !_.includes(posterLook.allowedMapStyles, currentItem.mapStyle)) {
-        return extendCurrentCartItem(state, {
-          mapStyle: posterLook.allowedMapStyles[0],
-          posterStyle: action.payload,
+      if (_.isArray(posterLook.allowedMapStyles) && !_.includes(posterLook.allowedMapStyles, currentItem.customisation.mapStyle)) {
+        return mergeCurrentCartItem(state, {
+          customisation: {
+            mapStyle: posterLook.allowedMapStyles[0],
+            posterStyle: action.payload,
+          },
         });
       }
 
-      return extendCurrentCartItem(state, { posterStyle: action.payload });
+      return mergeCurrentCartItem(state, { customisation: { posterStyle: action.payload } });
 
     case actions.SET_POSTER_LAYOUT:
       newAttrs = {
-        orientation: action.payload.orientation,
-        size: action.payload.size,
+        customisation: {
+          orientation: action.payload.orientation,
+        }
       };
-
+      let newSize = action.payload.size;
+      const currentMapItem = cartItemToMapItem(currentItem);
       if (action.payload.sizeType) {
         // If the size type was changed to e.g. inches, we'll also set the selected size to
         // match the closest inch size
-        const sizeToMatch = action.payload.size || currentItem.size;
-        newAttrs.size = findClosestSizeForOtherSizeType(sizeToMatch, action.payload.sizeType).id;
+        const sizeToMatch = action.payload.size || currentMapItem.size;
+        newSize = findClosestSizeForOtherSizeType(sizeToMatch, action.payload.sizeType).id;
       }
 
-      return extendCurrentCartItem(state, _.omitBy(newAttrs, _.isNil));
+      if (newSize) {
+        newAttrs.sku = sizeToPosterSku(newSize);
+      }
+
+      return mergeCurrentCartItem(state, _.omitBy(newAttrs, _.isNil));
 
     case actions.ADD_CART_ITEM_QUANTITY:
       const currentQuantity = state.cart[action.payload.index].quantity;
@@ -151,10 +166,10 @@ function reducer(state = initialState, action) {
       newEmptyItem.id = getItemId();
 
       // Copy basic attributes from the currently selected map
-      newEmptyItem.size = currentItem.size;
-      newEmptyItem.orientation = currentItem.orientation;
-      newEmptyItem.mapStyle = currentItem.mapStyle;
-      newEmptyItem.posterStyle = currentItem.posterStyle;
+      newEmptyItem.sku = currentItem.sku;
+      newEmptyItem.customisation.orientation = currentItem.customisation.orientation;
+      newEmptyItem.customisation.mapStyle = currentItem.customisation.mapStyle;
+      newEmptyItem.customisation.posterStyle = currentItem.customisation.posterStyle;
 
       newState.cart.push(newEmptyItem);
       newState.editCartItem = newState.cart.length - 1;
@@ -189,6 +204,11 @@ function reducer(state = initialState, action) {
         promotion: action.payload,
       });
 
+    case actions.SET_CURRENCY:
+      return _.extend({}, state, {
+        currency: action.payload.toUpperCase(),
+      });
+
     case actions.SET_MINI_CART_POSITION:
       return _.extend({}, state, {
         miniCartPosition: action.payload,
@@ -217,25 +237,23 @@ function reducer(state = initialState, action) {
     case actions.CHECKOUT_FORM_STATE_CHANGE:
       newState = _.extend({}, state, { checkoutFormState: action.payload });
       if (_.get(action.payload, 'giftCardCustomizeForm.values.giftCardType') === 'digital') {
-        newState.giftCardCart = _.filter(newState.giftCardCart, i => i.type === 'giftCardValue');
+        newState.giftCardCart = _.filter(newState.giftCardCart, i => i.sku === 'gift-card-value');
       } else {
-        const valueItem = _.find(newState.giftCardCart, i => i.type === 'giftCardValue');
+        const valueItem = _.find(newState.giftCardCart, i => i.sku === 'gift-card-value');
         newState.giftCardCart = [
           valueItem,
-          { type: 'physicalGiftCard', quantity: 1 }
+          { sku: 'physical-gift-card', quantity: 1 }
         ];
       }
 
       if (_.get(action.payload, 'shippingMethodForm.values.shippingMethod') === 'fast') {
         newState.additionalCart = [
           {
-            type: 'shippingClass',
-            value: 'EXPRESS',
+            sku: 'shipping-express',
             quantity: 1,
           },
           {
-            type: 'productionClass',
-            value: 'HIGH',
+            sku: 'production-high-priority',
             quantity: 1,
           }
         ];
@@ -255,14 +273,14 @@ function getCurrentCartItem(state) {
   return state.cart[index];
 }
 
-function extendCurrentCartItem(state, newAttrs) {
+function mergeCurrentCartItem(state, newAttrs) {
   const index = state.editCartItem;
-  return extendCartItem(state, index, newAttrs);
+  return extendCartItem(state, index, newAttrs, _.merge);
 }
 
-function extendCartItem(state, index, newAttrs) {
+function extendCartItem(state, index, newAttrs, extendFunc = _.extend) {
   const oldItem = state.cart[index];
-  const newItem = _.extend({}, oldItem, newAttrs);
+  const newItem = extendFunc({}, oldItem, newAttrs);
 
   const newState = _.cloneDeep(state);
   newState.cart[index] = newItem;

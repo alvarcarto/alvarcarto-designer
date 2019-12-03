@@ -5,8 +5,9 @@ import {
   POSTER_ORIENTATIONS,
   MAP_STYLES,
 } from 'alvarcarto-common';
+import { getProduct } from 'alvarcarto-price-util';
 import CONST from '../constants'
-import { getQuery, coordToPrettyText } from '.';
+import { getQuery, coordToPrettyText, sizeToPosterSku } from '.';
 
 // We can assign a unique id for each new poster in the cart. This can be used as a stable React
 // key (needed for e.g. MiniCart transition)
@@ -44,19 +45,23 @@ const BARCELONA_CENTER = {
 export { BARCELONA_CENTER as DEFAULT_MAP_CENTER };
 
 function getMapDefaults() {
+  const size = getQuery('size', 'string', '50x70cm', _.map(POSTER_SIZES, 'id'));
   return {
     id: getItemId(),
-    mapBounds: null,
     quantity: 1,
-    mapStyle: getQuery('mapStyle', 'string', 'bw', _.map(MAP_STYLES, 'id')),
-    posterStyle: getQuery('posterStyle', 'string', 'sharp', _.map(POSTER_STYLES, 'id')),
-    mapPitch: 0,
-    mapBearing: 0,
-    orientation: getQuery('orientation', 'string', 'portrait', _.map(POSTER_ORIENTATIONS, 'id')),
-    size: getQuery('size', 'string', '50x70cm', _.map(POSTER_SIZES, 'id')),
-    labelsEnabled: getQuery('labels', 'boolean', true),
-    labelHeader: getQuery('labelHeader', 'string', 'Barcelona'),
-    labelSmallHeader: getQuery('labelSmallHeader', 'string', 'Catalonia'),
+    sku: sizeToPosterSku(size),
+    customisation: {
+      mapBounds: null,
+      mapStyle: getQuery('mapStyle', 'string', 'bw', _.map(MAP_STYLES, 'id')),
+      posterStyle: getQuery('posterStyle', 'string', 'sharp', _.map(POSTER_STYLES, 'id')),
+      mapPitch: 0,
+      mapBearing: 0,
+      orientation: getQuery('orientation', 'string', 'portrait', _.map(POSTER_ORIENTATIONS, 'id')),
+      size,
+      labelsEnabled: getQuery('labels', 'boolean', true),
+      labelHeader: getQuery('labelHeader', 'string', 'Barcelona'),
+      labelSmallHeader: getQuery('labelSmallHeader', 'string', 'Catalonia'),
+    },
     // Used to save user entered text only. This can be used to recover what
     // user wrote if they change autoUpdateCoordinates flag
     labelTextManual: getQuery('labelText', 'string', null),
@@ -77,19 +82,35 @@ export function getInitialCartItem() {
   }
 
   return _.merge({}, getMapDefaults(), {
-    mapCenter: initialMapCenter,
-    mapZoom,
-    labelText: coordToPrettyText(initialMapCenter),
+    customisation: {
+      mapCenter: initialMapCenter,
+      mapZoom,
+      labelText: coordToPrettyText(initialMapCenter),
+    }
   });
 }
 
 export function getCartItemFromLocation(location) {
   return _.merge({}, getMapDefaults(), {
-    mapCenter: { lat: location.latitude, lng: location.longitude },
-    mapZoom: 11,
-    labelHeader: location.city,
-    labelSmallHeader: location.country_name,
-    labelText: coordToPrettyText({ lat: location.latitude, lng: location.longitude }),
+    customisation: {
+      mapCenter: { lat: location.latitude, lng: location.longitude },
+      mapZoom: 11,
+      labelHeader: location.city,
+      labelSmallHeader: location.country_name,
+      labelText: coordToPrettyText({ lat: location.latitude, lng: location.longitude }),
+    },
     labelTextManual: null,
   });
+}
+
+export function cartItemToMapItem(cartItem) {
+  const size = getProduct(cartItem.sku).metadata.size;
+  return _.merge({}, cartItem.customisation, {
+    size,
+  });
+}
+
+export function getCurrentMapItem(globalState) {
+  const cartItem = globalState.cart[globalState.editCartItem];
+  return cartItemToMapItem(cartItem);
 }

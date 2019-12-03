@@ -12,6 +12,7 @@ import { Carousel } from 'react-responsive-carousel';
 import ShippingMethodForm from './ShippingMethodForm';
 import CreditCardForm from './CreditCardForm';
 import ButtonLink from './ButtonLink';
+import { cartItemToMapItem } from '../util/cart-state';
 
 const form = {
   differentBillingAddress: () => null,
@@ -116,6 +117,7 @@ class CheckoutForm extends React.Component {
               initialState={this.state.shippingMethodForm}
               countryCode={this._getShippingAddressCountryCode(this.state.shippingAddressForm)}
               onChange={this._onShippingMethodFormChange}
+              currency={this.props.currency}
             />
           </section>
 
@@ -138,7 +140,8 @@ class CheckoutForm extends React.Component {
                 showIndicators={cart.length > 1}
               >
                 {_.map(cart, (item, i) => {
-                  return <div key={i}><PosterPreview mapItem={cart[i]} /></div>;
+                  const mapItem = cartItemToMapItem(item);
+                  return <div key={i}><PosterPreview mapItem={mapItem} /></div>;
                 })}
               </Carousel>
             </div>

@@ -71,6 +71,7 @@ class CheckoutPage extends React.Component {
           </MediaQuery>
           <CheckoutForm
             cart={this.props.globalState.cart}
+            currency={this.props.globalState.currency}
             additionalCart={this.props.globalState.additionalCart}
             promotion={this.props.globalState.promotion}
             initialState={this.props.globalState.checkoutFormState}
@@ -94,6 +95,7 @@ class CheckoutPage extends React.Component {
 
   _onFormSubmit = (form) => {
     const order = _.merge({}, form, {
+      currency: this.props.globalState.currency,
       cart: this.props.globalState.cart,
       additionalCart: this.props.globalState.additionalCart,
     });

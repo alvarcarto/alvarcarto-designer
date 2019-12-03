@@ -4,24 +4,27 @@ import { Tooltip, Popconfirm } from 'antd';
 import { getStyle } from '../util';
 import { posterSizeToThumbnailPixels, getPosterLook } from '../util';
 import IconButton from './IconButton';
+import { cartItemToMapItem } from '../util/cart-state';
 
 class MiniCartItem extends React.Component {
   static propTypes = {
     selected: PropTypes.bool.isRequired,
     index: PropTypes.number.isRequired,
-    item: PropTypes.shape({
-      posterStyle: PropTypes.string.isRequired,
+    mapItem: PropTypes.shape({
+      sku: PropTypes.string.isRequired,
       quantity: PropTypes.number.isRequired,
-      mapBounds:  PropTypes.object,
-      mapZoom: PropTypes.number.isRequired,
-      mapStyle: PropTypes.string.isRequired,
-      mapPitch: PropTypes.number.isRequired,
-      mapBearing: PropTypes.number.isRequired,
-      orientation: PropTypes.string.isRequired,
-      size: PropTypes.string.isRequired,
-      labelHeader: PropTypes.string.isRequired,
-      labelSmallHeader: PropTypes.string.isRequired,
-      labelText: PropTypes.string.isRequired,
+      customisation: PropTypes.shape({
+        posterStyle: PropTypes.string.isRequired,
+        mapBounds:  PropTypes.object,
+        mapZoom: PropTypes.number.isRequired,
+        mapStyle: PropTypes.string.isRequired,
+        mapPitch: PropTypes.number.isRequired,
+        mapBearing: PropTypes.number.isRequired,
+        orientation: PropTypes.string.isRequired,
+        labelHeader: PropTypes.string.isRequired,
+        labelSmallHeader: PropTypes.string.isRequired,
+        labelText: PropTypes.string.isRequired,
+      })
     }),
     onRemoveClick: PropTypes.func.isRequired,
     onEditClick: PropTypes.func.isRequired,
@@ -31,8 +34,9 @@ class MiniCartItem extends React.Component {
 
   render() {
     const { props } = this;
-    const item = props.item;
-    const isDecreaseDisabled = this.props.item.quantity < 2;
+    const { item } = props;
+    const mapItem = cartItemToMapItem(item);
+    const isDecreaseDisabled = item.quantity < 2;
 
     let className = 'MiniCartItem noselect';
     if (props.selected) {
@@ -40,13 +44,13 @@ class MiniCartItem extends React.Component {
     }
 
     let posterClassName = 'MiniCartItem__poster';
-    if (item.orientation === 'landscape') {
+    if (mapItem.orientation === 'landscape') {
       posterClassName += ' MiniCartItem__poster--landscape';
     }
 
-    const posterSize = posterSizeToThumbnailPixels(item.size, item.orientation);
-    const posterStyle = getPosterLook(item.posterStyle);
-    const mapStyle = getStyle(item.mapStyle);
+    const posterSize = posterSizeToThumbnailPixels(mapItem.size, mapItem.orientation);
+    const posterStyle = getPosterLook(mapItem.posterStyle);
+    const mapStyle = getStyle(mapItem.mapStyle);
 
     return (
       <div style={props.style} className={className} onClick={this._onEdit}>
@@ -90,7 +94,7 @@ class MiniCartItem extends React.Component {
           <IconButton className="MiniCartItem__action MiniCartItem__increase-quantity noselect" onClick={this._onIncreaseQuantity} type="plus" />
         </div>
 
-        <span className="MiniCartItem__title">{item.labelHeader.trim() ? item.labelHeader : <span>&nbsp;</span>}</span>
+        <span className="MiniCartItem__title">{mapItem.labelHeader.trim() ? mapItem.labelHeader : <span>&nbsp;</span>}</span>
       </div>
     );
   }
