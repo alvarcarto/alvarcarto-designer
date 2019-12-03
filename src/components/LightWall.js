@@ -8,7 +8,8 @@ import PlacementImageGrid from './PlacementImageGrid';
 import { Icon, Switch, Button } from 'antd';
 import config from '../config';
 import { getPlacementImages } from '../util/api';
-import { setMapView } from '../actions';
+import { setMapView, setCurrency } from '../actions';
+import { getSupportedCurrencies } from 'alvarcarto-price-util';
 import { getPosterPhysicalDimensions } from 'alvarcarto-common'
 import {
   posterSizeToPixels,
@@ -19,6 +20,7 @@ import {
 } from '../util';
 import UnstyledButton from './UnstyledButton';
 import { cartItemToMapItem } from '../util/cart-state';
+import CurrencySelect from './CurrencySelect';
 
 // Padding which should be left unfilled when scaling poster to light wall
 const MIN_POSTER_PADDING_WIDTH = 50;
@@ -203,6 +205,10 @@ class LightWall extends React.Component {
           }
         </div>
 
+        <div className="LightWall__currency">
+          <CurrencySelect value={globalState.currency} onChange={this._onCurrencyChange} />
+        </div>
+
         <div className="LightWall__logo">
           <a href="http://alvarcarto.com">
             <img
@@ -370,6 +376,10 @@ class LightWall extends React.Component {
       showOverlay: checked,
     });
   };
+
+  _onCurrencyChange = (newValue) => {
+    this.props.dispatch(setCurrency(newValue));
+  }
 
   _downloadCartAsJson = () => {
     const obj = this.props.globalState.cart;

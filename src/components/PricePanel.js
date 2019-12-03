@@ -21,9 +21,10 @@ class PricePanel extends React.Component {
     const itemCount = cart.length;
 
     const currencyOpts = currencyFormatter.findCurrency(currency);
-    const decimalFormat = _.repeat('d', currencyOpts.decimalDigits);
-    const odometerFormat = `(${currencyOpts.thousandsSeparator}ddd)${currencyOpts.decimalSeparator}${decimalFormat}`;
-
+    const decimalFormat = currencyOpts.decimalDigits > 0
+      ? `${currencyOpts.decimalSeparator}${_.repeat('d', currencyOpts.decimalDigits)}`
+      : ''
+    const odometerFormat = `(${currencyOpts.thousandsSeparator}ddd)${decimalFormat}`;
     return (
       <div className="PricePanel">
         <div className="PricePanel__container">

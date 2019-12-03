@@ -116,6 +116,21 @@ export const setMapStyle = (style) => ({
   },
 });
 
+export const setCurrency = (currency) => ({
+  type: actions.SET_CURRENCY,
+  payload: currency,
+  meta: {
+    analytics: [
+      {
+        type: 'designSetCurrency',
+        payload: {
+          userActionParameter: currency,
+        },
+      }
+    ],
+  },
+});
+
 export const setPosterStyle = (style) => ({
   type: actions.SET_POSTER_STYLE,
   payload: style,

@@ -204,6 +204,11 @@ function reducer(state = initialState, action) {
         promotion: action.payload,
       });
 
+    case actions.SET_CURRENCY:
+      return _.extend({}, state, {
+        currency: action.payload.toUpperCase(),
+      });
+
     case actions.SET_MINI_CART_POSITION:
       return _.extend({}, state, {
         miniCartPosition: action.payload,
