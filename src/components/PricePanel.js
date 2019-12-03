@@ -23,7 +23,7 @@ class PricePanel extends React.Component {
     const currencyOpts = currencyFormatter.findCurrency(currency);
     const decimalFormat = _.repeat('d', currencyOpts.decimalDigits);
     const odometerFormat = `(${currencyOpts.thousandsSeparator}ddd)${currencyOpts.decimalSeparator}${decimalFormat}`;
-    console.log('format', odometerFormat)
+
     return (
       <div className="PricePanel">
         <div className="PricePanel__container">
