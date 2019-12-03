@@ -1,9 +1,10 @@
 import React from 'react';
 import ImageLoader from 'react-imageloader';
 import { Icon } from 'antd';
-import { getStyle, createPosterThumbnailUrl, isMapSku, filterMapPosterCart, filterOtherItemsCart } from '../util';
-import { calculateCartPrice, calculateItemPrice, getCurrencySymbol, getItemLabel } from 'alvarcarto-price-util';
+import { getStyle, createPosterThumbnailUrl, filterMapPosterCart, filterOtherItemsCart } from '../util';
+import { calculateCartPrice, calculateItemPrice, getProduct } from 'alvarcarto-price-util';
 import _ from 'lodash';
+import { cartItemToMapItem } from '../util/cart-state';
 
 function preloader() {
   return <Icon type="loading" />;
@@ -22,11 +23,10 @@ class FinalOrderSummary extends React.Component {
 
     // XXX: Does not work with gift cards! We have separated items to map items and other.
     // Instead we should have normal items (maps, gifts) and additional items (delivery etc)
-    const sortedCart = _.sortBy(cart, item => isMapSku(item.sku));
     const mapCart = filterMapPosterCart(cart);
     const otherCart = filterOtherItemsCart(cart);
 
-    const mapCartOriginalPrice = calculateCartPrice(sortedCart, { currency });
+    const mapCartOriginalPrice = calculateCartPrice(mapCart, { currency });
 
     return (
       <div className={className}>
@@ -44,7 +44,7 @@ class FinalOrderSummary extends React.Component {
           {
             _.map(mapCart, (item, index) =>
               <li key={index}>
-                <OrderItem index={index} item={item} />
+                <OrderItem index={index} item={item} currency={currency} />
               </li>
             )
           }
@@ -62,8 +62,8 @@ class FinalOrderSummary extends React.Component {
               {
                 _.map(otherCart, (item, index) =>
                   <tr key={index}>
-                    <td>{getItemLabel(item)}</td>
-                    <td>{calculateItemPrice(item).label}</td>
+                    <td>{getProduct(item.sku).name}</td>
+                    <td>{calculateItemPrice(item, { currency }).label}</td>
                   </tr>
                 )
               }
@@ -84,13 +84,9 @@ class FinalOrderSummary extends React.Component {
       return null;
     }
 
-    const discountCurrencySymbol = getCurrencySymbol(totalPrice.discount.currency);
-    const discountHumanValue = (-totalPrice.discount.value / 100).toFixed(2);
-    const discountPriceLabel = `${discountHumanValue} ${discountCurrencySymbol}`;
-
     return <tr>
       <td>{promotion.label}</td>
-      <td>{discountPriceLabel}</td>
+      <td>-{totalPrice.discount.label}</td>
     </tr>;
   };
 }
@@ -98,11 +94,12 @@ class FinalOrderSummary extends React.Component {
 class OrderItem extends React.Component {
   render() {
     const { props } = this;
-    const item = props.item;
-    const price = calculateItemPrice(this.props.item);
-    const styleName = getStyle(item.mapStyle).name;
+    const { item, currency } = props;
+    const mapItem = cartItemToMapItem(item);
+    const price = calculateItemPrice(this.props.item, { currency });
+    const styleName = getStyle(mapItem.mapStyle).name;
     let cartImageClassName = 'OrderItem__image';
-    if (item.orientation === 'landscape') {
+    if (mapItem.orientation === 'landscape') {
       cartImageClassName += ' OrderItem__image--landscape';
     }
 
@@ -110,15 +107,15 @@ class OrderItem extends React.Component {
       <div className="OrderItem">
         <ImageLoader
           className={cartImageClassName}
-          src={createPosterThumbnailUrl(item)}
+          src={createPosterThumbnailUrl(mapItem)}
           preloader={preloader}
         >
           <Icon type="frown-o" />
         </ImageLoader>
 
         <div className="OrderItem__content">
-          <h3 className="OrderItem__title">{item.labelHeader}</h3>
-          <h4 className="OrderItem__type">{styleName}, {item.size}</h4>
+          <h3 className="OrderItem__title">{mapItem.labelHeader}</h3>
+          <h4 className="OrderItem__type">{styleName}, {mapItem.size}</h4>
           <h4 className="OrderItem__price">{price.label}</h4>
           <div className="OrderItem__quantity">
             <span className="OrderItem__quantity-number">{item.quantity}x</span>

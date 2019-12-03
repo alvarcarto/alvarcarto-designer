@@ -4,7 +4,6 @@ import { Radio, Tooltip } from 'antd';
 import MediaQuery from 'react-responsive';
 import { getPosterSize, POSTER_SIZES, POSTER_SIZE_TYPES } from 'alvarcarto-common';
 import { calculateItemPrice } from 'alvarcarto-price-util';
-import Price from './Price';
 import CONST from '../constants';
 import { sizeToPosterSku } from '../util';
 
@@ -82,9 +81,7 @@ class PosterSizeSelect extends React.Component {
             value={item.id}
           >
             {item.label}
-            <span className="PosterSizeSelect__price">
-              <Price value={price.humanValue} currency={price.currency} />
-            </span>
+            <span className="PosterSizeSelect__price">{price.label}</span>
           </Radio>;
         })
       }

@@ -145,7 +145,7 @@ handlers.designViewContent = (type, payload, state) => {
       const city = cities[0];
       triggerGtmEvent({
         event: type,
-        productIds: [getProductId(mapItem, city.id)],
+        productIds: [getProductId(item, city.id)],
       });
     });
 };

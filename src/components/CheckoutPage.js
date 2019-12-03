@@ -71,6 +71,7 @@ class CheckoutPage extends React.Component {
           </MediaQuery>
           <CheckoutForm
             cart={this.props.globalState.cart}
+            currency={this.props.globalState.currency}
             additionalCart={this.props.globalState.additionalCart}
             promotion={this.props.globalState.promotion}
             initialState={this.props.globalState.checkoutFormState}

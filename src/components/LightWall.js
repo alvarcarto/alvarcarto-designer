@@ -157,10 +157,10 @@ class LightWall extends React.Component {
 
                     const disabled = globalState.editCartItem !== i;
                     return <div className="LightWall__map-positioner" style={autoprefix({transform: `translateX(${translateX}px)`})}>
-                      <AlvarMap dimensions={dimensions} key={i} mapItem={m} disabled={disabled} scaleZoom={scalerZoom} hideOverlay={!this.state.showOverlay} hideShadows hideTips />
+                      <AlvarMap dimensions={dimensions} key={i} mapItem={mapItem} disabled={disabled} scaleZoom={scalerZoom} hideOverlay={!this.state.showOverlay} hideShadows hideTips />
                     </div>
                   })
-                : <AlvarMap dimensions={dimensions} mapItem={item} scaleZoom={scalerZoom} hideTips={globalState.debug} />
+                : <AlvarMap dimensions={dimensions} mapItem={mapItem} scaleZoom={scalerZoom} hideTips={globalState.debug} />
             }
           </div>
 
@@ -389,16 +389,19 @@ class LightWall extends React.Component {
   _downloadImage = () => {
     const { globalState } = this.props;
     const item = globalState.cart[globalState.editCartItem];
-    const newUrl = `${createPosterImageUrl(item)}&apiKey=${globalState.apiKey}&download=true`;
+    const mapItem = cartItemToMapItem(item);
+    const newUrl = `${createPosterImageUrl(mapItem)}&apiKey=${globalState.apiKey}&download=true`;
     window.open(newUrl, '_blank');
   };
 
   _downloadPlacement = (id, opts = {}) => {
     const { globalState } = this.props;
-    const item = _.merge({}, globalState.cart[globalState.editCartItem], {
+    const mapItem = cartItemToMapItem(globalState.cart[globalState.editCartItem]);
+    const queryParams = _.merge({}, mapItem, {
       resizeToWidth: opts.resizeToWidth
     });
-    const newUrl = `${createPlacementImageUrl(id, item)}&apiKey=${globalState.apiKey}&download=true`;
+
+    const newUrl = `${createPlacementImageUrl(id, queryParams)}&apiKey=${globalState.apiKey}&download=true`;
     window.open(newUrl, '_blank');
   };
 }

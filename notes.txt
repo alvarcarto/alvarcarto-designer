@@ -1,4 +1,0 @@
-AlvarMap olettaa saavansa vaan mapItem
-AlvarMapOverlay olettaa saavansa vaan mapItem
-
-CheckoutSummary <-

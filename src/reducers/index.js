@@ -18,7 +18,7 @@ const initialState = {
   apiKey: getQuery('apiKey', 'string'),
   location: history.location,
   initialLoadTime: new Date(),
-  currency: 'EUR',
+  currency: 'USD',
   cart: [],
   additionalCart: [{
     sku: 'shipping-express',
@@ -75,7 +75,7 @@ function reducer(state = initialState, action) {
         newAttrs.customisation.labelText = coordToPrettyText(newAttrs.customisation.mapCenter);
       }
 
-      return extendCurrentCartItem(state, _.omitBy(newAttrs, _.isNil));
+      return mergeCurrentCartItem(state, _.omitBy(newAttrs, _.isNil));
 
     case actions.SET_MAP_LABELS:
       newAttrs = {
@@ -84,12 +84,12 @@ function reducer(state = initialState, action) {
           labelHeader: action.payload.header,
           labelSmallHeader: action.payload.smallHeader,
           labelText: action.payload.text,
-          autoUpdateCoordinates: action.payload.autoUpdateCoordinates,
-        }
+        },
+        autoUpdateCoordinates: action.payload.autoUpdateCoordinates,
       };
 
       if (_.isString(newAttrs.customisation.labelText) && !currentItem.autoUpdateCoordinates) {
-        newAttrs.customisation.labelTextManual = newAttrs.labelText;
+        newAttrs.labelTextManual = newAttrs.labelText;
       }
 
       if (_.isBoolean(newAttrs.autoUpdateCoordinates)) {
@@ -103,10 +103,10 @@ function reducer(state = initialState, action) {
         }
       }
 
-      return extendCurrentCartItem(state, _.omitBy(newAttrs, _.isNil));
+      return mergeCurrentCartItem(state, _.omitBy(newAttrs, _.isNil));
 
     case actions.SET_MAP_STYLE:
-      return extendCurrentCartItem(state, { customisation: { mapStyle: action.payload } });
+      return mergeCurrentCartItem(state, { customisation: { mapStyle: action.payload } });
 
     case actions.SET_NOTIFICATION_MESSAGE:
       return _.extend({}, state, { notificationMessage: action.payload });
@@ -116,7 +116,7 @@ function reducer(state = initialState, action) {
       const posterLook = getPosterLook(posterStyle);
 
       if (_.isArray(posterLook.allowedMapStyles) && !_.includes(posterLook.allowedMapStyles, currentItem.customisation.mapStyle)) {
-        return extendCurrentCartItem(state, {
+        return mergeCurrentCartItem(state, {
           customisation: {
             mapStyle: posterLook.allowedMapStyles[0],
             posterStyle: action.payload,
@@ -124,7 +124,7 @@ function reducer(state = initialState, action) {
         });
       }
 
-      return extendCurrentCartItem(state, { customisation: { posterStyle: action.payload } });
+      return mergeCurrentCartItem(state, { customisation: { posterStyle: action.payload } });
 
     case actions.SET_POSTER_LAYOUT:
       newAttrs = {
@@ -145,7 +145,7 @@ function reducer(state = initialState, action) {
         newAttrs.sku = sizeToPosterSku(newSize);
       }
 
-      return extendCurrentCartItem(state, _.omitBy(newAttrs, _.isNil));
+      return mergeCurrentCartItem(state, _.omitBy(newAttrs, _.isNil));
 
     case actions.ADD_CART_ITEM_QUANTITY:
       const currentQuantity = state.cart[action.payload.index].quantity;
@@ -234,7 +234,7 @@ function reducer(state = initialState, action) {
       if (_.get(action.payload, 'giftCardCustomizeForm.values.giftCardType') === 'digital') {
         newState.giftCardCart = _.filter(newState.giftCardCart, i => i.sku === 'gift-card-value');
       } else {
-        const valueItem = _.find(newState.giftCardCart, i => i.type === 'gift-card-value');
+        const valueItem = _.find(newState.giftCardCart, i => i.sku === 'gift-card-value');
         newState.giftCardCart = [
           valueItem,
           { sku: 'physical-gift-card', quantity: 1 }
@@ -268,14 +268,14 @@ function getCurrentCartItem(state) {
   return state.cart[index];
 }
 
-function extendCurrentCartItem(state, newAttrs) {
+function mergeCurrentCartItem(state, newAttrs) {
   const index = state.editCartItem;
-  return extendCartItem(state, index, newAttrs);
+  return extendCartItem(state, index, newAttrs, _.merge);
 }
 
-function extendCartItem(state, index, newAttrs) {
+function extendCartItem(state, index, newAttrs, extendFunc = _.extend) {
   const oldItem = state.cart[index];
-  const newItem = _.extend({}, oldItem, newAttrs);
+  const newItem = extendFunc({}, oldItem, newAttrs);
 
   const newState = _.cloneDeep(state);
   newState.cart[index] = newItem;

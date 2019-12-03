@@ -14,6 +14,7 @@ class Odometer extends React.Component {
     // eslint-disable-next-line react/no-direct-mutation-state
     this.state.odometer = new HubspotOdometer({
       el: ReactDOM.findDOMNode(this.refs.container),
+      ...this.props,
       value: 0,
     });
 

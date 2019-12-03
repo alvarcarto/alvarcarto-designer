@@ -1,21 +1,18 @@
-import Odometer from './Odometer';
 import React from 'react';
 import _ from 'lodash';
 import { Icon, Badge, Tooltip } from 'antd';
+import Odometer from './Odometer';
 import { calculateCartPrice } from 'alvarcarto-price-util';
+import currencyFormatter from 'currency-formatter';
 import history from '../history';
 import ButtonLink from './ButtonLink';
 import { currencyToSymbol } from '../util';
-
-function cutZeroDecimals(humanValue) {
-  return _.trimEnd(humanValue, '0.');
-}
 
 class PricePanel extends React.Component {
   render() {
     const { cart, additionalCart, promotion, currency } = this.props.globalState;
     const combinedCart = cart.concat(additionalCart);
-    const originalPrice = calculateCartPrice(combinedCart);
+    const originalPrice = calculateCartPrice(combinedCart, { currency });
     const totalPrice = calculateCartPrice(combinedCart, {
       currency,
       promotion,
@@ -23,6 +20,10 @@ class PricePanel extends React.Component {
     });
     const itemCount = cart.length;
 
+    const currencyOpts = currencyFormatter.findCurrency(currency);
+    const decimalFormat = _.repeat('d', currencyOpts.decimalDigits);
+    const odometerFormat = `(${currencyOpts.thousandsSeparator}ddd)${currencyOpts.decimalSeparator}${decimalFormat}`;
+    console.log('format', odometerFormat)
     return (
       <div className="PricePanel">
         <div className="PricePanel__container">
@@ -40,15 +41,23 @@ class PricePanel extends React.Component {
             {
               promotion
                 ? <h5 className="PricePanel__original-price">
-                  <span className="PricePanel__original-price-value">{cutZeroDecimals(originalPrice.humanValue)}</span>
-                  <span className="PricePanel__price-currency PricePanel__original-price-currency">{getCurrencySymbol(totalPrice.currency)}</span>
+                  <span className="PricePanel__original-price-value">{originalPrice.label}</span>
                 </h5>
                 : null
             }
 
             <h5 className="PricePanel__price">
-              <Odometer value={totalPrice.humanValue} />
-              <span className="PricePanel__price-currency">{currencyToSymbol(totalPrice.currency)}</span>
+              {
+                currencyOpts.symbolOnLeft
+                  ? <span className="PricePanel__price-currency-left">{currencyToSymbol(totalPrice.currency)}</span>
+                  : null
+              }
+              <Odometer value={Number(totalPrice.humanValue)} format={odometerFormat} />
+              {
+                currencyOpts.symbolOnLeft
+                  ? null
+                  : <span className="PricePanel__price-currency-right">{currencyToSymbol(totalPrice.currency)}</span>
+              }
               { promotion ? null : <span className="PricePanel__price-shipping">+ Free shipping</span> }
             </h5>
           </div>

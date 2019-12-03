@@ -25,7 +25,7 @@ class CheckoutSummary extends React.Component {
       promotion,
       ignorePromotionExpiry: true
     });
-    const originalPrice = calculateCartPrice(cart, { currency });
+    const subtotalPrice = calculateCartPrice(cart, { currency });
 
     return (
       <div className="CheckoutSummary">
@@ -38,6 +38,7 @@ class CheckoutSummary extends React.Component {
                 <CartItem
                   index={index}
                   item={item}
+                  currency={currency}
                   hideRemoveButton={hideRemoveButton}
                   onRemoveClick={this._onCartItemRemoveClick}
                   onEditClick={this._onCartItemEditClick}
@@ -58,7 +59,7 @@ class CheckoutSummary extends React.Component {
             <tbody>
               <tr>
                 <td>Subtotal</td>
-                <td>{originalPrice.label}</td>
+                <td>{subtotalPrice.label}</td>
               </tr>
               {this._renderDiscountRow(totalPrice, promotion)}
 
@@ -94,12 +95,12 @@ class CheckoutSummary extends React.Component {
   };
 
   _getPromotionLink = () => {
-    const { promotion } = this.props.globalState;
+    const { promotion, currency } = this.props.globalState;
     if (promotion) {
       return <UnstyledButton onClick={this._onDeletePromotion}>Remove promotion</UnstyledButton>;
     }
 
-    return <AddPromotionLink onPromotionApply={this._onApplyPromotion} />;
+    return <AddPromotionLink currency={currency} onPromotionApply={this._onApplyPromotion} />;
   };
 
   _onDeletePromotion = () => {

@@ -20,7 +20,7 @@ class CartItem extends React.Component {
     item: PropTypes.shape({
       sku: PropTypes.string.isRequired,
       quantity: PropTypes.number.isRequired,
-      customisation: {
+      customisation: PropTypes.shape({
         mapBounds:  PropTypes.object,
         mapCenter:  PropTypes.object.isRequired,
         mapZoom: PropTypes.number.isRequired,
@@ -31,7 +31,7 @@ class CartItem extends React.Component {
         labelHeader: PropTypes.string.isRequired,
         labelSmallHeader: PropTypes.string.isRequired,
         labelText: PropTypes.string.isRequired,
-      },
+      }),
     }),
     currency: PropTypes.string.isRequired,
     onRemoveClick: PropTypes.func.isRequired,

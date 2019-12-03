@@ -64,7 +64,7 @@ class GiftCardCheckoutForm extends React.Component {
       wrapperCol: { span: 24, sm: { span: 14 }, md: { span: 14 }, lg: { span: 14 } },
     };
 
-    const { cart, currency } = this.props;
+    const { cart } = this.props;
     const {
       emailSubscription,
       termsAccepted,

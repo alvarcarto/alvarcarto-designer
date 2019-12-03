@@ -1,5 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
+import { calculateItemPrice } from 'alvarcarto-price-util';
 import Alert from './Alert'
 import { Radio, Row, Col } from 'antd';
 
@@ -29,6 +30,14 @@ class ShippingMethodForm extends React.Component {
       deliveryCompany = 'DHL';
     }
 
+    const expressPrice = calculateItemPrice({ sku: 'shipping-express', quantity: 1 }, {
+      currency: this.props.currency,
+    });
+
+    const priorityPrice = calculateItemPrice({ sku: 'production-high-priority', quantity: 1 }, {
+      currency: this.props.currency,
+    });
+
     return (
       <div className="ShippingMethodForm">
         <Radio.Group value={this.state.values.shippingMethod} onChange={this._onChange}>
@@ -55,7 +64,7 @@ class ShippingMethodForm extends React.Component {
               </div>
             </Col>
             <Col span={5} className="ShippingMethodForm__right-col">
-              <span className="ShippingMethodForm__item-price">0 €</span>
+              <span className="ShippingMethodForm__item-price">{expressPrice.label}</span>
             </Col>
           </Row>
           <Row className="ShippingMethodForm__item">
@@ -79,7 +88,7 @@ class ShippingMethodForm extends React.Component {
               </div>
             </Col>
             <Col span={5} className="ShippingMethodForm__right-col">
-              <span className="ShippingMethodForm__item-price">15 €</span>
+              <span className="ShippingMethodForm__item-price">{priorityPrice.label}</span>
             </Col>
           </Row>
         </Radio.Group>
