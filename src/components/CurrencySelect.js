@@ -2,11 +2,12 @@ import _ from 'lodash';
 import { Icon } from 'antd';
 import React from 'react';
 import { getSupportedCurrencies } from 'alvarcarto-price-util';
+import currencyFormatter from 'currency-formatter';
 
 const sortedCurrencies = _.sortBy(getSupportedCurrencies());
 const options = _.map(sortedCurrencies, currency => ({
   key: currency,
-  label: currency,
+  label: `${currency} (${currencyFormatter.findCurrency(currency).symbol})`,
   value: currency,
 }));
 
