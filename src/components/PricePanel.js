@@ -25,6 +25,15 @@ class PricePanel extends React.Component {
       ? `${currencyOpts.decimalSeparator}${_.repeat('d', currencyOpts.decimalDigits)}`
       : ''
     const odometerFormat = `(${currencyOpts.thousandsSeparator}ddd)${decimalFormat}`;
+
+    let valuesClassName = 'PricePanel__values';
+    const labelLength = promotion
+      ? totalPrice.label.length + originalPrice.label.length
+      : totalPrice.label.length
+    if (labelLength > 10) {
+      valuesClassName += ' PricePanel__values--smaller-font';
+    }
+
     return (
       <div className="PricePanel">
         <div className="PricePanel__container">
@@ -38,7 +47,7 @@ class PricePanel extends React.Component {
               : null
           }
 
-          <div className="PricePanel__values">
+          <div className={valuesClassName}>
             {
               promotion
                 ? <h5 className="PricePanel__original-price">
