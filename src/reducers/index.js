@@ -98,7 +98,7 @@ function reducer(state = initialState, action) {
 
         if (willEnableAutoUpdate) {
           newAttrs.customisation.labelText = coordToPrettyText(currentItem.customisation.mapCenter);
-        } else {
+        } else if (currentItem.labelTextManual) {
           newAttrs.customisation.labelText = currentItem.labelTextManual;
         }
       }
