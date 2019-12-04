@@ -30,7 +30,7 @@ class PricePanel extends React.Component {
     const labelLength = promotion
       ? totalPrice.label.length + originalPrice.label.length
       : totalPrice.label.length
-    if (labelLength > 10) {
+    if (labelLength > 12) {
       valuesClassName += ' PricePanel__values--smaller-font';
     }
 
