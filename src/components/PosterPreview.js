@@ -1,5 +1,6 @@
 import React from 'react';
 import { Icon } from 'antd';
+import _ from 'lodash';
 import ImageLoader from 'react-imageloader';
 import { createPlacementImageUrl } from '../util';
 
