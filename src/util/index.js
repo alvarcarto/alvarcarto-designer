@@ -139,22 +139,19 @@ export function createPosterImageUrl(mapItem) {
 }
 
 export function createPlacementImageUrl(id, mapItem) {
-  const params = createPosterUrlParameters(mapItem)
-  const query = qs.stringify(_.omit(params, ['size', 'orientation']));
+  const params = createPosterUrlParameters(mapItem);
+  const toOmit = ['size', 'orientation'];
+  if (!mapItem.resizeToWidth) {
+    toOmit.push('resizeToWidth');
+  }
+  const query = qs.stringify(_.omit(params, toOmit));
   return `${config.REACT_APP_PLACEMENT_API_URL}/api/place-map/${id}?${query}`;
 }
 
-export function createPosterPreviewUrl(mapItem) {
-  const query = qs.stringify(createPosterUrlParameters(mapItem));
-  return [
-    `${config.REACT_APP_RENDER_API_URL}/api/raster/placeit?${query}`,
-    '&frames=black&resizeToHeight=1000',
-  ].join('');
-}
-
 export function createPosterThumbnailUrl(mapItem) {
-  const query = qs.stringify(createPosterUrlParameters(mapItem));
-  return `${config.REACT_APP_RENDER_API_URL}/api/raster/render?${query}&resizeToHeight=140`;
+  const newMapItem = _.extend({}, mapItem, { resizeToHeight: 140 })
+  const query = qs.stringify(createPosterUrlParameters(newMapItem));
+  return `${config.REACT_APP_RENDER_API_URL}/api/raster/render?${query}`;
 }
 
 export function coordToPrettyText(coord) {
