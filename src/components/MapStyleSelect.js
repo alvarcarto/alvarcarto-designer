@@ -15,7 +15,6 @@ class MapStyleSelect extends React.Component {
       'bw',
       'gray',
       'black',
-      'copper',
       'petrol',
     ]
     if (this.props.debug) {
