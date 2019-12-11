@@ -160,11 +160,10 @@
 
 .LightWall__credits {
   position: absolute;
-  bottom: 3px;
+  top: 50%;
   transform-origin: 0 0;
-  transform: rotate(-90deg);
+  transform: rotate(-90deg) translateX(-50%);
   left: 5px;
-
   height: 15px;
   font-size: 10px;
   color: #aaa;
@@ -269,8 +268,9 @@
 @media @screen-gt-md-media {
   .LightWall__credits {
     bottom: 5px;
+    top: auto;
     left: 13px;
-    transform: none;
+    transform: rotate(0deg) translateX(0);
   }
 }
 

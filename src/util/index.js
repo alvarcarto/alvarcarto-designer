@@ -203,7 +203,7 @@ export function getStyle(styleId) {
 export function getMaterials() {
   return _.map(originalGetMaterials(), (material) => {
     return _.extend({}, material, {
-      icon: `${config.PUBLIC_URL}/assets/${material.id}-material-icon.svg`,
+      icon: `${config.PUBLIC_URL}/assets/${material.id}-material.png`,
     });
   });
 }
