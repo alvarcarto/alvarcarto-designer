@@ -130,9 +130,13 @@ class LightWall extends React.Component {
     };
 
     const sumOfPosterWidths = this._calculateSumOfPostersWidths(globalState);
+    let topClassName = 'LightWall noselect';
+    if (mapItem.material === 'plywood') {
+      topClassName += ' LightWall--plywood';
+    }
 
     return (
-      <div ref="container" className="LightWall noselect">
+      <div ref="container" className={topClassName}>
         <div className="LightWall__map-container" style={autoprefix(mapContainerCss)}>
           {
             MULTI
@@ -190,6 +194,15 @@ class LightWall extends React.Component {
               : <div className="LightWall__height-label">
                   <div className="LightWall__height-label-line"></div>
                   <span>{physicalDimensions.height} {physicalDimensions.unit}</span>
+                </div>
+          }
+
+          {
+            MULTI
+              ? null
+              : <div className="LightWall__depth-label">
+                  <div className="LightWall__depth-label-line"></div>
+                  <span>6&nbsp;mm</span>
                 </div>
           }
 
@@ -339,7 +352,8 @@ class LightWall extends React.Component {
     const cart = nFirstItems ? _.take(globalState.cart, nFirstItems) : globalState.cart;
 
     const totalWidth = _.reduce(cart, (memo, item) => {
-      return memo + posterSizeToPixels(item.customisation.size, item.customisation.orientation).width;
+      const mapItem = cartItemToMapItem(item);
+      return memo + posterSizeToPixels(mapItem.size, mapItem.orientation).width;
     }, 0);
     return totalWidth;
   };

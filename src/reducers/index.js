@@ -4,12 +4,12 @@ import {
   coordToPrettyText,
   getQuery,
   getPosterLook,
-  sizeToPosterSku,
+  mapItemToSku,
 } from '../util';
 import { getItemId, getInitialCartItem, cartItemToMapItem } from '../util/cart-state';
 import dummyCheckoutState from '../util/dummy-checkout-state';
 import history from '../history';
-import { findClosestSizeForOtherSizeType } from 'alvarcarto-common';
+import { findClosestSizeForOtherSizeType, getMaterial } from 'alvarcarto-common';
 
 const DEBUG = getQuery('debug', 'boolean', false);
 
@@ -50,8 +50,9 @@ const freshInitialState = _.cloneDeep(initialState);
 export { freshInitialState as initialState };
 
 function reducer(state = initialState, action) {
-  let newAttrs, newState;
+  let newAttrs, newState, newSize;
   const currentItem = getCurrentCartItem(state);
+  const currentMapItem = cartItemToMapItem(currentItem);
 
   switch (action.type) {
     case actions.SET_LOCATION:
@@ -113,7 +114,7 @@ function reducer(state = initialState, action) {
 
     case actions.SET_POSTER_STYLE:
       let posterStyle = action.payload;
-      const posterLook = getPosterLook(posterStyle);
+      const posterLook = getPosterLook(posterStyle, currentMapItem.material);
 
       if (_.isArray(posterLook.allowedMapStyles) && !_.includes(posterLook.allowedMapStyles, currentItem.customisation.mapStyle)) {
         return mergeCurrentCartItem(state, {
@@ -132,8 +133,7 @@ function reducer(state = initialState, action) {
           orientation: action.payload.orientation,
         }
       };
-      let newSize = action.payload.size;
-      const currentMapItem = cartItemToMapItem(currentItem);
+      newSize = action.payload.size;
       if (action.payload.sizeType) {
         // If the size type was changed to e.g. inches, we'll also set the selected size to
         // match the closest inch size
@@ -142,8 +142,39 @@ function reducer(state = initialState, action) {
       }
 
       if (newSize) {
-        newAttrs.sku = sizeToPosterSku(newSize);
+        newAttrs.sku = mapItemToSku({
+          size: newSize,
+          material: currentMapItem.material
+        });
       }
+
+      return mergeCurrentCartItem(state, _.omitBy(newAttrs, _.isNil));
+
+    case actions.SET_POSTER_MATERIAL:
+      newSize = currentMapItem.size;
+      const material = getMaterial(action.payload);
+      if (!_.includes(material.allowedPosterSizes, newSize)) {
+        newSize = _.last(material.allowedPosterSizes);
+      }
+
+      let newStyleId = currentMapItem.posterStyle;
+      if (!_.includes(material.allowedPosterStyles, newStyleId)) {
+        newStyleId = _.last(material.allowedPosterStyles);
+      }
+
+      const pStyle = getPosterLook(newStyleId, action.payload);
+      let newMapStyleId = currentMapItem.mapStyle;
+      if (!_.includes(pStyle.allowedMapStyles, newMapStyleId)) {
+        newMapStyleId = _.last(pStyle.allowedMapStyles);
+      }
+
+      newAttrs = {
+        sku: mapItemToSku({ size: newSize, material: action.payload }),
+        customisation: {
+          posterStyle: newStyleId,
+          mapStyle: newMapStyleId,
+        },
+      };
 
       return mergeCurrentCartItem(state, _.omitBy(newAttrs, _.isNil));
 

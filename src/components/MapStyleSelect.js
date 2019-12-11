@@ -1,26 +1,18 @@
 import React from 'react';
 import _ from 'lodash';
 import { Tooltip } from 'antd';
+import { getMapStyles } from 'alvarcarto-common';
 import MediaQuery from 'react-responsive';
-import { getStyles } from '../util';
 import CONST from '../constants';
 
 class MapStyleSelect extends React.Component {
   render() {
-    const styles = _.isArray(this.props.showStyles)
-      ? _.filter(getStyles(), s => _.includes(this.props.showStyles, s.id))
-      : getStyles();
+    const styleIds = this.props.showStyles;
 
-    const styleIdsToPick = [
-      'bw',
-      'gray',
-      'black',
-      'petrol',
-    ]
     if (this.props.debug) {
-      styleIdsToPick.push('contrast-black');
+      styleIds.push('contrast-black');
     }
-    const filteredStyles = _.filter(styles, style => _.includes(styleIdsToPick, style.id));
+    const filteredStyles = _.filter(getMapStyles(), style => _.includes(styleIds, style.id));
 
     return <MediaQuery minWidth={CONST.SCREEN_MD}>
       {(matches) =>

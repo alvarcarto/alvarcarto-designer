@@ -2,23 +2,16 @@ import React from 'react';
 import _ from 'lodash';
 import { Tooltip } from 'antd';
 import MediaQuery from 'react-responsive';
-import { getPosterLooks } from '../util';
 import { TickIcon } from '../util/svg';
 import CONST from '../constants';
 
 class PosterStyleSelect extends React.Component {
   render() {
-    const styles = _.reject(getPosterLooks(), style => _.includes([
-      'summer',
-      'pacific',
-      'round',
-    ], style.id));
-
     return <MediaQuery minWidth={CONST.SCREEN_MD}>
       {(matches) =>
         <div className="PosterStyleSelect">
           {
-            _.map(styles, style => {
+            _.map(this.props.options, style => {
               return <PosterStyleItem
                 tooltip={matches}
                 onClick={this._onClickItem}

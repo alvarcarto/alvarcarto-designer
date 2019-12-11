@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Icon, Tooltip, Popconfirm } from 'antd';
-import { getStyle } from '../util';
 import { calculateItemPrice } from 'alvarcarto-price-util';
 import { createPosterThumbnailUrl } from '../util';
 import IconButton from './IconButton';
@@ -45,13 +44,13 @@ class CartItem extends React.Component {
     const { item } = props;
     const mapItem = cartItemToMapItem(item);
     const price = calculateItemPrice(item, { currency: props.currency });
-    const styleName = getStyle(mapItem.mapStyle).name;
     const isDecreaseDisabled = item.quantity < 2;
     let cartImageClassName = 'CartItem__image';
     if (mapItem.orientation === 'landscape') {
       cartImageClassName += ' CartItem__image--landscape';
     }
 
+    const materialWord = mapItem.material === 'plywood' ? 'Plywood' : 'Print'
     return (
       <div className="CartItem">
         <ImageLoader
@@ -64,7 +63,7 @@ class CartItem extends React.Component {
 
         <div className="CartItem__content">
           <h3 className="CartItem__title">{mapItem.labelHeader}</h3>
-          <h4 className="CartItem__type">{styleName}, {mapItem.size}</h4>
+          <h4 className="CartItem__type">{materialWord}, {mapItem.size}</h4>
           <h4 className="CartItem__price">{price.label}</h4>
           <div className="CartItem__quantity">
             <IconButton

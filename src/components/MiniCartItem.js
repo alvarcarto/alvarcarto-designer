@@ -49,7 +49,7 @@ class MiniCartItem extends React.Component {
     }
 
     const posterSize = posterSizeToThumbnailPixels(mapItem.size, mapItem.orientation);
-    const posterStyle = getPosterLook(mapItem.posterStyle);
+    const posterStyle = getPosterLook(mapItem.posterStyle, mapItem.material);
     const mapStyle = getStyle(mapItem.mapStyle);
 
     return (

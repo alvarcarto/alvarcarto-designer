@@ -2,7 +2,13 @@ import _ from 'lodash';
 import qs from 'qs';
 import geolib from 'geolib';
 import currencyFormatter from 'currency-formatter';
-import { POSTER_STYLES, MAP_STYLES, resolveOrientation } from 'alvarcarto-common';
+import {
+  getPosterStyle,
+  getMapStyles,
+  getMaterials as originalGetMaterials,
+  getPosterStyles,
+  resolveOrientation
+} from 'alvarcarto-common';
 import CONST from '../constants';
 import config from '../config';
 
@@ -95,8 +101,9 @@ export function posterSizeToThumbnailPixels(size, orientation) {
   return resolveOrientation(dimensions, orientation);
 }
 
-export function sizeToPosterSku(size) {
-  return `custom-map-print-${size}`;
+export function mapItemToSku(mapItem) {
+  const materialWord = mapItem.material === 'plywood' ? 'plywood' : 'print';
+  return `custom-map-${materialWord}-${mapItem.size}`;
 }
 
 export function isMapSku(sku) {
@@ -175,7 +182,7 @@ function _transformStyle(styleObj) {
 }
 
 export function getStyle(styleId) {
-  const found = _.find(MAP_STYLES, { id: styleId });
+  const found = _.find(getMapStyles(), { id: styleId });
   if (found) {
     return _transformStyle(found);
   }
@@ -193,8 +200,16 @@ export function getStyle(styleId) {
   return null;
 }
 
+export function getMaterials() {
+  return _.map(originalGetMaterials(), (material) => {
+    return _.extend({}, material, {
+      icon: `${config.PUBLIC_URL}/assets/${material.id}-material-icon.svg`,
+    });
+  });
+}
+
 export function getStyles() {
-  return _.map(MAP_STYLES, _transformStyle);
+  return getMapStyles();
 }
 
 function _transformPosterStyle(styleObj) {
@@ -203,17 +218,13 @@ function _transformPosterStyle(styleObj) {
   });
 }
 
-export function getPosterLook(id) {
-  const found = _.find(POSTER_STYLES, { id: id });
-  if (found) {
-    return _transformPosterStyle(found);
-  }
-
-  return null;
+export function getPosterLook(id, material) {
+  const found = getPosterStyle(id, material);
+  return _transformPosterStyle(found);
 }
 
-export function getPosterLooks() {
-  return _.map(POSTER_STYLES, _transformPosterStyle);
+export function getPosterLooks(materialId) {
+  return _.map(getPosterStyles(materialId), _transformPosterStyle);
 }
 
 export function getStorageSafe(key) {

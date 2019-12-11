@@ -72,6 +72,9 @@ class AlvarMap extends React.Component {
     </span>;
 
     let className = 'AlvarMap';
+    if (mapItem.material === 'plywood') {
+      className += ' AlvarMap--plywood';
+    }
     if (props.hideShadows) {
       className += ' AlvarMap--no-shadows';
     }

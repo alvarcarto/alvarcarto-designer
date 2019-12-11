@@ -11,11 +11,14 @@ function preloader() {
 class PosterPreview extends React.Component {
   render() {
     const mapItem = _.extend({}, this.props.mapItem, { resizeToWidth: 800 });
+    const previewId = this.props.mapItem.material === 'plywood'
+      ? 'plywood-white-shelf-square'
+      : 'no-flowers-in-blue-black-frame';
 
     return (
       <ImageLoader
         className="PosterPreview"
-        src={createPlacementImageUrl('no-flowers-in-blue-black-frame', mapItem)}
+        src={createPlacementImageUrl(previewId, mapItem)}
         preloader={preloader}
       >
         <Icon type="frown-o" />
