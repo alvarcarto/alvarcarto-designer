@@ -7,7 +7,7 @@ import {
 } from 'alvarcarto-common';
 import { getProduct } from 'alvarcarto-price-util';
 import CONST from '../constants'
-import { getQuery, coordToPrettyText, sizeToPosterSku } from '.';
+import { getQuery, coordToPrettyText, mapItemToSku } from '.';
 
 // We can assign a unique id for each new poster in the cart. This can be used as a stable React
 // key (needed for e.g. MiniCart transition)
@@ -49,7 +49,7 @@ function getMapDefaults() {
   return {
     id: getItemId(),
     quantity: 1,
-    sku: sizeToPosterSku(size),
+    sku: mapItemToSku({ size, material: 'paper' }),
     customisation: {
       mapBounds: null,
       mapStyle: getQuery('mapStyle', 'string', 'bw', _.map(MAP_STYLES, 'id')),
@@ -57,7 +57,6 @@ function getMapDefaults() {
       mapPitch: 0,
       mapBearing: 0,
       orientation: getQuery('orientation', 'string', 'portrait', _.map(POSTER_ORIENTATIONS, 'id')),
-      size,
       labelsEnabled: getQuery('labels', 'boolean', true),
       labelHeader: getQuery('labelHeader', 'string', 'Barcelona'),
       labelSmallHeader: getQuery('labelSmallHeader', 'string', 'Catalonia'),
@@ -104,9 +103,14 @@ export function getCartItemFromLocation(location) {
 }
 
 export function cartItemToMapItem(cartItem) {
-  const size = getProduct(cartItem.sku).metadata.size;
+  if (!cartItem) {
+    return cartItem;
+  }
+
+  const { size, material } = getProduct(cartItem.sku).metadata;
   return _.merge({}, cartItem.customisation, {
     size,
+    material,
   });
 }
 

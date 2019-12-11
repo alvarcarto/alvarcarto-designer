@@ -116,6 +116,24 @@ export const setMapStyle = (style) => ({
   },
 });
 
+export const setPosterMaterial = (material) => ({
+  type: actions.SET_POSTER_MATERIAL,
+  payload: material,
+  meta: {
+    analytics: [
+      {
+        type: 'designViewContent',
+      },
+      {
+        type: 'designSetPosterMaterial',
+        payload: {
+          userActionParameter: material,
+        },
+      }
+    ],
+  },
+});
+
 export const setCurrency = (currency) => ({
   type: actions.SET_CURRENCY,
   payload: currency,

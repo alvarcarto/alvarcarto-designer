@@ -94,10 +94,10 @@ function getCurrentCartItem(state) {
 }
 
 function getProductId(cartItem, cityId) {
-  const item = cartItemToMapItem(cartItem);
+  const mapItem = cartItemToMapItem(cartItem);
   return createProductId({
-    mapStyle: item.mapStyle,
-    posterStyle: item.posterStyle,
+    mapStyle: mapItem.mapStyle,
+    posterStyle: mapItem.posterStyle,
     // Use fixed layout for FB ads
     size: '30x40cm',
     orientation: 'portrait',

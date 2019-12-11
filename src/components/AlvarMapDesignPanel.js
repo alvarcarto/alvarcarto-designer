@@ -5,10 +5,12 @@ import {
   setMapStyle,
   setPosterStyle,
   setPosterLayout,
-  setMapLabels
+  setMapLabels,
+  setPosterMaterial
 } from '../actions';
-import { coordToPrettyText, getPosterLook } from '../util';
+import { coordToPrettyText, getPosterLook, getPosterLooks } from '../util';
 import { cartItemToMapItem } from '../util/cart-state';
+import { getPosterSizes } from 'alvarcarto-common';
 import countries from 'i18n-iso-countries';
 import Accordion from './Accordion';
 import TabView from './TabView';
@@ -18,6 +20,7 @@ import PosterSizeSelect from './PosterSizeSelect';
 import OrientationSelect from './OrientationSelect';
 import PosterLabelInputs from './PosterLabelInputs';
 import PosterStyleSelect from './PosterStyleSelect';
+import PosterMaterialSelect from './PosterMaterialSelect';
 import ButtonLink from './ButtonLink';
 import MapStyleSelect from './MapStyleSelect';
 import { triggerGtmEvent } from '../util/gtm';
@@ -80,7 +83,7 @@ class AlvarMapDesignPanel extends React.Component {
 
   _renderLocationAndStylePanel = (item) => {
     const mapItem = cartItemToMapItem(item);
-    const posterLook = getPosterLook(mapItem.posterStyle);
+    const posterLook = getPosterLook(mapItem.posterStyle, mapItem.material);
     const { globalState } = this.props;
 
     return <div className="AlvarMapDesignPanel__group">
@@ -95,11 +98,20 @@ class AlvarMapDesignPanel extends React.Component {
         </p>
       </div>
 
+      <div className="AlvarMapDesignPanel__group AlvarMapDesignPanel__poster-material">
+        <h4>Material</h4>
+        <PosterMaterialSelect
+          selected={mapItem.material}
+          onChange={this._onPosterMaterialChange}
+        />
+      </div>
+
       <div className="AlvarMapDesignPanel__group AlvarMapDesignPanel__poster-style">
         <h4>Print style</h4>
         <PosterStyleSelect
           defaultValue={mapItem.posterStyle}
           selected={mapItem.posterStyle}
+          options={getPosterLooks(mapItem.material)}
           onChange={this._onPosterStyleChange}
         />
       </div>
@@ -132,6 +144,8 @@ class AlvarMapDesignPanel extends React.Component {
           onTypeChange={this._onSizeTypeChange}
           orientation={mapItem.orientation}
           selected={mapItem.size}
+          material={mapItem.material}
+          options={getPosterSizes(mapItem.material)}
           onChange={this._onSizeChange}
           currency={this.props.globalState.currency}
         />
@@ -146,7 +160,7 @@ class AlvarMapDesignPanel extends React.Component {
 
   _renderLabelsPanel = (item) => {
     const mapItem = cartItemToMapItem(item);
-    const posterLook = getPosterLook(mapItem.posterStyle);
+    const posterLook = getPosterLook(mapItem.posterStyle, mapItem.material);
 
     return <div className="AlvarMapDesignPanel__group">
       <PosterLabelInputs dispatch={this.props.dispatch} labels={{
@@ -213,6 +227,10 @@ class AlvarMapDesignPanel extends React.Component {
 
   _onPosterStyleChange = (value) => {
     this.props.dispatch(setPosterStyle(value));
+  };
+
+  _onPosterMaterialChange = (value) => {
+    this.props.dispatch(setPosterMaterial(value));
   };
 
   _onOrientationChange = (value) => {

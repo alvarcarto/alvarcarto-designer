@@ -109,7 +109,7 @@ class AlvarMapOverlay extends React.Component {
       return;
     }
 
-    const posterLook = getPosterLook(mapItem.posterStyle);
+    const posterLook = getPosterLook(mapItem.posterStyle, mapItem.material);
     const { upperCaseLabels } = posterLook;
     const styleObj = getStyle(mapItem.mapStyle);
     const { labelColor } = styleObj;

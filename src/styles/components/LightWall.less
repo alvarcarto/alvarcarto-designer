@@ -91,6 +91,9 @@
   float: none;
   background: white;
 }
+.LightWall.LightWall--plywood .LightWall__zoom-container .leaflet-control-zoom {
+  background: #fffce5;
+}
 
 .LightWall .LightWall__zoom-container .leaflet-control-zoom .UnstyledButton {
   width: 23px;
@@ -181,12 +184,15 @@
 .LightWall__width-label,
 .LightWall__width-label > *,
 .LightWall__height-label,
-.LightWall__height-label > * {
+.LightWall__height-label > *,
+.LightWall__depth-label,
+.LightWall__depth-label > * {
   position: absolute;
 }
 
 .LightWall__width-label > span,
-.LightWall__height-label > span {
+.LightWall__height-label > span,
+.LightWall__depth-label > span {
   position: absolute;
   color: #aaa;
   font-weight: 700;
@@ -233,6 +239,33 @@
   white-space: nowrap;
 }
 
+.LightWall__depth-label {
+  display: none;
+  visibility: hidden;
+}
+
+.LightWall--plywood .LightWall__depth-label {
+  display: block;
+  visibility: visible;
+  transform: rotate(45deg);
+  bottom: -5px;
+  left: -35px;
+  width: 24px;
+  height: 10px;
+  border-left: 2px solid rgba(0,0,0,0.2);
+  border-right: 2px solid rgba(0,0,0,0.2);
+}
+.LightWall--plywood .LightWall__depth-label-line {
+  width: 20px;
+  top: 4px;
+  border-bottom: 2px solid rgba(0,0,0,0.2);
+}
+.LightWall--plywood .LightWall__depth-label > span {
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
 @media @screen-gt-md-media {
   .LightWall__credits {
     bottom: 5px;
@@ -245,5 +278,10 @@
   .LightWall__wire-container {
     display: block;
     visibility: visible;
+  }
+
+  .LightWall.LightWall--plywood .LightWall__wire-container {
+    display: none;
+    visibility: hidden;
   }
 }

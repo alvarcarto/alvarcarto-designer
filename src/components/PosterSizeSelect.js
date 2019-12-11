@@ -2,10 +2,10 @@ import React from 'react';
 import _ from 'lodash';
 import { Radio, Tooltip } from 'antd';
 import MediaQuery from 'react-responsive';
-import { getPosterSize, POSTER_SIZES, POSTER_SIZE_TYPES } from 'alvarcarto-common';
+import { getPosterSize, POSTER_SIZE_TYPES } from 'alvarcarto-common';
 import { calculateItemPrice } from 'alvarcarto-price-util';
 import CONST from '../constants';
-import { sizeToPosterSku } from '../util';
+import { mapItemToSku } from '../util';
 
 class PosterSizeSelect extends React.Component {
   render() {
@@ -55,7 +55,10 @@ class PosterSizeSelect extends React.Component {
       >
         {
           _.map(sizes, (item) => {
-            const price = this._getPriceForSize(item.id);
+            const price = this._getPriceForItem({
+              size: item.id,
+              material: this.props.material,
+            });
 
             return <option
               value={item.id}
@@ -74,7 +77,10 @@ class PosterSizeSelect extends React.Component {
     return <Radio.Group value={this.props.selected} onChange={this._onChange}>
       {
         _.map(sizes, item => {
-          const price = this._getPriceForSize(item.id);
+          const price = this._getPriceForItem({
+            size: item.id,
+            material: this.props.material,
+          });
 
           return <Radio
             key={item.id}
@@ -88,9 +94,9 @@ class PosterSizeSelect extends React.Component {
     </Radio.Group>;
   };
 
-  _getPriceForSize = (size) => {
+  _getPriceForItem = (mapItem) => {
     const price = calculateItemPrice({
-      sku: sizeToPosterSku(size),
+      sku: mapItemToSku(mapItem),
       quantity: 1
     }, { currency: this.props.currency });
 
@@ -104,7 +110,7 @@ class PosterSizeSelect extends React.Component {
 
   _getSizesToShow = () => {
     const selectedType = this._getSelectedSize().type
-    const sizes = _.filter(POSTER_SIZES, size => size.type === selectedType);
+    const sizes = _.filter(this.props.options, size => size.type === selectedType);
     return sizes;
   };
 

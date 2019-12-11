@@ -1,6 +1,7 @@
 export const SET_LOCATION = 'SET_LOCATION';
 export const SET_MAP_VIEW = 'SET_MAP_VIEW';
 export const SET_POSTER_LAYOUT = 'SET_POSTER_LAYOUT';
+export const SET_POSTER_MATERIAL = 'SET_POSTER_MATERIAL';
 export const SET_MAP_STYLE = 'SET_MAP_STYLE';
 export const SET_POSTER_STYLE = 'SET_POSTER_STYLE';
 export const SET_MAP_LABELS = 'SET_MAP_LABELS';
