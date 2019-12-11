@@ -1,7 +1,7 @@
 import React from 'react';
 import ImageLoader from 'react-imageloader';
 import { Icon } from 'antd';
-import { getStyle, createPosterThumbnailUrl, filterMapPosterCart, filterOtherItemsCart } from '../util';
+import { createPosterThumbnailUrl, filterMapPosterCart, filterOtherItemsCart } from '../util';
 import { calculateCartPrice, calculateItemPrice, getProduct } from 'alvarcarto-price-util';
 import _ from 'lodash';
 import { cartItemToMapItem } from '../util/cart-state';
@@ -97,11 +97,12 @@ class OrderItem extends React.Component {
     const { item, currency } = props;
     const mapItem = cartItemToMapItem(item);
     const price = calculateItemPrice(this.props.item, { currency });
-    const styleName = getStyle(mapItem.mapStyle).name;
     let cartImageClassName = 'OrderItem__image';
     if (mapItem.orientation === 'landscape') {
       cartImageClassName += ' OrderItem__image--landscape';
     }
+
+    const materialWord = mapItem.material === 'plywood' ? 'Plywood' : 'Print'
 
     return (
       <div className="OrderItem">
@@ -115,7 +116,7 @@ class OrderItem extends React.Component {
 
         <div className="OrderItem__content">
           <h3 className="OrderItem__title">{mapItem.labelHeader}</h3>
-          <h4 className="OrderItem__type">{styleName}, {mapItem.size}</h4>
+          <h4 className="OrderItem__type">{materialWord}, {mapItem.size}</h4>
           <h4 className="OrderItem__price">{price.label}</h4>
           <div className="OrderItem__quantity">
             <span className="OrderItem__quantity-number">{item.quantity}x</span>
