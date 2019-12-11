@@ -8,12 +8,24 @@ function preloader() {
   return <Icon type="loading" />;
 }
 
+function getPortraitPreview(material) {
+  return material === 'plywood'
+    ? 'plywood-white-shelf-square'
+    : 'no-flowers-in-blue-black-frame';
+}
+
+function getLandscapePreview(material) {
+  return material === 'plywood'
+    ? 'plywood-white-shelf-landscape'
+    : 'white-paper-gray-bg-landscape';
+}
+
 class PosterPreview extends React.Component {
   render() {
     const mapItem = _.extend({}, this.props.mapItem, { resizeToWidth: 800 });
-    const previewId = this.props.mapItem.material === 'plywood'
-      ? 'plywood-white-shelf-square'
-      : 'no-flowers-in-blue-black-frame';
+    const previewId = mapItem.orientation === 'landscape'
+      ? getLandscapePreview(mapItem.material)
+      : getPortraitPreview(mapItem.material);
 
     return (
       <ImageLoader
