@@ -15,11 +15,55 @@
   background-color: #ffffff;
   /* background: linear-gradient(to right bottom, #FFF1D7 0%, #C6F8FF 100%); */
   background-image: url("./assets/concrete-wall.png");
+  perspective: 2000px;
 }
 
 .LightWall__map-container {
   z-index: 5;
   position: relative;
+  transform-style: preserve-3d;
+  transform: rotateY(0deg);
+  transform-origin: 50% 50%;
+  transition: transform 0.4s ease;
+}
+
+.LightWall--plywood.LightWall--3d .LightWall__map-container {
+  transform: rotateY(25deg);
+}
+
+.LightWall__wood-layer {
+  display: none;
+  visibility: hidden;
+}
+
+.LightWall--plywood .LightWall__wood-layer {
+  display: block;
+  visibility: visible;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background:#eedfbd;
+  width: 4px;
+  height: 100%;
+}
+.LightWall--plywood .LightWall__wood-layer:nth-child(odd) {
+  background:#d0c2a5;
+}
+
+.LightWall__wood-layer1 {
+  transform: translateZ(-2px) translateX(-50%) rotateY(90deg);
+}
+.LightWall__wood-layer2 {
+  transform: translateZ(-6px) translateX(-50%) rotateY(90deg);
+}
+.LightWall__wood-layer3 {
+  transform: translateZ(-10px) translateX(-50%) rotateY(90deg);
+}
+.LightWall__wood-layer4 {
+  transform: translateZ(-14px) translateX(-50%) rotateY(90deg);
+}
+.LightWall__wood-layer5 {
+  transform: translateZ(-18px) translateX(-50%) rotateY(90deg);
 }
 
 .LightWall__scaler {
@@ -85,6 +129,7 @@
   top: 20px;
   left: 3.5%;
   z-index: 2000;
+  transform: translateZ(20px);
 }
 
 .LightWall .LightWall__zoom-container .leaflet-control-zoom {
@@ -156,6 +201,28 @@
   position: absolute;
   top: 7px;
   right: 13px;
+}
+
+.LightWall__3d-toggle {
+  display: none;
+  visibility: hidden;
+}
+.LightWall--plywood .LightWall__3d-toggle {
+  display: block;
+  visibility: visible;
+  z-index: 1000;
+  position: absolute;
+  top: 55px;
+  font-weight: bold;
+  font-size: 0.9rem;
+  padding: 0;
+  cursor: pointer;
+  background: #fffce5;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.65);
+  border-radius: 4px;
+  width: 23px;
+  height: 23px;
+  color: #888;
 }
 
 .LightWall__credits {
@@ -239,29 +306,48 @@
 }
 
 .LightWall__depth-label {
-  display: none;
-  visibility: hidden;
+  opacity: 0;
 }
 
-.LightWall--plywood .LightWall__depth-label {
-  display: block;
-  visibility: visible;
-  transform: rotate(45deg);
+.LightWall--plywood.LightWall--3d .LightWall__depth-label {
+  opacity: 1;
   bottom: -5px;
-  left: -35px;
+  left: -25px;
   width: 24px;
   height: 10px;
-  border-left: 2px solid rgba(0,0,0,0.2);
-  border-right: 2px solid rgba(0,0,0,0.2);
 }
 .LightWall--plywood .LightWall__depth-label-line {
   width: 20px;
+  height: 3px;
   top: 4px;
-  border-bottom: 2px solid rgba(0,0,0,0.2);
+  background: rgba(0,0,0,0.2);
+  position: relative;
+  transform: rotateY(-80deg);
 }
+.LightWall--plywood .LightWall__depth-label-line::before,
+.LightWall--plywood .LightWall__depth-label-line::after {
+  height: 10px;
+  width: 4px;
+  background: rgba(0,0,0,0.2);
+  position: absolute;
+  content: '';
+  display: block;
+}
+.LightWall--plywood .LightWall__depth-label-line::before {
+  top: 50%;
+  transform: translateY(-50%);
+  left: -4px;
+}
+.LightWall--plywood .LightWall__depth-label-line::after {
+  top: 50%;
+  transform: translateY(-50%);
+  right: -4px;
+}
+
 .LightWall--plywood .LightWall__depth-label > span {
-  bottom: -20px;
-  left: 50%;
+  bottom: -0px;
+  left: -20px;
+  font-size: 0.8rem;
   transform: translateX(-50%);
 }
 

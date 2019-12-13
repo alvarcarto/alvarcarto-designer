@@ -39,6 +39,7 @@ class LightWall extends React.Component {
       showOverlay: true,
       placementImages: [],
       showPlacementGrid: false,
+      show3d: true,
     };
   }
 
@@ -134,10 +135,25 @@ class LightWall extends React.Component {
     if (mapItem.material === 'plywood') {
       topClassName += ' LightWall--plywood';
     }
+    if (this.state.show3d) {
+      topClassName += ' LightWall--3d';
+    }
 
     return (
       <div ref="container" className={topClassName}>
         <div className="LightWall__map-container" style={autoprefix(mapContainerCss)}>
+          {
+            MULTI
+              ? null
+              : <React.Fragment>
+                  <div className="LightWall__wood-layer LightWall__wood-layer1"></div>
+                  <div className="LightWall__wood-layer LightWall__wood-layer2"></div>
+                  <div className="LightWall__wood-layer LightWall__wood-layer3"></div>
+                  <div className="LightWall__wood-layer LightWall__wood-layer4"></div>
+                  <div className="LightWall__wood-layer LightWall__wood-layer5"></div>
+                </React.Fragment>
+          }
+
           {
             MULTI
               ? null
@@ -177,6 +193,7 @@ class LightWall extends React.Component {
                     <UnstyledButton className="leaflet-control-zoom-in" title="Zoom in" role="button" aria-label="Zoom in" onClick={this._onZoomInClick}>+</UnstyledButton>
                     <UnstyledButton className="leaflet-control-zoom-out" title="Zoom out" role="button" aria-label="Zoom out" onClick={this._onZoomOutClick}>-</UnstyledButton>
                   </div>
+                  <Button size="small" type="link" className="LightWall__3d-toggle" onClick={this._toggle3d}>{this.state.show3d ? '2D' : '3D'}</Button>
                 </div>
           }
           {
@@ -305,6 +322,12 @@ class LightWall extends React.Component {
       zoom: this._calculateZoom(),
     });
   };
+
+  _toggle3d = () => {
+    this.setState({
+      show3d: !this.state.show3d,
+    });
+  }
 
   _calculateZoom = (globalState) => {
     const cartLength = _.get(globalState, 'cart.length', 0)
