@@ -49,7 +49,7 @@ class App extends React.Component {
 
   componentDidMount() {
     const shouldShow = shouldShowUnsupported();
-    if (shouldShow && !Modernizr.flexbox) {
+    if (shouldShow && (!Modernizr.flexbox || !Modernizr.backgroundblendmode)) {
       this._showUnsupportedWarning();
     }
 

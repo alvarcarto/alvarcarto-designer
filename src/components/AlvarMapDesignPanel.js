@@ -1,3 +1,5 @@
+/* global Modernizr */
+
 import React from 'react';
 import _ from 'lodash';
 import {
@@ -98,13 +100,19 @@ class AlvarMapDesignPanel extends React.Component {
         </p>
       </div>
 
-      <div className="AlvarMapDesignPanel__group AlvarMapDesignPanel__poster-material">
-        <h4>Material</h4>
-        <PosterMaterialSelect
-          selected={mapItem.material}
-          onChange={this._onPosterMaterialChange}
-        />
-      </div>
+      {
+        !Modernizr.backgroundblendmode
+          ? null
+          : (
+            <div className="AlvarMapDesignPanel__group AlvarMapDesignPanel__poster-material">
+              <h4>Material</h4>
+              <PosterMaterialSelect
+                selected={mapItem.material}
+                onChange={this._onPosterMaterialChange}
+              />
+            </div>
+          )
+      }
 
       <div className="AlvarMapDesignPanel__group AlvarMapDesignPanel__poster-style">
         <h4>Print style</h4>
