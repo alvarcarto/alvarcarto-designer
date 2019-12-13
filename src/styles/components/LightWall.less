@@ -130,6 +130,7 @@
   left: 3.5%;
   z-index: 2000;
   transform: translateZ(20px);
+  transform-style: preserve-3d;
 }
 
 .LightWall .LightWall__zoom-container .leaflet-control-zoom {
@@ -206,6 +207,9 @@
 .LightWall__3d-toggle {
   display: none;
   visibility: hidden;
+  animation-name: hoverZ;
+  animation-duration: 1s;
+  animation-iteration-count: 4;
 }
 .LightWall--plywood .LightWall__3d-toggle {
   display: block;
@@ -369,5 +373,18 @@
   .LightWall.LightWall--plywood .LightWall__wire-container {
     display: none;
     visibility: hidden;
+  }
+}
+
+
+@keyframes hoverZ {
+  from {
+    transform: translateZ(0px);
+  }
+  50% {
+    transform: translateZ(8px);
+  }
+  to {
+    transform: translateZ(0px);
   }
 }

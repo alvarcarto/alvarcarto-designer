@@ -84,9 +84,10 @@ class AlvarMap extends React.Component {
       className += ' grabbable';
     }
 
+    const shouldShowTooltip = this.state.tooltipVisible && mapItem.material === 'paper';
     return (
       <div onClick={this._onMapClick} className={className} style={mapCssStyle}>
-        <Tooltip visible={this.state.tooltipVisible} title={tooltipContent}>
+        <Tooltip visible={shouldShowTooltip} title={tooltipContent}>
           <div className="AlvarMap__container">
             {
               this._renderLeaflet(style)
