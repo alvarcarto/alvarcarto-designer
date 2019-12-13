@@ -142,6 +142,18 @@ class LightWall extends React.Component {
     return (
       <div ref="container" className={topClassName}>
         <div className="LightWall__map-container" style={autoprefix(mapContainerCss)}>
+          {/* Zoom container has to be "under" (in DOM) wood layers to be shown on Android Chrome */
+            MULTI
+              ? null
+              : <div className="LightWall__zoom-container" style={zoomContainerCss}>
+                  <div className="leaflet-control-zoom leaflet-bar leaflet-control">
+                    <UnstyledButton className="leaflet-control-zoom-in" title="Zoom in" role="button" aria-label="Zoom in" onClick={this._onZoomInClick}>+</UnstyledButton>
+                    <UnstyledButton className="leaflet-control-zoom-out" title="Zoom out" role="button" aria-label="Zoom out" onClick={this._onZoomOutClick}>-</UnstyledButton>
+                  </div>
+                  <Button size="small" type="link" className="LightWall__3d-toggle" onClick={this._toggle3d}>{this.state.show3d ? '2D' : '3D'}</Button>
+                </div>
+          }
+
           {
             MULTI
               ? null
@@ -185,17 +197,6 @@ class LightWall extends React.Component {
             }
           </div>
 
-          {
-            MULTI
-              ? null
-              : <div className="LightWall__zoom-container" style={zoomContainerCss}>
-                  <div className="leaflet-control-zoom leaflet-bar leaflet-control">
-                    <UnstyledButton className="leaflet-control-zoom-in" title="Zoom in" role="button" aria-label="Zoom in" onClick={this._onZoomInClick}>+</UnstyledButton>
-                    <UnstyledButton className="leaflet-control-zoom-out" title="Zoom out" role="button" aria-label="Zoom out" onClick={this._onZoomOutClick}>-</UnstyledButton>
-                  </div>
-                  <Button size="small" type="link" className="LightWall__3d-toggle" onClick={this._toggle3d}>{this.state.show3d ? '2D' : '3D'}</Button>
-                </div>
-          }
           {
             MULTI
               ? null
