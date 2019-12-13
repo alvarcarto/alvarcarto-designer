@@ -151,8 +151,7 @@ class App extends React.Component {
         </p>
 
         <p>
-          If you still want to view the possibly broken page layout,
-          press OK.
+          If you still want to continue, press OK.
         </p>
 
         <Checkbox
