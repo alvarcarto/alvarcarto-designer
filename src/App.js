@@ -145,9 +145,9 @@ class App extends React.Component {
       onCancel: () => null,  // To prevent expection
       content: <div>
         <p>
-          Unfortunately this page doesn't work well with your browser.
-          For best user experience, you should use Chrome, Firefox, Safari, IE11+, or
-          Opera browser.
+          Unfortunately not all features in the page work with your browser.
+          For the best user experience, you should use Chrome, Firefox or Safari. The page is also
+          functional with IE11+ browsers, but some features are missing.
         </p>
 
         <p>
