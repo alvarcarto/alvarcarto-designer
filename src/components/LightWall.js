@@ -141,27 +141,27 @@ class LightWall extends React.Component {
 
     return (
       <div ref="container" className={topClassName}>
-        <div className="LightWall__scaler" style={autoprefix(scalerCss)}>
-          { /* Map container has to be "under" (in DOM) zoom and wood layers to be shown on Android Chrome */
-            MULTI
-              ? _.map(globalState.cart, (m, i) => {
-                  const widthSum = this._calculateSumOfPostersWidths(globalState, i + 1);
-                  const mapItem = cartItemToMapItem(m);
-                  const dimensions = posterSizeToPixels(mapItem.size, mapItem.orientation);
-                  const totalHalf = sumOfPosterWidths / 2;
-                  const half = dimensions.width / 2;
-                  const translateX = -totalHalf + half + widthSum - dimensions.width;
-
-                  const disabled = globalState.editCartItem !== i;
-                  return <div className="LightWall__map-positioner" style={autoprefix({transform: `translateX(${translateX}px)`})}>
-                    <AlvarMap dimensions={dimensions} key={i} mapItem={mapItem} disabled={disabled} scaleZoom={scalerZoom} hideOverlay={!this.state.showOverlay} hideShadows hideTips />
-                  </div>
-                })
-              : <AlvarMap dimensions={dimensions} mapItem={mapItem} scaleZoom={scalerZoom} hideTips={globalState.debug} />
-          }
-        </div>
-
         <div className="LightWall__map-container" style={autoprefix(mapContainerCss)}>
+          <div className="LightWall__scaler" style={autoprefix(scalerCss)}>
+            { /* Map container has to be "under" (in DOM) zoom and wood layers to be shown on Android Chrome */
+              MULTI
+                ? _.map(globalState.cart, (m, i) => {
+                    const widthSum = this._calculateSumOfPostersWidths(globalState, i + 1);
+                    const mapItem = cartItemToMapItem(m);
+                    const dimensions = posterSizeToPixels(mapItem.size, mapItem.orientation);
+                    const totalHalf = sumOfPosterWidths / 2;
+                    const half = dimensions.width / 2;
+                    const translateX = -totalHalf + half + widthSum - dimensions.width;
+
+                    const disabled = globalState.editCartItem !== i;
+                    return <div className="LightWall__map-positioner" style={autoprefix({transform: `translateX(${translateX}px)`})}>
+                      <AlvarMap dimensions={dimensions} key={i} mapItem={mapItem} disabled={disabled} scaleZoom={scalerZoom} hideOverlay={!this.state.showOverlay} hideShadows hideTips />
+                    </div>
+                  })
+                : <AlvarMap dimensions={dimensions} mapItem={mapItem} scaleZoom={scalerZoom} hideTips={globalState.debug} />
+            }
+          </div>
+
           {
             MULTI
               ? null
