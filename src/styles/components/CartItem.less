@@ -14,6 +14,15 @@
   justify-content: center;
   align-items: center;
 }
+.CartItem__image--plywood {
+  background-image: url('/assets/plywood-material.png');
+  background-size: cover;
+
+  img {
+    mix-blend-mode: multiply;
+  }
+}
+
 .CartItem__image:not(.CartItem__image--landscape) > img {
   height: 100%;
 }

@@ -49,8 +49,11 @@ class CartItem extends React.Component {
     if (mapItem.orientation === 'landscape') {
       cartImageClassName += ' CartItem__image--landscape';
     }
+    if (mapItem.material === 'plywood') {
+      cartImageClassName += ' CartItem__image--plywood';
+    }
 
-    const materialWord = mapItem.material === 'plywood' ? 'Plywood' : 'Print'
+    const materialWord = mapItem.material === 'plywood' ? 'Plywood' : 'Print';
     return (
       <div className="CartItem">
         <ImageLoader
