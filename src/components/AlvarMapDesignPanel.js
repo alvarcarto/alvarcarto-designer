@@ -110,6 +110,13 @@ class AlvarMapDesignPanel extends React.Component {
                 selected={mapItem.material}
                 onChange={this._onPosterMaterialChange}
               />
+              <p className="AlvarMapDesignPanel__label AlvarMapDesignPanel__material-info">
+                {
+                  mapItem.material === 'plywood'
+                    ? 'Printed on a high-quality Finnish birch plywood, from only PEFC & FSC certified sustainable sources. Plywood prints are ready-to-hang straight out of the package.'
+                    : 'Printed on a 180g/m² thick high-quality matt paper. Frames are not included.'
+                }
+              </p>
             </div>
           )
       }
