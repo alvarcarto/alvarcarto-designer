@@ -10,7 +10,7 @@ import {
   setMapLabels,
   setPosterMaterial
 } from '../actions';
-import { coordToPrettyText, getPosterLook, getPosterLooks } from '../util';
+import { coordToPrettyText, getPosterLook, getPosterLooks, getQuery } from '../util';
 import { cartItemToMapItem } from '../util/cart-state';
 import { getPosterSizes } from 'alvarcarto-common';
 import countries from 'i18n-iso-countries';
@@ -29,6 +29,8 @@ import { triggerGtmEvent } from '../util/gtm';
 import CONST from '../constants';
 import Alert from './Alert';
 import cities from '../data/cities.json';
+
+const SHOW_MATERIAL = getQuery('showMaterial', 'boolean', false);
 
 class AlvarMapDesignPanel extends React.Component {
   render() {
@@ -101,7 +103,7 @@ class AlvarMapDesignPanel extends React.Component {
       </div>
 
       {
-        !Modernizr.backgroundblendmode
+        !SHOW_MATERIAL || !Modernizr.backgroundblendmode
           ? null
           : (
             <div className="AlvarMapDesignPanel__group AlvarMapDesignPanel__poster-material">
