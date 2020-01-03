@@ -24,7 +24,7 @@ const CONST = {
   REACT_APP_PLACEMENT_API_URL: process.env.REACT_APP_PLACEMENT_API_URL || 'https://tile-api.alvarcarto.com/placement',
   REACT_APP_RENDER_API_KEY: process.env.REACT_APP_RENDER_API_KEY,
   REACT_APP_ANALYTICS_ENV: process.env.REACT_APP_ANALYTICS_ENV || 'development',
-  REACT_APP_GEO_API_URL: process.env.REACT_APP_GEO_API_URL || 'https://alvarcarto-geo-prod.herokuapp.com',
+  REACT_APP_GEO_API_URL: process.env.REACT_APP_GEO_API_URL || 'https://freegeoip.app',
 
   // By default design-qa.alvarcarto.com GTM ID is used
   REACT_APP_GTM_ID: process.env.REACT_APP_GTM_ID,
