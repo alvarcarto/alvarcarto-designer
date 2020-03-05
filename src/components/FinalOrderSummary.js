@@ -101,6 +101,9 @@ class OrderItem extends React.Component {
     if (mapItem.orientation === 'landscape') {
       cartImageClassName += ' OrderItem__image--landscape';
     }
+    if (mapItem.material === 'plywood') {
+      cartImageClassName += ' OrderItem__image--plywood';
+    }
 
     const materialWord = mapItem.material === 'plywood' ? 'Plywood' : 'Print'
 
