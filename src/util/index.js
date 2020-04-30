@@ -177,7 +177,7 @@ export function coordToPrettyText(coord) {
 
 function _transformStyle(styleObj) {
   return _.extend({}, styleObj, {
-    url: `${config.REACT_APP_TILE_API_URL}/contrast-black-tampere/{z}/{x}/{y}/tile.png`,
+    url: `${config.REACT_APP_TILE_API_URL}/${styleObj.id}/{z}/{x}/{y}/tile.png`,
   });
 }
 
