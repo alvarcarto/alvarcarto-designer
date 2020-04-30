@@ -156,7 +156,7 @@ export function createPlacementImageUrl(id, mapItem) {
 }
 
 export function createPosterThumbnailUrl(mapItem) {
-  const newMapItem = _.extend({}, mapItem, { resizeToHeight: 140 })
+  const newMapItem = _.extend({}, mapItem, { resizeToWidth: 140 })
   const query = qs.stringify(createPosterUrlParameters(newMapItem));
   return `${config.REACT_APP_RENDER_API_URL}/api/raster/render?${query}`;
 }
@@ -177,7 +177,7 @@ export function coordToPrettyText(coord) {
 
 function _transformStyle(styleObj) {
   return _.extend({}, styleObj, {
-    url: `${config.REACT_APP_TILE_API_URL}/${styleObj.id}/{z}/{x}/{y}/tile.png`,
+    url: `${config.REACT_APP_TILE_API_URL}/contrast-black-tampere/{z}/{x}/{y}/tile.png`,
   });
 }
 
