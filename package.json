@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "algolia-places-react": "^1.3.0",
-    "alvarcarto-common": "git+https://alvarcarto-integration:c20a4fe9a8771c17eab5f0470fba434ab2fcf901@github.com/kimmobrunfeldt/alvarcarto-common.git#v7.0.4",
+    "alvarcarto-common": "git+https://alvarcarto-integration:c20a4fe9a8771c17eab5f0470fba434ab2fcf901@github.com/kimmobrunfeldt/alvarcarto-common.git#v7.0.5",
     "alvarcarto-price-util": "git+https://alvarcarto-integration:c20a4fe9a8771c17eab5f0470fba434ab2fcf901@github.com/kimmobrunfeldt/alvarcarto-price-util.git#v7.3.2",
     "antd": "^3.23.2",
     "auto-prefixer": "^0.4.2",
