@@ -77,8 +77,37 @@
 
 @font-face {
   font-family: 'JosefinSans-Regular';
+  /*
+   We are specifying italic font as the old version of google fonts we are using don't have the
+   regular font variation. And if we update to newer, the bold has become too strong,
+   so we would need to mass update all designs to use SemiBold (if I remember correctly)
+  */
   src: url('styles/libs/fonts/josefinsans-italic-webfont.woff2') format('woff2'),
        url('styles/libs/fonts/josefinsans-italic-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'NotoSansSC-Regular';
+  src: url('styles/libs/fonts/notosanssc-regular-webfont.woff2') format('woff2'),
+       url('styles/libs/fonts/notosanssc-regular-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'NotoSansSC-Light';
+  src: url('styles/libs/fonts/notosanssc-light-webfont.woff2') format('woff2'),
+       url('styles/libs/fonts/notosanssc-light-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'NotoSansSC-Bold';
+  src: url('styles/libs/fonts/notosanssc-bold-webfont.woff2') format('woff2'),
+       url('styles/libs/fonts/notosanssc-bold-webfont.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }

@@ -101,6 +101,9 @@ class App extends React.Component {
           <p style={{fontFamily: 'RobotoCondensed-Bold'}}>T</p>
           <p style={{fontFamily: 'Pacifico'}}>T</p>
           <p style={{fontFamily: 'AmaticSC-Bold'}}>T</p>
+          <p style={{fontFamily: 'NotoSansSC-Regular'}}>T</p>
+          <p style={{fontFamily: 'NotoSansSC-Light'}}>T</p>
+          <p style={{fontFamily: 'NotoSansSC-Bold'}}>T</p>
         </div>
 
         <div className="App__layout">
