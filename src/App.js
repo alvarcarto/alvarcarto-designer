@@ -11,6 +11,7 @@ import EditorPage from './components/EditorPage';
 import CheckoutPage from './components/CheckoutPage';
 import GiftCardPage from './components/GiftCardPage';
 import ThankYouPage from './components/ThankYouPage';
+import ToolsPage from './components/ToolsPage';
 import { initialState } from './reducers';
 import { assertHealth } from './util/api';
 import history from './history';
@@ -78,6 +79,8 @@ class App extends React.Component {
       page = <CheckoutPage />;
     } else if (pathname === '/giftcard' || pathname === '/gift-cards') {
       page = <GiftCardPage />;
+    } else if (pathname === '/tools') {
+      page = <ToolsPage />;
     } else if (pathname.match(/^\/orders\/[a-zA-Z0-9-]+$/)) {
       // If matches /orders/:id, where id is alphanumeric and may contain dash
       const orderId = _.last(pathname.split('/'));
