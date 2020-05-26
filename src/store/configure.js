@@ -39,6 +39,7 @@ function setUrl(state) {
     zoom: mapItem.mapZoom,
     size: mapItem.size,
     orientation: mapItem.orientation,
+    material: mapItem.material,
     mapStyle: mapItem.mapStyle,
     posterStyle: mapItem.posterStyle,
     labelsEnabled: mapItem.labelsEnabled,

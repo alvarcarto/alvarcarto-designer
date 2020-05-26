@@ -46,10 +46,12 @@ export { BARCELONA_CENTER as DEFAULT_MAP_CENTER };
 
 function getMapDefaults() {
   const size = getQuery('size', 'string', '50x70cm', _.map(POSTER_SIZES, 'id'));
+  const material = getQuery('material', 'string', 'paper', ['paper', 'plywood']);
+
   return {
     id: getItemId(),
     quantity: 1,
-    sku: mapItemToSku({ size, material: 'paper' }),
+    sku: mapItemToSku({ size, material }),
     customisation: {
       mapBounds: null,
       mapStyle: getQuery('mapStyle', 'string', 'bw', _.map(MAP_STYLES, 'id')),
