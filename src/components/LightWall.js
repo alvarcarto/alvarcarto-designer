@@ -13,6 +13,7 @@ import { getPosterPhysicalDimensions } from 'alvarcarto-common'
 import {
   posterSizeToPixels,
   createPosterImageUrl,
+  createImperfectPlacementImageUrl,
   getQueryParameterByName,
   createPlacementImageUrl,
   calculateAspectRatioFit,
@@ -322,6 +323,9 @@ class LightWall extends React.Component {
         <Menu.Item key="png">
           PNG
         </Menu.Item>
+        <Menu.Item key="png-mockup">
+          PNG (for mockups)
+        </Menu.Item>
         <Menu.Item key="jpg">
           JPG
         </Menu.Item>
@@ -469,16 +473,24 @@ class LightWall extends React.Component {
 
   _downloadImage = (format) => {
     let spotQuery = '';
+    let mockupQuery = '';
+    let resolvedFormat = format;
     if (format === 'pdf-spot') {
-      format = 'pdf';
+      resolvedFormat = 'pdf';
       // Schätzl options:
       // goldfoil, silverfoil, copperfoil, uv-varnish, relief-varnish
       spotQuery = '&spotColor=cmyk(0,100,0,0)&spotColorName=copperfoil';
+    } else if (format === 'png-mockup') {
+      resolvedFormat = 'png'
     }
     const { globalState } = this.props;
     const item = globalState.cart[globalState.editCartItem];
     const mapItem = cartItemToMapItem(item);
-    const newUrl = `${createPosterImageUrl(mapItem)}${spotQuery}&format=${format}&apiKey=${globalState.apiKey}&download=true`;
+    const baseUrl = format === 'png-mockup'
+      ? createImperfectPlacementImageUrl(mapItem)
+      : createPosterImageUrl(mapItem);
+
+    const newUrl = `${baseUrl}${spotQuery}${mockupQuery}&format=${resolvedFormat}&apiKey=${globalState.apiKey}&download=true`;
     window.open(newUrl, '_blank');
   };
 

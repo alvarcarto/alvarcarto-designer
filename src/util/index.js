@@ -145,6 +145,11 @@ export function createPosterImageUrl(mapItem) {
   return `${config.REACT_APP_RENDER_API_URL}/api/raster/render?${query}`;
 }
 
+export function createImperfectPlacementImageUrl(mapItem) {
+  const query = qs.stringify(_.omit(createPosterUrlParameters(mapItem), ['resizeToWidth']));
+  return `${config.REACT_APP_PLACEMENT_API_URL}/api/render-imperfect-map?${query}`;
+}
+
 export function createPlacementImageUrl(id, mapItem) {
   const params = createPosterUrlParameters(mapItem);
   const toOmit = ['size', 'orientation'];
