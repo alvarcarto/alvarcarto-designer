@@ -5,7 +5,7 @@ import _ from 'lodash';
 import { connect } from 'react-redux';
 import AlvarMap from './AlvarMap';
 import PlacementImageGrid from './PlacementImageGrid';
-import { Icon, Switch, Button } from 'antd';
+import { Icon, Switch, Button, Dropdown, Menu } from 'antd';
 import config from '../config';
 import { getPlacementImages } from '../util/api';
 import { setMapView, setCurrency } from '../actions';
@@ -275,7 +275,11 @@ class LightWall extends React.Component {
           globalState.debug
             ? <div className="LightWall__debug-menu-section">
                 { this._renderPlacementMenu() }
-                <Button type="primary" onClick={this._downloadImage}>Download poster PNG</Button>
+                <Dropdown overlay={this._renderDownloadAsMenu()}>
+                  <Button type="primary">
+                    Download as <Icon type="down" />
+                  </Button>
+                </Dropdown>
                 <Button type="primary" onClick={this._downloadCartAsJson}>Download cart JSON</Button>
                 { /* Used to generate a JSON download. Needed for browser safety restrictions. */ }
                 <a // eslint-disable-line
@@ -310,6 +314,36 @@ class LightWall extends React.Component {
           </div>
         : null
     ]
+  };
+
+  _renderDownloadAsMenu = () => {
+    return (
+      <Menu onClick={this._onDownloadAsMenuClick}>
+        <Menu.Item key="png">
+          PNG
+        </Menu.Item>
+        <Menu.Item key="jpg">
+          JPG
+        </Menu.Item>
+        <Menu.Item key="pdf-png">
+          PDF raster (PNG embed)
+        </Menu.Item>
+        <Menu.Item key="pdf">
+          PDF vector
+        </Menu.Item>
+        <Menu.Item key="pdf-spot">
+          PDF vector (Copperfoil spot)
+        </Menu.Item>
+        <Menu.Item key="svg">
+          SVG
+        </Menu.Item>
+      </Menu>
+    );
+  };
+
+  _onDownloadAsMenuClick = (e) => {
+    const format = e.key;
+    this._downloadImage(format);
   };
 
   _renderPlacementMenu = () => {
@@ -433,11 +467,18 @@ class LightWall extends React.Component {
     dlAnchorElem.click();
   };
 
-  _downloadImage = () => {
+  _downloadImage = (format) => {
+    let spotQuery = '';
+    if (format === 'pdf-spot') {
+      format = 'pdf';
+      // Schätzl options:
+      // goldfoil, silverfoil, copperfoil, uv-varnish, relief-varnish
+      spotQuery = '&spotColor=cmyk(0,100,0,0)&spotColorName=copperfoil';
+    }
     const { globalState } = this.props;
     const item = globalState.cart[globalState.editCartItem];
     const mapItem = cartItemToMapItem(item);
-    const newUrl = `${createPosterImageUrl(mapItem)}&apiKey=${globalState.apiKey}&download=true`;
+    const newUrl = `${createPosterImageUrl(mapItem)}${spotQuery}&format=${format}&apiKey=${globalState.apiKey}&download=true`;
     window.open(newUrl, '_blank');
   };
 
