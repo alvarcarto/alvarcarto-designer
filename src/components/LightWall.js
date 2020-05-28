@@ -324,7 +324,7 @@ class LightWall extends React.Component {
           PNG
         </Menu.Item>
         <Menu.Item key="png-mockup">
-          PNG (for mockups)
+          Resized and noisy PNG (for mockups)
         </Menu.Item>
         <Menu.Item key="jpg">
           JPG
