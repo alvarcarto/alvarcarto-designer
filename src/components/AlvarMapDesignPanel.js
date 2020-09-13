@@ -30,7 +30,7 @@ import CONST from '../constants';
 import Alert from './Alert';
 import cities from '../data/cities.json';
 
-const SHOW_MATERIAL = getQuery('showMaterial', 'boolean', true);
+const SHOW_MATERIAL = getQuery('showMaterial', 'boolean', false);
 
 class AlvarMapDesignPanel extends React.Component {
   render() {
